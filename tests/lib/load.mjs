@@ -6,7 +6,7 @@ import { fileURLToPath } from 'node:url';
 
 export const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '..');
 
-export const CORE = ['js/decimal.js', 'js/words.js', 'js/models.js', 'js/engine.js', 'curriculum/decimals/lessons.js',
+export const CORE = ['js/decimal.js', 'js/words.js', 'js/models.js', 'js/engine.js', 'js/kit.js', 'curriculum/decimals/lessons.js',
   'curriculum/decimals/d01/bank.js', 'curriculum/decimals/d01/lesson.js'];
 
 export function loadGML(files = CORE) {

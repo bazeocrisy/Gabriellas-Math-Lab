@@ -70,10 +70,12 @@ try {
 
   // ── Home ──
   let r = await js(`${H} return { t: text(), modes: [...document.querySelectorAll('.btn-mode')].map((a) => a.textContent + '>' + a.getAttribute('href')),
-    later: document.querySelectorAll('.later-list li').length, laterButtons: document.querySelectorAll('.later-list a, .later-list button').length };`);
+    later: document.querySelectorAll('.later-list li').length, laterButtons: document.querySelectorAll('.later-list a, .later-list button').length,
+    avail: GML.unit.lessons.filter((l) => GML.unit.available(l.id)).map((l) => l.id), total: GML.unit.lessons.length };`);
   check('home shows title and subtitles', /Gabriella's Math Lab/.test(r.t) && /Grade 5 Mathematics/.test(r.t) && /Georgia Milestones Preparation/.test(r.t), r.t.slice(0, 200));
-  check('home: Lesson 1 has TEACH | PRACTICE | TEST', JSON.stringify(r.modes) === JSON.stringify(['TEACH>#/d01/teach/1', 'PRACTICE>#/d01/practice', 'TEST>#/d01/test']), r.modes);
-  check('home: 7 upcoming lessons with no buttons', r.later === 7 && r.laterButtons === 0, r);
+  check('home: every available lesson has TEACH | PRACTICE | TEST', JSON.stringify(r.modes) === JSON.stringify(r.avail.flatMap((id) => [`TEACH>#/${id}/teach/1`, `PRACTICE>#/${id}/practice`, `TEST>#/${id}/test`])), r.modes);
+  check('home: all 10 lessons listed; the rest say Coming later with no buttons', r.total === 10 && r.later === r.total - r.avail.length && r.laterButtons === 0, r);
+  check('home: Lesson Notes button for each available lesson', (await js(`return document.querySelectorAll('.btn-notes').length;`)) === r.avail.length);
 
   // ── Teach: every screen, step reveal, guided checks with wrong then right answers ──
   await b.load(URL + 'index.html#/d01/teach/1');

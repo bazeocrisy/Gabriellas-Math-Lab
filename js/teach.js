@@ -28,7 +28,7 @@
 
     app.innerHTML = `
       <div class="crumbs"><a href="#/">← Lesson menu</a></div>
-      <p class="mode-label">Lesson 1 · Teach <span class="screen-count">Screen ${i + 1} of ${total}</span></p>
+      <p class="mode-label">Lesson ${G.unit.find(lessonId).n} · Teach <span class="screen-count">Screen ${i + 1} of ${total}</span></p>
       <div class="progress" role="progressbar" aria-label="Lesson progress" aria-valuemin="1" aria-valuemax="${total}" aria-valuenow="${i + 1}"><span style="width:${((i + 1) / total) * 100}%"></span></div>
       <h1 tabindex="-1">${sc.title}</h1>
       <div class="teach-body">${sc.body || ''}</div>

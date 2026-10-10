@@ -28,7 +28,7 @@
       const q = G.engine.make(lessonId, item.id, item.seed);
       app.innerHTML = `
         <div class="crumbs"><a href="#/">← Lesson menu</a></div>
-        <p class="mode-label">Lesson 1 · Practice <span class="screen-count">Question ${d.i + 1} of ${d.set.length}</span></p>
+        <p class="mode-label">Lesson ${G.unit.find(lessonId).n} · Practice <span class="screen-count">Question ${d.i + 1} of ${d.set.length}</span></p>
         <div class="progress" role="progressbar" aria-label="Practice progress" aria-valuemin="1" aria-valuemax="${d.set.length}" aria-valuenow="${d.i + 1}"><span style="width:${((d.i + 1) / d.set.length) * 100}%"></span></div>
         <h1 tabindex="-1" class="q-heading">Question ${d.i + 1}</h1>
         <p class="skill-tag">Skill: ${bank.skills[q.skill]}</p>
@@ -81,7 +81,7 @@
       const review = Object.keys(bySkill).filter((sk) => bySkill[sk].c < bySkill[sk].t);
       app.innerHTML = `
         <div class="crumbs"><a href="#/">← Lesson menu</a></div>
-        <p class="mode-label">Lesson 1 · Practice</p>
+        <p class="mode-label">Lesson ${G.unit.find(lessonId).n} · Practice</p>
         <h1 tabindex="-1">Practice complete</h1>
         <p class="score-line">You answered <b>${first} of ${qs.length}</b> correctly on the first try.</p>
         <p>Practice is for learning, so hints and second tries are a good thing. The Test checks what you can do on your own.</p>

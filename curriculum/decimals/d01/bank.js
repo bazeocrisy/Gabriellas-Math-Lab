@@ -5,44 +5,10 @@
 (function (G) {
   'use strict';
   const D = G.D, M = G.models, W = G.words;
-  const f = (k, places) => D.fromThousandths(k, places);
-  const words = W.decimalWords;
-  const ORD = ['', 'first', 'second', 'third'];
-  const PL = [null,
-    { n: 10, one: 'tenth', many: 'tenths', places: 1 },
-    { n: 100, one: 'hundredth', many: 'hundredths', places: 2 },
-    { n: 1000, one: 'thousandth', many: 'thousandths', places: 3 }];
+  const { f, ORD, PL, s, list, textChoices, placeCheck, droppedZero, ZERO_TIP, words } = G.kit;
   const PLACE_KEYS = ['ones', 'tenths', 'hundredths', 'thousandths'];
-  const s = (n, word) => n + ' ' + word + (n === 1 ? '' : 's');
-  const list = (xs) => xs.length < 2 ? xs.join('') : xs.slice(0, -1).join(', ') + ' and ' + xs[xs.length - 1];
-  const textChoices = (r, correct, wrongs) => {
-    const all = [correct, ...wrongs];
-    if (new Set(all).size !== all.length) throw new Error('duplicate choices: ' + all.join(' | '));
-    return r.shuffle(all).map((t) => ({ value: t, text: t }));
-  };
   // Teaching examples (Teach screens and reminder cards) that generated questions avoid repeating.
   const RESERVED_HUNDREDTHS = new Set([27, 34, 50]);
-
-  /** Digits that differ between a typed answer and the correct one, as advice that does not reveal the answer. */
-  function placeCheck(resp, ans) {
-    const r = D.parse(resp), a = D.parse(ans);
-    if (!r) return null;
-    if (r.places > 3) return 'Decimals in this lesson have at most three digits after the decimal point (thousandths).';
-    const tips = [];
-    if (r.whole !== a.whole) tips.push(a.whole === '0' ? 'The amount is less than one whole, so the number should start with 0 and a decimal point.' : 'Check the whole-number part, to the left of the decimal point.');
-    const rd = r.frac.padEnd(3, '0'), ad = a.frac.padEnd(3, '0');
-    const wrong = ['tenths', 'hundredths', 'thousandths'].filter((p, i) => rd[i] !== ad[i]);
-    if (wrong.length) tips.push(`Check the digit${wrong.length > 1 ? 's' : ''} in the ${list(wrong)} place${wrong.length > 1 ? 's' : ''}.`);
-    return tips.join(' ') || null;
-  }
-
-  /** "A zero holds a place" detector: the typed answer is the correct one with its zeros left out. */
-  function droppedZero(resp, ans) {
-    const r = D.parse(resp), a = D.parse(ans);
-    if (!r || !a || !/0/.test(a.frac.replace(/0+$/, ''))) return false;
-    return r.whole === a.whole && r.frac === a.frac.replace(/0+$/, '').replace(/0/g, '');
-  }
-  const ZERO_TIP = 'A zero is a placeholder. If you leave it out, the other digits slide into the wrong places. Keep every zero that comes before a nonzero digit.';
 
   const templates = [];
   const T = (id, skill, make) => templates.push({ id, skill, make });

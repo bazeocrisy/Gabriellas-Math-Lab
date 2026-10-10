@@ -36,8 +36,8 @@
     function intro() {
       app.innerHTML = `
         <div class="crumbs"><a href="#/">← Lesson menu</a></div>
-        <p class="mode-label">Lesson 1 · Test</p>
-        <h1 tabindex="-1">Lesson 1 Test</h1>
+        <p class="mode-label">Lesson ${G.unit.find(lessonId).n} · Test</p>
+        <h1 tabindex="-1">Lesson ${G.unit.find(lessonId).n} Test</h1>
         <div class="card">
           <ul class="facts">
             <li>There are <b>10 questions</b>.</li>
@@ -68,7 +68,7 @@
       const q = qs[d.i];
       app.innerHTML = `
         <div class="crumbs"><a href="#/">← Lesson menu</a> <span class="crumb-note">(your answers are saved)</span></div>
-        <p class="mode-label">Lesson 1 · Test (no hints, work on your own) <span class="screen-count">Question ${d.i + 1} of 10</span></p>
+        <p class="mode-label">Lesson ${G.unit.find(lessonId).n} · Test (no hints, work on your own) <span class="screen-count">Question ${d.i + 1} of 10</span></p>
         <nav class="qnav" aria-label="Test questions">${qs.map((_, k) =>
           `<button type="button" class="qnav-btn${k === d.i ? ' is-current' : ''}${answered(k) ? ' is-done' : ''}" data-k="${k}" aria-label="Question ${k + 1}${answered(k) ? ', answered' : ', not answered'}"${k === d.i ? ' aria-current="step"' : ''}>${k + 1}</button>`).join('')}</nav>
         <h1 tabindex="-1" class="q-heading">Question ${d.i + 1}</h1>
@@ -110,7 +110,7 @@
       const missing = qs.map((_, k) => k).filter((k) => !answered(k));
       app.innerHTML = `
         <div class="crumbs"><a href="#/">← Lesson menu</a></div>
-        <p class="mode-label">Lesson 1 · Test</p>
+        <p class="mode-label">Lesson ${G.unit.find(lessonId).n} · Test</p>
         <h1 tabindex="-1">Ready to submit?</h1>
         <p>You answered <b>${10 - missing.length} of 10</b> questions.${missing.length ? '' : ' You can still go back and check your answers, or submit now.'}</p>
         ${missing.length ? `<div class="fb fb-info"><p>Not answered yet: ${missing.map((k) => `<button type="button" class="btn btn-link" data-k="${k}">Question ${k + 1}</button>`).join(' ')}</p><p>A question with no answer counts as incorrect.</p></div>` : ''}
@@ -166,10 +166,10 @@
       const teachLink = (sk) => `#/${lessonId}/teach/${L.screens.findIndex((x) => x.id === L.skillScreen[sk]) + 1}`;
       app.innerHTML = `
         <div class="crumbs"><a href="#/">← Lesson menu</a></div>
-        <p class="mode-label">Lesson 1 · Test results</p>
+        <p class="mode-label">Lesson ${G.unit.find(lessonId).n} · Test results</p>
         <h1 tabindex="-1">Your score: ${r.correct} out of ${r.total} (${r.percent}%)</h1>
         <div class="card ${r.mastered ? 'card-ok' : 'card-warn'}">
-          ${r.mastered ? '<p class="fb-title"><span aria-hidden="true">★</span> Lesson 1 mastered!</p><p>You got at least 9 out of 10 correct on your own.</p>'
+          ${r.mastered ? `<p class="fb-title"><span aria-hidden="true">★</span> Lesson ${G.unit.find(lessonId).n} mastered!</p>` + '<p>You got at least 9 out of 10 correct on your own.</p>'
             : '<p class="fb-title">Not mastered yet</p><p>The goal is at least 9 out of 10 correct. Review the skills below, practice, and then try a new test.</p>'}
         </div>
         <h2>Skills</h2>
