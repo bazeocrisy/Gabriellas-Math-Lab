@@ -142,7 +142,7 @@
       ],
       why: `One ${A.one} (${f(1000 / A.n)}) is bigger than one ${B.one} (${f(1000 / B.n)}): it takes ${ratio} ${B.many} to make one ${A.one}.`,
       diagnose(resp) {
-        if (resp === 'They are the same size') return `They are not the same size. A whole cut into ${B.n} parts has smaller pieces than a whole cut into ${A.n} parts.`;
+        if (resp === 'They are the same size') return `Two pieces are the same size only if the same whole is cut into the same number of parts. Here one whole is cut into ${A.n} parts and the other into ${B.n} parts.`;
         return `"${B.one[0].toUpperCase() + B.one.slice(1)}" sounds bigger because ${B.n} is bigger than ${A.n}. But it means the whole is cut into ${B.n} pieces instead of ${A.n}, and more pieces means each piece is smaller.`;
       }
     };
@@ -407,7 +407,6 @@
         const v = D.parse(resp);
         if (droppedZero(resp, ans)) return ZERO_TIP;
         if (v.places < 3) return 'Don\'t forget the thin slices. Each slice is one thousandth, the third place after the decimal point.';
-        if (droppedZero(resp, ans)) return ZERO_TIP;
         return placeCheck(resp, ans);
       }
     };
@@ -779,7 +778,7 @@
       why: `Writing zeros at the end keeps every digit in its place: ${x} = <b>${ans}</b>.`,
       diagnose(resp, info) {
         const v = info.value;
-        if (v.whole !== '0') return `${resp} is more than one whole, but ${x} is less than one. Keep the 0 before the decimal point and keep each digit in its place.`;
+        if (v.whole !== '0') return `${resp} is one whole or more, but ${x} is less than one. Keep the 0 before the decimal point and keep each digit in its place.`;
         if (v.frac.length > 1 && v.frac[0] === '0' && D.parse(x).frac[0] !== '0') return `In ${resp}, the zero is right after the decimal point, so it pushes the digits into smaller places. Where can a zero go without moving any digit?`;
         return `${resp} is not equal to ${x}. Line them up in a place-value chart and compare each place.`;
       }
@@ -951,22 +950,31 @@
   T('C4', 'compare', (r, p) => {
     const { a, b, c, x, y } = trapPair(r, p);
     const name = p.name || r.pick(['Sam', 'Ana', 'Jordan', 'Mia', 'Eli']);
-    const right = `No. ${x} = ${f(a * 100, 2)}, and ${a * 10} hundredths is more than ${b * 10 + c} hundredths.`;
-    const wrongs = [`Yes. ${b}${c} is greater than ${a}, so ${y} is greater.`, `Yes. ${y} has more digits, so it is greater.`, 'No. They are equal, because both start with 0.'];
+    const claimTrue = p.claim !== undefined ? p.claim === 'true' : r.next() < 0.5;
+    const bc = b * 10 + c;
+    let prompt, right, wrongs;
+    if (claimTrue) {
+      prompt = `${name} says <b>${x}</b> is greater than <b>${y}</b> because ${s(a, 'tenth')} is more than ${s(b, 'tenth')}. Is ${name} right?`;
+      right = `Yes. ${x} has ${s(a, 'tenth')} and ${y} has only ${s(b, 'tenth')}, so ${x} is greater.`;
+      wrongs = [`No. ${b}${c} is greater than ${a}, so ${y} is greater.`, `No. ${y} has more digits, so it is greater.`, `Yes. ${x} has fewer digits, so it is greater.`];
+    } else {
+      prompt = `${name} says <b>${y}</b> is greater than <b>${x}</b> because ${b}${c} is greater than ${a}. Is ${name} right?`;
+      right = `No. ${x} is ${a * 10} hundredths, which is more than ${bc} hundredths.`;
+      wrongs = [`Yes. ${b}${c} is greater than ${a}, so ${y} is greater.`, `Yes. ${y} has more digits, so it is greater.`, `No. ${x} is greater because it has fewer digits.`];
+    }
     return {
-      type: 'mc', sig: x + y,
-      prompt: `${name} says <b>${y}</b> is greater than <b>${x}</b> because ${b}${c} is greater than ${a}. Is ${name} right?`,
-      choices: textChoices(r, right, wrongs), answer: right, answerText: right,
+      type: 'mc', sig: x + y + (claimTrue ? 't' : 'f'),
+      prompt, choices: textChoices(r, right, wrongs), answer: right, answerText: right,
       hints: [
-        'Check the claim with place value instead of comparing the digits as whole numbers.',
-        `Write ${x} with two decimal places, so both numbers are in hundredths.`,
-        'Compare the number of hundredths in each. Then choose the answer whose reason is true.'
+        'Check the reason with place value. A true answer needs a true reason.',
+        'Rewrite the two numbers so they have the same number of decimal places.',
+        'Compare the numbers place by place, starting with the tenths. Then choose the answer whose reason matches what you found.'
       ],
-      why: `${x} is ${s(a, 'tenth')} = ${a * 10} hundredths, and ${y} is ${b * 10 + c} hundredths, so ${x} is greater. Comparing ${b}${c} with ${a} as whole numbers does not work, because the digits are in different places.`,
+      why: `${x} is ${s(a, 'tenth')} = ${a * 10} hundredths, and ${y} is ${bc} hundredths, so ${x} is greater. Comparing ${b}${c} with ${a} as whole numbers, or counting digits, does not work: compare place by place.`,
       diagnose(resp) {
-        if (/more digits/.test(resp)) return 'More digits does not mean a bigger decimal. Compare place by place, starting with the tenths.';
-        if (/equal/.test(resp)) return `Starting with 0 only tells you both are less than 1. Compare the tenths: ${x} has ${s(a, 'tenth')}, ${y} has ${s(b, 'tenth')}.`;
-        return `${b}${c} is bigger than ${a} as whole numbers, but ${x} means ${s(a, 'tenth')} and ${y} means ${b * 10 + c} hundredths. Compare them in the same unit.`;
+        if (/fewer digits|more digits/.test(resp)) return 'The number of digits does not decide which decimal is greater. Compare place by place, starting with the tenths.';
+        if (/equal/.test(resp)) return `Being less than 1 does not make two decimals equal. Compare the tenths: ${x} has ${s(a, 'tenth')}, ${y} has ${s(b, 'tenth')}.`;
+        return `${b}${c} is bigger than ${a} as whole numbers, but ${x} means ${s(a, 'tenth')} and ${y} means ${bc} hundredths. Compare them in the same unit.`;
       }
     };
   });

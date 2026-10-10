@@ -19,8 +19,10 @@
       }
     });
     const steps = sc.steps || [];
-    const revealed = G.store.getDraft(STEPS_KEY) || {};
-    let shown = Math.min(steps.length, revealed[lessonId + ':' + sc.id] || (steps.length ? 1 : 0));
+    const saved = G.store.getDraft(STEPS_KEY);
+    const revealed = saved && typeof saved === 'object' && !Array.isArray(saved) ? saved : {};
+    const was = revealed[lessonId + ':' + sc.id];
+    let shown = Math.min(steps.length, Number.isInteger(was) && was > 0 ? was : (steps.length ? 1 : 0));
     let checkSolved = false;
     const STEPBTN = '<button type="button" class="btn btn-primary step-btn" data-act="step">Show next step</button>';
 

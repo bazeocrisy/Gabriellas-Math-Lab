@@ -275,6 +275,6 @@
     // Sets used by Teach checks, so Practice and Test do not repeat them.
     teachSigs: screens.filter((s) => s.check).map((s) => G.engine.make('d01', s.check.t, 1, s.check.params).sig)
       // Worked examples on Teach screens, reteach cards and Lesson Notes.
-      .concat(['M1:3', 'M1:2', 'M2:13', 'M3:4', 'M9:153', 'P3:0:4', 'P3:0:2', 'W1:0.06', 'W1:2.5', 'W1:0.4', 'W1:0.004', 'W2:0.43', 'W2:0.207', 'W4:0.43', 'W4:0.207', 'P6:1:3'])
+      .concat(['M1:3', 'M1:2', 'M2:13', 'M3:4', 'M9:153', 'P3:0:4', 'P3:0:2', 'W1:0.06', 'W1:2.5', 'W1:0.4', 'W1:0.004', 'W2:0.43', 'W2:0.207', 'W4:0.43', 'W4:0.207', 'C2:0.5|0.50', 'C2:0.50|0.5', 'E2:0.5|0.50', 'E2:0.50|0.5'])
   };
 })(typeof window !== 'undefined' ? (window.GML = window.GML || {}) : (globalThis.GML = globalThis.GML || {}));

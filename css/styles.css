@@ -247,6 +247,9 @@ h3 { font-size: 1.1rem; margin: 1em 0 .4em; }
 .reset { margin-top: 28px; display: grid; gap: 10px; justify-items: start; }
 details { margin: 10px 0; }
 summary { cursor: pointer; font-weight: 700; min-height: 44px; display: flex; align-items: center; }
+summary::-webkit-details-marker { display: none; }
+summary::before { content: "▸"; display: inline-block; width: 1.2em; color: var(--brand); }
+details[open] > summary::before { content: "▾"; }
 .vocab dt { font-weight: 800; margin-top: 8px; }
 .vocab dd { margin: 0 0 4px 0; }
 .note-ex { border: 1px solid var(--line); border-radius: 10px; padding: 8px 14px; margin: 10px 0; background: #fff; break-inside: avoid; }

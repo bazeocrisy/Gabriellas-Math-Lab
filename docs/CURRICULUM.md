@@ -3,20 +3,36 @@
 ## Purpose
 Support fifth-grade understanding, current classroom assignments, and Georgia Milestones preparation. This is an instructional outline; validate every assessed objective against the current Georgia Department of Education Grade 5 mathematics standards and assessment blueprint before declaring complete alignment.
 
-## Initial learning sequence
-| Lesson | Topic | Core evidence of learning |
-|---|---|---|
-| D01 | Decimal foundations | Model tenths, hundredths and thousandths and connect each model to numerals |
-| D02 | Decimal place value | Identify the value of a digit and explain ten-to-one place relationships |
-| D03 | Representing decimals | Read and represent decimals with place-value charts, words, standard and expanded form as helpful supports |
-| D04 | Comparing decimals | Compare using place value and >, <, =; justify comparisons |
-| D05 | Ordering decimals | Order sets of decimals, including misleading digit-length cases |
-| D06 | Rounding decimals | Round to requested positions using place value and number lines |
-| D07 | Adding decimals | Add decimals in models, equations and word problems; explain alignment/regrouping |
-| D08 | Subtracting decimals | Subtract decimals in models, equations and word problems; explain regrouping |
-| D09 | Decimal review | Mixed cumulative assessment and targeted corrections |
+## Standards (Georgia K-12 Mathematics Standards, Grade 5)
+Wording below was checked on 2026-10-10 against a secondary source that reproduces the standards (goblinsapp.com, Georgia Grade 5 list). Confirm against the official GaDOE document before claiming full alignment.
 
-The lesson sequence is pedagogical, not a claim that Georgia designates nine lessons. Scope and number ranges must be checked against the official current standard, especially addition/subtraction through hundredths versus place-value work through thousandths.
+- **5.NR.1.1** — Explain that in a multi-digit number, a digit in one place represents 10 times as much as it represents in the place to its right and 1/10 of what it represents in the place to its left.
+- **5.NR.4.1** — Read and write decimal numbers to the thousandths place using base-ten numerals written in standard form and expanded form.
+- **5.NR.4.2** — Represent, compare, and order decimal numbers to the thousandths place based on the meanings of the digits in each place, using >, =, and < symbols to record the results of comparisons.
+- **5.NR.4.3** — Use place value understanding to round decimal numbers to the hundredths place.
+- **5.NR.4.4** — Solve problems involving addition and subtraction of decimal numbers to the hundredths place using a variety of strategies.
+
+Number ranges that follow: place value, reading/writing, comparing and ordering go to **thousandths**; rounding goes to **hundredths**; addition and subtraction go to **hundredths**.
+
+## Learning sequence (as shown in the app)
+| Lesson | Topic | Core evidence of learning | Standards | Status |
+|---|---|---|---|---|
+| D01 | Understanding Decimals | Model tenths, hundredths and thousandths; connect models, place-value chart, words and numerals; equivalent decimals and zero placeholders | Foundations for 5.NR.4.1, 5.NR.4.2; 5.NR.1.1 | **Built and audited** |
+| D02 | Decimal Place Value | Value of a digit; standard and expanded form; ten-to-one place relationships | 5.NR.4.1, 5.NR.1.1 | Coming later |
+| D03 | Comparing Decimals | Compare using place value and >, <, =; justify comparisons | 5.NR.4.2 | Coming later |
+| D04 | Ordering Decimals | Order sets, including misleading digit-length cases | 5.NR.4.2 | Coming later |
+| D05 | Rounding Decimals | Round to tenths and hundredths using place value and number lines | 5.NR.4.3 | Coming later |
+| D06 | Adding Decimals | Add in models, equations and word problems; alignment and regrouping | 5.NR.4.4 | Coming later |
+| D07 | Subtracting Decimals | Subtract with regrouping and zeros; word problems | 5.NR.4.4 | Coming later |
+| D08 | Mixed Decimal Problems | Cumulative application and reasoning | 5.NR.4.1–4.4 | Coming later |
+
+This eight-lesson sequence (from the project brief of 2026-10-10) replaces the earlier nine-lesson outline: "Representing decimals" was folded into D01/D02 and "Decimal review" became D08. The sequence is pedagogical, not a claim that Georgia designates eight lessons.
+
+### What D01 deliberately leaves for later lessons
+- Expanded form is shown in Teach (0.627 = 0.6 + 0.02 + 0.007) but practiced in D02.
+- The "10 times" relationship is taught and practiced as unit conversions (6 tenths = 60 hundredths); "the 4 in 0.4 is 10 times the 4 in 0.04" questions belong to D02.
+- Decimals greater than 1 appear in Teach and in some reading/place-value questions; models of numbers greater than 1 come later.
+- Comparing appears in D01 only as transfer practice for the 0.4 vs 0.35 misconception; full comparing and ordering are D03–D04.
 
 ## Each lesson includes
 1. **Teach:** definition, purpose, visual representation, worked example, guided check.

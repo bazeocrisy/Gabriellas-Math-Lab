@@ -283,6 +283,12 @@ try {
   await b.reload();
   r = await js(`return { steps: document.querySelectorAll('.steps li').length, next: document.querySelector('[data-act=next]').disabled };`);
   check('teach: revealed steps survive a refresh', r.steps === 3 && r.next === false, r);
+  for (const junk of ['5', '"abc"', '{"d01:whole":"abc"}', '{"d01:whole":-3}']) {
+    await js(`localStorage.setItem('gml:v1:draft:teach-steps', ${JSON.stringify(junk)});`);
+    await b.load(URL + 'index.html#/d01/teach/1'); await b.reload();
+    r = await js(`const a = document.querySelectorAll('.steps li').length; document.querySelector('[data-act=step]').click(); return { a, b: document.querySelectorAll('.steps li').length, next: document.querySelector('[data-act=next]').disabled };`);
+    check(`teach: damaged saved steps (${junk}) start at step 1 and still work`, r.a === 1 && r.b === 2 && r.next === true, r);
+  }
   await js(`localStorage.removeItem('gml:v1:draft:test-d01');`);
   await b.reload();
   await b.load(URL + 'index.html#/d01/test');

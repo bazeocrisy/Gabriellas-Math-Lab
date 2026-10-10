@@ -252,9 +252,10 @@ test('word problem and reasoning templates have correct answers', () => {
     const k = Number(strip(q.prompt).match(/(?:eats|uses|beads\.) (\d+)|\. (\d+) of the beads/).slice(1).find(Boolean));
     assert.equal(D.toThousandths(q.answer), k * 1000 / n, `P6 ${seed}`);
     const c = engine.make('d01', 'C4', seed);
-    const [y, x] = strip(c.prompt).match(/\d\.\d+/g);
-    assert.equal(D.cmp(x, y), 1, `C4 ${seed}: ${x} should be greater than ${y}`);
-    assert.ok(c.answer.startsWith('No.') && c.answer.includes('more than'), `C4 ${seed}`);
+    const [first, second] = strip(c.prompt).match(/\d\.\d+/g); // "<first> is greater than <second>"
+    const claimTrue = D.cmp(first, second) === 1;
+    assert.ok(c.answer.startsWith(claimTrue ? 'Yes.' : 'No.'), `C4 ${seed}`);
+    assert.ok(c.choices.filter((ch) => ch.value.startsWith('No.')).length === 2, `C4 ${seed}: a believable wrong "No"`);
   }
 });
 
@@ -266,7 +267,7 @@ test('reviewer regressions: feedback matches the actual mistake', () => {
   assert.match(msg('M7', { k: 7 }, '0.8'), /too many/);
   assert.match(msg('M7', { k: 7 }, '0.6'), /too few/);
   assert.doesNotMatch(msg('M1', { k: 4 }, '0'), /which is good/);
-  assert.match(msg('E3', { variant: 'a2', a: 1 }, '1.00'), /more than one whole/);
+  assert.match(msg('E3', { variant: 'a2', a: 1 }, '1.00'), /one whole or more/);
   const eq = engine.make('d01', 'C2', 1, { variant: 'equal', a: 6 });
   for (const h of eq.hints) assert.doesNotMatch(strip(h), /0\.60|60 hundredths|does not change/, 'C2 equal hints give the answer');
   assert.doesNotMatch(engine.check(eq, '<').message, /does not change/);
