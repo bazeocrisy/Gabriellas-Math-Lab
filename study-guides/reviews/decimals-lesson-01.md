@@ -107,7 +107,7 @@ the guide was changed to match:
 | All three reviews complete | Curriculum, design and PDF QA each passed, and each checked the corrected build again. No review agents are still running. |
 | Every page inspected by the lead | The committed PDF was rendered with pdf.js without rebuilding it, and all 15 pages were viewed. The working-copy PDF is byte-identical to the committed one (SHA-256 `fdaa0714…72db`). |
 | Questions match the answer key | All 25 questions (A–H, 1–17) were checked by eye against pages 13–14. The build's automatic check also passes: exactly one key entry per question, and each model matches its answer. |
-| Latest D01 curriculum | Matches the committed, audited app lesson (`claude/decimals-d01` @ `b7344a4`). <br>• Its six skill names are the checklist rows. <br>• Lesson 2 is Decimal Place Value, with expanded form. <br>• Lesson 3 is Comparing Decimals. <br>It also matches the app session's pending `CURRICULUM.md` update. |
+| Latest D01 curriculum | Matches the latest committed curriculum and app lesson (`claude/decimals-d01` @ `1aa8acb`, which includes the updated `docs/CURRICULUM.md`). <br>• Its six skill names are the checklist rows. <br>• Lesson 2 is Decimal Place Value, with expanded form. <br>• Lesson 3 is Comparing Decimals. |
 | App worktree untouched | `claude/decimals-d01` was not modified, staged, committed or reset. Its uncommitted changes belong to the app session. This branch changes only `study-guides/`. |
 | Final page count | 15 US Letter pages (612×792 pt), 1.54 MB, all fonts embedded |
 | PDF | `study-guides/pdf/decimals/Decimals-Lesson-1-Understanding-Decimals.pdf` |
