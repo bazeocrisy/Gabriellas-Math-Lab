@@ -1,0 +1,14 @@
+{
+  "name": "gml-study-guides",
+  "version": "1.0.0",
+  "description": "Printable study guides for Gabriella's Math Lab (HTML/CSS source to PDF)",
+  "scripts": {
+    "build": "node tools/build.mjs"
+  },
+  "type": "module",
+  "devDependencies": {
+    "pdfjs-dist": "^4.10.38",
+    "puppeteer-core": "^24.43.1"
+  },
+  "private": true
+}

@@ -1,0 +1,797 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Decimals Lesson 1 Understanding Decimals</title>
+<link rel="stylesheet" href="../../assets/workbook.css">
+<!--
+  Study guide: Decimals, Lesson 1 (app lesson D01) — Understanding Decimals.
+  Georgia K-12 Mathematics Standards: 5.NR.4.1, 5.NR.4.2 (connects to 5.NR.1.1).
+  Edit this file, then run `npm run build` in study-guides/ to make the PDF.
+  Conventions: data-q / data-for link every question to its answer-key entry; data-answer is checked
+  against the key, and data-model-answer also checks the question's model was drawn from that value.
+-->
+</head>
+<body>
+
+<!-- ═════════════════════════════ 1. COVER ═════════════════════════════ -->
+<section class="page cover t-learn">
+  <div class="band">
+    <div class="brand">Gabriella's Math Lab &nbsp;·&nbsp; Study Guide</div>
+    <div class="unit">DECIMALS &nbsp;·&nbsp; LESSON 1</div>
+    <h1>Understanding<br>Decimals</h1>
+    <p class="sub">Tenths, hundredths, and thousandths: what the digits after the decimal point really mean.</p>
+  </div>
+  <div class="stripe"><i style="background:var(--ones)"></i><i style="background:var(--tenths)"></i><i style="background:var(--hundredths)"></i><i style="background:var(--thousandths)"></i></div>
+  <div class="inner">
+    <div class="row mid mt-sm" style="gap:0.25in; justify-content:center">
+      <figure class="fig fixed">
+        <div data-model="strip" data-value="0.3" data-size="128" data-h="128"></div>
+        <div class="num-big d-t">0.3</div><div class="cap">3 <b>tenths</b></div>
+      </figure>
+      <figure class="fig fixed">
+        <div data-model="grid" data-value="0.34" data-size="128"></div>
+        <div class="num-big"><span class="d-t">0.3</span><span class="d-h">4</span></div><div class="cap">34 <b>hundredths</b></div>
+      </figure>
+      <figure class="fig fixed">
+        <div data-model="grid" data-value="0.347" data-size="128"></div>
+        <div class="num-big"><span class="d-t">0.3</span><span class="d-h">4</span><span class="d-th">7</span></div><div class="cap">347 <b>thousandths</b></div>
+      </figure>
+    </div>
+
+    <div class="row" style="gap:0.3in">
+      <div class="stack" style="flex:1.15">
+        <h3>Inside this guide</h3>
+        <div class="toc" style="grid-template-columns:1fr">
+          <div><span class="sw" style="background:var(--learn)"></span>Learn: goals, words, and the big idea<span class="pg">2</span></div>
+          <div><span class="sw" style="background:var(--see)"></span>See It: pictures of decimals<span class="pg">4</span></div>
+          <div><span class="sw" style="background:var(--worked)"></span>Worked Examples, step by step<span class="pg">6</span></div>
+          <div><span class="sw" style="background:var(--guided)"></span>Try It Together (guided practice)<span class="pg">8</span></div>
+          <div><span class="sw" style="background:var(--solo)"></span>On Your Own (independent practice)<span class="pg">10</span></div>
+          <div><span class="sw" style="background:var(--key)"></span>Answer Key with explanations<span class="pg">13</span></div>
+          <div><span class="sw" style="background:var(--parent)"></span>Parent Mastery Checklist<span class="pg">15</span></div>
+        </div>
+      </div>
+      <div class="stack" style="flex:1">
+        <h3>How to use it</h3>
+        <ol class="steps small">
+          <li><b>Read</b> the Learn and See It pages with a grown-up. Say the examples out loud.</li>
+          <li><b>Follow</b> each Worked Example, one step at a time.</li>
+          <li><b>Try It Together</b>, using the hints. Then work <b>On Your Own</b> with no help.</li>
+          <li><b>Check</b> with the Answer Key and fix any mistakes.</li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="spacer"></div>
+    <div class="row mid" style="margin-bottom:0.15in; gap:0.3in">
+      <div class="name-line grow2">Name <span class="blank" style="width:2.6in"></span></div>
+      <div class="name-line">Date started <span class="blank" style="width:1.1in"></span></div>
+    </div>
+    <div class="callout small" style="margin-bottom:0.6in">
+      <b>Georgia K-12 Mathematics Standards:</b> 5.NR.4.1 (read and write decimals to the thousandths place; expanded form introduced),
+      5.NR.4.2 (represent decimals using the meaning of the digits in each place; comparing introduced).
+      Connects to 5.NR.1.1 (each place is 10 times the place to its right). Matches Math Lab lesson D01.
+    </div>
+  </div>
+</section>
+
+<!-- ═════════════════════════════ 2. GOALS + VOCABULARY ═════════════════════════════ -->
+<section class="page t-learn">
+  <header class="pg-head"><span class="pg-tab">Learn</span><span class="pg-title">Goals and words to know</span></header>
+  <div class="body">
+    <h2 class="sec-title">What You Will Learn<small>By the end of this lesson, you should be able to say each of these sentences and prove it.</small></h2>
+    <div class="box wash">
+      <div class="grid2" style="gap:0.07in 0.25in">
+        <div class="check"><span class="cb"></span><span><b>I can</b> explain that a whole can be cut into 10, 100, or 1,000 equal parts called tenths, hundredths, and thousandths.</span></div>
+        <div class="check"><span class="cb"></span><span><b>I can</b> write the decimal for a shaded model, and shade a model to show a decimal.</span></div>
+        <div class="check"><span class="cb"></span><span><b>I can</b> name the place and the value of each digit in a decimal.</span></div>
+        <div class="check"><span class="cb"></span><span><b>I can</b> read and write decimals in words.</span></div>
+        <div class="check"><span class="cb"></span><span><b>I can</b> explain why 0.5 = 0.50, and why the zero in 0.05 matters.</span></div>
+        <div class="check"><span class="cb"></span><span><b>I can</b> use place value to compare decimals like 0.4 and 0.35.</span></div>
+      </div>
+    </div>
+
+    <h3 class="mt-sm">Words to Know</h3>
+    <div class="vocab">
+      <div class="vcard"><div class="pic"><div data-model="strip" data-value="1" data-size="76" data-h="20"></div></div>
+        <div><div class="term">whole</div><div class="def">One complete thing or amount, like a whole bar or a whole grid. One whole is the number <b>1</b>.</div></div></div>
+      <div class="vcard"><div class="pic"><span class="num-big num-lg">2<span style="color:var(--solo)">.</span>35</span></div>
+        <div><div class="term">decimal</div><div class="def">A number that uses a decimal point and place value to show parts of a whole, like <b>0.7</b> or <b>2.35</b>.</div></div></div>
+      <div class="vcard"><div class="pic"><span class="num-big num-lg">4<span class="dot-accent">.</span>6</span></div>
+        <div><div class="term">decimal point</div><div class="def">The dot that separates the whole number (on the left) from the parts of a whole (on the right). Read it as <b>“and.”</b></div></div></div>
+      <div class="vcard"><div class="pic"><div data-model="strip" data-value="0.1" data-size="76" data-h="20"></div></div>
+        <div><div class="term">tenth</div><div class="def">One of <b>10</b> equal parts of a whole. One tenth is written <b class="d-t">0.1</b> (or <sup>1</sup>/<sub>10</sub>).</div></div></div>
+      <div class="vcard"><div class="pic"><div data-model="grid" data-value="0.01" data-size="58"></div></div>
+        <div><div class="term">hundredth</div><div class="def">One of <b>100</b> equal parts of a whole. One hundredth is written <b class="d-h">0.01</b> (or <sup>1</sup>/<sub>100</sub>).</div></div></div>
+      <div class="vcard"><div class="pic"><span class="num-big d-th num-lg">0.001</span></div>
+        <div><div class="term">thousandth</div><div class="def">One of <b>1,000</b> equal parts of a whole. Cut one hundredth into 10 equal slices: each slice is <b class="d-th">0.001</b>.</div></div></div>
+      <div class="vcard"><div class="pic"><span class="num-big num-lg">0.<span class="d-t">6</span><span class="d-h">2</span><span class="d-th">7</span></span></div>
+        <div><div class="term">place value</div><div class="def">The value a digit has because of its <b>place</b>. In 0.627, the 2 is in the hundredths place, so it is worth <b>0.02</b>.</div></div></div>
+      <div class="vcard"><div class="pic"><span class="num-big num-md">0.5=0.50</span></div>
+        <div><div class="term">equivalent decimals</div><div class="def">Decimals that name the <b>same amount</b>. 0.5 and 0.50 are equivalent: 5 tenths is the same as 50 hundredths.</div></div></div>
+    </div>
+    <div class="callout tip small"><b>Say it with place names:</b> say 0.7 as “seven tenths” instead of “point seven.” Saying the place name tells you what the number means.</div>
+  </div>
+  <footer class="pg-foot"><span>Gabriella's Math Lab · Decimals · Lesson 1: Understanding Decimals</span><span class="num">2</span></footer>
+</section>
+
+<!-- ═════════════════════════════ 3. BIG IDEA ═════════════════════════════ -->
+<section class="page t-learn">
+  <header class="pg-head"><span class="pg-tab">Learn</span><span class="pg-title">The big idea</span></header>
+  <div class="body">
+    <h2 class="sec-title">What Is a Decimal?<small>Decimals use place value to show wholes and parts of a whole: tenths, hundredths, and thousandths.</small></h2>
+
+    <div class="box">
+      <div class="row mid">
+        <div style="flex:1.2">
+          <div class="box-title">Start with a chocolate bar</div>
+          <p>This chocolate bar is <b>one whole</b>. It is made of <b>10 equal pieces</b>, so each piece is <b>one tenth</b> of the bar.</p>
+          <p>Gabriella eats <b>3 pieces</b>. She ate <b>3 tenths</b> of the bar. As a decimal, that is <b class="d-t t-lg">0.3</b>. As a fraction, it is <sup>3</sup>/<sub>10</sub>.</p>
+          <p class="muted small">The pieces must be <b>equal</b>. If some pieces were bigger, they would not be tenths.</p>
+        </div>
+        <div class="fig" style="flex:1">
+          <div data-model="bar" data-value="0.7" data-eaten="3" data-size="270"></div>
+          <div class="cap">3 of the 10 equal pieces are eaten (dashed). 7 tenths are left.</div>
+        </div>
+      </div>
+    </div>
+
+    <h3>One whole, cut into smaller and smaller equal parts</h3>
+    <div class="grid3">
+      <div class="box" style="--sec:var(--tenths)">
+        <div class="box-title">10 equal parts</div>
+        <div class="fig"><div data-model="strip" data-value="0.1" data-size="190" data-h="40"></div></div>
+        <p class="small mt-md">Each part is <b class="d-t">one tenth</b>.<br><span class="num-big d-t num-md">0.1</span> &nbsp;<span class="muted">10 tenths = 1 whole</span></p>
+      </div>
+      <div class="box" style="--sec:var(--hundredths)">
+        <div class="box-title">100 equal parts</div>
+        <div class="fig"><div data-model="grid" data-value="0.01" data-size="110"></div></div>
+        <p class="small mt-md">Each small square is <b class="d-h">one hundredth</b>.<br><span class="num-big d-h num-md">0.01</span><br><span class="muted">Each column is 1 tenth.</span></p>
+      </div>
+      <div class="box" style="--sec:var(--thousandths)">
+        <div class="box-title">1,000 equal parts</div>
+        <div class="fig"><div data-model="grid" data-value="0.001" data-size="110"></div></div>
+        <p class="small mt-md">Cut each square into 10 slices. Each slice is <b class="d-th">one thousandth</b>.<br><span class="num-big d-th num-md">0.001</span></p>
+      </div>
+    </div>
+
+    <div class="big-idea">
+      <b>The big idea:</b> every place is worth <b>10 times</b> the place to its right.
+      <div class="row mid mt-md gap-sm chain">
+        <div>10 thousandths<br><b>= 1 hundredth</b></div><div class="fixed num-md">→</div>
+        <div>10 hundredths<br><b>= 1 tenth</b></div><div class="fixed num-md">→</div>
+        <div>10 tenths<br><b>= 1 whole</b></div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="callout">
+        <b>Why this matters.</b> Look at the hundredths grid: one column has 10 small squares. So
+        <b>10 hundredths fill exactly 1 tenth</b>. That is why <b>0.1 = 0.10</b>. Going the other way,
+        each place is <b>one tenth</b> (<sup>1</sup>/<sub>10</sub>) of the place to its left.
+      </div>
+      <div class="callout tip" style="flex:0.8">
+        <b>Where you see decimals:</b> money ($2.35), running distances (0.8 mile), science measurements (0.125 liter),
+        and sports times (9.58 seconds).
+      </div>
+    </div>
+  </div>
+  <footer class="pg-foot"><span>Gabriella's Math Lab · Decimals · Lesson 1: Understanding Decimals</span><span class="num">3</span></footer>
+</section>
+
+<!-- ═════════════════════════════ 4. SEE IT: PLACE VALUE + READING ═════════════════════════════ -->
+<section class="page t-see">
+  <header class="pg-head"><span class="pg-tab">See It</span><span class="pg-title">Place value and reading decimals</span></header>
+  <div class="body">
+    <h2 class="sec-title">Every Digit Has a Place<small>A place-value chart shows what each digit is worth.</small></h2>
+
+    <div class="box">
+      <div class="box-title">The number 0.627 in a place-value chart</div>
+      <div data-model="chart" data-value="0.627"></div>
+      <div class="grid3 center mt-md gap-sm">
+        <div class="box" style="--sec:var(--tenths); padding:0.06in 0.1in"><b class="d-t t-lg">6</b> is in the <b class="d-t">tenths</b> place.<br>6 tenths = <b>0.6</b></div>
+        <div class="box" style="--sec:var(--hundredths); padding:0.06in 0.1in"><b class="d-h t-lg">2</b> is in the <b class="d-h">hundredths</b> place.<br>2 hundredths = <b>0.02</b></div>
+        <div class="box" style="--sec:var(--thousandths); padding:0.06in 0.1in"><b class="d-th t-lg">7</b> is in the <b class="d-th">thousandths</b> place.<br>7 thousandths = <b>0.007</b></div>
+      </div>
+      <div class="callout small mt-md">Put the values together: <b>0.627 = 0.6 + 0.02 + 0.007</b>. Writing a number as the sum of its place values is called <b>expanded form</b>.</div>
+    </div>
+
+    <h3>Same digit, different place, different value</h3>
+    <div class="grid3">
+      <div class="fig box" style="--sec:var(--tenths)">
+        <div data-model="grid" data-value="0.6" data-size="98"></div>
+        <div class="num-big d-t num-md">0.6</div>
+        <div class="cap"><b>6 tenths</b><br>6 full columns</div>
+      </div>
+      <div class="fig box" style="--sec:var(--hundredths)">
+        <div data-model="grid" data-value="0.06" data-size="98"></div>
+        <div class="num-big d-h num-md">0.06</div>
+        <div class="cap"><b>6 hundredths</b><br>6 small squares</div>
+      </div>
+      <div class="fig box" style="--sec:var(--thousandths)">
+        <div data-model="grid" data-value="0.006" data-size="98"></div>
+        <div class="num-big d-th num-md">0.006</div>
+        <div class="cap"><b>6 thousandths</b><br>6 slices of one square</div>
+      </div>
+    </div>
+    <p class="center">Each time the 6 moves <b>one place to the right</b>, it is worth <b>one tenth as much</b>.</p>
+
+    <div class="box" style="--sec:var(--worked)">
+      <div class="box-title">How to read a decimal out loud</div>
+      <div class="row top">
+        <ol class="steps" style="flex:1.1">
+          <li>If there is a whole number, read it, then say <b>“and”</b> for the decimal point.</li>
+          <li>Read the digits after the decimal point like a whole number.</li>
+          <li>Say the place name of the <b>last</b> digit.</li>
+        </ol>
+        <table class="tbl" style="flex:1">
+          <tr><th>Decimal</th><th>Read it as</th></tr>
+          <tr><td><b>0.43</b></td><td>forty-three <b class="d-h">hundredths</b></td></tr>
+          <tr><td><b>0.07</b></td><td>seven <b class="d-h">hundredths</b></td></tr>
+          <tr><td><b>0.627</b></td><td>six hundred twenty-seven <b class="d-th">thousandths</b></td></tr>
+          <tr><td><b>2.5</b></td><td>two <b>and</b> five <b class="d-t">tenths</b></td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+  <footer class="pg-foot"><span>Gabriella's Math Lab · Decimals · Lesson 1: Understanding Decimals</span><span class="num">4</span></footer>
+</section>
+
+<!-- ═════════════════════════════ 5. SEE IT: EQUIVALENT + ZEROS + COMPARING ═════════════════════════════ -->
+<section class="page t-see">
+  <header class="pg-head"><span class="pg-tab">See It</span><span class="pg-title">Equivalent decimals, zeros, comparing, and number lines</span></header>
+  <div class="body">
+    <h2 class="sec-title">Zeros: When They Matter<small>Some zeros change a decimal. Some do not. Pictures show which is which.</small></h2>
+
+    <div class="box">
+      <div class="box-title">Equivalent decimals: 0.5 = 0.50</div>
+      <div class="row mid">
+        <div class="fig"><div data-model="strip" data-value="0.5" data-size="170" data-h="44"></div><div class="cap"><b>0.5</b> = 5 tenths</div></div>
+        <div class="sym">=</div>
+        <div class="fig"><div data-model="grid" data-value="0.50" data-size="96"></div><div class="cap"><b>0.50</b> = 50 hundredths</div></div>
+        <div class="callout small" style="flex:1.2">The same amount is shaded. <b>5 tenths = 50 hundredths.</b>
+          A zero added at the <b>end</b>, after the decimal digits, does not change the value: 0.5 = 0.50 = 0.500.</div>
+      </div>
+    </div>
+
+    <div class="box" style="--sec:var(--solo)">
+      <div class="box-title">A placeholder zero: 0.05 is NOT 0.5</div>
+      <div class="row mid">
+        <div class="fig"><div data-model="grid" data-value="0.05" data-size="96"></div><div class="cap"><b>0.05</b> = 5 hundredths</div></div>
+        <div class="sym">≠</div>
+        <div class="fig"><div data-model="grid" data-value="0.5" data-size="96"></div><div class="cap"><b>0.5</b> = 5 tenths</div></div>
+        <div class="callout warn small" style="flex:1.3">In 0.05, the zero is a <b>placeholder zero</b> in the tenths place. It holds the place so the 5 stays in the <b>hundredths</b> place.
+          Leave that zero out and the 5 slides into the tenths place: a number <b>10 times as big</b>.</div>
+      </div>
+    </div>
+
+    <div class="box" style="--sec:var(--guided)">
+      <div class="box-title">Watch out: is 0.35 bigger than 0.4?</div>
+      <p>Some students think <b>0.35 &gt; 0.4</b> because 35 is bigger than 4. Look at the grids:</p>
+      <div class="row mid mt-sm">
+        <div class="fig"><div data-model="grid" data-value="0.4" data-size="96"></div><div class="cap"><b>0.4 = 0.40</b><br>40 hundredths</div></div>
+        <div class="sym">&gt;</div>
+        <div class="fig"><div data-model="grid" data-value="0.35" data-size="96" data-color="2"></div><div class="cap"><b>0.35</b><br>35 hundredths</div></div>
+        <div class="stack small" style="flex:1.3">
+          <div><b>Step 1.</b> Write 0.4 as <b>0.40</b> so both numbers have hundredths.</div>
+          <div><b>Step 2.</b> Compare: 40 hundredths &gt; 35 hundredths.</div>
+          <div class="callout small"><b>0.4 &gt; 0.35.</b> The tenths agree: 4 tenths &gt; 3 tenths. More digits does <b>not</b> mean a bigger decimal.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="box">
+      <div class="box-title">Decimals on a number line</div>
+      <p class="small">Find the size of <b>one jump</b>, then count the jumps from the start. 1 whole in 10 jumps: <b class="d-t">tenths</b>. 1 tenth in 10 jumps: <b class="d-h">hundredths</b>.</p>
+      <div class="row mid mt-xs">
+        <div class="fig"><div data-model="line" data-from="0" data-to="1" data-point="0.4" data-point-label="0.4" data-size="300"></div><div class="cap">0 to 1: each jump is <b>0.1</b>. 4 jumps = <b>0.4</b></div></div>
+        <div class="fig"><div data-model="line" data-from="0" data-to="0.1" data-point="0.03" data-point-label="0.03" data-size="300"></div><div class="cap">0 to 0.1: each jump is <b>0.01</b>. 3 jumps = <b>0.03</b></div></div>
+      </div>
+    </div>
+  </div>
+  <footer class="pg-foot"><span>Gabriella's Math Lab · Decimals · Lesson 1: Understanding Decimals</span><span class="num">5</span></footer>
+</section>
+
+<!-- ═════════════════════════════ 6. WORKED EXAMPLES 1–2 ═════════════════════════════ -->
+<section class="page t-worked">
+  <header class="pg-head"><span class="pg-tab">Worked Examples</span><span class="pg-title">Read each step, then cover it and explain it yourself</span></header>
+  <div class="body">
+    <h2 class="sec-title">Step by Step</h2>
+
+    <div class="box">
+      <div class="box-title">Example 1 · Write the decimal for a model</div>
+      <p><b>What decimal names the shaded part of the grid?</b></p>
+      <p class="small muted">In every grid in this guide, shading fills one column at a time, top to bottom.</p>
+      <div class="row mid mt-sm">
+        <div class="fig fixed"><div data-model="grid" data-value="0.34" data-size="118"></div></div>
+        <ol class="steps">
+          <li>The grid is one whole cut into <b>100</b> equal squares, so each square is <b>one hundredth</b>.</li>
+          <li>Count the <b>full columns</b>. Each column is 1 tenth. There are <b class="d-t">3</b> full columns: <b class="d-t">3 tenths</b>.</li>
+          <li>Count the <b>extra squares</b>. There are <b class="d-h">4</b>: <b class="d-h">4 hundredths</b>.</li>
+          <li>Write the digits in their places: <span class="num-big num-md">0.<span class="d-t">3</span><span class="d-h">4</span></span></li>
+          <li><b>Check:</b> 34 of the 100 squares are shaded. Read it as “thirty-four hundredths.” <span class="hand">✓ 34 squares!</span></li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="box">
+      <div class="box-title">Example 2 · Show thousandths on a grid</div>
+      <p><b>Show 0.125 on a hundredths grid.</b></p>
+      <div class="row mid mt-sm">
+        <ol class="steps">
+          <li>Find each digit's value: <b class="d-t">1 tenth</b>, <b class="d-h">2 hundredths</b>, <b class="d-th">5 thousandths</b>.</li>
+          <li>Shade <b class="d-t">1 full column</b> for 1 tenth.</li>
+          <li>Shade <b class="d-h">2 more squares</b> for 2 hundredths. That is 12 squares in all.</li>
+          <li>Thousandths are smaller than one square. Cut the <b>next square</b> into 10 equal slices and shade <b class="d-th">5 slices</b>.</li>
+          <li><b>Check:</b> 0.125 is a little more than 12 hundredths and less than 13 hundredths. <span class="hand">12 squares + half a square ✓</span></li>
+        </ol>
+        <div class="fig fixed"><div data-model="grid" data-value="0.125" data-size="118"></div><div class="cap">Orange box: the square cut into 10 thousandths</div></div>
+      </div>
+    </div>
+
+
+    <div class="box" style="--sec:var(--see)">
+      <div class="box-title">One number, five ways: 0.34</div>
+      <div class="row mid" style="gap:0.18in">
+        <div class="fig fixed"><div data-model="grid" data-value="0.34" data-size="76"></div><div class="cap">grid</div></div>
+        <div class="fig fixed"><div data-model="chart" data-value="0.34" data-cols="ones,t,h" data-sm="1"></div><div class="cap">place-value chart</div></div>
+        <div class="fig"><div data-model="line" data-from="0.3" data-to="0.4" data-point="0.34" data-point-label="0.34" data-size="230"></div><div class="cap">number line from 0.3 to 0.4 (each jump is 0.01)</div></div>
+      </div>
+      <p class="small center mt-sm">In words: <b>thirty-four hundredths</b> &nbsp;·&nbsp; Expanded form: <b>0.3 + 0.04</b></p>
+    </div>
+  </div>
+  <footer class="pg-foot"><span>Gabriella's Math Lab · Decimals · Lesson 1: Understanding Decimals</span><span class="num">6</span></footer>
+</section>
+
+<!-- ═════════════════════════════ 7. WORKED EXAMPLES 3–5 ═════════════════════════════ -->
+<section class="page t-worked">
+  <header class="pg-head"><span class="pg-tab">Worked Examples</span><span class="pg-title">Follow each step</span></header>
+  <div class="body">
+    <div class="box">
+      <div class="box-title">Example 3 · Find the value of a digit</div>
+      <p><b>What is the value of the 8 in 2.385?</b></p>
+      <div class="row mid mt-sm">
+        <div class="fixed"><div data-model="chart" data-value="2.385" data-sm="1"></div></div>
+        <ol class="steps">
+          <li>Write the number in a place-value chart. Line the decimal point up with the chart's point.</li>
+          <li>The 8 is the <b>second</b> digit after the decimal point: the <b class="d-h">hundredths</b> place.</li>
+          <li>So the 8 is worth <b>8 hundredths</b>, which is <b class="d-h">0.08</b>.</li>
+        </ol>
+      </div>
+      <p class="small muted mt-sm">The other digits: 2 ones (2), 3 tenths (0.3), 5 thousandths (0.005). So 2.385 = 2 + 0.3 + 0.08 + 0.005.</p>
+    </div>
+
+    <div class="box">
+      <div class="box-title">Example 4 · Write a decimal from words</div>
+      <p><b>Write “seven hundredths” as a decimal.</b></p>
+      <div class="row mid mt-sm">
+        <ol class="steps grow2">
+          <li>The last word is <b>hundredths</b>, so the last digit goes in the hundredths place: 2 places after the point.</li>
+          <li>Put the 7 in the hundredths place. The tenths place is empty, so it gets a <b>placeholder zero</b>.</li>
+          <li>Answer: <span class="num-big num-md">0.<span class="d-t">0</span><span class="d-h">7</span></span> &nbsp;<span class="hand">not 0.7!</span></li>
+        </ol>
+        <div class="fixed"><div data-model="chart" data-value="0.07" data-cols="ones,t,h" data-sm="1"></div></div>
+      </div>
+    </div>
+
+    <div class="box">
+      <div class="box-title">Example 5 · Compare two decimals</div>
+      <p><b>Which is greater, 0.6 or 0.58?</b></p>
+      <div class="row mid mt-sm">
+        <ol class="steps grow2">
+          <li>Line up the decimal points. Give both numbers the same number of places: <b>0.6 = 0.60</b>.</li>
+          <li>Compare from the left. Ones: 0 and 0, the same. Tenths: <b class="d-t">6 &gt; 5</b>.</li>
+          <li>The tenths decide it, so <b>0.6 &gt; 0.58</b>. The grids agree: 60 squares &gt; 58 squares.</li>
+        </ol>
+        <div class="fig fixed"><div class="row" style="gap:0.12in">
+          <div class="fig"><div data-model="grid" data-value="0.6" data-size="92"></div><div class="cap">0.60</div></div>
+          <div class="fig"><div data-model="grid" data-value="0.58" data-size="92" data-color="2"></div><div class="cap">0.58</div></div>
+        </div></div>
+      </div>
+    </div>
+    <div class="callout tip">
+      <b>Explain it out loud.</b> Cover the examples, then explain to a grown-up:
+      <ul class="ticks small mt-xs">
+        <li>Why is the 8 in 2.385 worth 0.08, not 8?</li>
+        <li>Why does “seven hundredths” need a zero right after the decimal point?</li>
+        <li>Why is it fair to write 0.6 as 0.60 before comparing it with 0.58?</li>
+      </ul>
+    </div>
+  </div>
+  <footer class="pg-foot"><span>Gabriella's Math Lab · Decimals · Lesson 1: Understanding Decimals</span><span class="num">7</span></footer>
+</section>
+
+<!-- ═════════════════════════════ 8. GUIDED PRACTICE A–D ═════════════════════════════ -->
+<section class="page t-guided">
+  <header class="pg-head"><span class="pg-tab">Try It Together</span><span class="pg-title">Guided practice</span><span class="name-line">Name<span class="blank"></span></span></header>
+  <div class="body">
+    <h2 class="sec-title">Try It Together<small>Work with a grown-up. Fill in the blanks, use a hint only if you need it, and explain each answer using tenths, hundredths, or thousandths.</small></h2>
+
+    <div class="q" data-q="A" data-answer="0.7" data-model-answer="1"><div class="q-n">A</div><div class="q-body">
+      <div class="q-skill">Models</div>
+      <p>What decimal names the shaded part of the bar?</p>
+      <div data-model="strip" data-value="0.7" data-size="300" data-h="38"></div>
+      <p><span class="frame"></span> of 10 equal parts are shaded = <span class="frame"></span> tenths = <span class="frame w"></span></p>
+      <div class="hint">Count the shaded parts. Each part is one tenth.</div>
+    </div></div>
+
+    <div class="q" data-q="B" data-answer="0.52" data-model-answer="1"><div class="q-n">B</div><div class="q-body">
+      <div class="q-skill">Models</div>
+      <p>What decimal names the shaded part of the grid?</p>
+      <div class="row mid">
+        <div class="fixed"><div data-model="grid" data-value="0.52" data-size="130"></div></div>
+        <div class="stack" style="gap:0.12in">
+          <p><span class="frame"></span> full columns = <span class="frame"></span> tenths</p>
+          <p><span class="frame"></span> more squares = <span class="frame"></span> hundredths</p>
+          <p>Decimal: <span class="frame w"></span></p>
+          <div class="hint">Count full columns first. Each column is 10 squares, or 1 tenth.</div>
+        </div>
+      </div>
+    </div></div>
+
+    <div class="q" data-q="C"><div class="q-n">C</div><div class="q-body">
+      <div class="q-skill">Models</div>
+      <div class="row mid">
+        <div class="stack">
+          <p><b>Shade the grid</b> to show <b>0.09</b>.</p>
+          <p>0.09 has <span class="frame"></span> tenths and <span class="frame"></span> hundredths.</p>
+          <p>So I shade <span class="frame"></span> small squares.</p>
+          <div class="hint">Is 0.09 more or less than one full column (0.10)?</div>
+        </div>
+        <div class="fixed"><div data-model="grid" data-value="0" data-blank="1" data-size="130"></div></div>
+      </div>
+    </div></div>
+
+    <div class="q" data-q="D" data-answer="0.7"><div class="q-n">D</div><div class="q-body">
+      <div class="q-skill">Place value</div>
+      <p>Write <b>4.716</b> in the chart. Then answer.</p>
+      <div class="row mid">
+        <div class="fixed"><div data-model="chart" data-blank="1" data-sm="1"></div></div>
+        <div class="stack" style="gap:0.12in">
+          <p>The 7 is in the <span class="frame w"></span> place.</p>
+          <p>The value of the 7 is <span class="frame w"></span></p>
+          <p>Thousandths digit: <span class="frame"></span></p>
+        </div>
+      </div>
+      <div class="hint">The first place after the decimal point is tenths, then hundredths, then thousandths.</div>
+    </div></div>
+  </div>
+  <footer class="pg-foot"><span>Gabriella's Math Lab · Decimals · Lesson 1: Understanding Decimals</span><span class="num">8</span></footer>
+</section>
+
+<!-- ═════════════════════════════ 9. GUIDED PRACTICE E–G ═════════════════════════════ -->
+<section class="page t-guided">
+  <header class="pg-head"><span class="pg-tab">Try It Together</span><span class="pg-title">Guided practice</span></header>
+  <div class="body">
+    <div class="q" data-q="E"><div class="q-n">E</div><div class="q-body">
+      <div class="q-skill">Reading and writing decimals</div>
+      <p><b>a.</b> Write <b>0.38</b> in words. The last digit is in the <span class="frame w"></span> place.</p>
+      <p>0.38 is read as <span class="ans-line w3"></span></p>
+      <p><b>b.</b> Write <b>“two and six tenths”</b> as a decimal. <span class="ans-line"></span></p>
+      <div class="hint">“And” is the decimal point. The whole number goes on the left.</div>
+    </div></div>
+
+    <div class="q" data-q="F" data-answer="0.3 &gt; 0.27"><div class="q-n">F</div><div class="q-body">
+      <div class="q-skill">Comparing</div>
+      <p>Which is greater, <b>0.3</b> or <b>0.27</b>?</p>
+      <div class="row mid">
+        <div class="stack" style="gap:0.12in">
+          <p>Write 0.3 with hundredths: 0.3 = <span class="frame w"></span></p>
+          <p><span class="frame"></span> hundredths compared with 27 hundredths</p>
+          <p>So 0.3 <span class="ans-box" style="width:0.5in; height:0.36in"></span> 0.27 &nbsp;<span class="small muted">(write &gt;, &lt;, or =)</span></p>
+          <div class="hint">Shade both grids. Which shows more?</div>
+        </div>
+        <div class="row fixed" style="gap:0.14in">
+          <div class="fig"><div data-model="grid" data-value="0" data-blank="1" data-size="120"></div><div class="cap">0.3</div></div>
+          <div class="fig"><div data-model="grid" data-value="0" data-blank="1" data-size="120"></div><div class="cap">0.27</div></div>
+        </div>
+      </div>
+    </div></div>
+
+    <div class="q" data-q="G" data-answer="0.4" data-model-answer="1"><div class="q-n">G</div><div class="q-body">
+      <div class="q-skill">Models</div>
+      <p>The number line from 0 to 1 is cut into 10 equal jumps. What decimal is at point <b>P</b>?</p>
+      <div data-model="line" data-from="0" data-to="1" data-value="0.4" data-point="0.4" data-size="480"></div>
+      <p>Each jump is <span class="frame w"></span>. &nbsp;P is <span class="frame"></span> jumps from 0. &nbsp;P = <span class="frame w"></span></p>
+      <div class="hint">10 equal jumps make 1 whole, so each jump is one tenth.</div>
+    </div></div>
+
+    <div class="q" data-q="H" data-answer="0.236" data-model-answer="1"><div class="q-n">H</div><div class="q-body">
+      <div class="q-skill">Models with thousandths</div>
+      <p>What decimal does this grid show? The orange square is cut into 10 equal slices.</p>
+      <div class="row mid">
+        <div class="fixed"><div data-model="grid" data-value="0.236" data-size="98"></div></div>
+        <div class="stack" style="gap:0.08in">
+          <p><span class="frame"></span> full columns = <span class="frame"></span> tenths</p>
+          <p><span class="frame"></span> more squares = <span class="frame"></span> hundredths</p>
+          <p><span class="frame"></span> slices = <span class="frame"></span> thousandths</p>
+          <p>Decimal: <span class="frame w"></span></p>
+        </div>
+      </div>
+      <div class="hint">Each slice is one thousandth: 10 slices fill one small square.</div>
+    </div></div>
+
+    <div class="spacer"></div>
+  </div>
+  <footer class="pg-foot"><span>Gabriella's Math Lab · Decimals · Lesson 1: Understanding Decimals</span><span class="num">9</span></footer>
+</section>
+
+<!-- ═════════════════════════════ 10. INDEPENDENT 1–6 ═════════════════════════════ -->
+<section class="page t-solo">
+  <header class="pg-head"><span class="pg-tab">On Your Own</span><span class="pg-title">Independent practice</span><span class="name-line">Name<span class="blank"></span></span></header>
+  <div class="body">
+    <h2 class="sec-title">On Your Own<small>No hints this time. Show your thinking. Then check the Answer Key.</small></h2>
+
+    <div class="q" data-q="1" data-answer="C"><div class="q-n">1</div><div class="q-body">
+      <p>A whole is cut into <b>1,000</b> equal parts. What is the name of <b>one</b> of those parts?</p>
+      <div class="choices">
+        <div><span class="bubble">A</span>one tenth</div><div><span class="bubble">B</span>one hundredth</div>
+        <div><span class="bubble">C</span>one thousandth</div><div><span class="bubble">D</span>one whole</div>
+      </div>
+    </div></div>
+
+    <div class="q" data-q="2" data-answer="0.608" data-model-answer="1"><div class="q-n">2</div><div class="q-body">
+      <div class="row top">
+        <div class="stack"><p>What decimal does the grid show? The orange square is cut into 10 equal slices.</p><p>Answer: <span class="ans-line"></span></p></div>
+        <div class="fixed"><div data-model="grid" data-value="0.608" data-size="110"></div></div>
+      </div>
+    </div></div>
+
+    <div class="q" data-q="3" data-answer="B"><div class="q-n">3</div><div class="q-body">
+      <p>Which decimal names the <b>shaded</b> part of the bar?</p>
+      <div data-model="strip" data-value="0.3" data-size="260" data-h="32"></div>
+      <div class="choices">
+        <div><span class="bubble">A</span>0.03</div><div><span class="bubble">B</span>0.3</div>
+        <div><span class="bubble">C</span>3.0</div><div><span class="bubble">D</span>0.7</div>
+      </div>
+    </div></div>
+
+    <div class="q" data-q="4" data-answer="0.07" data-model-answer="1"><div class="q-n">4</div><div class="q-body">
+      <p>This number line goes from 0 to <b>0.1</b> and is cut into 10 equal jumps. What decimal is at point <b>A</b>?</p>
+      <div class="row mid">
+        <div class="fixed"><div data-model="line" data-from="0" data-to="0.1" data-value="0.07" data-point="0.07" data-point-label="A" data-size="400"></div></div>
+        <p>A = <span class="ans-line"></span></p>
+      </div>
+    </div></div>
+
+    <div class="q" data-q="5"><div class="q-n">5</div><div class="q-body">
+      <div class="row top">
+        <div class="stack"><p><b>Shade the grid</b> to show <b>0.45</b>.</p><p class="small muted">Then write how many full columns and extra squares you shaded.</p>
+          <p>Full columns: <span class="ans-line" style="min-width:0.6in"></span> &nbsp; Extra squares: <span class="ans-line" style="min-width:0.6in"></span></p></div>
+        <div class="fixed"><div data-model="grid" data-value="0" data-blank="1" data-size="120"></div></div>
+      </div>
+    </div></div>
+
+    <div class="q" data-q="6" data-answer="C"><div class="q-n">6</div><div class="q-body">
+      <p>In the number <b>5.438</b>, which digit is in the <b>hundredths</b> place?</p>
+      <div class="choices">
+        <div><span class="bubble">A</span>5</div><div><span class="bubble">B</span>4</div>
+        <div><span class="bubble">C</span>3</div><div><span class="bubble">D</span>8</div>
+      </div>
+    </div></div>
+    <div class="work fill"></div>
+  </div>
+  <footer class="pg-foot"><span>Gabriella's Math Lab · Decimals · Lesson 1: Understanding Decimals</span><span class="num">10</span></footer>
+</section>
+
+<!-- ═════════════════════════════ 11. INDEPENDENT 7–12 ═════════════════════════════ -->
+<section class="page t-solo">
+  <header class="pg-head"><span class="pg-tab">On Your Own</span><span class="pg-title">Independent practice</span></header>
+  <div class="body">
+    <div class="q" data-q="7" data-answer="0.09"><div class="q-n">7</div><div class="q-body">
+      <p>What is the <b>value</b> of the digit 9 in <b>0.392</b>? Write it as a decimal.</p>
+      <div class="ans-row"><p>Answer: <span class="ans-line"></span></p><div class="work md"></div></div>
+    </div></div>
+
+    <div class="q" data-q="8" data-answer="0.604"><div class="q-n">8</div><div class="q-body">
+      <p><b>a.</b> Write the decimal that has <b>6 tenths, 0 hundredths, and 4 thousandths</b>. Use the chart to help.</p>
+      <div class="row mid">
+        <div class="fixed"><div data-model="chart" data-blank="1" data-sm="1"></div></div>
+        <p>Decimal: <span class="ans-line"></span></p>
+      </div>
+      <p><b>b.</b> Write your decimal in <b>expanded form</b>: <span class="ans-line w2"></span></p>
+    </div></div>
+
+    <div class="q" data-q="9"><div class="q-n">9</div><div class="q-body">
+      <p>Write <b>0.209</b> in words.</p>
+      <div class="lines"><i></i><i></i></div>
+    </div></div>
+
+    <div class="q" data-q="10" data-answer="3.15"><div class="q-n">10</div><div class="q-body">
+      <p>Write <b>“three and fifteen hundredths”</b> as a decimal.</p>
+      <div class="ans-row"><p>Answer: <span class="ans-line"></span></p><div class="work md"></div></div>
+    </div></div>
+
+    <div class="q" data-q="11" data-answer="B and C"><div class="q-n">11</div><div class="q-body">
+      <p>Which decimals are <b>equal to 0.6</b>? <b>Choose all</b> that are correct.</p>
+      <div class="choices">
+        <div><span class="bubble sq">A</span>0.06</div><div><span class="bubble sq">B</span>0.60</div>
+        <div><span class="bubble sq">C</span>0.600</div><div><span class="bubble sq">D</span>6.0</div>
+      </div>
+    </div></div>
+
+    <div class="q" data-q="12"><div class="q-n">12</div><div class="q-body">
+      <p>Mia says, <i>“0.8 and 0.08 are equal, because zeros don't change a decimal.”</i>
+        Is Mia correct? Explain using place value or a model.</p>
+      <div class="row">
+        <div class="lines grow2"><i></i><i></i><i></i><i></i><i></i></div>
+        <div class="work" style="flex:1"></div>
+      </div>
+    </div></div>
+    <div class="spacer"></div>
+  </div>
+  <footer class="pg-foot"><span>Gabriella's Math Lab · Decimals · Lesson 1: Understanding Decimals</span><span class="num">11</span></footer>
+</section>
+
+<!-- ═════════════════════════════ 12. INDEPENDENT 13–17 ═════════════════════════════ -->
+<section class="page t-solo">
+  <header class="pg-head"><span class="pg-tab">On Your Own</span><span class="pg-title">Independent practice</span></header>
+  <div class="body">
+    <div class="q" data-q="13"><div class="q-n">13</div><div class="q-body">
+      <p>Write <b>&gt;</b>, <b>&lt;</b>, or <b>=</b> in each box.</p>
+      <div class="grid2 t-lg" style="gap:0.14in 0.3in; font-weight:600">
+        <div><b>a.</b> 0.7 <span class="ans-box" style="width:0.5in"></span> 0.69</div>
+        <div><b>b.</b> 0.25 <span class="ans-box" style="width:0.5in"></span> 0.250</div>
+        <div><b>c.</b> 0.04 <span class="ans-box" style="width:0.5in"></span> 0.4</div>
+        <div><b>d.</b> 0.512 <span class="ans-box" style="width:0.5in"></span> 0.52</div>
+      </div>
+    </div></div>
+
+    <div class="q" data-q="14"><div class="q-n">14</div><div class="q-body">
+      <p>Jordan ran <b>0.8 mile</b>. Ava ran <b>0.75 mile</b>. Ava says she ran farther because 75 is greater than 8.
+        <b>Who ran farther?</b> Explain using place value or a model.</p>
+      <div class="row">
+        <div class="lines grow2"><i></i><i></i><i></i></div>
+        <div class="work" style="flex:1"></div>
+      </div>
+    </div></div>
+
+    <div class="q" data-q="15" data-answer="0.6"><div class="q-n">15</div><div class="q-body">
+      <div class="row mid">
+        <div class="stack"><p>A chocolate bar has 10 equal pieces. Sam eats <b>4 pieces</b>.
+          Cross out the 4 pieces Sam eats. What decimal names the part of the bar that is <b>left</b>?</p><p>Answer: <span class="ans-line"></span></p></div>
+        <div class="fixed"><div data-model="bar" data-value="0" data-light="1" data-size="220"></div></div>
+      </div>
+    </div></div>
+
+    <div class="q" data-q="16"><div class="q-n">16</div><div class="q-body">
+      <p>Fill in the blanks: &nbsp; 1 tenth = <span class="ans-line" style="min-width:0.7in"></span> hundredths
+        = <span class="ans-line" style="min-width:0.7in"></span> thousandths</p>
+    </div></div>
+
+    <div class="q" data-q="17" data-answer="0.702"><div class="q-n">17</div><div class="q-body">
+      <div class="q-skill">Challenge</div>
+      <p><b>What number am I?</b> I am less than 1 and have 3 digits after the decimal point.
+        My thousandths digit is 2. My hundredths digit is 0. My tenths digit is 5 more than my thousandths digit.</p>
+      <div class="row mid">
+        <div class="fixed"><div data-model="chart" data-blank="1" data-sm="1"></div></div>
+        <p>I am <span class="ans-line"></span></p>
+      </div>
+    </div></div>
+    <div class="work fill" style="min-height:0.9in"></div>
+    <div class="callout small"><b>Done?</b> Check every answer in the Answer Key. For each one you missed, read the explanation and fix it in a different color.</div>
+  </div>
+  <footer class="pg-foot"><span>Gabriella's Math Lab · Decimals · Lesson 1: Understanding Decimals</span><span class="num">12</span></footer>
+</section>
+
+<!-- ═════════════════════════════ 13. ANSWER KEY: GUIDED + 1–6 ═════════════════════════════ -->
+<section class="page t-key">
+  <header class="pg-head"><span class="pg-tab">Answer Key</span><span class="pg-title">Answers with explanations</span></header>
+  <div class="body">
+    <h2 class="sec-title">Answer Key<small>Every answer comes with a reason. Read the reason, even when you got it right.</small></h2>
+    <h3 style="color:var(--guided)">Try It Together</h3>
+    <div class="key">
+      <div class="k g" data-for="A"><span class="kn">A</span><div><span class="ka">0.7</span>. 7 of 10 equal parts are shaded: 7 tenths = 0.7.</div></div>
+      <div class="k g" data-for="B"><span class="kn">B</span><div><span class="ka">0.52</span>. 5 full columns = 5 tenths; 2 more squares = 2 hundredths. 52 of 100 squares are shaded.</div></div>
+      <div class="k g" data-for="C"><span class="kn">C</span><div><div class="row top gap-sm"><div><span class="ka">Shade 9 small squares</span> (not a full column). 0.09 = 0 tenths and 9 hundredths, which is less than one column (0.10).</div><div class="fixed" data-model="grid" data-value="0.09" data-size="58"></div></div></div></div>
+      <div class="k g" data-for="D"><span class="kn">D</span><div>Chart: 4 . 7 1 6. The 7 is in the <b>tenths</b> place, so its value is <span class="ka">0.7</span> (7 tenths). The thousandths digit is <b>6</b>.</div></div>
+      <div class="k g" data-for="E"><span class="kn">E</span><div><b>a.</b> Last digit is in the hundredths place: <span class="ka">thirty-eight hundredths</span>. <b>b.</b> <b>2.6</b>. “Two” is the whole number, “and” is the point, 6 goes in the tenths place.</div></div>
+      <div class="k g" data-for="F"><span class="kn">F</span><div>0.3 = 0.30, and 30 hundredths &gt; 27 hundredths, so <span class="ka">0.3 &gt; 0.27</span>. <div class="row top gap-sm"><div>On the grids: 3 full columns for 0.3; 2 columns + 7 squares for 0.27.</div><div class="row fixed" style="gap:0.08in"><div class="fig"><div data-model="grid" data-value="0.3" data-size="50"></div><div class="cap">0.3</div></div><div class="fig"><div data-model="grid" data-value="0.27" data-size="50" data-color="2"></div><div class="cap">0.27</div></div></div></div></div></div>
+      <div class="k g" data-for="G"><span class="kn">G</span><div>Each jump is 0.1 (one tenth). P is 4 jumps from 0, so P = <span class="ka">0.4</span>.</div></div>
+      <div class="k g" data-for="H"><span class="kn">H</span><div><span class="ka">0.236</span>. 2 full columns = 2 tenths; 3 more squares = 3 hundredths; 6 slices = 6 thousandths. So 0.236 is a little more than 23 hundredths.</div></div>
+    </div>
+
+    <h3 class="mt-xs" style="color:var(--solo)">On Your Own: 1–9</h3>
+    <div class="key">
+      <div class="k s" data-for="1"><span class="kn">1</span><div><span class="ka">C</span>, one thousandth. 1,000 equal parts are thousandths. (10 parts are tenths; 100 parts are hundredths.)</div></div>
+      <div class="k s" data-for="2"><span class="kn">2</span><div><span class="ka">0.608</span>. 6 full columns = 6 tenths. No extra squares, so 0 hundredths (a placeholder zero). 8 slices = 8 thousandths.</div></div>
+      <div class="k s" data-for="3"><span class="kn">3</span><div><span class="ka">B</span>, 0.3. 3 of 10 equal parts are shaded. D (0.7) is the <b>unshaded</b> part; A (0.03) would be 3 hundredths.</div></div>
+      <div class="k s" data-for="4"><span class="kn">4</span><div><span class="ka">0.07</span>. From 0 to 0.1 is 1 tenth = 10 hundredths, so each jump is 0.01. A is 7 jumps from 0.</div></div>
+      <div class="k s" data-for="5"><span class="kn">5</span><div class="row top gap-sm"><div>Shade <b>4 full columns</b> and <b>5 more squares</b> (45 squares in all). 0.45 = 4 tenths + 5 hundredths.</div><div class="fixed" data-model="grid" data-value="0.45" data-size="62"></div></div></div>
+      <div class="k s" data-for="6"><span class="kn">6</span><div><span class="ka">C</span>, the 3. In 5.438: 5 ones, 4 tenths, <b>3 hundredths</b>, 8 thousandths.</div></div>
+      <div class="k s" data-for="7"><span class="kn">7</span><div><span class="ka">0.09</span> (9 hundredths). In 0.392 the 9 is the second digit after the point, the hundredths place. <i>Not</i> 9 or 0.9.</div></div>
+      <div class="k s" data-for="8"><span class="kn">8</span><div><b>a.</b> <span class="ka">0.604</span>. <b>b.</b> <b>0.6 + 0.004</b>. Chart: 0 . 6 0 4. The 0 holds the hundredths place. Without it, 0.64 would mean 6 tenths and 4 hundredths, a different number.</div></div>
+      <div class="k s" data-for="9"><span class="kn">9</span><div><span class="ka">two hundred nine thousandths</span>. Read 209 as a whole number, then say the place of the last digit (thousandths). There is no “and,” because there is no whole number.</div></div>
+    </div>
+  </div>
+  <footer class="pg-foot"><span>Gabriella's Math Lab · Decimals · Lesson 1: Understanding Decimals</span><span class="num">13</span></footer>
+</section>
+
+<!-- ═════════════════════════════ 14. ANSWER KEY: 7–17 ═════════════════════════════ -->
+<section class="page t-key">
+  <header class="pg-head"><span class="pg-tab">Answer Key</span><span class="pg-title">Answers with explanations</span></header>
+  <div class="body">
+    <h3 style="color:var(--solo)">On Your Own: 10–17</h3>
+    <div class="key" style="grid-template-columns:1fr; gap:0.09in">
+      <div class="k s" data-for="10"><span class="kn">10</span><div><span class="ka">3.15</span>. “Three” is the whole number, “and” is the decimal point, and fifteen hundredths needs 2 places: .15.</div></div>
+      <div class="k s" data-for="11"><span class="kn">11</span><div><span class="ka">B and C</span>. 0.60 and 0.600 add zeros at the <b>end</b>, which does not change the value. A (0.06) is 6 hundredths, which is smaller. D (6.0) is 6 wholes.</div></div>
+      <div class="k s" data-for="12"><span class="kn">12</span><div><div class="row top" style="gap:0.16in"><div><span class="ka">No, Mia is not correct.</span> 0.8 is 8 tenths (80 hundredths). 0.08 is 8 hundredths. The zero in 0.08 holds the tenths place, so the 8 is worth only one tenth as much. A zero added at the <b>end</b>, after the last decimal digit, does not change the value: 0.8 = 0.80. <i>Full credit: says “no” and gives a place-value or model reason.</i></div><div class="row fixed" style="gap:0.08in"><div class="fig"><div data-model="grid" data-value="0.8" data-size="58"></div><div class="cap">0.8</div></div><div class="fig"><div data-model="grid" data-value="0.08" data-size="58" data-color="2"></div><div class="cap">0.08</div></div></div></div></div></div>
+      <div class="k s" data-for="13"><span class="kn">13</span><div><span class="ka">a. &gt; &nbsp; b. = &nbsp; c. &lt; &nbsp; d. &lt;</span><br>
+        a. 0.70 vs 0.69: 70 hundredths &gt; 69 hundredths. &nbsp;b. 0.25 = 0.250 (a zero at the end).
+        c. 0.04 is 4 hundredths; 0.4 is 4 tenths. &nbsp;d. 0.512 vs 0.520: the tenths are equal (5); hundredths 1 &lt; 2. Not “512 &gt; 52”!</div></div>
+      <div class="k s" data-for="14"><span class="kn">14</span><div><div class="row top" style="gap:0.16in"><div><span class="ka">Jordan ran farther.</span> 0.8 = 0.80 = 80 hundredths, and 80 hundredths &gt; 75 hundredths. Or compare tenths: 8 tenths &gt; 7 tenths. Ava compared 75 and 8 as whole numbers, but the digits are in different places. <i>Full credit: correct runner and a place-value reason.</i></div><div class="row fixed" style="gap:0.08in"><div class="fig"><div data-model="grid" data-value="0.8" data-size="58"></div><div class="cap">0.8</div></div><div class="fig"><div data-model="grid" data-value="0.75" data-size="58" data-color="2"></div><div class="cap">0.75</div></div></div></div></div></div>
+      <div class="k s" data-for="15"><span class="kn">15</span><div><span class="ka">0.6</span>. 10 − 4 = 6 pieces are left. 6 of 10 equal pieces is 6 tenths = 0.6. (0.4 is the part Sam <b>ate</b>.)</div></div>
+      <div class="k s" data-for="16"><span class="kn">16</span><div><span class="ka">10 hundredths, 100 thousandths</span>. One column of the grid holds 10 hundredths, and each hundredth holds 10 thousandths: 10 × 10 = 100.</div></div>
+      <div class="k s" data-for="17"><span class="kn">17</span><div><div class="row top" style="gap:0.16in"><div><span class="ka">0.702</span>. Thousandths = 2, hundredths = 0, tenths = 2 + 5 = 7. It is less than 1, so the ones digit is 0.</div><div class="fixed" data-model="chart" data-value="0.702" data-sm="1"></div></div></div></div>
+    </div>
+    <div class="box fill" style="--sec:var(--solo)">
+      <div class="box-title">My fix-it notes</div>
+      <p class="small muted">For each question I missed: the question number, what I did wrong, and what I will remember next time.</p>
+      <div class="lines"><i></i><i></i><i></i><i></i><i></i></div>
+    </div>
+    <div class="callout small"><b>Scoring On Your Own:</b> 17 questions; 13 parts a–d count as one question (all four correct). 8a and 8b count as one question (both correct). Questions 12 and 14 need a reason to count as correct.</div>
+  </div>
+  <footer class="pg-foot"><span>Gabriella's Math Lab · Decimals · Lesson 1: Understanding Decimals</span><span class="num">14</span></footer>
+</section>
+
+<!-- ═════════════════════════════ 15. PARENT MASTERY CHECKLIST ═════════════════════════════ -->
+<section class="page t-parent">
+  <header class="pg-head"><span class="pg-tab">For Parents</span><span class="pg-title">Mastery checklist</span></header>
+  <div class="body">
+    <h2 class="sec-title">Parent Mastery Checklist<small>Use the On Your Own results to decide what is mastered and what needs more practice.</small></h2>
+    <table class="tbl">
+      <tr><th style="width:27%">Skill (same as the Math Lab app)</th><th style="width:12%">Questions</th><th>Signs of mastery</th><th style="width:0.75in" class="center">Mastered</th><th style="width:0.75in" class="center">Practice more</th></tr>
+      <tr><td><b>Equal parts</b>: tenths, hundredths, thousandths</td><td>1, 16</td><td>Names the part for 10, 100, and 1,000 equal parts; knows 10 of one place make 1 of the next.</td><td class="center"><span class="cb inline"></span></td><td class="center"><span class="cb inline"></span></td></tr>
+      <tr><td><b>Decimal models</b>: bars, grids, number lines</td><td>2, 3, 4, 5, 15</td><td>Counts columns as tenths, squares as hundredths, and slices as thousandths; finds the jump size on a number line.</td><td class="center"><span class="cb inline"></span></td><td class="center"><span class="cb inline"></span></td></tr>
+      <tr><td><b>Place value</b> of decimal digits</td><td>6, 7, 8, 17</td><td>Names the place and value of any digit (the 9 in 0.392 is 0.09); uses placeholder zeros.</td><td class="center"><span class="cb inline"></span></td><td class="center"><span class="cb inline"></span></td></tr>
+      <tr><td><b>Reading and writing</b> decimals</td><td>9, 10</td><td>Reads with place names (“two hundred nine thousandths”); uses “and” only for the decimal point.</td><td class="center"><span class="cb inline"></span></td><td class="center"><span class="cb inline"></span></td></tr>
+      <tr><td><b>Equivalent decimals</b> and zero placeholders</td><td>11, 12</td><td>Knows 0.6 = 0.60 = 0.600 but 0.06 ≠ 0.6; explains why with place value.</td><td class="center"><span class="cb inline"></span></td><td class="center"><span class="cb inline"></span></td></tr>
+      <tr><td><b>Comparing</b> with place value</td><td>13, 14</td><td>Writes equal numbers of places or compares tenths first; is not fooled by “more digits.”</td><td class="center"><span class="cb inline"></span></td><td class="center"><span class="cb inline"></span></td></tr>
+    </table>
+
+    <div class="row">
+      <div class="box">
+        <div class="box-title">Ready for Lesson 2?</div>
+        <p class="small">A good sign of independent mastery is <b>15 or more of the 17</b> On Your Own questions correct, including reasons for 12 and 14. That is about the same as the app's suggestion of 9 of 10 on its D01 Test.
+          <i>This is a family benchmark, not an official Georgia score.</i></p>
+        <p class="small mt-sm">Score: <span class="ans-line" style="min-width:0.6in; height:0.24in"></span> / 17 &nbsp;&nbsp; Date: <span class="ans-line" style="min-width:1in; height:0.24in"></span></p>
+      </div>
+      <div class="box">
+        <div class="box-title">Common mistakes to watch for</div>
+        <ul class="ticks small">
+          <li>Thinking more digits means bigger (0.35 &gt; 0.4).</li>
+          <li>Dropping a placeholder zero (0.07 written as 0.7).</li>
+          <li>Counting the <b>unshaded</b> part of a model.</li>
+          <li>Mixing up hundredths and thousandths places.</li>
+          <li>Reading “point four three” without the place name; ask for “forty-three hundredths.”</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="box wash">
+        <div class="box-title">Talk about it (2 minutes)</div>
+        <ul class="ticks small">
+          <li>“Show me 0.3 and 0.03 on a grid. Which is bigger? How do you know?”</li>
+          <li>“Why is 0.5 the same as 0.50, but 0.05 is different?”</li>
+          <li>“What is the value of the 4 in 1.246?” <span class="muted">(0.04)</span></li>
+        </ul>
+      </div>
+      <div class="box wash">
+        <div class="box-title">Next steps</div>
+        <ul class="ticks small">
+          <li><b>Mastered:</b> do the D01 <b>Test</b> in Gabriella's Math Lab, then move on to Lesson 2: Decimal Place Value.</li>
+          <li><b>Practice more:</b> reread the matching See It page, then do a D01 <b>Practice</b> session in the app.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="spacer"></div>
+    <p class="small muted">Georgia standards: 5.NR.4.1 and 5.NR.4.2, connecting to 5.NR.1.1. Comparing is introduced here and taught fully in Lesson 4.</p>
+  </div>
+  <footer class="pg-foot"><span>Gabriella's Math Lab · Decimals · Lesson 1: Understanding Decimals</span><span class="num">15</span></footer>
+</section>
+
+<script src="../../assets/models.js"></script>
+</body>
+</html>

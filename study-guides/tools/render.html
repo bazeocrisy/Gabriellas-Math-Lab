@@ -1,0 +1,22 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>PDF page renderer (used by build.mjs)</title>
+<script type="module">
+  import * as pdfjs from '../node_modules/pdfjs-dist/build/pdf.mjs';
+  pdfjs.GlobalWorkerOptions.workerSrc = '../node_modules/pdfjs-dist/build/pdf.worker.mjs';
+  // Renders every page of the PDF at `scale` (2 = 144 dpi) and returns PNG data URLs.
+  window.renderPdf = async (url, scale) => {
+    const doc = await pdfjs.getDocument({ url, cMapUrl: '../node_modules/pdfjs-dist/cmaps/', cMapPacked: true }).promise;
+    const out = [];
+    for (let i = 1; i <= doc.numPages; i++) {
+      const pg = await doc.getPage(i), vp = pg.getViewport({ scale });
+      const c = document.createElement('canvas');
+      c.width = vp.width; c.height = vp.height;
+      const ctx = c.getContext('2d');
+      ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, c.width, c.height);
+      await pg.render({ canvasContext: ctx, viewport: vp }).promise;
+      out.push(c.toDataURL('image/png'));
+    }
+    return out;
+  };
+</script>
