@@ -107,6 +107,18 @@ function orderOk(q) {
   if (!up) want.reverse();
   assert.deepEqual(q.answer.map(val), want);
 }
+// Lesson 5: rounding recomputed with whole-number thousandths (exactly halfway rounds up).
+const rnd = (x, place) => { const k = D.toThousandths(x), u = place === 'tenth' ? 100 : 10, rm = k % u; return rm * 2 >= u ? k - rm + u : k - rm; };
+const placeIn = (q) => (/nearest <b>?tenth|nearest tenth/.test(q.prompt) ? 'tenth' : 'hundredth');
+const roundOk = (q) => { const x = decs(q)[0]; assert.equal(D.toThousandths(q.answer), rnd(x, placeIn(q)), `${x} ${placeIn(q)}`); };
+VERIFY.d05 = {
+  T1: roundOk, T2: roundOk, H1: roundOk, H2: roundOk, K1: roundOk, K3: roundOk, A2: roundOk,
+  R1: (q) => { const x = decs(q)[0]; const fr = D.parse(x).frac; assert.equal(q.answer, fr[placeIn(q) === 'tenth' ? 1 : 2]); },
+  R2: (q) => { const x = decs(q)[0]; const h = Number(D.parse(x).frac[1]); assert.ok(q.answer.startsWith(h >= 5 ? 'Round up' : 'Round down') && /hundredths digit/.test(q.answer)); },
+  K2: (q) => { const x = decs(q)[0]; assert.equal(D.toThousandths(q.answer), rnd(x, 'tenth')); },
+  A1: (q) => { const target = D.toThousandths(decs(q)[0]); for (const c of q.choices) assert.equal(c.value === q.answer, rnd(c.value, 'tenth') === target, c.value); },
+  A3: (q) => { const [x, said] = decs(q); assert.equal(q.answer.startsWith('Yes'), rnd(x, 'tenth') === D.toThousandths(said)); assert.equal(q.choices.filter((c) => c.value.startsWith('Yes')).length, 2); }
+};
 function decs(q) { return strip(q.prompt).match(/\d+\.\d+/g); }
 function pad(x) { const v = D.parse(x); return v.whole.padStart(2, '0').slice(-1) + '.' + v.frac.padEnd(3, '0'); }
 function symbolOk(q) { const [x, y] = decs(q); const c = D.cmp(x, y); assert.equal(q.answer, c < 0 ? '<' : c > 0 ? '>' : '='); }

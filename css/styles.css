@@ -208,6 +208,15 @@ h3 { font-size: 1.1rem; margin: 1em 0 .4em; }
 .m-focus { fill: none; stroke: #e08a00; stroke-width: 2.5; }
 .m-zoomline { stroke: #e08a00; stroke-width: 1.2; stroke-dasharray: 4 3; }
 .m-axis, .m-tick { stroke: #1d2433; stroke-width: 2; }
+.m-mid { stroke: #e08a00; stroke-width: 3; }
+.m-a { fill: #dbe8fb; stroke: #8a94a6; stroke-width: .6; }
+.m-b { fill: #fff0c7; stroke: #8a94a6; stroke-width: .6; }
+.vcalc-model { border-collapse: collapse; font-size: 1.6rem; font-weight: 800; margin: 8px 0; font-variant-numeric: tabular-nums; }
+.vcalc-model td { width: 1.1em; height: 1.5em; text-align: center; padding: 0 1px; }
+.vcalc-model .v-op { width: 1.2em; color: var(--muted); }
+.vcalc-model .v-pt { width: .5em; color: var(--brand-dark); }
+.vcalc-model .v-last td { border-bottom: 3px solid var(--ink); }
+.vcalc-model .v-carry td { font-size: .9rem; color: #b45309; height: 1em; }
 .m-dot { fill: #d1495b; stroke: #fff; stroke-width: 1.5; }
 .m-text { font: 600 14px system-ui, -apple-system, "Segoe UI", sans-serif; fill: #1d2433; }
 .m-bold { font-weight: 800; font-size: 16px; }

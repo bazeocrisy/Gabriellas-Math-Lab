@@ -68,6 +68,10 @@
       const v = from + i * step, x = X(v), big = i === 0 || i === 10;
       parts.push(`<line x1="${x}" y1="${y - (big ? 12 : 8)}" x2="${x}" y2="${y + (big ? 12 : 8)}" class="m-tick"/>`);
       if (o.tickLabels && !big) parts.push(`<text x="${x}" y="${y + 26}" class="m-text m-small" text-anchor="middle">${esc(G.D.fromThousandths(v))}</text>`);
+      if (o.mid && i === 5) {
+        parts.push(`<line x1="${x}" y1="${y - 16}" x2="${x}" y2="${y + 16}" class="m-mid"/>`);
+        if (!o.tickLabels) parts.push(`<text x="${x}" y="${y + 32}" class="m-text m-small" text-anchor="middle">halfway ${esc(G.D.fromThousandths(v))}</text>`);
+      }
     }
     const [l, r] = o.labels || [G.D.fromThousandths(from), G.D.fromThousandths(to)];
     parts.push(`<text x="${x0}" y="${y + 30}" class="m-text m-bold" text-anchor="middle">${esc(l)}</text>`);
@@ -85,7 +89,8 @@
     });
     const label = o.label || `A number line from ${l} to ${r} cut into 10 equal jumps` +
       (o.point !== undefined ? `. Point ${o.pointLabel || 'A'} is ${Math.round((o.point - from) / step)} jumps to the right of ${l}.` : '') +
-      (o.points ? ' ' + o.points.map((pt) => `Point ${pt.label} is ${Math.round((pt.v - from) / step)} jumps to the right of ${l}.`).join(' ') : '') + (o.point === undefined && !o.points ? '.' : '');
+      (o.points ? ' ' + o.points.map((pt) => `Point ${pt.label} is ${Math.round((pt.v - from) / step)} jumps to the right of ${l}.`).join(' ') : '') + (o.point === undefined && !o.points ? '.' : '') +
+      (o.mid ? ` The halfway mark is at ${G.D.fromThousandths(from + 5 * step)}.` : '');
     return `<svg class="model model-line" viewBox="0 0 340 84" role="img" aria-label="${esc(label)}">${parts.join('')}</svg>`;
   }
 
@@ -135,5 +140,49 @@
     return `<table class="pv-chart pv-stack">${cap}<thead><tr>${head}</tr></thead><tbody>${rows}</tbody></table>`;
   }
 
-  G.models = { strip, grid, line, chart, stack, esc, PLACES, PLACE_TITLES };
+  /**
+   * Numbers written in columns for adding or subtracting, lined up by the decimal point.
+   * nums: [top, bottom]; op: '+' or '−'. o.answer: bottom line (string; '' leaves it blank).
+   * o.pad: write filler zeros (shown lighter). o.misaligned: line the digits up from the right like whole
+   * numbers (to show a common mistake). o.carry: small digits above the top row, keyed by column index.
+   */
+  function vertical(nums, op, o = {}) {
+    const rows = nums.concat(o.answer !== undefined ? [o.answer] : []);
+    const ps = rows.filter((x) => x !== '').map((x) => G.D.parse(x));
+    const W = Math.max(...ps.map((x) => x.whole.length)), P = Math.max(...ps.map((x) => x.places));
+    const cells = (x) => {
+      if (x === '') return Array(W + 1 + P).fill({ c: '' });
+      if (o.misaligned) {
+        const str = x.split('');
+        return Array(W + 1 + P - str.length).fill({ c: '' }).concat(str.map((c) => ({ c })));
+      }
+      const v = G.D.parse(x);
+      const w = v.whole.padStart(W, ' ').split('').map((c) => ({ c: c === ' ' ? '' : c }));
+      const fr = [];
+      for (let i = 0; i < P; i++) fr.push(v.frac[i] !== undefined ? { c: v.frac[i] } : { c: o.pad ? '0' : '', pad: !!o.pad });
+      return w.concat([{ c: P ? '.' : '' }], fr);
+    };
+    const tr = (x, k) => {
+      const sign = k === 1 ? op : '';
+      return `<tr class="${k === nums.length ? 'v-ans' : k === nums.length - 1 ? 'v-last' : ''}"><td class="v-op">${sign}</td>${cells(x).map((c) => `<td class="${c.pad ? 'pv-pad' : ''}${c.c === '.' ? ' v-pt' : ''}">${esc(c.c)}</td>`).join('')}</tr>`;
+    };
+    const carry = o.carry ? `<tr class="v-carry"><td></td>${Array.from({ length: W + 1 + P }, (_, i) => `<td>${o.carry[i] ? esc(o.carry[i]) : ''}</td>`).join('')}</tr>` : '';
+    const label = o.label || `${nums[0]} ${op === '+' ? 'plus' : 'minus'} ${nums[1]}, written in columns${o.misaligned ? ' with the digits lined up from the right' : ' with the decimal points lined up'}${o.answer ? ', equals ' + o.answer : ''}.`;
+    return `<table class="vcalc-model" role="img" aria-label="${esc(label)}"><tbody>${carry}${rows.map(tr).join('')}</tbody></table>`;
+  }
+
+  /** Area model on a hundredths grid: a tenths of the rows and b tenths of the columns; the overlap is a × b. */
+  function area(a, b, o = {}) {
+    const parts = [];
+    for (let i = 0; i < 100; i++) {
+      const col = Math.floor(i / 10), row = i % 10;
+      const inA = row < a, inB = col < b;
+      parts.push(`<rect x="${col * 20}" y="${row * 20}" width="20" height="20" class="${inA && inB ? 'm-on' : inA ? 'm-a' : inB ? 'm-b' : 'm-off'}"/>`);
+    }
+    for (let k = 1; k < 10; k++) parts.push(`<line x1="${k * 20}" y1="0" x2="${k * 20}" y2="200" class="m-col"/>`);
+    const label = o.label || `A grid of 100 squares. ${a} of the 10 rows and ${b} of the 10 columns are marked. They overlap in ${a * b} squares.`;
+    return `<svg class="model model-grid" viewBox="-2 -2 204 204" role="img" aria-label="${esc(label)}">${parts.join('')}<rect x="0" y="0" width="200" height="200" class="m-frame"/></svg>`;
+  }
+
+  G.models = { strip, grid, line, chart, stack, vertical, area, esc, PLACES, PLACE_TITLES };
 })(typeof window !== 'undefined' ? (window.GML = window.GML || {}) : (globalThis.GML = globalThis.GML || {}));
