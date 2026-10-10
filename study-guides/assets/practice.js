@@ -52,6 +52,54 @@
     return out;
   }
 
+  // ---------- column arithmetic (used by the calculators and by the column model) ----------
+  // Lines numbers up on the decimal point. Returns digit strings with no point, all the same length.
+  function align(xs) {
+    const F = Math.max(...xs.map((x) => parts(x).f.length));
+    const W = Math.max(...xs.map((x) => parts(x).w.length));
+    const rows = xs.map((x) => { const { w, f } = parts(x); return w.padStart(W, '0') + f.padEnd(F, '0'); });
+    const placeAt = (i) => PLACE[String(i - (W - 1))] || 'place';
+    return { F, W, rows, placeAt };
+  }
+  // Column addition: per-column steps with carries.
+  function colAdd(xs) {
+    const { F, W, rows, placeAt } = align(xs);
+    const steps = [], carries = new Array(W + F).fill(0);
+    let carry = 0;
+    for (let i = W + F - 1; i >= 0; i--) {
+      const ds = rows.map((r) => Number(r[i]));
+      const s = ds.reduce((a, b) => a + b, 0) + carry;
+      steps.push({ place: placeAt(i), ds, carryIn: carry, sum: s, digit: s % 10, carryOut: Math.floor(s / 10) });
+      carry = Math.floor(s / 10);
+      if (i > 0) carries[i - 1] = carry;
+    }
+    return { F, W, steps, carries, finalCarry: carry };
+  }
+  // Column subtraction (top − bottom, top ≥ bottom): per-column steps and the regrouped top digits.
+  function colSub(a, b) {
+    const { F, W, rows, placeAt } = align([a, b]);
+    const top = [...rows[0]].map(Number), bot = [...rows[1]].map(Number);
+    const used = top.slice(), steps = [];
+    let borrow = 0;
+    for (let i = W + F - 1; i >= 0; i--) {
+      let t = top[i] - borrow; const before = t;
+      const regroup = t < bot[i];
+      if (regroup) { t += 10; borrow = 1; } else borrow = 0;
+      used[i] = t;
+      steps.push({ place: placeAt(i), orig: top[i], before, t, b: bot[i], regroup, digit: t - bot[i] });
+    }
+    if (borrow) throw new Error(`colSub: ${a} < ${b}`);
+    return { F, W, top, used, steps };
+  }
+  const placeCount = (s) => parts(s).f.length;
+  const wholeDigits = (s) => String(s).replace('.', '').replace(/^0+(?=\d)/, '');
+  const plural = (n, w) => `${n} ${w}${n === 1 ? '' : 's'}`;
+  const pow10 = (k) => 10n ** BigInt(k);
+  function roundTo(v, P) {               // round half up to P places (P = 0 → whole number)
+    const unit = pow10(SCALE - P), down = v - (v % unit);
+    return (v % unit) * 2n >= unit ? down + unit : down;
+  }
+
   // ---------- calculators: each returns [answer, worked step] ----------
   const CALC = {
     whole: (n) => [parts(n).w, `The digits left of the decimal point are the whole-number part: ${parts(n).w}.`],
@@ -141,6 +189,81 @@
       const n = Math.max(...xs.map((v) => parts(v).f.length));
       return [sorted.join(', '), `With ${n} decimal place${n === 1 ? '' : 's'}: ${sorted.map((v) => fmt(D(v), n)).join(dir === 'desc' ? ' > ' : ' < ')}.`];
     },
+    // Rounding: "round 4.735 t" (place = whole | t | h)
+    round: (n, place) => {
+      const P = { whole: 0, t: 1, h: 2 }[place];
+      if (P == null) throw new Error('round place: ' + place);
+      const name = ['ones', 'tenths', 'hundredths'][P];
+      const { w, f } = parts(n);
+      const rd = P === 0 ? w[w.length - 1] : f[P - 1], next = f[P] || '0';
+      const r = fmt(roundTo(D(n), P), P);
+      const up = Number(next) >= 5;
+      return [r, `Rounding digit: ${rd} (${name}). Digit to its right: ${next}, ${up ? '5 or more, so round up' : 'less than 5, so keep'} → ${r}.`];
+    },
+    // Addition: "add 3.45 2.27"
+    add: (...xs) => {
+      const c = colAdd(xs), sum = fmt(xs.reduce((s, x) => s + D(x), 0n), c.F);
+      const padNote = xs.some((x) => placeCount(x) < c.F) ? `Line up the points; write ${xs.map((x) => fmt(D(x), c.F)).join(' and ')}. ` : 'Line up the points. ';
+      const cols = c.steps.filter((s, i) => i < c.F || s.sum > 0).map((s) =>
+        `${s.place[0].toUpperCase() + s.place.slice(1)}: ${s.ds.join(' + ')}${s.carryIn ? ' + ' + s.carryIn + ' (carried)' : ''} = ${s.sum}${s.carryOut ? `, write ${s.digit}, carry ${s.carryOut}` : ''}.`);
+      if (c.finalCarry) cols.push(`Write the carried ${c.finalCarry} in the next place on the left.`);
+      const simple = fmt(D(sum));
+      return [sum, padNote + cols.join(' ') + ` → ${sum}${simple !== sum ? ' = ' + simple : ''}.`];
+    },
+    // Subtraction: "sub 8.20 3.76"
+    sub: (a, b) => {
+      const c = colSub(a, b), diff = fmt(D(a) - D(b), c.F);
+      const pad = placeCount(a) !== placeCount(b) ? `Line up the points; write ${fmt(D(a), c.F)} − ${fmt(D(b), c.F)}. ` : 'Line up the points. ';
+      const cols = c.steps.filter((s, i) => i < c.F || s.t || s.b).map((s) => {
+        const P = s.place[0].toUpperCase() + s.place.slice(1);
+        if (s.before < 0) return `${P}: the 0 was regrouped to 10, then gave 1 away, so it is 9: ${s.t} − ${s.b} = ${s.digit}.`;
+        const was = s.before !== s.orig ? ` (${s.orig} became ${s.before})` : '';
+        return s.regroup ? `${P}${was}: ${s.before} < ${s.b}, regroup: ${s.t} − ${s.b} = ${s.digit}.` : `${P}${was}: ${s.t} − ${s.b} = ${s.digit}.`;
+      });
+      return [diff, pad + cols.join(' ') + ` → ${diff}.`];
+    },
+    // Multiplication: "mul 2.4 3"
+    mul: (a, b) => {
+      const p = mul(D(a), D(b)), P = placeCount(a) + placeCount(b);
+      const A = wholeDigits(a), B = wholeDigits(b), prod = (BigInt(A) * BigInt(B)).toString();
+      const placed = fmt(p, P), ans = fmt(p);
+      const note = P ? ` Decimal places: ${placeCount(a)} + ${placeCount(b)} = ${P}, so ${prod} → ${placed}${placed !== ans ? ' = ' + ans : ''}.` : '';
+      return [ans, `Multiply as whole numbers: ${A} × ${B} = ${prod}.${note}`];
+    },
+    // × or ÷ by 10, 100, 1000: "x10 3.45 100", "d10 34.5 100"
+    x10: (n, p) => {
+      const k = p.length - 1, ans = fmt(D(n) * BigInt(p));
+      return [ans, `× ${p}: each digit moves ${plural(k, 'place')} to the left (the point moves ${k} right): ${n} → ${ans}.`];
+    },
+    d10: (n, p) => {
+      const k = p.length - 1, q = D(n) / BigInt(p);
+      if (q * BigInt(p) !== D(n)) throw new Error('d10 not exact');
+      const ans = fmt(q);
+      return [ans, `÷ ${p}: each digit moves ${plural(k, 'place')} to the right (the point moves ${k} left): ${n} → ${ans}.`];
+    },
+    // Division: "div 6.4 2"
+    div: (a, b) => {
+      const x = D(a), y = D(b);
+      if ((x * ONE) % y) throw new Error(`div ${a} ÷ ${b} is not exact`);
+      const q = x * ONE / y, ans = fmt(q);
+      if (placeCount(ans) > 3) throw new Error('div answer has more than 3 places');
+      const k = placeCount(b);
+      if (k) {
+        const a2 = fmt(x * pow10(k)), b2 = fmt(y * pow10(k));
+        return [ans, `Multiply both numbers by ${10 ** k}: ${a} ÷ ${b} = ${a2} ÷ ${b2} = ${ans}. Check: ${ans} × ${b} = ${a}.`];
+      }
+      const zeros = placeCount(ans) > placeCount(a) ? `Write ${a} as ${fmt(x, placeCount(ans))} so you can keep dividing. ` : '';
+      return [ans, `${zeros}${a} ÷ ${b} = ${ans}. Check: ${ans} × ${b} = ${fmt(x)}.`];
+    },
+    // Estimate by rounding each number to the nearest whole: "est + 3.45 2.27"
+    est: (op, a, b) => {
+      const ra = fmt(roundTo(D(a), 0), 0), rb = fmt(roundTo(D(b), 0), 0);
+      const A = Number(ra), B = Number(rb);
+      const v = { '+': A + B, '-': A - B, x: A * B }[op];
+      if (v == null) throw new Error('est op');
+      const sym = { '+': '+', '-': '−', x: '×' }[op];
+      return [String(v), `Round each number to the nearest whole: ${a} ≈ ${ra}, ${b} ≈ ${rb}. ${ra} ${sym} ${rb} = ${v}.`];
+    },
     // Word form and back
     words: (n) => [wordForm(n), wordWhy(n)],
     fromwords: (n) => {
@@ -179,6 +302,22 @@
   document.querySelectorAll('[data-words]').forEach((el) => { el.textContent = wordForm(el.dataset.words); });
   // Fill any <span data-expanded="0.34"></span> with the number's expanded form (0.3 + 0.04).
   document.querySelectorAll('[data-expanded]').forEach((el) => { el.textContent = CALC.expanded(el.dataset.expanded)[0]; });
+
+  // ---------- expressions written from the calculation ----------
+  // <span data-expr></span> inside a question shows that question's calculation ("3.45 + 2.27");
+  // <span data-expr="add 3.45 2.27"></span> shows a given one. The printed problem can never differ from the answer.
+  const EXPR = {
+    add: (...xs) => xs.join(' + '), sub: (a, b) => `${a} − ${b}`, mul: (a, b) => `${a} × ${b}`, div: (a, b) => `${a} ÷ ${b}`,
+    x10: (n, p) => `${n} × ${p}`, d10: (n, p) => `${n} ÷ ${p}`, round: (n) => n,
+    est: (op, a, b) => `${a} ${{ '+': '+', '-': '−', x: '×' }[op]} ${b}`,
+  };
+  document.querySelectorAll('[data-expr]').forEach((el) => {
+    const src = el.dataset.expr || (el.closest('[data-calc]') || {}).dataset?.calc;
+    if (!src) throw new Error('data-expr without a calculation');
+    const [name, ...args] = src.trim().split(/\s+/);
+    if (!EXPR[name]) throw new Error('no expression for ' + name);
+    el.textContent = EXPR[name](...args);
+  });
 
   // ---------- compact cards ----------
   // <div class="card q" data-calc="...">prompt</div> becomes: number badge + prompt, work space, answer line.
@@ -241,5 +380,5 @@
   });
 
   window.__practice = { errors, count: all.filter((a) => !a.isTry).length, tries: all.filter((a) => a.isTry).length, items: all };
-  window.StudyMath = { D, fmt, CALC };
+  window.StudyMath = { D, fmt, CALC, colAdd, colSub, align, parts };
 })();

@@ -87,6 +87,19 @@ async function checkLayout(page) {
         if (cs.overflow === 'hidden' && el.scrollHeight > el.clientHeight + 1) problems.push(`page ${i + 1}: content clipped inside ${el.className}`);
       }
     });
+    // Footer page numbers match the real page, and table-of-contents rows (data-toc="3.1" or "key")
+    // point at the page where that skill (or the answer key) starts.
+    pages.forEach((pg, i) => {
+      const n = pg.querySelector('.pg-foot .num');
+      if (n && Number(n.textContent) !== i + 1) problems.push(`page ${i + 1}: footer says page ${n.textContent}`);
+    });
+    document.querySelectorAll('[data-toc]').forEach((row) => {
+      const id = row.dataset.toc;
+      const target = id === 'key' ? document.querySelector('[data-key-for]')?.closest('.page') : document.querySelector(`[data-skill="${id}"] .page`);
+      const want = pages.indexOf(target) + 1, shown = Number(row.querySelector('.p').textContent);
+      if (!target) problems.push(`contents: no section for ${id}`);
+      else if (want !== shown) problems.push(`contents: ${id} says page ${shown} but starts on page ${want}`);
+    });
     return { problems, count: pages.length };
   });
 }

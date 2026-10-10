@@ -163,7 +163,107 @@
     return `<table class="pv${el.dataset.xs ? ' xs' : ''}${el.dataset.sm ? ' sm' : ''}${el.dataset.blank ? ' empty' : ''}"><thead><tr>${head}</tr></thead><tbody><tr>${row}</tr>${vals}</tbody></table>`;
   }
 
-  const MODELS = { strip, bar, grid, line, chart };
+  // Column (stacked) arithmetic. data-op="+" | "-" | "x", data-nums="3.45,2.27".
+  // data-show="1" shows carries / regrouping and the answer (Show How); otherwise the answer row is empty boxes.
+  // data-pad="1" shows placeholder zeros (in gray) so every number has the same number of places.
+  // + and − line up on the decimal point; × lines up on the right (multiply as whole numbers first).
+  function column(el) {
+    const SM = window.StudyMath;
+    // Without data-nums/data-op, use the question's own calculation (data-calc="add 3.45 2.27").
+    let nums = el.dataset.nums && el.dataset.nums.split(','), op = el.dataset.op;
+    if (!nums) {
+      const [name, ...args] = el.closest('[data-calc]').dataset.calc.trim().split(/\s+/);
+      op = { add: '+', sub: '-', mul: 'x' }[name]; nums = args;
+    }
+    const show = !!el.dataset.show;
+    const sym = { '+': '+', '-': '−', x: '×' }[op];
+    if (!sym) throw new Error('column op ' + op);
+    const cell = (c, cls = '') => `<td class="${cls}">${c}</td>`;
+    let rowsHtml = [], top = '', ans = '';
+    if (op === 'x') {
+      if (nums.length !== 2) throw new Error('column × needs two numbers');
+      const prod = SM.CALC.mul(nums[0], nums[1])[0];
+      const P = nums[0].split('.')[1]?.length || 0, Q = nums[1].split('.')[1]?.length || 0;
+      const placed = SM.fmt(SM.D(prod), P + Q);
+      const width = Math.max(...nums.map((n) => n.length), placed.length) + 1;
+      const row = (s, first = '') => '<tr>' + cell(first, 'op') + [...s.padStart(width - 1, ' ')].map((ch) => cell(ch === ' ' ? '' : ch, ch === '.' ? 'pt' : '')).join('') + '</tr>';
+      rowsHtml.push(row(nums[0]), row(nums[1], sym));
+      ans = show ? row(placed).replace('<tr>', '<tr class="res">') : '<tr class="res">' + cell('', 'op') + Array(width - 1).fill('<td class="box"></td>').join('') + '</tr>';
+    } else {
+      const al = SM.align(nums), F = al.F;
+      const result = op === '+' ? SM.CALC.add(...nums)[0] : SM.CALC.sub(nums[0], nums[1])[0];
+      const W = Math.max(al.W, SM.parts(result).w.length);
+      const pad = !!el.dataset.pad;
+      const digitsRow = (n, first) => {
+        const { w, f } = SM.parts(n);
+        let h = cell(first || '', 'op');
+        for (let i = 0; i < W; i++) { const k = i - (W - w.length); h += cell(k >= 0 ? w[k] : ''); }
+        h += cell('.', 'pt');
+        for (let i = 0; i < F; i++) h += i < f.length ? cell(f[i]) : cell(pad ? '0' : '', pad ? 'padz' : '');
+        return h;
+      };
+      if (show) {
+        let marks = Array(W + F).fill('');
+        if (op === '+') {
+          const c = SM.colAdd(nums), off = W - al.W;
+          c.carries.forEach((v, i) => { if (v) marks[i + off] = String(v); });
+          if (c.finalCarry && off) marks[0] = '';
+          top = '<tr class="carry">' + cell('', 'op') + marks.slice(0, W).map((m) => cell(m)).join('') + cell('', 'pt') + marks.slice(W).map((m) => cell(m)).join('') + '</tr>';
+        } else {
+          const c = SM.colSub(nums[0], nums[1]), off = W - al.W;
+          c.used.forEach((u, i) => { if (u !== c.top[i]) marks[i + off] = String(u); });
+          top = '<tr class="carry">' + cell('', 'op') + marks.slice(0, W).map((m) => cell(m)).join('') + cell('', 'pt') + marks.slice(W).map((m) => cell(m)).join('') + '</tr>';
+          // strike the regrouped digits in the top number
+          el.dataset.strike = marks.map((m, i) => (m ? i : '')).filter((x) => x !== '').join(',');
+        }
+      }
+      rowsHtml = nums.map((n, i) => '<tr>' + digitsRow(n, i === nums.length - 1 ? sym : '') + '</tr>');
+      if (show && op === '-' && el.dataset.strike) {
+        const strike = el.dataset.strike.split(',').map(Number);
+        rowsHtml[0] = rowsHtml[0].replace(/<td class="([^"]*)">([^<]*)<\/td>/g, (() => { let j = -1; return (m, c, v) => {
+          if (c === 'op') return m; if (c === 'pt') return m; j++; return strike.includes(j) ? `<td class="${c} struck">${v}</td>` : m; }; })());
+      }
+      if (show) {
+        ans = '<tr class="res">' + digitsRow(result, '') + '</tr>';
+      } else {
+        ans = '<tr class="res">' + cell('', 'op') + Array(W).fill('<td class="box"></td>').join('') + cell('.', 'pt') + Array(F).fill('<td class="box"></td>').join('') + '</tr>';
+      }
+    }
+    return `<table class="colm${show ? ' show' : ''}">${top}${rowsHtml.join('')}${ans}</table>`;
+  }
+
+  // Long division: data-a = dividend as written (e.g. "7.00"), data-b = divisor. data-show="1" writes the quotient.
+  function longdiv(el) {
+    const SM = window.StudyMath, a = el.dataset.a, b = el.dataset.b;
+    const places = (a.split('.')[1] || '').length;
+    const q = SM.CALC.div(a, b)[0];
+    const qs = SM.fmt(SM.D(q), places);
+    if ((qs.split('.')[1] || '').length !== places || SM.D(qs) !== SM.D(q)) throw new Error(`longdiv: write ${a} with enough places for ${q}`);
+    const top = qs.padStart(a.length, ' ');
+    const cells = (s, cls) => [...s].map((ch) => `<td class="${ch === '.' ? 'pt' : ''} ${cls}">${ch === ' ' ? '' : ch}</td>`).join('');
+    const qrow = el.dataset.show ? cells(top, 'q') : [...a].map((ch) => `<td class="q ${ch === '.' ? 'pt' : 'qbox'}">${ch === '.' ? '.' : ''}</td>`).join('');
+    return `<table class="ldiv"><tr><td class="dv"></td>${qrow}</tr><tr><td class="dv">${b}</td>${cells(a, 'dd')}</tr></table>`;
+  }
+
+  // Area model for decimal × decimal: a 10×10 grid. data-a tenths = columns (blue), data-b tenths = rows (hatched).
+  // The overlap (dark) is the product.
+  function area(el) {
+    const a = parse(el.dataset.a).thou, b = parse(el.dataset.b).thou;
+    if (a % 100 || b % 100 || a > 1000 || b > 1000) throw new Error('area model needs tenths from 0 to 1');
+    const ca = a / 100, rb = b / 100, S = +(el.dataset.size || 160), c = S / 10;
+    let body = '';
+    for (let i = 0; i < 100; i++) {
+      const col = Math.floor(i / 10), row = i % 10, inA = col < ca, inB = row < rb;
+      const fill = inA && inB ? '#2d4f74' : inA ? 'var(--shade)' : inB ? 'var(--shade-2-wash)' : '#fff';
+      body += `<rect class="cell" x="${2 + col * c}" y="${2 + row * c}" width="${c}" height="${c}" style="fill:${fill}"/>`;
+    }
+    body += `<rect class="m-frame" x="2" y="2" width="${S}" height="${S}"/>`;
+    body += `<text x="${2 + ca * c / 2}" y="${S + 16}" text-anchor="middle" font-size="10" class="lbl">${el.dataset.a}</text>`;
+    body += `<text x="${S + 8}" y="${2 + rb * c / 2 + 4}" font-size="10" class="lbl">${el.dataset.b}</text>`;
+    return svg(S + 36, S + 22, body, `Area model: ${el.dataset.a} by ${el.dataset.b}; the overlap is ${ca * rb} hundredths`);
+  }
+
+  const MODELS = { strip, bar, grid, line, chart, column, longdiv, area };
   const errors = [];
   // Fit an SVG's box to everything drawn in it (labels included), so nothing can stick out of it.
   function fit(s) {

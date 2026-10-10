@@ -236,3 +236,28 @@ table.tbl-forms th { background: var(--show-wash); width: 1.3in; }
 /* Long answer lines stretch to fill the card instead of using a fixed width (no overflow at the left edge). */
 .card .ans:has(.fill.ww) { justify-content: flex-start; }
 .card .ans .fill.ww { min-width: 0; flex: 1; }
+
+/* ───────── Sections 3–8: stacked arithmetic, long division, area model ───────── */
+table.colm { border-collapse: collapse; font-size: 22pt; font-weight: 700; font-variant-numeric: tabular-nums; margin: 0 auto; }
+table.colm td { width: 0.36in; height: 0.44in; text-align: center; padding: 0; }
+table.colm td.op { width: 0.34in; color: var(--show); }
+table.colm td.pt { width: 0.16in; }
+table.colm td.padz { color: #9aa7c2; }
+table.colm tr.carry td { font-size: 12pt; height: 0.26in; color: var(--note); font-family: 'Caveat', cursive; font-weight: 700; font-size: 16pt; vertical-align: bottom; }
+table.colm td.struck { text-decoration: line-through; text-decoration-color: var(--note); text-decoration-thickness: 2px; color: #7d879e; }
+table.colm tr.res td { border-top: 2.5px solid var(--ink); color: var(--show); }
+table.colm tr.res td.op { border-top: 2.5px solid var(--ink); }
+table.colm td.box { border: 1.4px dashed #9aa7c2; border-top: 2.5px solid var(--ink); }
+table.colm.sm { font-size: 17pt; } table.colm.sm td { width: 0.28in; height: 0.36in; }
+table.ldiv { border-collapse: collapse; font-size: 22pt; font-weight: 700; margin: 0 auto; font-variant-numeric: tabular-nums; }
+table.ldiv td { width: 0.34in; height: 0.46in; text-align: center; padding: 0; }
+table.ldiv td.pt { width: 0.16in; }
+table.ldiv td.dv { padding-right: 0.08in; width: auto; }
+table.ldiv tr:nth-child(2) td.dd { border-top: 2.5px solid var(--ink); }
+table.ldiv tr:nth-child(2) td.dd:first-of-type { border-left: 2.5px solid var(--ink); border-top-left-radius: 0.12in; }
+table.ldiv td.q { color: var(--show); }
+table.ldiv td.qbox { border-bottom: 1.4px dashed #9aa7c2; }
+.groups { display: flex; flex-direction: column; gap: 0.06in; }
+.groups .g { display: flex; align-items: center; gap: 0.08in; }
+.groups .g > b { width: 0.8in; font-size: 9.5pt; color: var(--ink-soft); }
+.op-chip { display: inline-block; border-radius: 0.06in; padding: 0 0.08in; font-weight: 700; color: #fff; background: var(--show); }
