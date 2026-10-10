@@ -18,9 +18,9 @@ Number ranges that follow: place value, reading/writing, comparing and ordering 
 | Lesson | Topic | Core evidence of learning | Standards | Status |
 |---|---|---|---|---|
 | D01 | Understanding Decimals | Model tenths, hundredths and thousandths; connect models, place-value chart, words and numerals; equivalent decimals and zero placeholders | Foundations for 5.NR.4.1, 5.NR.4.2; 5.NR.1.1 | **Built, audited, live** |
-| D02 | Decimal Place Value | Place vs value of a digit (tens to thousandths); ×10 and 1/10 between places; standard, expanded and word form; placeholder zeros | 5.NR.4.1, 5.NR.1.1 | **Built** (branch `claude/decimals-d02-d04`) |
-| D03 | Comparing Decimals | Compare to thousandths with >, <, =; different numbers of digits; equal decimals; place-value charts; number lines; explain why | 5.NR.4.2 | **Built** (branch) |
-| D04 | Ordering Decimals | Least to greatest and greatest to least; line up places with placeholder zeros; number lines; word problems | 5.NR.4.2 | **Built** (branch) |
+| D02 | Decimal Place Value | Place vs value of a digit (tens to thousandths); ×10 and 1/10 between places; standard, expanded and word form; placeholder zeros | 5.NR.4.1, 5.NR.1.1 | **Built, live** |
+| D03 | Comparing Decimals | Compare to thousandths with >, <, =; different numbers of digits; equal decimals; place-value charts; number lines; explain why | 5.NR.4.2 | **Built, live** |
+| D04 | Ordering Decimals | Least to greatest and greatest to least; line up places with placeholder zeros; number lines; word problems | 5.NR.4.2 | **Built, live** |
 | D05 | Rounding Decimals | Round to tenths and hundredths using place value and number lines | 5.NR.4.3 | Coming later |
 | D06 | Adding Decimals | Add in models, equations and word problems; alignment and regrouping | 5.NR.4.4 | Coming later |
 | D07 | Subtracting Decimals | Subtract with regrouping and zeros; word problems | 5.NR.4.4 | Coming later |
