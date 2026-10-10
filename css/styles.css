@@ -177,6 +177,8 @@ h3 { font-size: 1.1rem; margin: 1em 0 .4em; }
 .place-table th { background: var(--info-soft); }
 .pv-pad { color: #8a94a6; font-style: italic; }
 .expr { white-space: nowrap; font-weight: 700; }
+.order-h { margin: 10px 0 0; font-weight: 700; font-size: .9rem; color: var(--muted); }
+.order-pool { background: #f6f8fc; border-radius: 10px; padding: 6px; }
 .order-slots { list-style: none; padding: 0; margin: 10px 0; display: flex; flex-wrap: wrap; gap: 8px; }
 .order-slots li { display: flex; flex-direction: column; align-items: center; gap: 2px; }
 .order-empty { display: inline-flex; align-items: center; justify-content: center; min-width: 84px; min-height: 52px; border: 2px dashed #9aa3b2; border-radius: 10px; color: var(--muted); font-weight: 700; }

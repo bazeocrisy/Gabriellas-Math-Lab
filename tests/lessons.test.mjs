@@ -73,8 +73,36 @@ const VERIFY = {
     Y1: (q) => { const [a, b] = decs(q); assert.equal(q.answer.startsWith('Yes'), D.cmp(a, b) > 0); assert.equal(q.choices.filter((c) => c.value.startsWith('Yes')).length, 2); },
     Y2: (q) => { const [x, y] = decs(q); assert.equal(D.cmp(x, y), 1); const a = pad(x), b = pad(y); const i = [...a].findIndex((ch, k) => ch !== b[k]); assert.ok(q.answer.includes(['ones', '.', 'tenths', 'hundredths', 'thousandths'][i]), q.answer); },
     Y3: (q) => { const [x, y] = decs(q); assert.equal(D.cmp(x, y), -1, 'the student\'s claim is false'); assert.ok(q.answer.includes('whole numbers')); }
+  },
+  d04: {
+    O1: (q) => orderOk(q), O2: (q) => orderOk(q), O3: (q) => orderOk(q), W2: (q) => orderOk(q),
+    O4: (q) => {
+      const dec = (l) => l.split(', ').every((x, i, a) => i === 0 || D.cmp(a[i - 1], x) > 0);
+      for (const c of q.choices) assert.equal(c.value === q.answer, dec(c.value), c.value);
+    },
+    O5: (q) => { const xs = sorted(decs(q)); assert.equal(q.answer, xs[1]); },
+    A1: (q) => { const xs = sorted(q.choices.map((c) => c.value)); assert.equal(q.answer, /least/.test(q.prompt) ? xs[0] : xs[xs.length - 1]); },
+    A2: (q) => { const [x] = decs(q); const places = Number(strip(q.prompt).match(/with (\d) decimal places/)[1]); assert.ok(D.equal(q.answer, x) && D.parse(q.answer).places === places); },
+    A3: (q) => { const [lo, hi] = decs(q); for (const c of q.choices) assert.equal(c.value === q.answer, D.cmp(c.value, lo) > 0 && D.cmp(c.value, hi) < 0, c.value); },
+    NL1: (q) => { const xs = sorted(decs(q)); assert.equal(q.answer, /left/.test(q.prompt) ? xs[0] : xs[xs.length - 1]); },
+    NL2: (q) => { const val = D.toThousandths(decs(q).slice(-1)[0]); const pts = linePoints(q.visual); assert.equal(pts.find((p) => p.v === val).label, q.answer); },
+    W1: (q) => {
+      const rows = [...q.visual.matchAll(/<tr><td>([^<]+)<\/td><td>([\d.]+)<\/td><\/tr>/g)].map((m) => ({ name: m[1], v: m[2] }));
+      const least = /fastest|lightest/.test(q.prompt);
+      const best = rows.slice().sort((a, b) => D.cmp(a.v, b.v))[least ? 0 : rows.length - 1];
+      assert.equal(q.answer, best.name);
+    },
+    W3: (q) => { const xs = sorted(decs(q)); assert.equal(q.answer, xs[xs.length - 1]); }
   }
 };
+function sorted(xs) { return xs.slice().sort((a, b) => D.cmp(a, b)); }
+function orderOk(q) {
+  const val = (x) => x.split(' ')[0];
+  const up = /least to greatest|shortest to/.test(strip(q.prompt));
+  const want = sorted(q.items.map(val));
+  if (!up) want.reverse();
+  assert.deepEqual(q.answer.map(val), want);
+}
 function decs(q) { return strip(q.prompt).match(/\d+\.\d+/g); }
 function pad(x) { const v = D.parse(x); return v.whole.padStart(2, '0').slice(-1) + '.' + v.frac.padEnd(3, '0'); }
 function symbolOk(q) { const [x, y] = decs(q); const c = D.cmp(x, y); assert.equal(q.answer, c < 0 ? '<' : c > 0 ? '>' : '='); }

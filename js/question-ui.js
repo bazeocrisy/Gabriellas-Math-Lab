@@ -108,7 +108,9 @@
       // Tap numbers in the order asked; tap a placed number to take it back.
       let placed = [], disabled = false;
       area.innerHTML = `<p class="hint-small" id="${id}-oh">Tap the numbers in order, ${M.esc(q.orderText)}. Tap a number in your list to take it back.</p>
+        <p class="order-h" aria-hidden="true">Your order</p>
         <ol class="order-slots" aria-label="Your order" aria-describedby="${id}-oh"></ol>
+        <p class="order-h" aria-hidden="true">Numbers to tap</p>
         <div class="order-pool" role="group" aria-label="Numbers to place"></div>
         <button type="button" class="btn btn-link order-clear">Start over</button>
         <p class="sr-only" aria-live="polite"></p>`;
