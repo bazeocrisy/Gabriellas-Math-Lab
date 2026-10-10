@@ -47,8 +47,46 @@ const VERIFY = {
     Z2: (q) => { const n = nums(q).slice(-1)[0]; const fr = n.split('.')[1]; const zi = fr.indexOf('0'); assert.ok(q.answer.includes(['tenths', 'hundredths'][zi] + ' place')); },
     Z3: (q) => { const x = nums(q)[0]; for (const c of q.choices) assert.equal(c.value === q.answer, D.equal(c.value, x)); },
     Z4: (q) => { const cells = [...q.visual.matchAll(/<td class="[^"]*">(\d?)<\/td>/g)].map((m) => m[1]); assert.equal(D.toThousandths(q.answer), D.toThousandths(cells.slice(0, 2).join('') + '.' + cells.slice(2).join(''))); }
+  },
+  d03: {
+    S1: (q) => symbolOk(q), S3: (q) => symbolOk(q), L1: (q) => symbolOk(q), E1: (q) => symbolOk(q),
+    S2: (q) => greaterLess(q), L2: (q) => greaterLess(q),
+    S4: (q) => {
+      const [x, y] = decs(q); const a = pad(x), b = pad(y);
+      const i = [...a].findIndex((ch, k) => ch !== b[k]);
+      assert.equal(q.answer, ['ones', '.', 'tenths', 'hundredths', 'thousandths'][i]);
+    },
+    S5: (q) => {
+      const t = strip(q.prompt).replace(/&gt;/g, '>').replace(/&lt;/g, '<'); const want = t.includes('>') ? 1 : -1; const [, a, d] = t.match(/0\.(\d)\?(\d)/) || t.match(/0\.(\d)\s*\?\s*(\d)/);
+      const y = decs(q).slice(-1)[0];
+      for (const c of q.choices) assert.equal(c.value === q.answer, D.cmp(`0.${a}${c.value}${d}`, y) === want, `S5 ${c.value}`);
+    },
+    L3: (q) => {
+      const [lo, hi] = decs(q); const L = D.toThousandths(lo), H = D.toThousandths(hi);
+      for (let k = Math.max(0, L - 30); k <= H + 30; k++) assert.equal(!!q.accept(D.parse(D.fromThousandths(k, 3))), k > L && k < H, `L3 ${k}`);
+      assert.ok(q.accept(D.parse(q.answer)));
+    },
+    E2: (q) => { const x = decs(q)[0]; for (const c of q.choices) assert.equal(c.value === q.answer, D.equal(c.value, x)); },
+    NL1: (q) => { const pts = linePoints(q.visual); assert.equal(D.toThousandths(q.answer), Math.max(...pts.map((p) => p.v))); },
+    NL2: (q) => { const [x, y] = decs(q); assert.equal(q.answer, D.cmp(x, y) > 0 ? x : y); },
+    NL3: (q) => { const target = D.toThousandths(decs(q)[0]); const pts = linePoints(q.visual); assert.equal(pts.find((p) => p.v === target).label, q.answer); },
+    Y1: (q) => { const [a, b] = decs(q); assert.equal(q.answer.startsWith('Yes'), D.cmp(a, b) > 0); assert.equal(q.choices.filter((c) => c.value.startsWith('Yes')).length, 2); },
+    Y2: (q) => { const [x, y] = decs(q); assert.equal(D.cmp(x, y), 1); const a = pad(x), b = pad(y); const i = [...a].findIndex((ch, k) => ch !== b[k]); assert.ok(q.answer.includes(['ones', '.', 'tenths', 'hundredths', 'thousandths'][i]), q.answer); },
+    Y3: (q) => { const [x, y] = decs(q); assert.equal(D.cmp(x, y), -1, 'the student\'s claim is false'); assert.ok(q.answer.includes('whole numbers')); }
   }
 };
+function decs(q) { return strip(q.prompt).match(/\d+\.\d+/g); }
+function pad(x) { const v = D.parse(x); return v.whole.padStart(2, '0').slice(-1) + '.' + v.frac.padEnd(3, '0'); }
+function symbolOk(q) { const [x, y] = decs(q); const c = D.cmp(x, y); assert.equal(q.answer, c < 0 ? '<' : c > 0 ? '>' : '='); }
+function greaterLess(q) { const [x, y] = decs(q); const g = D.cmp(x, y) > 0 ? x : y, l = g === x ? y : x; assert.equal(q.answer, /greater/.test(q.prompt) ? g : l); }
+/** Points on a number-line SVG: value from the dot's position between the two end labels. */
+function linePoints(svg) {
+  const ends = [...svg.matchAll(/m-bold" text-anchor="middle">([^<]+)</g)].map((m) => m[1]);
+  const from = D.toThousandths(ends[0]), to = D.toThousandths(ends[1]);
+  const cx = [...svg.matchAll(/<circle cx="([\d.]+)"/g)].map((m) => Number(m[1]));
+  const labels = ends.slice(2);
+  return cx.map((x, i) => ({ v: Math.round(from + ((x - 24) / 292) * (to - from)), label: labels[i] }));
+}
 
 for (const id of LESSONS.filter((x) => x !== 'd01')) {
   const bank = engine.banks[id];

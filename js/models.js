@@ -114,7 +114,9 @@
     const pad = o.pad !== false;
     const ps = nums.map((n) => G.D.parse(n));
     const tens = ps.some((x) => x.whole.length > 1);
-    const cols = tens ? PLACES_T : PLACES, pt = cols.indexOf('tenths');
+    // Show places only as far as the longest number (or o.places), so 0.8 and 0.75 line up as 0.80 and 0.75.
+    const maxP = Math.max(1, o.places || Math.max(...ps.map((x) => x.places)));
+    const cols = (tens ? PLACES_T : PLACES).slice(0, (tens ? 2 : 1) + maxP), pt = cols.indexOf('tenths');
     const head = (o.labels ? '<th scope="col"><span class="sr-only">Number</span></th>' : '') + cols.map((p, i) => (i === pt ? '<th class="pv-point" aria-hidden="true"></th>' : '') +
       `<th scope="col" class="${o.highlight === p ? 'pv-hi' : ''}">${PLACE_TITLES[p]}</th>`).join('');
     const rows = ps.map((x, r) => {
