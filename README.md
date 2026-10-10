@@ -14,7 +14,7 @@ Teach the concept clearly, provide meaningful practice, and assess independent m
 - **Parent Progress:** lesson status, most recent test, skills correct / needing practice, suggested next step. Stored only in this browser.
 
 ## Status
-**Decimals Lessons 1–4 are implemented**: Lesson 1 (Understanding Decimals) is audited and live; Lessons 2–4 (Place Value, Comparing, Ordering) are on branch `claude/decimals-d02-d04` awaiting approval. Lessons 5–10 are shown as "Coming later" and are not built. See [docs/STATUS.md](docs/STATUS.md) and [docs/LESSON-1-AUDIT.md](docs/LESSON-1-AUDIT.md).
+**Decimals Lessons 1–4 are implemented**: Lessons 1–4 (Understanding Decimals, Place Value, Comparing, Ordering) are live at https://bazeocrisy.github.io/Gabriellas-Math-Lab/. Lessons 5–10 are shown as "Coming later" and are not built. See [docs/STATUS.md](docs/STATUS.md) and [docs/LESSON-1-AUDIT.md](docs/LESSON-1-AUDIT.md).
 
 ## Run it
 It is a static site with no build step and no dependencies.

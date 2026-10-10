@@ -1,11 +1,13 @@
 # Project status
 
-Updated: 2026-10-10 · Live (Lesson 1): https://bazeocrisy.github.io/Gabriellas-Math-Lab/ · Lessons 2–4: branch `claude/decimals-d02-d04` · Lesson 1 audit: [LESSON-1-AUDIT.md](LESSON-1-AUDIT.md)
+Updated: 2026-10-10 · Live (Lessons 1–4): https://bazeocrisy.github.io/Gabriellas-Math-Lab/ · Lesson 1 audit: [LESSON-1-AUDIT.md](LESSON-1-AUDIT.md)
 
 ## Live site (main)
-- Lesson 1 only: https://bazeocrisy.github.io/Gabriellas-Math-Lab/ (merge `a236b32`, verified live 2026-10-10; details below).
+- **Lessons 1–4 and the new homepage are live:** https://bazeocrisy.github.io/Gabriellas-Math-Lab/
+- PR #5 merged into `main` (merge commit `b61b65e`, 2026-10-10). The GitHub Pages build of `b61b65e` succeeded.
+- **Verified live:** the full browser suite ran against the live URL with **297/297 pass**. It covers Teach, Practice, Test, Notes and Parent Progress for Lessons 1–4, the homepage, saved Lesson 1 progress, layouts at 375–1920 px, no console errors, and all scripts and styles loading with HTTP 200.
 
-## Branch `claude/decimals-d02-d04`: built and tested, NOT merged or deployed (awaiting approval)
+## Lessons 2–4 and homepage (merged from `claude/decimals-d02-d04`)
 - [x] **Homepage:** Teach blue, Practice green, Test purple (cards, buttons, mode labels, progress bars); progress chips per lesson (Teach / Practice / Test, always in words); Lesson Notes as a resource button; all ten decimal lessons listed. Lessons 1–4 have working controls; Lessons 5–10 say "Coming later" with no controls or statuses. Lessons 8–9 are marked as including supplemental skills (no Grade 5 Georgia standard covers multiplying or dividing decimals).
 - [x] **Lesson 2, Decimal Place Value** (5.NR.4.1, 5.NR.1.1):
   - 15 Teach screens and 7 guided checks: places from tens to thousandths; place vs value (required example: the value of 7 in 4.735); ×10 and 1/10 between neighbouring places; expanded form both ways; word form; placeholder zeros.
@@ -44,7 +46,6 @@ Updated: 2026-10-10 · Live (Lesson 1): https://bazeocrisy.github.io/Gabriellas-
   - Command: `LIVE_URL=https://bazeocrisy.github.io/Gabriellas-Math-Lab/ npm run test:browser`
 
 ## Not done yet
-- [ ] Merge `claude/decimals-d02-d04` and deploy Lessons 2–4: **waiting for owner approval**. Re-run the live suite after deploying.
 - [ ] Test on a real iPhone/iPad (Safari). Mobile layouts were checked only with Chrome device emulation.
 - [ ] Check with a real screen reader. Labels, roles and keyboard focus are in place but untested with assistive technology.
 - [ ] Check the printed Lesson Notes on paper. Print styles exist; only on-screen rendering was checked.
