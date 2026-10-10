@@ -1,251 +1,174 @@
-/* Gabriella's Math Lab — study-guide design system (shared by every lesson).
-   Pages are fixed US Letter sheets: each <section class="page"> is exactly one printed page,
-   so nothing flows across a page break by accident. tools/build.mjs fails the build if any
-   page's content overflows its sheet.
-   Conventions for every lesson:
-   - Section colors (t-learn, t-see, ...) and place-value colors never change meaning.
-   - Model shading (--shade) is NOT a place-value color: it only means "this amount".
-     A second amount being compared uses data-color="2", drawn hatched so it also shows in grayscale.
-   - Caveat "teacher notes" (.hand) appear only in Worked Examples, at most one per example.
-   - Grids a student must shade are at least 1.25in (data-size >= 120).
-   - Use the utility classes below instead of inline styles; inline style is for one-off --sec overrides. */
+/* Gabriella's Math Lab: decimals workbook design system (shared by every section).
+   Each <section class="page"> is exactly one US Letter sheet. tools/build.mjs fails the build if anything
+   overflows a page, runs into the footer, or sticks out of its box.
+
+   Every skill uses the same pattern and colors:
+     Skill banner  (navy)    skill number, name, one-line goal
+     SHOW HOW      (blue)    a real problem solved step by step, with a one-line "Why it works"
+     LET'S TRY ONE (green)   a similar problem with some steps filled in
+     YOUR TURN     (purple)  5-10 problems, easier to harder, each with its own work space
+     ANSWER KEY    (slate)   generated from the questions by assets/practice.js
+   Place-value colors never change meaning: tens brown, ones red, tenths orange, hundredths teal, thousandths pink.
+   Model shading (--shade) is not a place-value color: it only means "this amount". */
 
 @font-face { font-family: 'Lexend'; src: url('fonts/Lexend.ttf') format('truetype'); font-weight: 100 900; }
 @font-face { font-family: 'Caveat'; src: url('fonts/Caveat.ttf') format('truetype'); font-weight: 400 700; }
 
 :root {
-  /* Ink and paper */
-  --ink: #1d2742;
-  --ink-soft: #4a5571;
-  --rule: #c9d0e0;
-  --paper: #ffffff;
-  --wash: #f4f6fb;
+  --ink: #1d2742; --ink-soft: #4a5571; --rule: #c9d0e0; --paper: #fff; --wash: #f4f6fb;
+  --navy: #1d2742;
 
-  /* Section colors: one per kind of page, used for the tab, headings and box borders. */
-  --learn: #0f7c74;      --learn-wash: #e3f4f1;
-  --see: #2f5fd0;        --see-wash: #e7eefc;
-  --worked: #6a3fc1;     --worked-wash: #efe9fb;
-  --guided: #a86400;     --guided-wash: #fff3dc;
-  --solo: #d2475a;       --solo-wash: #fde9ec;
-  --key: #3f5168;        --key-wash: #ebeff4;
-  --parent: #8a3f8f;     --parent-wash: #f6e8f6;
+  --show: #1f63c6;  --show-wash: #e8f0fc;   /* SHOW HOW: worked examples */
+  --try: #237a3b;   --try-wash: #e6f4ea;    /* LET'S TRY ONE: guided practice */
+  --turn: #6a3fb8;  --turn-wash: #f0eafa;   /* YOUR TURN: independent practice */
+  --key: #3f5168;   --key-wash: #ebeff4;    /* answer key */
+  --gold: #f2b84b;
 
-  /* Place-value colors: the same place always has the same color, in every lesson. */
-  --ones: #6a3fc1;
-  --tenths: #2f5fd0;
-  --hundredths: #0f8a5f;
-  --thousandths: #e0701a;
-  --tenths-wash: #dfe8fb;
-  --hundredths-wash: #d9f1e6;
-  --thousandths-wash: #fde6d3;
-  --thousandths-dark: #c4581a; /* header fills behind white text */
+  --tens: #7a5236; --ones: #c62f2f; --tenths: #d9600b; --hundredths: #0b7d8c; --thousandths: #b8235a;
 
-  --shade: #4f7fa8;      /* shaded part of a model: an amount, not a place value */
-  --shade-2: #b4466f;    /* second amount being compared: drawn as hatching */
-  --shade-2-wash: #f7dce7;
-  --empty: #ffffff;
-  --grid-line: #9aa7c2;
-
-  --note: #c2410c;       /* handwritten teacher notes */
-  --sec: var(--learn);
-  --sec-wash: var(--learn-wash);
+  --shade: #4f7fa8; --shade-2: #b4466f; --shade-2-wash: #f7dce7;
+  --empty: #fff; --grid-line: #9aa7c2; --note: #c2410c;
+  --sec: var(--show); --sec-wash: var(--show-wash);
 }
 
 * { box-sizing: border-box; }
 @page { size: 8.5in 11in; margin: 0; }
 html, body { margin: 0; padding: 0; background: #d5d9e2; }
 body {
-  font-family: 'Lexend', 'Segoe UI', sans-serif;
-  font-size: 10.6pt; line-height: 1.42; color: var(--ink);
-  -webkit-print-color-adjust: exact; print-color-adjust: exact;
-  font-variant-numeric: lining-nums;
+  font-family: 'Lexend', 'Segoe UI', sans-serif; font-size: 11pt; line-height: 1.4; color: var(--ink);
+  -webkit-print-color-adjust: exact; print-color-adjust: exact; font-variant-numeric: lining-nums tabular-nums;
 }
 @media print { html, body { background: none; } }
 
 /* ───────── Page frame ───────── */
 .page {
-  width: 8.5in; height: 11in; position: relative; overflow: hidden;
-  background: var(--paper); margin: 0.25in auto; padding: 0.55in 0.6in 0.98in;
-  page-break-after: always; break-after: page;
-  display: flex; flex-direction: column;
+  width: 8.5in; height: 11in; position: relative; overflow: hidden; background: var(--paper);
+  margin: 0.25in auto; padding: 0.55in 0.6in 0.98in; display: flex; flex-direction: column;
+  break-after: page; page-break-after: always;
 }
+.page:last-child { break-after: auto; page-break-after: auto; }
 @media print { .page { margin: 0; } }
-.page:last-child { page-break-after: auto; break-after: auto; }
-.page > .body { flex: 1; display: flex; flex-direction: column; gap: 0.15in; min-height: 0; }
+.page > .body { flex: 1; display: flex; flex-direction: column; gap: 0.16in; min-height: 0; }
 
-/* Section-colored themes */
-.t-learn  { --sec: var(--learn);  --sec-wash: var(--learn-wash); }
-.t-see    { --sec: var(--see);    --sec-wash: var(--see-wash); }
-.t-worked { --sec: var(--worked); --sec-wash: var(--worked-wash); }
-.t-guided { --sec: var(--guided); --sec-wash: var(--guided-wash); }
-.t-solo   { --sec: var(--solo);   --sec-wash: var(--solo-wash); }
-.t-key    { --sec: var(--key);    --sec-wash: var(--key-wash); }
-.t-parent { --sec: var(--parent); --sec-wash: var(--parent-wash); }
-
-/* Header: colored section tab + running title */
-.pg-head {
-  display: flex; align-items: center; gap: 0.14in;
-  border-bottom: 2.5px solid var(--sec); padding-bottom: 0.08in; margin-bottom: 0.18in;
-}
-.pg-tab {
-  background: var(--sec); color: #fff; font-weight: 700; font-size: 9pt; letter-spacing: 0.08em;
-  text-transform: uppercase; padding: 0.05in 0.14in; border-radius: 0.08in 0.08in 0.08in 0;
-}
-.pg-title { font-size: 9pt; color: var(--ink-soft); font-weight: 500; }
-.pg-head .name-line { margin-left: auto; font-size: 9pt; color: var(--ink-soft); }
-.name-line .blank { display: inline-block; width: 1.6in; border-bottom: 1px solid var(--ink-soft); margin-left: 0.04in; }
-
-/* Footer */
+.pg-head { display: flex; align-items: center; gap: 0.12in; border-bottom: 2px solid var(--rule); padding-bottom: 0.07in; margin-bottom: 0.16in; font-size: 9pt; color: var(--ink-soft); }
+.pg-head .sec-tag { background: var(--navy); color: #fff; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; padding: 0.04in 0.12in; border-radius: 0.06in; font-size: 8.5pt; }
+.pg-head .name-line { margin-left: auto; }
+.blank { display: inline-block; border-bottom: 1px solid var(--ink-soft); width: 1.6in; margin-left: 0.04in; }
 .pg-foot {
-  position: absolute; left: 0.6in; right: 0.6in; bottom: 0.5in;
-  display: flex; justify-content: space-between; align-items: center;
+  position: absolute; left: 0.6in; right: 0.6in; bottom: 0.5in; display: flex; justify-content: space-between; align-items: center;
   font-size: 8pt; color: var(--ink-soft); border-top: 1px solid var(--rule); padding-top: 0.06in;
 }
-.pg-foot .num {
-  background: var(--sec); color: #fff; font-weight: 700; min-width: 0.26in; height: 0.26in;
-  border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 8.5pt;
-}
+.pg-foot .num { background: var(--navy); color: #fff; font-weight: 700; min-width: 0.26in; height: 0.26in; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; }
 
 /* ───────── Type ───────── */
-h1, h2, h3, h4 { margin: 0; line-height: 1.15; color: var(--ink); }
-h2.sec-title { font-size: 21pt; font-weight: 700; color: var(--sec); letter-spacing: -0.01em; }
-h2.sec-title small { display: block; font-size: 10.5pt; font-weight: 400; color: var(--ink-soft); margin-top: 0.04in; letter-spacing: 0; }
-h3 { font-size: 13pt; font-weight: 700; }
-h4 { font-size: 10.6pt; font-weight: 700; }
+h1, h2, h3, h4 { margin: 0; line-height: 1.15; }
 p { margin: 0; }
-p + p { margin-top: 0.06in; }
 b, strong { font-weight: 650; }
 .muted { color: var(--ink-soft); }
-.small { font-size: 9pt; }
+.small { font-size: 9.2pt; }
 .center { text-align: center; }
-.num-big { font-size: 20pt; font-weight: 700; letter-spacing: 0.01em; }
-.hand { font-family: 'Caveat', cursive; color: var(--note); font-size: 14pt; line-height: 1.1; font-weight: 600; }
-
-/* Place-value coloring for digits and words */
-.d-ones { color: var(--ones); font-weight: 700; }
-.d-t { color: var(--tenths); font-weight: 700; }
-.d-h { color: var(--hundredths); font-weight: 700; }
+.math { font-size: 15pt; font-weight: 600; letter-spacing: 0.01em; }
+.math-lg { font-size: 20pt; font-weight: 700; letter-spacing: 0.02em; }
+.hand { font-family: 'Caveat', cursive; color: var(--note); font-size: 15pt; font-weight: 600; line-height: 1; }
+.d-tens { color: var(--tens); font-weight: 700; } .d-ones { color: var(--ones); font-weight: 700; }
+.d-t { color: var(--tenths); font-weight: 700; } .d-h { color: var(--hundredths); font-weight: 700; }
 .d-th { color: var(--thousandths); font-weight: 700; }
+.hi { background: #fff2b3; border-radius: 0.05in; padding: 0 0.04in; box-shadow: 0 0 0 2px #f2b84b inset; }
 
 /* ───────── Layout helpers ───────── */
-.row { display: flex; gap: 0.18in; align-items: stretch; }
-.row > * { flex: 1; min-width: 0; }
+.row { display: flex; gap: 0.2in; align-items: center; }
+.row > * { min-width: 0; }
 .row.top { align-items: flex-start; }
-.row.mid { align-items: center; }
-.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0.16in; }
-.grid3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.14in; }
-.stack { display: flex; flex-direction: column; gap: 0.08in; }
-.fill { flex: 1; }
+.grow { flex: 1; }
+.fixed { flex: 0 0 auto; }
+.stack { display: flex; flex-direction: column; gap: 0.07in; }
 .spacer { flex: 1; }
+.fig { display: flex; flex-direction: column; align-items: center; gap: 0.04in; margin: 0; }
+.cap { font-size: 8.8pt; color: var(--ink-soft); text-align: center; }
 
-/* ───────── Boxes ───────── */
-.box { border: 1.6px solid var(--sec); border-radius: 0.12in; padding: 0.12in 0.16in; background: #fff; }
-.box.wash { background: var(--sec-wash); border-color: transparent; }
-.box-title {
-  display: inline-block; font-weight: 700; font-size: 9pt; letter-spacing: 0.07em; text-transform: uppercase;
-  color: var(--sec); margin-bottom: 0.05in;
-}
-.callout {
-  border-left: 5px solid var(--sec); background: var(--sec-wash); padding: 0.1in 0.16in;
-  border-radius: 0 0.1in 0.1in 0;
-}
-.callout.warn { --sec: var(--solo); --sec-wash: var(--solo-wash); }
-.callout.tip { --sec: var(--guided); --sec-wash: var(--guided-wash); }
-.big-idea {
-  background: var(--sec); color: #fff; border-radius: 0.14in; padding: 0.13in 0.2in;
-  font-size: 12pt; font-weight: 500;
-}
-.big-idea b { font-weight: 700; }
+/* ───────── Skill banner ───────── */
+.skill { display: flex; align-items: center; gap: 0.16in; background: var(--navy); color: #fff; border-radius: 0.14in; padding: 0.12in 0.2in; }
+.skill .sn { flex: 0 0 auto; background: var(--gold); color: var(--navy); font-weight: 800; font-size: 17pt; border-radius: 0.1in; padding: 0.02in 0.14in; }
+.skill h2 { font-size: 18pt; font-weight: 700; color: #fff; }
+.skill .goal { font-size: 10pt; color: #d6def2; margin-top: 0.02in; }
 
-/* Steps for worked examples */
+/* ───────── Section boxes: SHOW HOW / LET'S TRY ONE / YOUR TURN ───────── */
+.box { border: 2px solid var(--sec); border-radius: 0.14in; overflow: hidden; background: #fff; }
+.box > .lbl { background: var(--sec); color: #fff; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; font-size: 9pt; padding: 0.05in 0.16in; display: flex; justify-content: space-between; }
+.box > .in { padding: 0.12in 0.18in 0.14in; display: flex; flex-direction: column; gap: 0.1in; }
+.show { --sec: var(--show); --sec-wash: var(--show-wash); }
+.try  { --sec: var(--try);  --sec-wash: var(--try-wash); }
+.turn { --sec: var(--turn); --sec-wash: var(--turn-wash); }
+.keybox { --sec: var(--key); --sec-wash: var(--key-wash); }
+.problem { font-size: 13pt; font-weight: 600; }
+.problem .math { font-size: 15pt; }
+.why { background: var(--sec-wash); border-radius: 0.08in; padding: 0.06in 0.12in; font-size: 9.6pt; }
+.why b:first-child { color: var(--sec); }
+
 ol.steps { list-style: none; margin: 0; padding: 0; counter-reset: s; display: flex; flex-direction: column; gap: 0.06in; }
-ol.steps > li { counter-increment: s; position: relative; padding-left: 0.34in; }
+ol.steps > li { counter-increment: s; position: relative; padding-left: 0.34in; min-height: 0.24in; }
 ol.steps > li::before {
-  content: counter(s); position: absolute; left: 0; top: 0.01in; width: 0.22in; height: 0.22in; border-radius: 50%;
+  content: counter(s); position: absolute; left: 0; top: 0; width: 0.24in; height: 0.24in; border-radius: 50%;
   background: var(--sec); color: #fff; font-weight: 700; font-size: 8.5pt; display: flex; align-items: center; justify-content: center;
 }
-ul.ticks { margin: 0; padding-left: 0.2in; }
-ul.ticks li + li { margin-top: 0.03in; }
 
-/* ───────── Questions ───────── */
-.q { display: flex; gap: 0.12in; break-inside: avoid; }
-.q-n {
-  flex: 0 0 auto; width: 0.32in; height: 0.32in; border-radius: 0.08in; background: var(--sec); color: #fff;
-  font-weight: 700; font-size: 11pt; display: flex; align-items: center; justify-content: center;
-}
-.q-body { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 0.07in; }
-.q-skill { font-size: 7.5pt; font-weight: 600; color: var(--sec); text-transform: uppercase; letter-spacing: 0.08em; }
-.choices { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.06in 0.12in; }
-.choices.two { grid-template-columns: 1fr 1fr; }
-.choices > div { display: flex; align-items: center; gap: 0.08in; }
-.bubble {
-  flex: 0 0 auto; width: 0.22in; height: 0.22in; border: 1.4px solid var(--ink-soft); border-radius: 50%;
-  font-size: 8pt; font-weight: 600; display: inline-flex; align-items: center; justify-content: center; color: var(--ink-soft);
-}
-.bubble.sq { border-radius: 0.04in; }
-.ans-line { display: inline-block; min-width: 1.1in; border-bottom: 1.4px solid var(--ink); height: 0.3in; vertical-align: bottom; }
-.ans-line.w2 { min-width: 2.2in; }
-.ans-line.w3 { min-width: 3.4in; }
-.ans-box {
-  display: inline-block; width: 1.15in; height: 0.42in; border: 1.6px solid var(--ink-soft); border-radius: 0.06in;
-  vertical-align: middle; background: #fff;
-}
-.work {
-  border: 1.2px dashed var(--grid-line); border-radius: 0.1in; min-height: 0.8in; position: relative;
-  background-image: radial-gradient(circle, #cfd6e6 0.7px, transparent 0.8px); background-size: 0.2in 0.2in;
-  background-position: 0.1in 0.1in;
-}
-.work::before {
-  content: 'My work'; position: absolute; top: 0.04in; left: 0.1in; font-size: 7.5pt; color: var(--ink-soft);
-  background: #fff; padding: 0 0.04in; letter-spacing: 0.05em; text-transform: uppercase;
-}
+/* Blanks to fill */
+.fill { display: inline-block; min-width: 0.6in; border-bottom: 1.5px solid var(--ink); height: 0.3in; vertical-align: bottom; }
+.fill.w { min-width: 1.3in; } .fill.ww { min-width: 2.6in; }
+.fill.box-in { min-width: 0.5in; height: 0.38in; border: 1.5px solid var(--ink-soft); border-radius: 0.06in; vertical-align: middle; }
+
+/* ───────── YOUR TURN problem cards ───────── */
+.cards { flex: 1; display: grid; grid-template-columns: 1fr 1fr; gap: 0.14in; min-height: 0; }
+.cards.one { grid-template-columns: 1fr; }
+.card { border: 1.4px solid #cdbfe9; border-radius: 0.1in; padding: 0.1in 0.12in; display: flex; flex-direction: column; gap: 0.06in; min-height: 0; break-inside: avoid; }
+.card .top { display: flex; gap: 0.1in; align-items: flex-start; }
+.q-n { flex: 0 0 auto; width: 0.3in; height: 0.3in; border-radius: 0.07in; background: var(--turn); color: #fff; font-weight: 700; font-size: 11pt; display: flex; align-items: center; justify-content: center; }
+.card .prompt { flex: 1; font-size: 11pt; }
+.card .prompt .math { font-size: 13.5pt; }
+.card .work { flex: 1; min-height: 0.5in; }
+.card .ans { display: flex; justify-content: flex-end; align-items: flex-end; gap: 0.08in; font-size: 10pt; color: var(--ink-soft); }
+.card .ans .fill { min-width: 1.4in; }
+.card .ans .fill.ww { min-width: 2.7in; }
+.work { border-radius: 0.06in; background-image: radial-gradient(circle, #cfd6e6 0.7px, transparent 0.8px); background-size: 0.2in 0.2in; background-position: 0.1in 0.1in; }
 .lines { display: flex; flex-direction: column; }
 .lines > i { display: block; height: 0.34in; border-bottom: 1.2px solid var(--rule); }
-.hint {
-  font-size: 9pt; background: var(--guided-wash); border-radius: 0.08in; padding: 0.05in 0.1in; color: #7a4a00;
-}
-.hint::before { content: 'Hint  '; font-weight: 700; letter-spacing: 0.05em; }
+.choices { display: flex; gap: 0.18in; flex-wrap: wrap; font-size: 11.5pt; }
+.choices span { display: inline-flex; align-items: center; gap: 0.06in; }
+.bubble { width: 0.22in; height: 0.22in; border: 1.4px solid var(--ink-soft); border-radius: 50%; font-size: 8pt; font-weight: 600; display: inline-flex; align-items: center; justify-content: center; color: var(--ink-soft); }
 
-/* Fill-in frames for guided practice: given text, plus blanks */
-.frame { display: inline-block; min-width: 0.55in; border-bottom: 1.4px solid var(--ink); text-align: center; height: 0.28in; vertical-align: bottom; }
-.frame.w { min-width: 1.2in; }
-
-/* ───────── Vocabulary cards ───────── */
-.vocab { display: grid; grid-template-columns: 1fr 1fr; gap: 0.1in 0.14in; }
-.vcard { display: flex; gap: 0.1in; align-items: center; border: 1.4px solid var(--rule); border-radius: 0.1in; padding: 0.08in 0.12in; }
-.vcard .term { font-weight: 700; color: var(--sec); font-size: 10.6pt; }
-.vcard .def { font-size: 9.2pt; line-height: 1.32; }
-.vcard .pic { flex: 0 0 0.85in; display: flex; align-items: center; justify-content: center; }
-
-/* ───────── Tables ───────── */
-table { border-collapse: collapse; width: 100%; }
-.tbl th, .tbl td { border: 1px solid var(--rule); padding: 0.04in 0.08in; text-align: left; vertical-align: top; font-size: 9.4pt; }
-.tbl th { background: var(--sec-wash); color: var(--ink); font-weight: 700; }
-
-/* Place-value chart */
-table.pv { width: auto; margin: 0 auto; border-collapse: separate; border-spacing: 0; }
-table.pv th, table.pv td { text-align: center; padding: 0.04in 0.1in; min-width: 0.85in; border: 1.4px solid var(--ink-soft); }
+/* ───────── Place-value chart (assets/models.js) ───────── */
+table { border-collapse: collapse; }
+table.pv { margin: 0 auto; border-collapse: separate; border-spacing: 0; }
+table.pv th, table.pv td { text-align: center; padding: 0.04in 0.08in; min-width: 0.82in; border: 1.4px solid var(--ink-soft); }
 table.pv th { font-size: 8.6pt; font-weight: 700; color: #fff; line-height: 1.2; }
 table.pv th small { display: block; font-weight: 500; font-size: 7.8pt; }
 table.pv td { font-size: 20pt; font-weight: 700; height: 0.5in; background: #fff; }
+table.pv th.pv-tens { background: var(--tens); } table.pv td.pv-tens { color: var(--tens); }
 table.pv th.pv-ones { background: var(--ones); } table.pv td.pv-ones { color: var(--ones); }
-table.pv th.pv-t { background: var(--tenths); }  table.pv td.pv-t { color: var(--tenths); }
+table.pv th.pv-t { background: var(--tenths); } table.pv td.pv-t { color: var(--tenths); }
 table.pv th.pv-h { background: var(--hundredths); } table.pv td.pv-h { color: var(--hundredths); }
-table.pv th.pv-th { background: var(--thousandths-dark); } table.pv td.pv-th { color: var(--thousandths); }
-table.pv .pv-dot { min-width: 0.2in; width: 0.2in; padding: 0; border-left: none; border-right: none; background: #fff; color: var(--ink); }
-table.pv th.pv-dot { background: #fff; border-top-color: transparent; }
-table.pv.sm th, table.pv.sm td { min-width: 0.62in; padding: 0.03in 0.06in; }
+table.pv th.pv-th { background: var(--thousandths); } table.pv td.pv-th { color: var(--thousandths); }
+table.pv th.pv-dot, table.pv td.pv-dot { min-width: 0.22in; width: 0.22in; padding: 0; border-left: none; border-right: none; background: #fff; color: var(--ink); }
+table.pv th.pv-dot { border-top-color: transparent; }
+table.pv td.pv-on { background: #fff2b3; box-shadow: inset 0 0 0 3px var(--gold); }
+table.pv .pv-dim { opacity: 0.45; }
+table.pv tr.pv-vals td { font-size: 8.6pt; font-weight: 500; height: auto; line-height: 1.25; color: var(--ink); padding: 0.04in; }
+table.pv tr.pv-vals td b { display: block; font-size: 11pt; }
+table.pv.sm th, table.pv.sm td { min-width: 0.6in; padding: 0.03in 0.05in; }
+table.pv.sm th { font-size: 7.8pt; }
 table.pv.sm td { font-size: 15pt; height: 0.38in; }
-table.pv.empty td { height: 0.5in; }
+table.pv.xs th, table.pv.xs td { min-width: 0.46in; padding: 0.02in 0.03in; }
+table.pv.xs th { font-size: 6.8pt; } table.pv.xs th small { font-size: 6.4pt; }
+table.pv.xs td { font-size: 13pt; height: 0.32in; }
 
-/* ───────── Models (SVG from assets/models.js) ───────── */
+/* ───────── Models (SVG) ───────── */
 svg.m { display: block; overflow: visible; }
 svg.m .on { fill: var(--shade); }
 svg.m .on2 { fill: var(--shade-2-wash); }
 svg.m .hatch { stroke: var(--shade-2); stroke-width: 1.3; }
-svg.m .cell.on { stroke: #b9cadb; } /* light lines inside shaded squares, so they can still be counted */
 svg.m .off { fill: var(--empty); }
 svg.m .cell { stroke: var(--grid-line); stroke-width: 0.6; }
+svg.m .cell.on { stroke: #b9cadb; }
 svg.m .col { stroke: #5d6b8a; stroke-width: 1.2; }
 svg.m .m-frame { fill: none; stroke: var(--ink); stroke-width: 2; }
 svg.m .focus { fill: none; stroke: var(--thousandths); stroke-width: 2; }
@@ -253,60 +176,49 @@ svg.m .zoom { stroke: var(--thousandths); stroke-width: 1.2; stroke-dasharray: 4
 svg.m text { font-family: 'Lexend', sans-serif; fill: var(--ink); font-size: 11px; }
 svg.m .lbl { font-weight: 700; }
 svg.m .axis, svg.m .tick { stroke: var(--ink); stroke-width: 1.6; }
-svg.m .dot { fill: var(--solo); stroke: #fff; stroke-width: 1.5; }
-.fig { display: flex; flex-direction: column; align-items: center; gap: 0.05in; }
-.fig figcaption, .fig .cap { font-size: 8.8pt; color: var(--ink-soft); text-align: center; }
+svg.m .dot { fill: var(--ones); stroke: #fff; stroke-width: 1.5; }
+
+/* ───────── Ten-times ladder (Skill 1.6) ───────── */
+.ladder { display: flex; align-items: center; justify-content: center; gap: 0.08in; }
+.ladder .rung { border: 2px solid var(--rule); border-radius: 0.1in; padding: 0.06in 0.12in; text-align: center; font-weight: 700; font-size: 13pt; min-width: 1.1in; }
+.ladder .rung small { display: block; font-size: 8.5pt; font-weight: 500; color: var(--ink-soft); }
+.ladder .arrow { font-size: 9pt; font-weight: 700; color: var(--show); text-align: center; line-height: 1.1; }
 
 /* ───────── Answer key ───────── */
-.key { display: grid; grid-template-columns: 1fr 1fr; gap: 0.08in 0.2in; }
-.k { break-inside: avoid; display: flex; gap: 0.09in; font-size: 9.2pt; line-height: 1.34; }
-.k .kn { flex: 0 0 auto; font-weight: 700; color: #fff; background: var(--sec); border-radius: 0.06in; min-width: 0.3in; height: 0.22in; display: flex; align-items: center; justify-content: center; font-size: 8.6pt; }
-.k .ka { font-weight: 700; color: var(--hundredths); }
-.k.g .kn { background: var(--guided); }
-.k.s .kn { background: var(--solo); }
-
-/* ───────── Checklist ───────── */
-.check { display: flex; gap: 0.1in; align-items: flex-start; }
-.cb { flex: 0 0 auto; width: 0.19in; height: 0.19in; border: 1.6px solid var(--ink-soft); border-radius: 0.04in; margin-top: 0.02in; background: #fff; }
+.key-cols { columns: 2; column-gap: 0.3in; }
+.key-skill { break-inside: avoid; margin-bottom: 0.14in; }
+.key-skill h4 { font-size: 10.5pt; display: flex; align-items: center; gap: 0.08in; border-bottom: 1.5px solid var(--rule); padding-bottom: 0.03in; margin-bottom: 0.05in; }
+.key-badge { background: var(--navy); color: #fff; border-radius: 0.05in; padding: 0.01in 0.07in; font-size: 9pt; }
+.key-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.035in; }
+.key-list li { display: flex; gap: 0.07in; font-size: 8.8pt; line-height: 1.3; }
+.key-list .kn { flex: 0 0 auto; min-width: 0.3in; height: 0.19in; border-radius: 0.05in; background: var(--turn); color: #fff; font-weight: 700; font-size: 8pt; display: flex; align-items: center; justify-content: center; }
+.key-list .kn.try { background: var(--try); }
+.key-list .ka { color: var(--ink); }
+.key-list .kw { color: var(--ink-soft); }
 
 /* ───────── Cover ───────── */
-.cover { padding: 0; }
-.cover .band { background: var(--ink); color: #fff; padding: 0.4in 0.45in 0.36in; margin: 0.5in 0.5in 0; border-radius: 0.18in 0.18in 0 0; position: relative; }
-.cover .brand { font-size: 10pt; letter-spacing: 0.18em; text-transform: uppercase; font-weight: 600; color: #b9c4e4; }
-.cover .unit { margin-top: 0.22in; font-size: 13pt; font-weight: 600; color: #ffd27a; letter-spacing: 0.04em; }
-.cover h1 { color: #fff; font-size: 40pt; font-weight: 800; letter-spacing: -0.02em; line-height: 1.02; margin-top: 0.06in; }
-.cover .sub { margin-top: 0.12in; font-size: 12.5pt; color: #dce3f5; max-width: 5.6in; }
-.cover .stripe { height: 0.12in; display: flex; margin: 0 0.5in; border-radius: 0 0 0.1in 0.1in; overflow: hidden; }
-.cover .stripe i { flex: 1; }
-.cover .inner { padding: 0.3in 0.6in 0; flex: 1; display: flex; flex-direction: column; gap: 0.22in; }
-.toc { display: grid; grid-template-columns: 1fr 1fr; gap: 0.06in 0.3in; }
-.toc div { display: flex; align-items: center; gap: 0.1in; font-size: 10pt; border-bottom: 1px dotted var(--rule); padding-bottom: 0.04in; }
-.toc .sw { width: 0.14in; height: 0.14in; border-radius: 0.04in; flex: 0 0 auto; }
-.toc .pg { margin-left: auto; font-weight: 700; color: var(--ink-soft); }
+.cover .band { background: var(--navy); color: #fff; border-radius: 0.18in; padding: 0.38in 0.42in 0.34in; }
+.cover .brand { font-size: 9.5pt; letter-spacing: 0.18em; text-transform: uppercase; font-weight: 600; color: #b9c4e4; }
+.cover .unit { margin-top: 0.18in; font-size: 12pt; font-weight: 600; color: var(--gold); letter-spacing: 0.06em; }
+.cover h1 { color: #fff; font-size: 36pt; font-weight: 800; letter-spacing: -0.02em; line-height: 1.03; margin-top: 0.04in; }
+.cover .sub { margin-top: 0.1in; font-size: 12pt; color: #dce3f5; }
+.flow { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.12in; }
+.flow > div { border-radius: 0.12in; padding: 0.1in 0.12in; color: #fff; font-size: 9pt; line-height: 1.3; }
+.flow > div b { display: block; font-size: 11pt; letter-spacing: 0.04em; text-transform: uppercase; margin-bottom: 0.03in; }
+.toc { width: 100%; border-collapse: collapse; font-size: 10.5pt; }
+.toc td { padding: 0.055in 0.06in; border-bottom: 1px dotted var(--rule); }
+.toc td.n { width: 0.5in; font-weight: 800; color: var(--show); }
+.toc td.p { width: 0.5in; text-align: right; font-weight: 700; color: var(--ink-soft); }
+.toc td.c { width: 1.1in; text-align: center; }
+.cb { display: inline-block; width: 0.17in; height: 0.17in; border: 1.5px solid var(--ink-soft); border-radius: 0.04in; vertical-align: middle; }
 
-/* The decimal-point column stays narrow in every chart size. */
-table.pv th.pv-dot, table.pv td.pv-dot, table.pv.sm th.pv-dot, table.pv.sm td.pv-dot { min-width: 0.22in; width: 0.22in; padding: 0; }
+/* The decimal-point column stays narrow at every chart size (must come after .sm/.xs). */
+table.pv th.pv-dot, table.pv td.pv-dot, table.pv.sm th.pv-dot, table.pv.sm td.pv-dot, table.pv.xs th.pv-dot, table.pv.xs td.pv-dot { min-width: 0.2in; width: 0.2in; padding: 0; }
+.cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.cards.one { grid-template-columns: minmax(0, 1fr); }
+.card > .below { align-self: center; }
 
-/* ───────── Utilities (use these instead of inline styles) ───────── */
-.fixed { flex: 0 0 auto; }
-.grow2 { flex: 1.4; }
-.num-md { font-size: 15pt; }
-.num-lg { font-size: 17pt; }
-.t-lg { font-size: 13pt; }
-.sym { flex: 0 0 auto; font-size: 26pt; font-weight: 700; color: var(--sec); }
-.mt-xs { margin-top: 0.04in; }
-.mt-sm { margin-top: 0.06in; }
-.mt-md { margin-top: 0.1in; }
-.gap-sm { gap: 0.1in; }
-.work.sm { min-height: 0.75in; }
-.work.md { min-height: 1in; }
-.work.lg { min-height: 1.3in; }
-.ans-row { display: flex; gap: 0.18in; align-items: stretch; }
-.ans-row > p { flex: 0.8; align-self: flex-end; }
-.ans-row > .work { flex: 1; }
-.cb.inline { display: inline-block; }
-.blank.wide { width: 2.6in; }
-.blank.mid { width: 1.1in; }
-.fig { margin: 0; }
-.dot-accent { color: var(--solo); font-size: 24pt; }
-.chain { font-size: 11pt; text-align: center; }
+/* LET'S TRY ONE fills the rest of its page with work space. */
+.body > .box.try { flex: 1; display: flex; flex-direction: column; min-height: 0; }
+.body > .box.try > .in { flex: 1; min-height: 0; }
+.work.auto { flex: 1; min-height: 0.45in; }

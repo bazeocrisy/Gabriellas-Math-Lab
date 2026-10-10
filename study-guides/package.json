@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "description": "Printable study guides for Gabriella's Math Lab (HTML/CSS source to PDF)",
   "scripts": {
-    "build": "node tools/build.mjs"
+    "build": "node tools/build.mjs",
+    "test": "node --test \"tests/*.test.cjs\""
   },
   "type": "module",
   "devDependencies": {

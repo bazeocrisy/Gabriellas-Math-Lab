@@ -126,17 +126,38 @@
     return svg(W, 66, b, `A number line from ${el.dataset.from} to ${el.dataset.to} cut into 10 equal jumps`);
   }
 
-  const COLS = { ones: ['Ones', '1', 'pv-ones'], t: ['Tenths', '0.1', 'pv-t'], h: ['Hundredths', '0.01', 'pv-h'], th: ['Thousandths', '0.001', 'pv-th'] };
+  // Place-value chart. data-value fills the digits from a number; data-digits="ones:4,h:3" fills chosen cells
+  // (empty cells stay blank, for chart-reading questions). data-cols picks columns (default ones,t,h,th; add "tens").
+  // data-hi="t" highlights one place; data-values="1" adds a row with each digit's value (7 tenths = 0.7).
+  const COLS = {
+    tens: ['Tens', '10', 'pv-tens', 10000], ones: ['Ones', '1', 'pv-ones', 1000], t: ['Tenths', '0.1', 'pv-t', 100],
+    h: ['Hundredths', '0.01', 'pv-h', 10], th: ['Thousandths', '0.001', 'pv-th', 1],
+  };
+  const UNIT = { tens: ['ten', 'tens'], ones: ['one', 'ones'], t: ['tenth', 'tenths'], h: ['hundredth', 'hundredths'], th: ['thousandth', 'thousandths'] };
   function chart(el) {
     const cols = (el.dataset.cols || 'ones,t,h,th').split(',');
     let digits = {};
     if (el.dataset.value && !el.dataset.blank) {
-      const v = parse(el.dataset.value), f = v.frac;
-      digits = { ones: v.whole, t: f[0] || '', h: f[1] || '', th: f[2] || '' };
+      const v = parse(el.dataset.value), f = v.frac, w = v.whole.padStart(2, ' ');
+      if (v.whole.length > 2) throw new Error('chart supports up to tens: ' + el.dataset.value);
+      digits = { tens: w[0].trim(), ones: w[1], t: f[0] || '', h: f[1] || '', th: f[2] || '' };
+      if (digits.tens && !cols.includes('tens')) throw new Error('number needs a tens column: ' + el.dataset.value);
     }
-    const head = cols.map((c, i) => (c !== 'ones' && cols[i - 1] === 'ones' ? '<th class="pv-dot"></th>' : '') + `<th class="${COLS[c][2]}">${COLS[c][0]}<small>${COLS[c][1]}</small></th>`).join('');
-    const row = cols.map((c, i) => (c !== 'ones' && cols[i - 1] === 'ones' ? '<td class="pv-dot">.</td>' : '') + `<td class="${COLS[c][2]}">${digits[c] ?? ''}</td>`).join('');
-    return `<table class="pv${el.dataset.sm ? ' sm' : ''}${el.dataset.blank ? ' empty' : ''}"><thead><tr>${head}</tr></thead><tbody><tr>${row}</tbody></table>`;
+    if (el.dataset.digits) for (const kv of el.dataset.digits.split(',')) { const [k, d] = kv.split(':'); digits[k] = d; }
+    const hi = el.dataset.hi;
+    const dot = (c, i) => c !== 'tens' && c !== 'ones' && (cols[i - 1] === 'ones');
+    const cls = (c) => COLS[c][2] + (hi ? (hi === c ? ' pv-on' : ' pv-dim') : '');
+    const head = cols.map((c, i) => (dot(c, i) ? '<th class="pv-dot"></th>' : '') + `<th class="${cls(c)}">${COLS[c][0]}<small>${COLS[c][1]}</small></th>`).join('');
+    const row = cols.map((c, i) => (dot(c, i) ? '<td class="pv-dot">.</td>' : '') + `<td class="${cls(c)}">${digits[c] ?? ''}</td>`).join('');
+    let vals = '';
+    if (el.dataset.values) {
+      vals = '<tr class="pv-vals">' + cols.map((c, i) => {
+        const d = digits[c];
+        const txt = d === '' || d == null ? '' : `${d} ${UNIT[c][d === '1' ? 0 : 1]}<b>${fromThou(+d * COLS[c][3])}</b>`;
+        return (dot(c, i) ? '<td class="pv-dot"></td>' : '') + `<td class="${cls(c)}">${txt}</td>`;
+      }).join('') + '</tr>';
+    }
+    return `<table class="pv${el.dataset.xs ? ' xs' : ''}${el.dataset.sm ? ' sm' : ''}${el.dataset.blank ? ' empty' : ''}"><thead><tr>${head}</tr></thead><tbody><tr>${row}</tr>${vals}</tbody></table>`;
   }
 
   const MODELS = { strip, bar, grid, line, chart };

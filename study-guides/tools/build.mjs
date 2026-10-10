@@ -112,7 +112,13 @@ async function checkAnswers(page) {
         for (const m of ms) if (parse(m.dataset.value).thou !== parse(a).thou) problems.push(`${q.dataset.q}: model shows ${m.dataset.value} but answer is ${a}`);
       }
     }
-    return { problems, questions: qs.length };
+    // Practice engine (assets/practice.js): every answer computed or written, with no errors.
+    const P = window.__practice;
+    if (P) {
+      for (const e of P.errors) problems.push('answer: ' + e);
+      if (!P.items.length) problems.push('no questions found');
+    }
+    return { problems, questions: qs.length, practice: P ? P.count : null, tries: P ? P.tries : null };
   });
 }
 
@@ -159,6 +165,7 @@ try {
     if (!fonts.includes('Lexend')) problems.push('Lexend font did not load');
     if (rendered !== layout.count) problems.push(`PDF has ${rendered} pages but the HTML has ${layout.count} page sections`);
     console.log(`${problems.length ? '✖' : '✔'} ${rel} → ${pdfRel}`);
+    if (answers.practice != null) console.log(`  ${answers.practice} practice problems + ${answers.tries} Let's Try One problems, all answered in the key`);
     console.log(`  ${layout.count} pages, ${answers.questions} questions, fonts: ${[...new Set(fonts)].join(', ')}; PNGs in qa/${rel}/`);
     for (const p of problems) console.log('  ✖ ' + p);
     if (problems.length) failed = true;

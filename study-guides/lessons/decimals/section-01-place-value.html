@@ -1,0 +1,648 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Decimals Section 1 Decimal Place Value</title>
+<link rel="stylesheet" href="../../assets/workbook.css">
+<!--
+  Decimals workbook, Section 1: Decimal Place Value (Phase 1).
+  Georgia K-12 Mathematics Standards: 5.NR.4.1 (read and write decimals to thousandths; standard and expanded form),
+  5.NR.4.2 (represent decimals by the meaning of each digit), 5.NR.1.1 (each place is 10 times the place to its right).
+
+  Every skill: banner -> SHOW HOW (blue) -> LET'S TRY ONE (green) -> YOUR TURN (purple, next page).
+  Questions: class "q" inside a data-skill wrapper. Give each one data-calc="..." (answer computed exactly by
+  assets/practice.js) or data-answer="..." (written answer). The answer key at the end is generated from them.
+  Cards: <div class="card q" data-calc="...">prompt</div> is expanded into number + prompt + work space + answer line.
+  Edit this file, then run `npm run build` in study-guides/.
+-->
+</head>
+<body>
+
+<!-- ═════════════════════════════ COVER ═════════════════════════════ -->
+<section class="page cover">
+  <div class="body">
+    <div class="band">
+      <div class="brand">Gabriella's Math Lab · Decimals Workbook</div>
+      <div class="unit">SECTION 1</div>
+      <h1>Decimal Place Value</h1>
+      <p class="sub">Every digit has a place. Every place has a value. Learn it, then practice it.</p>
+    </div>
+
+    <div class="flow">
+      <div style="background:var(--navy)"><b>Skill</b>One new idea at a time.</div>
+      <div style="background:var(--show)"><b>Show How</b>Watch a problem solved step by step.</div>
+      <div style="background:var(--try)"><b>Try One</b>Finish a problem with help.</div>
+      <div style="background:var(--turn)"><b>Your Turn</b>Solve problems on your own.</div>
+    </div>
+
+    <table class="toc">
+      <tr><td class="n">1.1</td><td>The Decimal Point</td><td class="c"><span class="cb"></span> done</td><td class="p">2</td></tr>
+      <tr><td class="n">1.2</td><td>Tenths, Hundredths, and Thousandths</td><td class="c"><span class="cb"></span> done</td><td class="p">4</td></tr>
+      <tr><td class="n">1.3</td><td>Naming the Place of a Digit</td><td class="c"><span class="cb"></span> done</td><td class="p">6</td></tr>
+      <tr><td class="n">1.4</td><td>Finding the Value of a Digit</td><td class="c"><span class="cb"></span> done</td><td class="p">8</td></tr>
+      <tr><td class="n">1.5</td><td>Reading a Place-Value Chart</td><td class="c"><span class="cb"></span> done</td><td class="p">10</td></tr>
+      <tr><td class="n">1.6</td><td>Each Place Is 10 Times the Next</td><td class="c"><span class="cb"></span> done</td><td class="p">12</td></tr>
+      <tr><td class="n">1.7</td><td>Expanded Form</td><td class="c"><span class="cb"></span> done</td><td class="p">14</td></tr>
+      <tr><td class="n">1.8</td><td>From Expanded Form to Standard Form</td><td class="c"><span class="cb"></span> done</td><td class="p">16</td></tr>
+      <tr><td class="n">1.9</td><td>Equivalent Decimals</td><td class="c"><span class="cb"></span> done</td><td class="p">18</td></tr>
+      <tr><td class="n">✓</td><td>Section 1 Review</td><td class="c"><span class="cb"></span> done</td><td class="p">20</td></tr>
+      <tr><td class="n">🔑</td><td>Parent Answer Key</td><td class="c"></td><td class="p">22</td></tr>
+    </table>
+
+    <div class="spacer"></div>
+    <div class="row" style="font-size:10.5pt">
+      <div class="grow">Name <span class="blank" style="width:2.6in"></span></div>
+      <div>Started <span class="blank" style="width:1.1in"></span></div>
+    </div>
+    <p class="small muted">Georgia K-12 Mathematics Standards 5.NR.4.1, 5.NR.4.2 and 5.NR.1.1. Place-value colors stay the same on every page:
+      <span class="d-tens">tens</span>, <span class="d-ones">ones</span>, <span class="d-t">tenths</span>, <span class="d-h">hundredths</span>, <span class="d-th">thousandths</span>.</p>
+  </div>
+</section>
+
+<!-- ═════════════════════════════ 1.1 THE DECIMAL POINT ═════════════════════════════ -->
+<div data-skill="1.1" data-title="The Decimal Point">
+<section class="page">
+  <header class="pg-head"><span class="sec-tag">Section 1 · Place Value</span>Skill 1.1</header>
+  <div class="body">
+    <div class="skill"><span class="sn">1.1</span><div><h2>The Decimal Point</h2><div class="goal">Goal: I can tell the whole-number part from the part less than one.</div></div></div>
+
+    <div class="box show"><div class="lbl">Show how</div><div class="in">
+      <p class="problem">Look at <span class="math">4.735</span>. What is the whole-number part? Between which two whole numbers is it?</p>
+      <div class="row top">
+        <div class="fixed center" style="width:2.7in">
+          <div class="math-lg" style="font-size:38pt"><span class="d-ones">4</span><span style="color:var(--show)">.</span><span class="d-t">7</span><span class="d-h">3</span><span class="d-th">5</span></div>
+          <div class="row" style="justify-content:center; gap:0.06in; font-size:8.6pt; font-weight:600">
+            <span style="border-top:3px solid var(--ones); padding-top:0.03in; width:0.5in">whole-number<br>part</span>
+            <span style="color:var(--show); width:0.55in">decimal<br>point</span>
+            <span style="border-top:3px solid var(--tenths); padding-top:0.03in; width:1.1in">part less<br>than one</span>
+          </div>
+        </div>
+        <ol class="steps grow">
+          <li>Find the <b>decimal point</b>.</li>
+          <li>Digits to the <b>left</b> are the <b>whole-number part</b>: <span class="d-ones">4</span>. That is 4 wholes.</li>
+          <li>Digits to the <b>right</b> are the <b>part less than one</b>: 0.735.</li>
+          <li>4 wholes plus a part less than one: <b>4.735 is between 4 and 5</b>.</li>
+        </ol>
+      </div>
+      <div class="why"><b>Why it works:</b> the decimal point separates whole things (left) from parts of a whole (right). Read it as “and”: 4.735 is 4 and 735 thousandths.</div>
+    </div></div>
+
+    <div class="box try"><div class="lbl">Let's try one</div><div class="in">
+      <div class="q try" data-calc="between 12.6" data-why="Whole-number part 12; part less than one 0.6; so 12.6 is between 12 and 13.">
+        <p class="problem">Look at <span class="math">12.6</span>.</p>
+        <div class="stack" style="gap:0.12in; margin-top:0.06in">
+          <p>The whole-number part is <span class="fill"></span> . The part less than one is 0.<span class="fill"></span></p>
+          <p>So 12.6 is between <span class="fill"></span> and <span class="fill"></span> .</p>
+        </div>
+      </div>
+      
+      <div class="work auto"></div>
+    </div></div>
+  </div>
+  <footer class="pg-foot"><span>Gabriella's Math Lab · Decimals · Section 1: Decimal Place Value</span><span class="num">2</span></footer>
+</section>
+
+<section class="page">
+  <header class="pg-head"><span class="sec-tag">Section 1 · Place Value</span>Skill 1.1 · Your turn<span class="name-line">Name<span class="blank"></span></span></header>
+  <div class="body">
+    <div class="box turn grow" style="display:flex; flex-direction:column"><div class="lbl">Your turn<span>Skill 1.1 · The Decimal Point</span></div><div class="in grow">
+      <div class="cards">
+        <div class="card q" data-calc="whole 6.2">Write the <b>whole-number part</b> of <span class="math">6.2</span>.</div>
+        <div class="card q" data-calc="whole 15.48">Write the <b>whole-number part</b> of <span class="math">15.48</span>.</div>
+        <div class="card q" data-calc="decpart 3.9">Write the <b>part less than one</b> of <span class="math">3.9</span> as a decimal.</div>
+        <div class="card q" data-calc="decpart 20.375">Write the <b>part less than one</b> of <span class="math">20.375</span> as a decimal.</div>
+        <div class="card q" data-calc="between 7.4" data-ans="Between">Between which two whole numbers is <span class="math">7.4</span>?</div>
+        <div class="card q" data-calc="between 0.86" data-ans="Between">Between which two whole numbers is <span class="math">0.86</span>?</div>
+        <div class="card q" data-calc="between 31.09" data-ans="Between">Between which two whole numbers is <span class="math">31.09</span>?</div>
+        <div class="card q" data-answer="1.02" data-why="1.02 has whole-number part 1, so it is at least 1. 0.98 has whole-number part 0, so it is less than 1." data-ans="Greater than 1">Which number is greater than 1: <span class="math">0.98</span> or <span class="math">1.02</span>? Use the whole-number part to decide.</div>
+      </div>
+    </div></div>
+  </div>
+  <footer class="pg-foot"><span>Gabriella's Math Lab · Decimals · Section 1: Decimal Place Value</span><span class="num">3</span></footer>
+</section>
+</div>
+
+<!-- ═════════════════════════════ 1.2 TENTHS, HUNDREDTHS, THOUSANDTHS ═════════════════════════════ -->
+<div data-skill="1.2" data-title="Tenths, Hundredths, and Thousandths">
+<section class="page">
+  <header class="pg-head"><span class="sec-tag">Section 1 · Place Value</span>Skill 1.2</header>
+  <div class="body">
+    <div class="skill"><span class="sn">1.2</span><div><h2>Tenths, Hundredths, and Thousandths</h2><div class="goal">Goal: I can write the decimal that a model shows.</div></div></div>
+
+    <div class="box show"><div class="lbl">Show how</div><div class="in">
+      <div class="row" style="justify-content:space-around">
+        <div class="fig"><div data-model="strip" data-value="0.1" data-size="150" data-h="30"></div><div class="cap">10 equal parts: each is <b class="d-t">1 tenth = 0.1</b></div></div>
+        <div class="fig"><div data-model="grid" data-value="0.01" data-size="70"></div><div class="cap">100 squares: each is <b class="d-h">1 hundredth = 0.01</b></div></div>
+        <div class="fig"><div data-model="grid" data-value="0.001" data-size="70"></div><div class="cap">1 square in 10 slices: <b class="d-th">1 thousandth = 0.001</b></div></div>
+      </div>
+      <p class="problem">What decimal does this grid show?</p>
+      <div class="row">
+        <div class="fixed"><div data-model="grid" data-value="0.34" data-size="128"></div></div>
+        <ol class="steps grow">
+          <li>The whole grid is <b>1 whole</b> cut into 100 equal squares.</li>
+          <li>Count the <b>full columns</b>. Each column is 1 tenth: <b class="d-t">3 tenths</b>.</li>
+          <li>Count the <b>extra squares</b>. Each is 1 hundredth: <b class="d-h">4 hundredths</b>.</li>
+          <li>Write the digits in their places: <span class="math">0.<span class="d-t">3</span><span class="d-h">4</span></span> <span class="hand">34 squares ✓</span></li>
+        </ol>
+      </div>
+      <div class="why"><b>Why it works:</b> 10 tenths, 100 hundredths, or 1,000 thousandths each make 1 whole. Shading fills one column at a time, top to bottom.</div>
+    </div></div>
+
+    <div class="box try"><div class="lbl">Let's try one</div><div class="in">
+      <div class="q try" data-calc="model">
+        <p class="problem">What decimal does this grid show? The pink square is cut into 10 equal slices.</p>
+        <div class="row" style="margin-top:0.06in">
+          <div class="fixed"><div data-model="grid" data-value="0.236" data-size="104"></div></div>
+          <div class="stack grow" style="gap:0.1in">
+            <p><span class="fill"></span> full columns = <span class="fill"></span> tenths</p>
+            <p><span class="fill"></span> extra squares = <span class="fill"></span> hundredths</p>
+            <p><span class="fill"></span> slices = <span class="fill"></span> thousandths</p>
+            <p>Decimal: <span class="fill w"></span></p>
+          </div>
+        </div>
+      </div>
+      <div class="work auto"></div>
+    </div></div>
+  </div>
+  <footer class="pg-foot"><span>Gabriella's Math Lab · Decimals · Section 1: Decimal Place Value</span><span class="num">4</span></footer>
+</section>
+
+<section class="page">
+  <header class="pg-head"><span class="sec-tag">Section 1 · Place Value</span>Skill 1.2 · Your turn<span class="name-line">Name<span class="blank"></span></span></header>
+  <div class="body">
+    <div class="box turn grow" style="display:flex; flex-direction:column"><div class="lbl">Your turn<span>Skill 1.2 · Write the decimal each model shows</span></div><div class="in grow">
+      <div class="cards">
+        <div class="card q" data-calc="model" data-work="none"><div><div data-model="strip" data-value="0.6" data-size="250" data-h="34"></div></div></div>
+        <div class="card q" data-calc="model" data-work="none"><div><div data-model="strip" data-value="0.9" data-size="250" data-h="34"></div></div></div>
+        <div class="card q" data-calc="model" data-work="none"><div><div data-model="grid" data-value="0.47" data-size="104"></div></div></div>
+        <div class="card q" data-calc="model" data-work="none"><div><div data-model="grid" data-value="0.08" data-size="104"></div></div></div>
+        <div class="card q" data-calc="model" data-work="none" data-why="7 full columns = 7 tenths = 0.7. (0.70 is also correct.)"><div><div data-model="grid" data-value="0.7" data-size="104"></div></div></div>
+        <div class="card q" data-calc="model" data-work="none"><div><div data-model="grid" data-value="0.125" data-size="104"></div></div></div>
+        <div class="card q" data-calc="model" data-work="none" data-why="5 full columns = 5 tenths, 0 extra squares = 0 hundredths, 8 slices = 8 thousandths."><div><div data-model="grid" data-value="0.508" data-size="104"></div></div></div>
+        <div class="card q" data-answer="62 squares: 6 full columns and 2 more squares" data-why="0.62 = 6 tenths (6 columns) + 2 hundredths (2 squares)." data-ans="none" data-work="none">
+          <div class="row" style="gap:0.12in; align-items:flex-start"><p class="grow"><b>Shade</b> the grid to show <span class="math">0.62</span>.</p><div class="fixed"><div data-model="grid" data-value="0" data-blank="1" data-size="120"></div></div></div>
+        </div>
+      </div>
+    </div></div>
+  </div>
+  <footer class="pg-foot"><span>Gabriella's Math Lab · Decimals · Section 1: Decimal Place Value</span><span class="num">5</span></footer>
+</section>
+</div>
+
+<!-- ═════════════════════════════ 1.3 NAMING THE PLACE ═════════════════════════════ -->
+<div data-skill="1.3" data-title="Naming the Place of a Digit">
+<section class="page">
+  <header class="pg-head"><span class="sec-tag">Section 1 · Place Value</span>Skill 1.3</header>
+  <div class="body">
+    <div class="skill"><span class="sn">1.3</span><div><h2>Naming the Place of a Digit</h2><div class="goal">Goal: I can name the place of any digit in a decimal.</div></div></div>
+
+    <div class="box show"><div class="lbl">Show how</div><div class="in">
+      <p class="problem">In <span class="math">4.7<span class="hi">3</span>5</span>, what is the place of the <b>3</b>?</p>
+      <div data-model="chart" data-value="4.735" data-hi="h" data-cols="tens,ones,t,h,th"></div>
+      <ol class="steps">
+        <li>Write the number in a place-value chart. The decimal point lines up with the chart's point.</li>
+        <li>Count places to the <b>right</b> of the point: 1st is <span class="d-t">tenths</span>, 2nd is <span class="d-h">hundredths</span>, 3rd is <span class="d-th">thousandths</span>.
+          To the <b>left</b>: 1st is <span class="d-ones">ones</span>, 2nd is <span class="d-tens">tens</span>.</li>
+        <li>The 3 is the <b>2nd</b> digit after the point. It is in the <b class="d-h">hundredths</b> place.</li>
+        <li><b>Other way round:</b> which digit is in the thousandths place? Count 3 places right: the <b class="d-th">5</b>.</li>
+      </ol>
+      <div class="why"><b>Why it works:</b> every place has a name. Places right of the point end in “-ths” because they are parts of one.</div>
+    </div></div>
+
+    <div class="box try"><div class="lbl">Let's try one</div><div class="in">
+      <div class="q try" data-calc="place 2.618 8" data-why="Chart: 2 ones, 6 tenths, 1 hundredth, 8 thousandths. The 8 is digit number 3 after the point: the thousandths place.">
+        <p class="problem">In <span class="math">2.618</span>, what is the place of the <b>8</b>? Fill in the chart first.</p>
+        <div class="row" style="margin-top:0.06in">
+          <div class="fixed"><div data-model="chart" data-blank="1" data-sm="1"></div></div>
+          <div class="stack grow" style="gap:0.12in">
+            <p>The 8 is digit number <span class="fill"></span> after the point.</p>
+            <p>The 8 is in the <span class="fill w"></span> place.</p>
+          </div>
+        </div>
+      </div>
+      <div class="work auto"></div>
+    </div></div>
+  </div>
+  <footer class="pg-foot"><span>Gabriella's Math Lab · Decimals · Section 1: Decimal Place Value</span><span class="num">6</span></footer>
+</section>
+
+<section class="page">
+  <header class="pg-head"><span class="sec-tag">Section 1 · Place Value</span>Skill 1.3 · Your turn<span class="name-line">Name<span class="blank"></span></span></header>
+  <div class="body">
+    <div class="box turn grow" style="display:flex; flex-direction:column"><div class="lbl">Your turn<span>Skill 1.3 · Name the place of the digit</span></div><div class="in grow">
+      <div class="cards">
+        <div class="card q" data-calc="place 5.3 3" data-ans="Place">In <span class="math">5.3</span>, what is the place of the <b>3</b>?</div>
+        <div class="card q" data-calc="place 0.47 7" data-ans="Place">In <span class="math">0.47</span>, what is the place of the <b>7</b>?</div>
+        <div class="card q" data-calc="place 8.62 8" data-ans="Place">In <span class="math">8.62</span>, what is the place of the <b>8</b>?</div>
+        <div class="card q" data-calc="place 0.159 9" data-ans="Place">In <span class="math">0.159</span>, what is the place of the <b>9</b>?</div>
+        <div class="card q" data-calc="place 26.4 2" data-ans="Place">In <span class="math">26.4</span>, what is the place of the <b>2</b>?</div>
+        <div class="card q" data-calc="place 3.072 7" data-ans="Place">In <span class="math">3.072</span>, what is the place of the <b>7</b>?</div>
+        <div class="card q" data-calc="place 14.506 6" data-ans="Place">In <span class="math">14.506</span>, what is the place of the <b>6</b>?</div>
+        <div class="card q" data-calc="digit 9.384 h" data-ans="Digit">Which digit is in the <b>hundredths</b> place of <span class="math">9.384</span>?</div>
+      </div>
+    </div></div>
+  </div>
+  <footer class="pg-foot"><span>Gabriella's Math Lab · Decimals · Section 1: Decimal Place Value</span><span class="num">7</span></footer>
+</section>
+</div>
+
+<!-- ═════════════════════════════ 1.4 VALUE OF A DIGIT ═════════════════════════════ -->
+<div data-skill="1.4" data-title="Finding the Value of a Digit">
+<section class="page">
+  <header class="pg-head"><span class="sec-tag">Section 1 · Place Value</span>Skill 1.4</header>
+  <div class="body">
+    <div class="skill"><span class="sn">1.4</span><div><h2>Finding the Value of a Digit</h2><div class="goal">Goal: I can find how much a digit is worth.</div></div></div>
+
+    <div class="box show"><div class="lbl">Show how</div><div class="in">
+      <p class="problem">What is the value of the <b>7</b> in <span class="math">4.<span class="hi">7</span>35</span>?</p>
+      <div data-model="chart" data-value="4.735" data-hi="t" data-values="1"></div>
+      <ol class="steps">
+        <li><b>Locate</b> the digit: find the 7 in 4.735.</li>
+        <li><b>Identify its place:</b> the 7 is the 1st digit after the point, the <b class="d-t">tenths</b> place.</li>
+        <li><b>Find its value:</b> 7 tenths = 7 × 0.1 = <span class="math d-t">0.7</span></li>
+      </ol>
+      <div class="why"><b>Why it works:</b> a digit's value depends on its place. The same 7 would be worth 0.07 in the hundredths place, or 7 in the ones place.</div>
+    </div></div>
+
+    <div class="box try"><div class="lbl">Let's try one</div><div class="in">
+      <div class="q try" data-calc="value 2.169 6" data-why="The 6 is in the hundredths place: 6 hundredths = 0.06.">
+        <p class="problem">What is the value of the <b>6</b> in <span class="math">2.169</span>?</p>
+        <div class="stack" style="gap:0.12in; margin-top:0.06in">
+          <p>The 6 is in the <span class="fill w"></span> place.</p>
+          <p>6 <span class="fill w"></span> = <span class="fill w"></span></p>
+        </div>
+      </div>
+      
+      <div class="work auto"></div>
+    </div></div>
+  </div>
+  <footer class="pg-foot"><span>Gabriella's Math Lab · Decimals · Section 1: Decimal Place Value</span><span class="num">8</span></footer>
+</section>
+
+<section class="page">
+  <header class="pg-head"><span class="sec-tag">Section 1 · Place Value</span>Skill 1.4 · Your turn<span class="name-line">Name<span class="blank"></span></span></header>
+  <div class="body">
+    <div class="box turn grow" style="display:flex; flex-direction:column"><div class="lbl">Your turn<span>Skill 1.4 · Find the value of the digit</span></div><div class="in grow">
+      <div class="cards">
+        <div class="card q" data-calc="value 0.4 4" data-ans="Value">What is the value of the <b>4</b> in <span class="math">0.4</span>?</div>
+        <div class="card q" data-calc="value 3.25 5" data-ans="Value">What is the value of the <b>5</b> in <span class="math">3.25</span>?</div>
+        <div class="card q" data-calc="value 7.81 7" data-ans="Value">What is the value of the <b>7</b> in <span class="math">7.81</span>?</div>
+        <div class="card q" data-calc="value 0.629 9" data-ans="Value">What is the value of the <b>9</b> in <span class="math">0.629</span>?</div>
+        <div class="card q" data-calc="value 5.306 3" data-ans="Value">What is the value of the <b>3</b> in <span class="math">5.306</span>?</div>
+        <div class="card q" data-calc="value 8.075 7" data-ans="Value">What is the value of the <b>7</b> in <span class="math">8.075</span>?</div>
+        <div class="card q" data-calc="value 12.48 1" data-ans="Value">What is the value of the <b>1</b> in <span class="math">12.48</span>?</div>
+        <div class="card q" data-calc="value 2.385 8" data-ans="Value">A ribbon is <span class="math">2.385</span> meters long. What is the value of the <b>8</b>?</div>
+      </div>
+    </div></div>
+  </div>
+  <footer class="pg-foot"><span>Gabriella's Math Lab · Decimals · Section 1: Decimal Place Value</span><span class="num">9</span></footer>
+</section>
+</div>
+
+<!-- ═════════════════════════════ 1.5 READING A PLACE-VALUE CHART ═════════════════════════════ -->
+<div data-skill="1.5" data-title="Reading a Place-Value Chart">
+<section class="page">
+  <header class="pg-head"><span class="sec-tag">Section 1 · Place Value</span>Skill 1.5</header>
+  <div class="body">
+    <div class="skill"><span class="sn">1.5</span><div><h2>Reading a Place-Value Chart</h2><div class="goal">Goal: I can write the number a chart shows, and put a number into a chart.</div></div></div>
+
+    <div class="box show"><div class="lbl">Show how</div><div class="in">
+      <p class="problem">What number does this chart show?</p>
+      <div data-model="chart" data-digits="ones:3,h:5"></div>
+      <ol class="steps">
+        <li>Read from the left: <b class="d-ones">3 ones</b>. Write <span class="math">3</span>.</li>
+        <li>The decimal point comes right after the ones: <span class="math">3.</span></li>
+        <li>The <b class="d-t">tenths</b> place is empty. An empty place before the last digit gets a <b>0</b>: <span class="math">3.0</span></li>
+        <li>Then <b class="d-h">5 hundredths</b>: <span class="math">3.05</span> <span class="hand">not 3.5!</span></li>
+      </ol>
+      <div class="why"><b>Why it works:</b> the 0 holds the tenths place so the 5 stays in the hundredths place. Without it, 3.5 would mean 5 tenths.</div>
+    </div></div>
+
+    <div class="box try"><div class="lbl">Let's try one</div><div class="in">
+      <div class="q try" data-calc="chart" data-why="The empty place is the hundredths place, so it gets a 0: 0.702.">
+        <p class="problem">What number does this chart show?</p>
+        <div class="row" style="margin-top:0.06in">
+          <div class="fixed"><div data-model="chart" data-digits="ones:0,t:7,th:2" data-sm="1"></div></div>
+          <div class="stack grow" style="gap:0.12in">
+            <p>The empty place is the <span class="fill w"></span> place, so it gets a <span class="fill"></span> .</p>
+            <p>The number is <span class="fill w"></span></p>
+          </div>
+        </div>
+      </div>
+      <div class="work auto"></div>
+    </div></div>
+  </div>
+  <footer class="pg-foot"><span>Gabriella's Math Lab · Decimals · Section 1: Decimal Place Value</span><span class="num">10</span></footer>
+</section>
+
+<section class="page">
+  <header class="pg-head"><span class="sec-tag">Section 1 · Place Value</span>Skill 1.5 · Your turn<span class="name-line">Name<span class="blank"></span></span></header>
+  <div class="body">
+    <div class="box turn grow" style="display:flex; flex-direction:column"><div class="lbl">Your turn<span>Skill 1.5 · Read and fill place-value charts</span></div><div class="in grow">
+      <div class="cards">
+        <div class="card q" data-calc="chart" data-work="none" data-ans="Number">What number does the chart show?<div class="below" data-model="chart" data-digits="ones:2,t:6" data-sm="1" data-cols="ones,t,h"></div></div>
+        <div class="card q" data-calc="chart" data-work="none" data-ans="Number">What number does the chart show?<div class="below" data-model="chart" data-digits="ones:0,t:4,h:9" data-sm="1" data-cols="ones,t,h"></div></div>
+        <div class="card q" data-calc="chart" data-work="none" data-ans="Number">What number does the chart show?<div class="below" data-model="chart" data-digits="ones:5,t:0,h:8" data-sm="1" data-cols="ones,t,h"></div></div>
+        <div class="card q" data-calc="chart" data-work="none" data-ans="Number">What number does the chart show?<div class="below" data-model="chart" data-digits="ones:1,h:3" data-sm="1" data-cols="ones,t,h"></div></div>
+        <div class="card q" data-calc="chart" data-work="none" data-ans="Number">What number does the chart show?<div class="below" data-model="chart" data-digits="tens:4,ones:2,t:1,th:7" data-cols="tens,ones,t,h,th" data-xs="1"></div></div>
+        <div class="card q" data-answer="6 ones, 9 tenths, 0 hundredths, 4 thousandths" data-why="6.904: the 0 must be written in the hundredths place." data-work="none" data-ans="none">Write <span class="math">6.904</span> in the chart.<div class="below" data-model="chart" data-blank="1" data-xs="1"></div></div>
+        <div class="card q" data-answer="0 ones, 3 tenths, 8 hundredths" data-why="The thousandths box may be left empty or hold a 0 (0.380 = 0.38)." data-work="none" data-ans="none">Write <span class="math">0.38</span> in the chart.<div class="below" data-model="chart" data-blank="1" data-xs="1"></div></div>
+        <div class="card q" data-answer="1 ten, 7 ones, 0 tenths, 5 hundredths" data-why="17.05: the 0 holds the tenths place." data-work="none" data-ans="none">Write <span class="math">17.05</span> in the chart.<div class="below" data-model="chart" data-blank="1" data-xs="1" data-cols="tens,ones,t,h,th"></div></div>
+      </div>
+    </div></div>
+  </div>
+  <footer class="pg-foot"><span>Gabriella's Math Lab · Decimals · Section 1: Decimal Place Value</span><span class="num">11</span></footer>
+</section>
+</div>
+
+<!-- ═════════════════════════════ 1.6 TEN TIMES ═════════════════════════════ -->
+<div data-skill="1.6" data-title="Each Place Is 10 Times the Next">
+<section class="page">
+  <header class="pg-head"><span class="sec-tag">Section 1 · Place Value</span>Skill 1.6</header>
+  <div class="body">
+    <div class="skill"><span class="sn">1.6</span><div><h2>Each Place Is 10 Times the Next</h2><div class="goal">Goal: I can use “10 of one place make 1 of the place to its left.”</div></div></div>
+
+    <div class="box show"><div class="lbl">Show how</div><div class="in">
+      <div class="ladder">
+        <div class="rung" style="border-color:var(--ones)"><span class="d-ones">1</span><small>one</small></div>
+        <div class="arrow">= 10 ×<br>←</div>
+        <div class="rung" style="border-color:var(--tenths)"><span class="d-t">0.1</span><small>tenth</small></div>
+        <div class="arrow">= 10 ×<br>←</div>
+        <div class="rung" style="border-color:var(--hundredths)"><span class="d-h">0.01</span><small>hundredth</small></div>
+        <div class="arrow">= 10 ×<br>←</div>
+        <div class="rung" style="border-color:var(--thousandths)"><span class="d-th">0.001</span><small>thousandth</small></div>
+      </div>
+      <p class="problem">How many <b>hundredths</b> are in <span class="math">3 tenths</span>?</p>
+      <div class="row">
+        <div class="fixed"><div data-model="grid" data-value="0.3" data-size="112"></div></div>
+        <ol class="steps grow">
+          <li>1 tenth is one column. One column has <b>10</b> small squares, so <b>1 tenth = 10 hundredths</b>.</li>
+          <li>3 tenths = 3 × 10 hundredths = <b>30 hundredths</b>. <span class="hand">0.3 = 0.30 ✓</span></li>
+          <li><b>Two places:</b> 1 tenth = 10 hundredths = <b>100 thousandths</b> (10 × 10).</li>
+          <li><b>Other way:</b> group by 10s. 40 hundredths = 4 groups of 10 hundredths = <b>4 tenths</b>.</li>
+        </ol>
+      </div>
+      <div class="why"><b>How many times as much?</b> The 4 in <b>0.4</b> is 1 place left of the 4 in <b>0.04</b>, so it is worth <b>10 times</b> as much. 2 places left: 10 × 10 = <b>100 times</b>. Going right, 1 place is worth <b>one tenth</b> as much: 0.04 is <sup>1</sup>/<sub>10</sub> of 0.4.</div>
+    </div></div>
+
+    <div class="box try"><div class="lbl">Let's try one</div><div class="in">
+      <div class="q try" data-calc="convert 5 h th">
+        <p class="problem">How many <b>thousandths</b> are in <span class="math">5 hundredths</span>?</p>
+        <div class="stack" style="gap:0.12in; margin-top:0.06in">
+          <p>1 hundredth = <span class="fill"></span> thousandths</p>
+          <p>5 hundredths = 5 × <span class="fill"></span> = <span class="fill"></span> thousandths</p>
+        </div>
+      </div>
+      <div class="work auto"></div>
+    </div></div>
+  </div>
+  <footer class="pg-foot"><span>Gabriella's Math Lab · Decimals · Section 1: Decimal Place Value</span><span class="num">12</span></footer>
+</section>
+
+<section class="page">
+  <header class="pg-head"><span class="sec-tag">Section 1 · Place Value</span>Skill 1.6 · Your turn<span class="name-line">Name<span class="blank"></span></span></header>
+  <div class="body">
+    <div class="box turn grow" style="display:flex; flex-direction:column"><div class="lbl">Your turn<span>Skill 1.6 · 10 times relationships</span></div><div class="in grow">
+      <div class="cards">
+        <div class="card q" data-calc="convert 1 t h" data-ans="none">1 tenth = <span class="fill"></span> hundredths</div>
+        <div class="card q" data-calc="convert 1 h th" data-ans="none">1 hundredth = <span class="fill"></span> thousandths</div>
+        <div class="card q" data-calc="convert 6 t h" data-ans="none">6 tenths = <span class="fill"></span> hundredths</div>
+        <div class="card q" data-calc="convert 1 t th" data-ans="none">1 tenth = <span class="fill"></span> thousandths</div>
+        <div class="card q" data-calc="convert 40 h t" data-ans="none">40 hundredths = <span class="fill"></span> tenths</div>
+        <div class="card q" data-calc="times 0.7 0.07" data-unit="times">The value of the 7 in <span class="math">0.7</span> is how many times the value of the 7 in <span class="math">0.07</span>?</div>
+        <div class="card q" data-calc="times 0.5 0.005" data-unit="times">The value of the 5 in <span class="math">0.5</span> is how many times the value of the 5 in <span class="math">0.005</span>?</div>
+        <div class="card q" data-calc="times 3 0.3" data-unit="times">The 3 in <span class="math">3.4</span> is worth how many times the 3 in <span class="math">0.36</span>?</div>
+      </div>
+    </div></div>
+  </div>
+  <footer class="pg-foot"><span>Gabriella's Math Lab · Decimals · Section 1: Decimal Place Value</span><span class="num">13</span></footer>
+</section>
+</div>
+
+<!-- ═════════════════════════════ 1.7 EXPANDED FORM ═════════════════════════════ -->
+<div data-skill="1.7" data-title="Expanded Form">
+<section class="page">
+  <header class="pg-head"><span class="sec-tag">Section 1 · Place Value</span>Skill 1.7</header>
+  <div class="body">
+    <div class="skill"><span class="sn">1.7</span><div><h2>Expanded Form</h2><div class="goal">Goal: I can write a decimal as the sum of its place values.</div></div></div>
+
+    <div class="box show"><div class="lbl">Show how</div><div class="in">
+      <p class="problem">Write <span class="math">4.735</span> in expanded form.</p>
+      <div data-model="chart" data-value="4.735" data-values="1"></div>
+      <ol class="steps">
+        <li>Find the <b>value of each digit</b> (Skill 1.4): 4, 0.7, 0.03, 0.005.</li>
+        <li>Write the values with <b>+</b> between them, largest place first.</li>
+        <li>A <b>0 digit</b> adds nothing, so skip it: 6.208 = 6 + 0.2 + 0.008.</li>
+      </ol>
+      <p class="center math-lg"><span class="d-ones">4</span> + <span class="d-t">0.7</span> + <span class="d-h">0.03</span> + <span class="d-th">0.005</span></p>
+      <div class="why"><b>Why it works:</b> a decimal is the total of its digits' values. Expanded form shows each part. Standard form (4.735) is the short way to write the total.</div>
+    </div></div>
+
+    <div class="box try"><div class="lbl">Let's try one</div><div class="in">
+      <div class="q try" data-calc="expanded 3.62" data-why="3 ones = 3, 6 tenths = 0.6, 2 hundredths = 0.02.">
+        <p class="problem">Write <span class="math">3.62</span> in expanded form.</p>
+        <p style="margin-top:0.12in">3 ones = <span class="fill"></span> &nbsp; 6 tenths = <span class="fill"></span> &nbsp; 2 hundredths = <span class="fill"></span></p>
+        <p style="margin-top:0.14in">3.62 = <span class="fill"></span> + <span class="fill"></span> + <span class="fill"></span></p>
+      </div>
+      <div class="work auto"></div>
+    </div></div>
+  </div>
+  <footer class="pg-foot"><span>Gabriella's Math Lab · Decimals · Section 1: Decimal Place Value</span><span class="num">14</span></footer>
+</section>
+
+<section class="page">
+  <header class="pg-head"><span class="sec-tag">Section 1 · Place Value</span>Skill 1.7 · Your turn<span class="name-line">Name<span class="blank"></span></span></header>
+  <div class="body">
+    <div class="box turn grow" style="display:flex; flex-direction:column"><div class="lbl">Your turn<span>Skill 1.7 · Write each number in expanded form</span></div><div class="in grow">
+      <div class="cards">
+        <div class="card q" data-calc="expanded 0.85" data-fill="ww" data-ans="=">Write <span class="math">0.85</span> in expanded form.</div>
+        <div class="card q" data-calc="expanded 2.5" data-fill="ww" data-ans="=">Write <span class="math">2.5</span> in expanded form.</div>
+        <div class="card q" data-calc="expanded 0.46" data-fill="ww" data-ans="=">Write <span class="math">0.46</span> in expanded form.</div>
+        <div class="card q" data-calc="expanded 5.13" data-fill="ww" data-ans="=">Write <span class="math">5.13</span> in expanded form.</div>
+        <div class="card q" data-calc="expanded 7.042" data-fill="ww" data-ans="=">Write <span class="math">7.042</span> in expanded form.</div>
+        <div class="card q" data-calc="expanded 0.309" data-fill="ww" data-ans="=">Write <span class="math">0.309</span> in expanded form.</div>
+        <div class="card q" data-calc="expanded 15.27" data-fill="ww" data-ans="=">Write <span class="math">15.27</span> in expanded form.</div>
+        <div class="card q" data-calc="expanded 30.605" data-fill="ww" data-ans="=">Write <span class="math">30.605</span> in expanded form.</div>
+      </div>
+    </div></div>
+  </div>
+  <footer class="pg-foot"><span>Gabriella's Math Lab · Decimals · Section 1: Decimal Place Value</span><span class="num">15</span></footer>
+</section>
+</div>
+
+<!-- ═════════════════════════════ 1.8 EXPANDED → STANDARD ═════════════════════════════ -->
+<div data-skill="1.8" data-title="From Expanded Form to Standard Form">
+<section class="page">
+  <header class="pg-head"><span class="sec-tag">Section 1 · Place Value</span>Skill 1.8</header>
+  <div class="body">
+    <div class="skill"><span class="sn">1.8</span><div><h2>From Expanded Form to Standard Form</h2><div class="goal">Goal: I can write the standard form of a number given in expanded form.</div></div></div>
+
+    <div class="box show"><div class="lbl">Show how</div><div class="in">
+      <p class="problem">Write <span class="math"><span class="d-ones">5</span> + <span class="d-t">0.2</span> + <span class="d-th">0.009</span></span> in standard form.</p>
+      <div data-model="chart" data-digits="ones:5,t:2,h:0,th:9" data-hi="h"></div>
+      <ol class="steps">
+        <li>Put each value's digit in its place: <b class="d-ones">5</b> ones, <b class="d-t">2</b> tenths, <b class="d-th">9</b> thousandths.</li>
+        <li>No hundredths are listed, so write a <b>0</b> in the hundredths place (highlighted).</li>
+        <li>Read the chart: <span class="math">5.209</span> <span class="hand">not 5.29!</span></li>
+      </ol>
+      <div class="why"><b>Why it works:</b> expanded form lists the value in each place. Standard form writes each digit in its place, with 0 in any empty place before the last digit.</div>
+    </div></div>
+
+    <div class="box try"><div class="lbl">Let's try one</div><div class="in">
+      <div class="q try" data-calc="standard 0.6 + 0.04 + 0.003">
+        <p class="problem">Write <span class="math">0.6 + 0.04 + 0.003</span> in standard form.</p>
+        <div class="row" style="margin-top:0.06in">
+          <div class="fixed"><div data-model="chart" data-blank="1" data-sm="1"></div></div>
+          <div class="stack grow"><p>Standard form: <span class="fill w"></span></p></div>
+        </div>
+      </div>
+      <div class="work auto"></div>
+    </div></div>
+  </div>
+  <footer class="pg-foot"><span>Gabriella's Math Lab · Decimals · Section 1: Decimal Place Value</span><span class="num">16</span></footer>
+</section>
+
+<section class="page">
+  <header class="pg-head"><span class="sec-tag">Section 1 · Place Value</span>Skill 1.8 · Your turn<span class="name-line">Name<span class="blank"></span></span></header>
+  <div class="body">
+    <div class="box turn grow" style="display:flex; flex-direction:column"><div class="lbl">Your turn<span>Skill 1.8 · Write each number in standard form</span></div><div class="in grow">
+      <div class="cards">
+        <div class="card q" data-calc="standard 2 + 0.4" data-ans="Standard form"><span class="math">2 + 0.4</span></div>
+        <div class="card q" data-calc="standard 0.7 + 0.05" data-ans="Standard form"><span class="math">0.7 + 0.05</span></div>
+        <div class="card q" data-calc="standard 8 + 0.3 + 0.06" data-ans="Standard form"><span class="math">8 + 0.3 + 0.06</span></div>
+        <div class="card q" data-calc="standard 4 + 0.08" data-ans="Standard form"><span class="math">4 + 0.08</span></div>
+        <div class="card q" data-calc="standard 0.9 + 0.001" data-ans="Standard form"><span class="math">0.9 + 0.001</span></div>
+        <div class="card q" data-calc="standard 0.03 + 0.5" data-ans="Standard form"><span class="math">0.03 + 0.5</span> <span class="small muted">(careful: not in order)</span></div>
+        <div class="card q" data-calc="standard 10 + 6 + 0.2 + 0.007" data-ans="Standard form"><span class="math">10 + 6 + 0.2 + 0.007</span></div>
+        <div class="card q" data-calc="standard 0.004 + 3 + 0.1" data-ans="Standard form"><span class="math">0.004 + 3 + 0.1</span></div>
+      </div>
+    </div></div>
+  </div>
+  <footer class="pg-foot"><span>Gabriella's Math Lab · Decimals · Section 1: Decimal Place Value</span><span class="num">17</span></footer>
+</section>
+</div>
+
+<!-- ═════════════════════════════ 1.9 EQUIVALENT DECIMALS ═════════════════════════════ -->
+<div data-skill="1.9" data-title="Equivalent Decimals">
+<section class="page">
+  <header class="pg-head"><span class="sec-tag">Section 1 · Place Value</span>Skill 1.9</header>
+  <div class="body">
+    <div class="skill"><span class="sn">1.9</span><div><h2>Equivalent Decimals</h2><div class="goal">Goal: I can tell when two decimals name the same amount.</div></div></div>
+
+    <div class="box show"><div class="lbl">Show how</div><div class="in">
+      <p class="problem">Is <span class="math">0.5</span> equal to <span class="math">0.50</span>?</p>
+      <div class="row" style="justify-content:center; gap:0.3in">
+        <div class="fig"><div data-model="strip" data-value="0.5" data-size="180" data-h="44"></div><div class="cap"><b>0.5</b> = 5 tenths</div></div>
+        <div class="math-lg" style="color:var(--show)">=</div>
+        <div class="fig"><div data-model="grid" data-value="0.50" data-size="96"></div><div class="cap"><b>0.50</b> = 50 hundredths</div></div>
+      </div>
+      <ol class="steps">
+        <li>0.5 is <b>5 tenths</b>. 1 tenth = 10 hundredths, so 5 tenths = <b>50 hundredths</b> = 0.50.</li>
+        <li>The same amount is shaded. <b>Yes: 0.5 = 0.50 = 0.500.</b></li>
+        <li><b>Watch out:</b> a zero right after the point is different. 0.05 is 5 hundredths, <b>not</b> equal to 0.5.</li>
+      </ol>
+      <div class="why"><b>Why it works:</b> a zero added at the <b>end</b>, after the last decimal digit, does not move any digit, so the value stays the same.</div>
+    </div></div>
+
+    <div class="box try"><div class="lbl">Let's try one</div><div class="in">
+      <div class="q try" data-calc="same 0.7 0.70" data-why="0.7 = 7 tenths = 70 hundredths; 0.70 = 70 hundredths; so yes.">
+        <p class="problem">Is <span class="math">0.7</span> equal to <span class="math">0.70</span>?</p>
+        <div class="stack" style="gap:0.12in; margin-top:0.06in">
+          <p>0.7 = 7 tenths = <span class="fill"></span> hundredths. &nbsp; 0.70 = <span class="fill"></span> hundredths.</p>
+          <p>Equal? (yes or no) <span class="fill w"></span></p>
+        </div>
+      </div>
+      <div class="work auto"></div>
+    </div></div>
+  </div>
+  <footer class="pg-foot"><span>Gabriella's Math Lab · Decimals · Section 1: Decimal Place Value</span><span class="num">18</span></footer>
+</section>
+
+<section class="page">
+  <header class="pg-head"><span class="sec-tag">Section 1 · Place Value</span>Skill 1.9 · Your turn<span class="name-line">Name<span class="blank"></span></span></header>
+  <div class="body">
+    <div class="box turn grow" style="display:flex; flex-direction:column"><div class="lbl">Your turn<span>Skill 1.9 · Are they equal? Write yes or no.</span></div><div class="in grow">
+      <div class="cards">
+        <div class="card q" data-calc="same 0.3 0.30" data-ans="Yes or no"><span class="math">0.3</span> and <span class="math">0.30</span></div>
+        <div class="card q" data-calc="same 0.6 0.06" data-ans="Yes or no"><span class="math">0.6</span> and <span class="math">0.06</span></div>
+        <div class="card q" data-calc="same 1.2 1.20" data-ans="Yes or no"><span class="math">1.2</span> and <span class="math">1.20</span></div>
+        <div class="card q" data-calc="same 0.40 0.4" data-ans="Yes or no"><span class="math">0.40</span> and <span class="math">0.4</span></div>
+        <div class="card q" data-calc="same 2.5 2.05" data-ans="Yes or no"><span class="math">2.5</span> and <span class="math">2.05</span></div>
+        <div class="card q" data-calc="same 0.700 0.7" data-ans="Yes or no"><span class="math">0.700</span> and <span class="math">0.7</span></div>
+        <div class="card q" data-answer="0.90" data-why="9 tenths = 90 hundredths." data-ans="Decimal">Write a decimal with <b>hundredths</b> that is equal to <span class="math">0.9</span>.</div>
+        <div class="card q" data-answer="3.200" data-why="Adding zeros after the last decimal digit keeps the value: 3.2 = 3.20 = 3.200." data-ans="Decimal">Write a decimal with <b>thousandths</b> that is equal to <span class="math">3.2</span>.</div>
+      </div>
+    </div></div>
+  </div>
+  <footer class="pg-foot"><span>Gabriella's Math Lab · Decimals · Section 1: Decimal Place Value</span><span class="num">19</span></footer>
+</section>
+</div>
+
+<!-- ═════════════════════════════ SECTION 1 REVIEW ═════════════════════════════ -->
+<div data-skill="Review" data-title="Section 1 Review">
+<section class="page">
+  <header class="pg-head"><span class="sec-tag">Section 1 · Place Value</span>Section 1 Review<span class="name-line">Name<span class="blank"></span></span></header>
+  <div class="body">
+    <div class="skill"><span class="sn">✓</span><div><h2>Section 1 Review</h2><div class="goal">Mixed practice from Skills 1.1 to 1.9. No hints: show what you know.</div></div></div>
+    <div class="box turn grow" style="display:flex; flex-direction:column"><div class="lbl">Your turn<span>Review · problems 1–6</span></div><div class="in grow">
+      <div class="cards">
+        <div class="card q" data-calc="place 7.164 4" data-ans="Place">In <span class="math">7.164</span>, what is the place of the <b>4</b>?</div>
+        <div class="card q" data-calc="value 0.075 7" data-ans="Value">A beetle is <span class="math">0.075</span> meter long. What is the value of the <b>7</b>?</div>
+        <div class="card q" data-calc="expanded 0.582" data-fill="ww" data-ans="=">Write <span class="math">0.582</span> in expanded form.</div>
+        <div class="card q" data-calc="standard 6 + 0.04 + 0.009" data-ans="Standard form">Write <span class="math">6 + 0.04 + 0.009</span> in standard form.</div>
+        <div class="card q" data-calc="same 0.80 0.8" data-ans="Yes or no">Is <span class="math">0.80</span> equal to <span class="math">0.8</span>?</div>
+        <div class="card q" data-calc="convert 2 t h" data-ans="none">2 tenths = <span class="fill"></span> hundredths</div>
+      </div>
+    </div></div>
+  </div>
+  <footer class="pg-foot"><span>Gabriella's Math Lab · Decimals · Section 1: Decimal Place Value</span><span class="num">20</span></footer>
+</section>
+
+<section class="page">
+  <header class="pg-head"><span class="sec-tag">Section 1 · Place Value</span>Section 1 Review</header>
+  <div class="body">
+    <div class="box turn grow" style="display:flex; flex-direction:column"><div class="lbl">Your turn<span>Review · problems 7–10</span></div><div class="in grow">
+      <div class="cards">
+        <div class="card q" data-calc="model" data-work="none">What decimal does the grid show?<div data-model="grid" data-value="0.29" data-size="120" style="margin-top:0.08in"></div></div>
+        <div class="card q" data-calc="digit 4.317 th" data-ans="Digit">Which digit is in the <b>thousandths</b> place of <span class="math">4.317</span>?</div>
+        <div class="card q" data-calc="between 18.93" data-ans="Between">Between which two whole numbers is <span class="math">18.93</span>?</div>
+        <div class="card q" data-calc="times 0.9 0.009" data-unit="times">The value of the 9 in <span class="math">0.9</span> is how many times the value of the 9 in <span class="math">0.009</span>?</div>
+      </div>
+    </div></div>
+    <div class="box keybox"><div class="lbl">How did it go?</div><div class="in">
+      <p class="small">Circle the skills to practice again, then redo two problems from that skill's Your Turn page.
+        &nbsp; <b>1.1 &nbsp; 1.2 &nbsp; 1.3 &nbsp; 1.4 &nbsp; 1.5 &nbsp; 1.6 &nbsp; 1.7 &nbsp; 1.8 &nbsp; 1.9</b></p>
+    </div></div>
+  </div>
+  <footer class="pg-foot"><span>Gabriella's Math Lab · Decimals · Section 1: Decimal Place Value</span><span class="num">21</span></footer>
+</section>
+</div>
+
+<!-- ═════════════════════════════ ANSWER KEY ═════════════════════════════ -->
+<section class="page">
+  <header class="pg-head"><span class="sec-tag" style="background:var(--key)">Parent answer key</span>Section 1: Decimal Place Value</header>
+  <div class="body">
+    <div class="skill" style="background:var(--key)"><span class="sn">🔑</span><div><h2>Parent Answer Key</h2><div class="goal">Equal values are correct: 0.7 and 0.70 are the same answer. Expanded form may also be written 4 × 1 + 7 × 0.1. “Try” is the Let's Try One problem.</div></div></div>
+    <div class="key-cols" data-key-for="1.1,1.2,1.3,1.4"></div>
+  </div>
+  <footer class="pg-foot"><span>Gabriella's Math Lab · Decimals · Section 1: Decimal Place Value</span><span class="num">22</span></footer>
+</section>
+<section class="page">
+  <header class="pg-head"><span class="sec-tag" style="background:var(--key)">Parent answer key</span>Section 1: Decimal Place Value</header>
+  <div class="body">
+    <div class="key-cols" data-key-for="1.5,1.6,1.7"></div>
+  </div>
+  <footer class="pg-foot"><span>Gabriella's Math Lab · Decimals · Section 1: Decimal Place Value</span><span class="num">23</span></footer>
+</section>
+<section class="page">
+  <header class="pg-head"><span class="sec-tag" style="background:var(--key)">Parent answer key</span>Section 1: Decimal Place Value</header>
+  <div class="body">
+    <div class="key-cols" data-key-for="1.8,1.9,Review"></div>
+  </div>
+  <footer class="pg-foot"><span>Gabriella's Math Lab · Decimals · Section 1: Decimal Place Value</span><span class="num">24</span></footer>
+</section>
+
+<script src="../../assets/practice.js"></script>
+<script src="../../assets/models.js"></script>
+</body>
+</html>

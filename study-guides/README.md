@@ -1,81 +1,90 @@
-# Study Guides
+# Decimals Workbook
 
-Printable color workbooks that go with the Math Lab app. Each lesson has one HTML source file, and a
-build script turns it into a US Letter PDF. The guides use the same objectives, words, examples and
-skills as the app lesson.
+A printable, color fifth-grade decimals workbook that goes with the Math Lab app. It teaches through
+examples and practice. Each section is one HTML source file, and a build script turns it into a
+US Letter PDF.
 
-| Guide | App lesson | PDF | Status |
-|---|---|---|---|
-| Decimals, Lesson 1: Understanding Decimals | D01 | [pdf/decimals/Decimals-Lesson-1-Understanding-Decimals.pdf](pdf/decimals/Decimals-Lesson-1-Understanding-Decimals.pdf) | Reviewed ([review log](reviews/decimals-lesson-01.md)) |
-
-## What is in a guide
-
-Every guide has the same sections, in this order, with one color for each:
-
-| Section | Color | Purpose |
+| Section | PDF | Status |
 |---|---|---|
-| Cover | navy | Title, a hero picture, contents, how to use the guide, standards |
-| Learn | teal | "I can" goals, Words to Know, the big idea |
-| See It | blue | Labeled pictures: place-value charts, models, common mistakes |
-| Worked Examples | purple | Numbered steps with a handwritten check |
-| Try It Together | amber | Guided practice with blanks to fill in and hints |
-| On Your Own | rose | Independent practice with no hints, in a mix of question types |
-| Answer Key | slate | Every answer with the reason, and pictures where they help |
-| For Parents | plum | Mastery checklist matching the app's skills, common mistakes, next steps |
+| 1. Decimal Place Value | [pdf/decimals/Decimals-Section-1-Decimal-Place-Value.pdf](pdf/decimals/Decimals-Section-1-Decimal-Place-Value.pdf) | Phase 1: waiting for review |
+| 2. Reading, Writing, and Comparing Decimals | | Not started (waits for Phase 1 approval) |
+| 3. Rounding Decimals | | Not started |
+| 4. Adding Decimals | | Not started |
+| 5. Subtracting Decimals | | Not started |
+| 6. Multiplying Decimals (supplemental) | | Not started |
+| 7. Dividing Decimals (supplemental) | | Not started |
+| 8. Mixed Decimal Practice | | Not started |
 
-Each place value always has the same color: ones are purple, tenths blue, hundredths green and thousandths orange.
+## How every skill is laid out
+
+Each skill takes two pages: a teaching page, then a practice page.
+
+| Part | Color | What it has |
+|---|---|---|
+| Skill heading | navy | Skill number, name, and one goal |
+| **Show How** | blue | A real problem solved in numbered steps, with diagrams and a one-line "Why it works" |
+| **Let's Try One** | green | A similar problem with some steps filled in, plus room to work |
+| **Your Turn** | purple | 8 problems, from easier to harder, on that one skill. Each has its own work space and answer line |
+| **Parent Answer Key** | slate | At the end of the section, built automatically from the questions |
+
+Each place value always has the same color: tens are brown, ones red, tenths orange, hundredths teal
+and thousandths pink.
 
 ## Files
 
 ```
 study-guides/
-  assets/workbook.css     design system: page frame, colors, type, boxes, questions, key, checklist
-  assets/models.js        draws the grids, bars, number lines and place-value charts from exact values
-  assets/fonts/           Lexend (text) and Caveat (handwritten notes), both under the SIL Open Font License
-  lessons/<unit>/lesson-NN.html   the lesson source: edit this file
-  pdf/<unit>/*.pdf        the built PDF (committed)
-  reviews/                review log for each lesson
-  tools/build.mjs         builds the PDFs, checks them, and renders every page to PNG
-  tools/render.html       renders PDF pages with pdf.js, used by build.mjs
+  assets/workbook.css     design system: page, skill banner, Show How / Try / Your Turn boxes, cards, charts, key
+  assets/practice.js      numbers the questions, works out every answer exactly, and builds the answer key
+  assets/models.js        draws grids, strips, number lines and place-value charts from exact values
+  assets/fonts/           Lexend and Caveat (SIL Open Font License)
+  lessons/decimals/section-NN-*.html   the section sources (edit these)
+  pdf/decimals/           the built PDFs (committed)
+  tests/                  unit tests for the answer calculators
+  tools/build.mjs         builds and checks the PDFs, and renders every page to PNG
+  reviews/                review record for each section
 ```
 
-## Build
+## Writing problems
 
-You need Node 18 or newer and Google Chrome or Microsoft Edge. Set `CHROME_PATH` if the browser is not found.
+A practice problem is one card. Give it a calculator, and the answer is worked out for the key:
+
+```html
+<div class="card q" data-calc="value 4.735 7" data-ans="Value">What is the value of the <b>7</b> in 4.735?</div>
+```
+
+Calculators in `assets/practice.js`:
+
+| Calculator | What it answers |
+|---|---|
+| `whole`, `decpart`, `between` | The whole-number part, the part less than one, or the two whole numbers it falls between |
+| `place`, `value`, `digit` | The place of a digit, its value, or which digit is in a given place |
+| `convert 3 t h` | How many hundredths are in 3 tenths |
+| `times 0.7 0.07` | How many times as much the first value is |
+| `expanded`, `standard` | Expanded form, or standard form from expanded form |
+| `chart`, `model` | The number shown by the chart or model in the question |
+| `same`, `cmp` | Whether two decimals are equal, or how they compare (>, <, =) |
+
+All arithmetic is exact: no floating point. For a written-answer question, use
+`data-answer="..."` with `data-why="..."` instead of a calculator.
+
+## Build and test
+
+You need Node 18+ and Chrome or Edge (set `CHROME_PATH` if the browser isn't found).
 
 ```
 cd study-guides
 npm install
-npm run build                              # every lesson
-node tools/build.mjs decimals/lesson-01    # one lesson
+npm test            # unit tests for the calculators
+npm run build       # builds every PDF in pdf/, and PNGs of every page in qa/
 ```
 
-The build stops with an error if any of these checks fails:
+The build fails if any of these happen:
 
-1. A model can't be drawn, for example a value that isn't a decimal with up to 3 places.
-2. Something on a page runs into the footer or the margins, or sticks out of its box and overlaps
-   something next to it.
-3. The PDF doesn't have exactly one page per `<section class="page">`, or the Lexend font didn't load.
-4. A question (`data-q`) has no answer-key entry (`data-for`), or a key entry has no question.
-5. A key doesn't show the question's `data-answer`.
-6. With `data-model-answer`, the question's model wasn't drawn from that same value.
+- A question has no answer.
+- A key entry doesn't match its question.
+- A model can't be drawn.
+- Anything runs into the margins or the footer, sticks out of its box, or is clipped.
+- The page count doesn't match.
 
-After building, each page of the PDF is drawn with pdf.js to `qa/<unit>/<lesson>/page-NN.png`.
-Look at every one of these images before you publish. The `qa/` folder is not committed.
-
-## Writing a new lesson
-
-1. Copy `lessons/decimals/lesson-01.html`. Keep the section order and the `t-*` theme classes.
-2. Put each page in its own `<section class="page">`. Pages never flow onto the next one, so a page
-   that is too full fails the build and you fix it on purpose.
-3. Draw pictures with `data-model`, never with images:
-   - `<div data-model="grid" data-value="0.34">`
-   - `strip` / `bar` for tenths
-   - `line` with `data-from`, `data-to`, `data-point`
-   - `chart`
-   - `data-blank="1"` gives an empty model for the student to shade or fill in.
-4. Give every question `data-q`, and its key entry `data-for` with the answer in `<span class="ka">`.
-   Add `data-answer` (and `data-model-answer`) so the build can check the key.
-5. Use the app lesson's skills, words and teaching examples, and keep the parent checklist's skill
-   names the same as the app's.
-6. Run the curriculum, design and PDF reviews, then record them in `reviews/`.
+Look at every PNG in `qa/` before you publish.
