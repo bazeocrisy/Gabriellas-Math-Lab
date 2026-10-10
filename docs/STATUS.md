@@ -1,6 +1,6 @@
 # Project status
 
-Updated: 2026-10-10 · Branch: `claude/decimals-d01` · Full audit: [LESSON-1-AUDIT.md](LESSON-1-AUDIT.md)
+Updated: 2026-10-10 · Live: https://bazeocrisy.github.io/Gabriellas-Math-Lab/ · Full audit: [LESSON-1-AUDIT.md](LESSON-1-AUDIT.md)
 
 ## Confirmed
 - [x] GitHub repository initialized
@@ -14,9 +14,14 @@ Updated: 2026-10-10 · Branch: `claude/decimals-d01` · Full audit: [LESSON-1-AU
 - [x] **Parent Progress:** lesson completed, Teach status, practice sessions, most recent test, skills correct / needing practice, suggested next step, test history, device-only storage notice, erase button
 - [x] Math and curriculum review, student-experience review, and QA review run as three independent reviewers; all confirmed findings fixed and re-verified (see audit)
 - [x] Automated tests: `npm test` 47/47 pass; `npm run test:browser` 135/135 pass (headless Chrome, 5 viewport sizes)
+- [x] **Deployed and verified live (2026-10-10).**
+  - PR #2 merged into `main` (merge commit `a236b32`).
+  - GitHub Pages enabled from `main` / root; the Pages build of `a236b32` succeeded.
+  - The full browser suite ran twice against the live URL: **135/135 pass both times**.
+  - Coverage: Teach, Practice hints and answer checking, Test scoring (8/10, 9/10, 10/10), progress after refresh, navigation, layouts from 375 to 1920 px wide, no console errors, and all 16 scripts and styles loading with HTTP 200.
+  - Command: `LIVE_URL=https://bazeocrisy.github.io/Gabriellas-Math-Lab/ npm run test:browser`
 
 ## Not done yet
-- [ ] Enable GitHub Pages and confirm the live site (nothing has been deployed or checked live)
 - [ ] Test on a real iPhone/iPad (Safari). Mobile layouts were checked only with Chrome device emulation.
 - [ ] Check with a real screen reader (labels and roles are in place but untested with assistive technology)
 - [ ] Check the printed Lesson Notes on paper (print styles exist; only on-screen rendering was checked)

@@ -1,6 +1,7 @@
 // End-to-end browser test (headless Chrome/Edge, no dependencies). Serves the repo under
 // /Gabriellas-Math-Lab/ like GitHub Pages and drives every mode the way a student would.
 // Run: npm run test:browser   (set CHROME_PATH if Chrome/Edge is not found)
+// Live site: LIVE_URL=https://bazeocrisy.github.io/Gabriellas-Math-Lab/ npm run test:browser
 import path from 'node:path';
 import { ROOT, BASE, startServer, startBrowser } from './lib/harness.mjs';
 
@@ -11,9 +12,11 @@ function check(name, ok, detail) {
   console.log(`${ok ? '✔' : '✖'} ${name}${!ok && detail !== undefined ? ' — ' + JSON.stringify(detail).slice(0, 500) : ''}`);
 }
 
-const server = await startServer();
+const LIVE = process.env.LIVE_URL;
+const server = LIVE ? { origin: '', missing: [], close() {} } : await startServer();
 const b = await startBrowser();
-const URL = server.origin + BASE;
+const URL = LIVE ? LIVE.replace(/\/?$/, '/') : server.origin + BASE;
+if (LIVE) console.log('Testing the live site: ' + URL);
 const { js } = b;
 
 // In-page helpers: build the question on screen from saved state and answer it right or wrong.
@@ -316,7 +319,12 @@ try {
   check('parent: erase progress works', /No test taken yet/.test(await js(`return document.getElementById('app').innerText;`)) && (await js(`return Object.keys(localStorage).filter((k) => k.startsWith('gml:')).length;`)) === 0);
 
   check('no console errors', b.errors.length === 0, b.errors);
-  check('no missing files', server.missing.length === 0, server.missing);
+  if (LIVE) {
+    await b.load(URL + 'index.html');
+    const st = await js(`return Promise.all([...document.scripts].map((x) => x.src).concat([...document.querySelectorAll('link[rel=stylesheet]')].map((x) => x.href))
+      .map((u) => fetch(u, { cache: 'no-store' }).then((r) => [u, r.status])));`);
+    check(`live: all ${st.length} scripts and styles load (HTTP 200)`, st.length >= 10 && st.every((x) => x[1] === 200), st.filter((x) => x[1] !== 200));
+  } else check('no missing files', server.missing.length === 0, server.missing);
 } catch (e) {
   check('browser test crashed', false, String(e && e.stack || e));
 } finally {
