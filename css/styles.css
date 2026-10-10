@@ -208,6 +208,7 @@ h3 { font-size: 1.1rem; margin: 1em 0 .4em; }
 .m-focus { fill: none; stroke: #e08a00; stroke-width: 2.5; }
 .m-zoomline { stroke: #e08a00; stroke-width: 1.2; stroke-dasharray: 4 3; }
 .m-axis, .m-tick { stroke: #1d2433; stroke-width: 2; }
+.m-x { stroke: #a3271d; stroke-width: 2.5; stroke-linecap: round; }
 .m-mid { stroke: #e08a00; stroke-width: 3; }
 .m-a { fill: #dbe8fb; stroke: #8a94a6; stroke-width: .6; }
 .m-b { fill: #fff0c7; stroke: #8a94a6; stroke-width: .6; }

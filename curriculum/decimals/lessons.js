@@ -12,7 +12,7 @@
       { id: 'd04', n: 4, title: 'Ordering Decimals', blurb: 'Put decimals in order from least to greatest and greatest to least, and solve ordering problems.', ready: true },
       { id: 'd05', n: 5, title: 'Rounding Decimals', blurb: 'Round decimals to the nearest tenth and hundredth with number lines and the rounding rule.', ready: true },
       { id: 'd06', n: 6, title: 'Adding Decimals', blurb: 'Add decimals to hundredths with models, lined-up decimal points, regrouping, estimates and word problems.', ready: true },
-      { id: 'd07', n: 7, title: 'Subtracting Decimals', blurb: 'Regrouping, zeros and word problems.', ready: false },
+      { id: 'd07', n: 7, title: 'Subtracting Decimals', blurb: 'Subtract decimals to hundredths with models, regrouping, zeros, checking by adding, and word problems.', ready: true },
       { id: 'd08', n: 8, title: 'Multiplying Decimals', blurb: 'Includes supplemental skills beyond the Grade 5 Georgia decimal standards.', ready: false },
       { id: 'd09', n: 9, title: 'Dividing Decimals', blurb: 'Includes supplemental skills beyond the Grade 5 Georgia decimal standards.', ready: false },
       { id: 'd10', n: 10, title: 'Mixed Decimal Review', blurb: 'Cumulative application and reasoning.', ready: false }

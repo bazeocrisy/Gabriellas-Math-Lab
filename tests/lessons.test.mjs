@@ -137,6 +137,19 @@ VERIFY.d06 = {
   ES1: (q) => { const [a, b] = numbersIn(q); const rw = (x) => Math.floor((D.toThousandths(x) + 500) / 1000); assert.equal(q.answer, String(rw(a) + rw(b))); },
   ES2: (q) => { const [a, b, said] = numbersIn(q); assert.equal(q.answer.startsWith('Yes'), sumOf([a, b]) === D.toThousandths(said)); }
 };
+// Lesson 7: differences recomputed from the numbers in the question.
+const diffOf = (a, b) => D.toThousandths(a) - D.toThousandths(b);
+const firstTwoDiff = (q) => { const [a, b] = numbersIn(q); assert.equal(D.toThousandths(q.answer), diffOf(a, b)); assert.ok(diffOf(a, b) > 0); };
+VERIFY.d07 = {
+  SL1: firstTwoDiff, SZ1: firstTwoDiff, SZ2: firstTwoDiff, SW2: firstTwoDiff, SL3: firstTwoDiff,
+  SW1: (q) => { const [cost, paid] = numbersIn(q); assert.equal(D.toThousandths(q.answer), diffOf(paid, cost)); },
+  SM1: (q) => { const [a, b] = numbersIn(q); assert.equal((q.visual.match(/class="m-on"/g) || []).length * 10, D.toThousandths(a)); assert.equal((q.visual.match(/class="m-x"/g) || []).length * 10, D.toThousandths(b)); assert.equal(D.toThousandths(q.answer), diffOf(a, b)); },
+  SM2: (q) => { const [start, jump] = decs(q); assert.equal(linePoints(q.visual)[0].v, D.toThousandths(start)); assert.equal(D.toThousandths(q.answer), diffOf(start, jump)); },
+  SL2: (q) => { for (const c of q.choices) { const cols = pointCols(c.html); assert.equal(c.value === q.answer, cols.every((x) => x === cols[0]), c.text); } },
+  SC1: (q) => { const [a, b, d] = numbersIn(q); const [x, y, z] = q.answer.match(/\d+(\.\d+)?/g); assert.equal(D.toThousandths(d), diffOf(a, b)); assert.ok(D.equal(x, d) && D.equal(y, b) && D.equal(z, a)); },
+  SC2: (q) => { const [a, b, said] = numbersIn(q); assert.equal(q.answer.startsWith('Yes'), diffOf(a, b) === D.toThousandths(said)); },
+  SC3: (q) => { const [a, b] = numbersIn(q); const rw = (x) => Math.floor((D.toThousandths(x) + 500) / 1000); assert.equal(q.answer, String(rw(a) - rw(b))); }
+};
 function decs(q) { return strip(q.prompt).match(/\d+\.\d+/g); }
 function pad(x) { const v = D.parse(x); return v.whole.padStart(2, '0').slice(-1) + '.' + v.frac.padEnd(3, '0'); }
 function symbolOk(q) { const [x, y] = decs(q); const c = D.cmp(x, y); assert.equal(q.answer, c < 0 ? '<' : c > 0 ? '>' : '='); }

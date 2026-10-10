@@ -29,6 +29,7 @@
     for (let i = 0; i < 100; i++) {
       const col = Math.floor(i / 10), row = i % 10;
       parts.push(`<rect x="${col * 20}" y="${row * 20}" width="20" height="20" class="${i < k ? 'm-on' : 'm-off'}"/>`);
+      if (o.cross && i < k && i >= k - o.cross) parts.push(`<path d="M${col * 20 + 4} ${row * 20 + 4}L${col * 20 + 16} ${row * 20 + 16}M${col * 20 + 16} ${row * 20 + 4}L${col * 20 + 4} ${row * 20 + 16}" class="m-x"/>`);
     }
     // Column lines drawn thicker so each tenth (column) is easy to see.
     for (let col = 1; col < 10; col++) parts.push(`<line x1="${col * 20}" y1="0" x2="${col * 20}" y2="200" class="m-col"/>`);
@@ -48,7 +49,7 @@
     }
     const cols = Math.floor(k / 10), extra = k % 10;
     const label = o.label || `A grid of 100 equal squares. ${cols} full column${cols === 1 ? '' : 's'} and ${extra} more square${extra === 1 ? '' : 's'} ${k === 1 ? 'is' : 'are'} shaded` +
-      (c ? `, and ${c} of the 10 thin slices of the next square ${c === 1 ? 'is' : 'are'} shaded.` : '.');
+      (c ? `, and ${c} of the 10 thin slices of the next square ${c === 1 ? 'is' : 'are'} shaded.` : '.') + (o.cross ? ` ${o.cross} of the shaded squares are crossed out.` : '');
     return `<svg class="model model-grid${c ? ' model-zoom' : ''}" viewBox="-2 -2 ${width + 4} 204" role="img" aria-label="${esc(label)}">` +
       parts.join('') + `<rect x="0" y="0" width="200" height="200" class="m-frame"/></svg>`;
   }
