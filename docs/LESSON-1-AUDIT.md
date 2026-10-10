@@ -146,7 +146,7 @@ All 24 were fixed, and each reviewer re-checked its own findings against the fix
 | Math reviewer: 34 templates × 3000 seeds, typical-mistake probes, read-through of all Teach, Notes, hints and feedback | 13 findings; all fixed and re-checked; 3 new minor findings, also fixed |
 | Student-experience reviewer: about 60 screenshots per round at 375, 390, 768, 1366 and 1920 | 15 findings; all fixed and re-checked; 1 new minor finding, also fixed |
 | QA reviewer: 24 routes, back/forward and refresh, input edge cases, steppers, hint sequences, DOM leak inspection, 3000 scoring patterns, corrupted and blocked storage, double activation | 6 defects and 2 suspected issues; all fixed and re-checked; 1 new minor defect, also fixed |
-| Live site (GitHub Pages) | **Not performed.** Nothing is deployed. |
+| Live site (GitHub Pages), after the merge on 2026-10-10 | **135 / 135 pass, on two runs** of the full browser suite against https://bazeocrisy.github.io/Gabriellas-Math-Lab/ (merge commit `a236b32`) |
 
 ## 10. Remaining limitations
 - **Standards:** the wording was checked against a secondary source. Confirm with the official GaDOE document and the Milestones blueprint before claiming full alignment. D01 is a foundations lesson; it does not by itself meet 5.NR.4.1–4.4.
@@ -156,4 +156,3 @@ All 24 were fixed, and each reviewer re-checked its own findings against the fix
 - **Answers can be worked out from the browser console** (the question generator runs in the page). This is fine for a home learning app, but it is not secure testing.
 - **Guided Teach checks stay answered:** revisiting a check shows it as already solved, and there is no "try again" for a check.
 - **E2 and E4** (equal / same-amount yes-or-no questions) appear only in Practice.
-- **GitHub Pages** has not been enabled or verified.
