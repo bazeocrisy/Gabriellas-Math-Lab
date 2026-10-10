@@ -55,3 +55,22 @@ test('equivalent decimals and comparing', () => {
   assert.strictEqual(ans('cmp', '0.8', '0.75'), '>');
   assert.strictEqual(ans('cmp', '0.25', '0.250'), '=');
 });
+
+test('word form', () => {
+  assert.strictEqual(ans('words', '4.735'), 'four and seven hundred thirty-five thousandths');
+  assert.strictEqual(ans('words', '0.07'), 'seven hundredths');
+  assert.strictEqual(ans('words', '0.1'), 'one tenth');
+  assert.strictEqual(ans('words', '16.08'), 'sixteen and eight hundredths');
+  assert.strictEqual(ans('words', '0.209'), 'two hundred nine thousandths');
+  assert.strictEqual(ans('fromwords', '6.08'), '6.08');
+});
+
+test('comparing and ordering (the required 0.8 and 0.75 example)', () => {
+  assert.strictEqual(ans('cmp', '0.8', '0.75'), '>');
+  assert.match(CALC.cmp('0.8', '0.75')[1], /tenths, 8 > 7/);
+  assert.strictEqual(ans('cmp', '0.512', '0.52'), '<');
+  assert.strictEqual(ans('cmp', '2.1', '1.99'), '>');
+  assert.strictEqual(ans('order', 'asc', '0.5', '0.45', '0.405'), '0.405, 0.45, 0.5');
+  assert.strictEqual(ans('order', 'desc', '1.2', '1.02', '1.202'), '1.202, 1.2, 1.02');
+  assert.throws(() => ans('order', 'asc', '0.5', '0.50'), /different values/);
+});

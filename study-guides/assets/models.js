@@ -118,11 +118,14 @@
       const lab = i === 0 || i === 10 || el.dataset.ticks;
       if (lab) b += `<text x="${x}" y="${y + 26}" text-anchor="middle" class="${i % 10 ? '' : 'lbl'}" font-size="${i % 10 ? 9.5 : 11.5}">${fromThou(t, i % 10 ? places : undefined)}</text>`;
     }
-    if (el.dataset.point && !el.dataset.blank) {
-      const p = parse(el.dataset.point).thou;
-      if (p < a || p > z || (p - a) % step) throw new Error('point not on a tick: ' + el.dataset.point);
-      b += `<circle class="dot" cx="${X(p)}" cy="${y}" r="6.5"/><text x="${X(p)}" y="${y - 14}" text-anchor="middle" class="lbl" font-size="12">${el.dataset.pointLabel || 'P'}</text>`;
-    }
+    // One point (data-point + data-point-label) or several (data-points="0.35:A,0.4:B").
+    const pts = el.dataset.points ? el.dataset.points.split(',').map((s) => s.split(':'))
+      : el.dataset.point ? [[el.dataset.point, el.dataset.pointLabel || 'P']] : [];
+    if (!el.dataset.blank) pts.forEach(([v, label], i) => {
+      const p = parse(v).thou;
+      if (p < a || p > z || (p - a) % step) throw new Error('point not on a tick: ' + v);
+      b += `<circle class="${i % 2 ? 'dot2' : 'dot'}" cx="${X(p)}" cy="${y}" r="6.5"/><text x="${X(p)}" y="${y - 14}" text-anchor="middle" class="lbl" font-size="12">${label}</text>`;
+    });
     return svg(W, 66, b, `A number line from ${el.dataset.from} to ${el.dataset.to} cut into 10 equal jumps`);
   }
 

@@ -6,8 +6,8 @@ US Letter PDF.
 
 | Section | PDF | Status |
 |---|---|---|
-| 1. Decimal Place Value | [pdf/decimals/Decimals-Section-1-Decimal-Place-Value.pdf](pdf/decimals/Decimals-Section-1-Decimal-Place-Value.pdf) | Phase 1: waiting for review |
-| 2. Reading, Writing, and Comparing Decimals | | Not started (waits for Phase 1 approval) |
+| 1. Decimal Place Value | [pdf/decimals/Decimals-Section-1-Decimal-Place-Value.pdf](pdf/decimals/Decimals-Section-1-Decimal-Place-Value.pdf) | Approved 2026-10-10 |
+| 2. Reading, Writing, and Comparing Decimals | [pdf/decimals/Decimals-Section-2-Reading-Writing-and-Comparing-Decimals.pdf](pdf/decimals/Decimals-Section-2-Reading-Writing-and-Comparing-Decimals.pdf) | Built and reviewed; waiting for review |
 | 3. Rounding Decimals | | Not started |
 | 4. Adding Decimals | | Not started |
 | 5. Subtracting Decimals | | Not started |
@@ -64,6 +64,8 @@ Calculators in `assets/practice.js`:
 | `expanded`, `standard` | Expanded form, or standard form from expanded form |
 | `chart`, `model` | The number shown by the chart or model in the question |
 | `same`, `cmp` | Whether two decimals are equal, or how they compare (>, <, =) |
+| `order asc …`, `order desc …` | A list in order, least to greatest or greatest to least |
+| `words`, `fromwords`, `expwords` | Word form, a decimal from its word form, or word form from expanded form |
 
 All arithmetic is exact: no floating point. For a written-answer question, use
 `data-answer="..."` with `data-why="..."` instead of a calculator.

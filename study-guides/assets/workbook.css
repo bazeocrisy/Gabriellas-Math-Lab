@@ -222,3 +222,17 @@ table.pv th.pv-dot, table.pv td.pv-dot, table.pv.sm th.pv-dot, table.pv.sm td.pv
 .body > .box.try { flex: 1; display: flex; flex-direction: column; min-height: 0; }
 .body > .box.try > .in { flex: 1; min-height: 0; }
 .work.auto { flex: 1; min-height: 0.45in; }
+svg.m .dot2 { fill: var(--show); stroke: #fff; stroke-width: 1.5; }
+
+/* Section 2: aligned numbers for comparing/ordering, the three-forms table, number-line answers */
+table.align { border-collapse: collapse; font-size: 22pt; font-weight: 700; letter-spacing: 0.08em; font-variant-numeric: tabular-nums; }
+table.align td { padding: 0.02in 0.16in; border-bottom: 1px dashed var(--rule); text-align: left; }
+.pad { color: #9aa7c2; }
+table.tbl-forms { width: 100%; border-collapse: collapse; font-size: 11pt; }
+table.tbl-forms th, table.tbl-forms td { border: 1px solid var(--rule); padding: 0.06in 0.1in; text-align: left; vertical-align: middle; }
+table.tbl-forms th { background: var(--show-wash); width: 1.3in; }
+.card .nl-ans { font-size: 10.5pt; margin-top: 0.04in; }
+
+/* Long answer lines stretch to fill the card instead of using a fixed width (no overflow at the left edge). */
+.card .ans:has(.fill.ww) { justify-content: flex-start; }
+.card .ans .fill.ww { min-width: 0; flex: 1; }

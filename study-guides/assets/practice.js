@@ -122,8 +122,63 @@
     same: (a, b) => (D(a) === D(b)
       ? ['yes', `${a} = ${b}: zeros added after the last decimal digit do not change the value.`]
       : ['no', `${a} ≠ ${b}: the digits are in different places.`]),
-    cmp: (a, b) => { const x = D(a), y = D(b); const s = x > y ? '>' : x < y ? '<' : '='; return [s, `${a} ${s} ${b}.`]; },
+    // Compare: line up the places and find the first place where the digits differ.
+    cmp: (a, b) => {
+      const x = D(a), y = D(b); const s = x > y ? '>' : x < y ? '<' : '=';
+      if (s === '=') return [s, `${a} = ${b}: written with the same number of places, the digits are all the same.`];
+      const n = Math.max(parts(a).f.length, parts(b).f.length);
+      const pa = fmt(x, n), pb = fmt(y, n);
+      const da = digitsOf(pa), db = digitsOf(pb);
+      if (da.length !== db.length) return [s, `${s === '>' ? a : b} has the bigger whole-number part.`];
+      const i = da.findIndex(([c], k) => c !== db[k][0]);
+      return [s, `Write ${pa} and ${pb}. First different place: ${da[i][1]}, ${da[i][0]} ${s} ${db[i][0]}. So ${a} ${s} ${b}.`];
+    },
+    // Order a list: "order asc 0.5 0.45 0.405"
+    order: (dir, ...xs) => {
+      if (new Set(xs.map((v) => String(D(v)))).size !== xs.length) throw new Error('order needs different values');
+      const sorted = [...xs].sort((p, q) => (D(p) < D(q) ? -1 : D(p) > D(q) ? 1 : 0));
+      if (dir === 'desc') sorted.reverse();
+      const n = Math.max(...xs.map((v) => parts(v).f.length));
+      return [sorted.join(', '), `With ${n} decimal place${n === 1 ? '' : 's'}: ${sorted.map((v) => fmt(D(v), n)).join(dir === 'desc' ? ' > ' : ' < ')}.`];
+    },
+    // Word form and back
+    words: (n) => [wordForm(n), wordWhy(n)],
+    fromwords: (n) => {
+      const { w, f } = parts(n), k = String(Number(f)), place = LAST[f.length][1];
+      const whole = Number(w) ? `Before “and”: ${w}.` : 'No “and”, so 0 wholes.';
+      const pad = k.length < f.length ? `; ${k} has ${k.length} digit${k.length > 1 ? 's' : ''}, so write ${f.length - k.length === 1 ? 'a 0' : (f.length - k.length) + ' zeros'} first` : `: ${k} fills them`;
+      return [fmt(D(n), f.length), `${whole} ${place[0].toUpperCase() + place.slice(1)} = ${f.length} place${f.length > 1 ? 's' : ''} after the point${pad} → ${fmt(D(n), f.length)}.`];
+    },
+    // expanded form → word form: add the parts to get standard form, then read it
+    expwords: (n) => [wordForm(n), `${CALC.expanded(n)[0]} = ${n}; ${wordWhy(n)[0].toLowerCase() + wordWhy(n).slice(1)}`],
   };
+
+  // ---------- word form ----------
+  const ONES_W = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve', 'thirteen',
+    'fourteen', 'fifteen', 'sixteen', 'seventeen', 'eighteen', 'nineteen'];
+  const TENS_W = ['', '', 'twenty', 'thirty', 'forty', 'fifty', 'sixty', 'seventy', 'eighty', 'ninety'];
+  function intWords(n) {
+    if (n < 20) return ONES_W[n];
+    if (n < 100) return TENS_W[Math.floor(n / 10)] + (n % 10 ? '-' + ONES_W[n % 10] : '');
+    if (n < 1000) return ONES_W[Math.floor(n / 100)] + ' hundred' + (n % 100 ? ' ' + intWords(n % 100) : '');
+    throw new Error('word form up to 999: ' + n);
+  }
+  const LAST = [null, ['tenth', 'tenths'], ['hundredth', 'hundredths'], ['thousandth', 'thousandths']];
+  function wordForm(n) {
+    const { w, f } = parts(n);
+    if (!f) return intWords(Number(w));
+    const k = Number(f), dec = `${intWords(k)} ${LAST[f.length][k === 1 ? 0 : 1]}`;
+    return Number(w) ? `${intWords(Number(w))} and ${dec}` : dec;
+  }
+  function wordWhy(n) {
+    const { w, f } = parts(n);
+    const read = `read ${Number(f)}, then say the place of the last digit: ${LAST[f.length][1]}.`;
+    return Number(w) ? `${Number(w)} whole${Number(w) === 1 ? '' : 's'}, then “and” for the point; ${read}` : read[0].toUpperCase() + read.slice(1);
+  }
+  // Fill any <span data-words="4.735"></span> with the number's word form.
+  document.querySelectorAll('[data-words]').forEach((el) => { el.textContent = wordForm(el.dataset.words); });
+  // Fill any <span data-expanded="0.34"></span> with the number's expanded form (0.3 + 0.04).
+  document.querySelectorAll('[data-expanded]').forEach((el) => { el.textContent = CALC.expanded(el.dataset.expanded)[0]; });
 
   // ---------- compact cards ----------
   // <div class="card q" data-calc="...">prompt</div> becomes: number badge + prompt, work space, answer line.

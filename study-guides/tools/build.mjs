@@ -74,7 +74,8 @@ async function checkLayout(page) {
       // A child sticking out sideways past its parent's box overlaps its neighbor (e.g. a chart under text).
       for (const el of pg.querySelectorAll('.body *')) {
         const par = el.parentElement;
-        if (!par || par.closest('svg') || par.tagName === 'TR' || getComputedStyle(par).display === 'inline') continue;
+        if (!par || par.closest('svg') || par.tagName === 'TR') continue;
+        if (getComputedStyle(par).display === 'inline' && !el.matches('.ans, .ans *')) continue;
         const r = el.getBoundingClientRect(), p = par.getBoundingClientRect();
         if (!r.width) continue;
         const nm = el.tagName.toLowerCase() + (typeof el.className === 'string' && el.className ? '.' + el.className.split(' ')[0] : '');
