@@ -14,24 +14,24 @@ Teach the concept clearly, provide meaningful practice, and assess independent m
 - **Parent Progress:** lesson status, most recent test, skills correct / needing practice, suggested next step. Stored only in this browser.
 
 ## Status
-**Lesson 1 — Understanding Decimals is implemented and audited** (see [docs/STATUS.md](docs/STATUS.md) and [docs/LESSON-1-AUDIT.md](docs/LESSON-1-AUDIT.md)). Lessons 2–8 are shown as "Coming later" and are not built.
+**Decimals Lessons 1–4 are implemented**: Lesson 1 (Understanding Decimals) is audited and live; Lessons 2–4 (Place Value, Comparing, Ordering) are on branch `claude/decimals-d02-d04` awaiting approval. Lessons 5–10 are shown as "Coming later" and are not built. See [docs/STATUS.md](docs/STATUS.md) and [docs/LESSON-1-AUDIT.md](docs/LESSON-1-AUDIT.md).
 
 ## Run it
 It is a static site with no build step and no dependencies.
 
 - Serve the folder with any static web server (for example `npx serve .` or VS Code Live Server), or publish the repository with GitHub Pages. All paths are relative, so it works under `/Gabriellas-Math-Lab/`.
-- Routes: `#/` home, `#/d01/teach/1`, `#/d01/practice`, `#/d01/test`, `#/d01/notes` (printable Lesson Notes), `#/parent`.
+- Routes: `#/` home, `#/d01/teach/1`, `#/d01/practice`, `#/d01/test`, `#/d01/notes` (printable Lesson Notes), `#/parent`; the same for `d02`, `d03`, `d04`.
 
 ## Tests (Node 22+, no npm install needed)
-- `npm test` — verifies every question template over hundreds of seeds (answer keys, pictures match numbers, valid choices, hints never contain the answer, feedback for wrong answers), scoring, and question-set rules.
+- `npm test` — verifies every question template in every lesson over hundreds of seeds, recomputing each answer independently (answer keys, pictures match numbers, valid choices, hints never contain the answer, feedback for wrong answers), scoring, and question-set rules.
 - `npm run test:browser` — drives headless Chrome/Edge through Home, all Teach screens, Practice, Test, Parent Progress, refreshes, damaged saved data, and five viewport sizes. Set `CHROME_PATH` if the browser is not found. Screenshots go to `tests/screenshots/` (ignored by git).
 
 ## Project layout
 - `index.html`, `css/styles.css`
 - `js/decimal.js` exact decimal helpers (digit strings, no floating point) · `js/words.js` number names · `js/models.js` SVG models and place-value chart
-- `js/engine.js` question generation, checking, question sets · `js/scoring.js` test scoring · `js/storage.js` local progress
+- `js/kit.js` shared question-bank helpers · `js/engine.js` question generation, checking (typed, multiple choice, shade-a-model, chart, order, expanded form, ranges), question sets · `js/scoring.js` test scoring · `js/storage.js` local progress
 - `js/question-ui.js` answer controls · `js/coach.js` hints and feedback · `js/teach.js`, `js/practice.js`, `js/test.js`, `js/app.js` (routes, home, notes, parent page)
-- `curriculum/decimals/lessons.js` unit lesson list · `curriculum/decimals/d01/bank.js` question templates · `curriculum/decimals/d01/lesson.js` Teach screens and Lesson Notes
+- `curriculum/decimals/lessons.js` unit lesson list · `curriculum/decimals/dNN/bank.js` question templates · `curriculum/decimals/dNN/lesson.js` Teach screens and Lesson Notes (one folder per lesson)
 - `tests/` unit and browser tests · `docs/` curriculum, status and audit
 
 ## Project principles

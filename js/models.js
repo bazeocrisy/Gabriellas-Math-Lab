@@ -77,25 +77,63 @@
       parts.push(`<circle cx="${x}" cy="${y}" r="6" class="m-dot"/>`);
       parts.push(`<text x="${x}" y="${y - 18}" class="m-text m-bold" text-anchor="middle">${esc(o.pointLabel || 'A')}</text>`);
     }
+    (o.points || []).forEach((pt) => {
+      if (pt.v < from || pt.v > to) throw new Error('point off the line');
+      const x = X(pt.v);
+      parts.push(`<circle cx="${x}" cy="${y}" r="6" class="m-dot"/>`);
+      parts.push(`<text x="${x}" y="${y - 18}" class="m-text m-bold" text-anchor="middle">${esc(pt.label)}</text>`);
+    });
     const label = o.label || `A number line from ${l} to ${r} cut into 10 equal jumps` +
-      (o.point !== undefined ? `. Point ${o.pointLabel || 'A'} is ${Math.round((o.point - from) / step)} jumps to the right of ${l}.` : '.');
+      (o.point !== undefined ? `. Point ${o.pointLabel || 'A'} is ${Math.round((o.point - from) / step)} jumps to the right of ${l}.` : '') +
+      (o.points ? ' ' + o.points.map((pt) => `Point ${pt.label} is ${Math.round((pt.v - from) / step)} jumps to the right of ${l}.`).join(' ') : '') + (o.point === undefined && !o.points ? '.' : '');
     return `<svg class="model model-line" viewBox="0 0 340 84" role="img" aria-label="${esc(label)}">${parts.join('')}</svg>`;
   }
 
   const PLACES = ['ones', 'tenths', 'hundredths', 'thousandths'];
+  const PLACES_T = ['tens', 'ones', 'tenths', 'hundredths', 'thousandths'];
   // Soft hyphens (­) let long headings break cleanly in narrow charts.
-  const PLACE_TITLES = { ones: 'Ones', tenths: 'Tenths', hundredths: 'Hun­dredths', thousandths: 'Thou­sandths' };
-  const PLACE_VALUES = { ones: '1', tenths: '0.1', hundredths: '0.01', thousandths: '0.001' };
+  const PLACE_TITLES = { tens: 'Tens', ones: 'Ones', tenths: 'Tenths', hundredths: 'Hun­dredths', thousandths: 'Thou­sandths' };
+  const PLACE_VALUES = { tens: '10', ones: '1', tenths: '0.1', hundredths: '0.01', thousandths: '0.001' };
 
   /** Place-value chart. d = { ones, tenths, hundredths, thousandths } (strings; '' leaves a cell empty). */
   function chart(d, o = {}) {
-    const head = PLACES.map((p, i) => (i === 1 ? '<th class="pv-point" aria-hidden="true"></th>' : '') +
+    const cols = o.tens ? PLACES_T : PLACES, pt = cols.indexOf('tenths');
+    const head = cols.map((p, i) => (i === pt ? '<th class="pv-point" aria-hidden="true"></th>' : '') +
       `<th scope="col" class="${o.highlight === p ? 'pv-hi' : ''}">${PLACE_TITLES[p]}<span class="pv-val">${PLACE_VALUES[p]}</span></th>`).join('');
-    const row = d ? '<tr>' + PLACES.map((p, i) => (i === 1 ? '<td class="pv-point" aria-label="decimal point">.</td>' : '') +
+    const row = d ? '<tr>' + cols.map((p, i) => (i === pt ? '<td class="pv-point" aria-label="decimal point">.</td>' : '') +
       `<td class="${o.highlight === p ? 'pv-hi' : ''}">${esc(d[p] == null ? '' : d[p])}</td>`).join('') + '</tr>' : '';
     const cap = o.caption ? `<caption>${esc(o.caption)}</caption>` : '';
     return `<table class="pv-chart">${cap}<thead><tr>${head}</tr></thead><tbody>${row}</tbody></table>`;
   }
 
-  G.models = { strip, grid, line, chart, esc, PLACES, PLACE_TITLES };
+  /**
+   * Numbers lined up by place value, one row each. Zeros added to fill empty places are shown lighter.
+   * o.highlight: a place to highlight; o.pad: write the filler zeros (default true); o.labels: row labels.
+   */
+  function stack(nums, o = {}) {
+    const pad = o.pad !== false;
+    const ps = nums.map((n) => G.D.parse(n));
+    const tens = ps.some((x) => x.whole.length > 1);
+    // Show places only as far as the longest number (or o.places), so 0.8 and 0.75 line up as 0.80 and 0.75.
+    const maxP = Math.max(1, o.places || Math.max(...ps.map((x) => x.places)));
+    const cols = (tens ? PLACES_T : PLACES).slice(0, (tens ? 2 : 1) + maxP), pt = cols.indexOf('tenths');
+    const head = (o.labels ? '<th scope="col"><span class="sr-only">Number</span></th>' : '') + cols.map((p, i) => (i === pt ? '<th class="pv-point" aria-hidden="true"></th>' : '') +
+      `<th scope="col" class="${o.highlight === p ? 'pv-hi' : ''}">${PLACE_TITLES[p]}</th>`).join('');
+    const rows = ps.map((x, r) => {
+      const w = x.whole.padStart(tens ? 2 : 1, ' ');
+      const cells = cols.map((p, i) => {
+        let v, filler = false;
+        if (p === 'tens') v = w[0] === ' ' ? '' : w[0];
+        else if (p === 'ones') v = w[w.length - 1];
+        else { v = x.frac[i - pt]; if (v === undefined) { v = pad ? '0' : ''; filler = pad; } }
+        return (i === pt ? '<td class="pv-point" aria-label="decimal point">.</td>' : '') +
+          `<td class="${[o.highlight === p ? 'pv-hi' : '', filler ? 'pv-pad' : ''].join(' ').trim()}">${esc(v)}</td>`;
+      }).join('');
+      return `<tr>${o.labels ? `<th scope="row">${esc(o.labels[r])}</th>` : ''}${cells}</tr>`;
+    }).join('');
+    const cap = o.caption ? `<caption>${esc(o.caption)}</caption>` : '';
+    return `<table class="pv-chart pv-stack">${cap}<thead><tr>${head}</tr></thead><tbody>${rows}</tbody></table>`;
+  }
+
+  G.models = { strip, grid, line, chart, stack, esc, PLACES, PLACE_TITLES };
 })(typeof window !== 'undefined' ? (window.GML = window.GML || {}) : (globalThis.GML = globalThis.GML || {}));

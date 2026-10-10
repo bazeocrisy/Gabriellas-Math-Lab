@@ -24,17 +24,19 @@
     const was = revealed[lessonId + ':' + sc.id];
     let shown = Math.min(steps.length, Number.isInteger(was) && was > 0 ? was : (steps.length ? 1 : 0));
     let checkSolved = false;
+    const WHY = sc.why ? `<div class="why-box" hidden><p class="why-title">Why it works</p><p>${sc.why}</p></div>` : '';
     const STEPBTN = '<button type="button" class="btn btn-primary step-btn" data-act="step">Show next step</button>';
 
     app.innerHTML = `
       <div class="crumbs"><a href="#/">← Lesson menu</a></div>
-      <p class="mode-label">Lesson 1 · Teach <span class="screen-count">Screen ${i + 1} of ${total}</span></p>
+      <p class="mode-label">Lesson ${G.unit.find(lessonId).n} · Teach <span class="screen-count">Screen ${i + 1} of ${total}</span></p>
       <div class="progress" role="progressbar" aria-label="Lesson progress" aria-valuemin="1" aria-valuemax="${total}" aria-valuenow="${i + 1}"><span style="width:${((i + 1) / total) * 100}%"></span></div>
       <h1 tabindex="-1">${sc.title}</h1>
+      ${sc.goal ? `<p class="goal"><b>You will learn:</b> ${sc.goal}</p>` : ''}
       <div class="teach-body">${sc.body || ''}</div>
       ${sc.visual ? `<div class="teach-visual">${sc.visual}</div>` : ''}
-      ${sc.example || sc.exampleVisual ? `<section class="example">${sc.example ? `<h2>${sc.example}</h2>` : ''}${sc.exampleVisual ? `<div class="teach-visual">${sc.exampleVisual}</div>` : ''}<ol class="steps"></ol>${STEPBTN}</section>`
-        : steps.length ? `<section class="example"><ol class="steps"></ol>${STEPBTN}</section>` : ''}
+      ${sc.example || sc.exampleVisual ? `<section class="example">${sc.example ? `<h2>${sc.example}</h2>` : ''}${sc.exampleVisual ? `<div class="teach-visual">${sc.exampleVisual}</div>` : ''}<ol class="steps"></ol>${STEPBTN}${WHY}</section>`
+        : steps.length ? `<section class="example"><ol class="steps"></ol>${STEPBTN}${WHY}</section>` : ''}
       ${sc.widget ? `<details class="try-it"><summary>Try it yourself: shade a model</summary><p>Use the + and − buttons to shade the model. Watch how the decimal changes.</p><div class="widget"></div></details>` : ''}
       ${sc.kind === 'check' ? '<section class="guided"><p class="guided-intro">Let\'s check that idea. Answer this question. You can use hints.</p><div class="check-host"></div></section>' : ''}
       ${sc.kind === 'done' ? `<div class="done-actions">
@@ -52,6 +54,9 @@
     function drawSteps() {
       if (!stepsEl) return;
       stepsEl.innerHTML = steps.slice(0, shown).map((s) => `<li>${s}</li>`).join('');
+      // "Why it works" appears once the whole example has been shown.
+      const why = app.querySelector('.why-box');
+      if (why) why.hidden = shown < steps.length;
     }
     const stepBtn = app.querySelector('[data-act="step"]');
     const stepNote = app.querySelector('.step-note');

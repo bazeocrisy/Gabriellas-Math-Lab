@@ -20,7 +20,7 @@
       <div class="coach-next"></div></div>`;
     const $ = (s) => host.querySelector(s);
     const save = () => opts.onChange && opts.onChange(st);
-    const ctl = G.qui.render(q, $('.coach-q'), { response: st.resp, onChange: (r) => { st.resp = r; save(); }, onEnter: () => doCheck() });
+    const ctl = G.qui.render(q, $('.coach-q'), { response: st.resp, onChange: (r) => { st.resp = r; if (st.fb && st.fb.kind === 'info') { st.fb = null; drawFeedback(); } save(); }, onEnter: () => doCheck() });
 
     function drawHints() {
       $('.hints').innerHTML = q.hints.slice(0, st.hints).map((h, i) =>

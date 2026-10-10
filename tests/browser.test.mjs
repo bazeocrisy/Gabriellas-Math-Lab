@@ -23,17 +23,21 @@ const { js } = b;
 const H = `
   const E = GML.engine, D = GML.D;
   const draft = (n) => JSON.parse(localStorage.getItem('gml:v1:draft:' + n) || 'null');
-  const right = (q) => q.type === 'chart' ? D.digits(q.answer) : q.answer;
+  const right = (q) => q.type === 'chart' ? D.digits(q.answer) : q.type === 'expanded' ? GML.kit.expanded(q.answer) : q.answer;
   const wrong = (q) => {
     if (q.type === 'mc') return q.choices.find((c) => c.value !== q.answer).value;
     if (q.type === 'build') return q.answer === 1 ? 2 : q.answer - 1;
     if (q.type === 'chart') { const d = D.digits(q.answer); return { ...d, tenths: String((Number(d.tenths) + 1) % 10) }; }
+    if (q.type === 'order') return q.answer.slice().reverse();
+    if (q.type === 'expanded') return GML.kit.expanded(D.fromThousandths(D.toThousandths(q.answer) + 1, 3));
+    if (q.accept) { for (let k = 0; ; k += 7) { const v = D.fromThousandths(k, 3); if (!q.accept(D.parse(v), {})) return v; } }
     return D.fromThousandths(D.toThousandths(q.answer) + 1, 3);
   };
   const fire = (el, t) => el.dispatchEvent(new Event(t, { bubbles: true }));
   function fill(host, q, resp) {
     if (q.type === 'mc') { const i = [...host.querySelectorAll('input[type=radio]')].find((x) => x.value === resp); i.click(); }
-    else if (q.type === 'number') { const i = host.querySelector('.num-input'); i.value = resp; fire(i, 'input'); }
+    else if (q.type === 'number' || q.type === 'expanded') { const i = host.querySelector('.num-input'); i.value = resp; fire(i, 'input'); }
+    else if (q.type === 'order') { host.querySelector('.order-clear').click(); resp.forEach((v) => [...host.querySelectorAll('.order-pool [data-v]')].find((x) => x.dataset.v === v).click()); }
     else if (q.type === 'chart') host.querySelectorAll('.pv-cell').forEach((i) => { i.value = resp[i.dataset.k]; fire(i, 'input'); });
     else if (q.type === 'build') {
       const steps = [...host.querySelectorAll('.stepper')];
@@ -44,6 +48,7 @@ const H = `
   }
   const practiceQ = () => { const d = draft('practice-d01'); const x = d.set[d.i]; return E.make('d01', x.id, x.seed); };
   const testQ = () => { const d = draft('test-d01'); const x = d.set[d.i]; return E.make('d01', x.id, x.seed); };
+  const qIn = (mode, id) => { const d = draft(mode + '-' + id); const x = d.set[d.i]; return E.make(id, x.id, x.seed); };
   const text = () => document.getElementById('app').innerText;
 `;
 
@@ -70,10 +75,12 @@ try {
 
   // ── Home ──
   let r = await js(`${H} return { t: text(), modes: [...document.querySelectorAll('.btn-mode')].map((a) => a.textContent + '>' + a.getAttribute('href')),
-    later: document.querySelectorAll('.later-list li').length, laterButtons: document.querySelectorAll('.later-list a, .later-list button').length };`);
+    later: document.querySelectorAll('.later-list li').length, laterButtons: document.querySelectorAll('.later-list a, .later-list button').length,
+    avail: GML.unit.lessons.filter((l) => GML.unit.available(l.id)).map((l) => l.id), total: GML.unit.lessons.length };`);
   check('home shows title and subtitles', /Gabriella's Math Lab/.test(r.t) && /Grade 5 Mathematics/.test(r.t) && /Georgia Milestones Preparation/.test(r.t), r.t.slice(0, 200));
-  check('home: Lesson 1 has TEACH | PRACTICE | TEST', JSON.stringify(r.modes) === JSON.stringify(['TEACH>#/d01/teach/1', 'PRACTICE>#/d01/practice', 'TEST>#/d01/test']), r.modes);
-  check('home: 7 upcoming lessons with no buttons', r.later === 7 && r.laterButtons === 0, r);
+  check('home: every available lesson has TEACH | PRACTICE | TEST', JSON.stringify(r.modes) === JSON.stringify(r.avail.flatMap((id) => [`TEACH>#/${id}/teach/1`, `PRACTICE>#/${id}/practice`, `TEST>#/${id}/test`])), r.modes);
+  check('home: all 10 lessons listed; the rest say Coming later with no buttons', r.total === 10 && r.later === r.total - r.avail.length && r.laterButtons === 0, r);
+  check('home: Lesson Notes button for each available lesson', (await js(`return document.querySelectorAll('.btn-notes').length;`)) === r.avail.length);
 
   // ── Teach: every screen, step reveal, guided checks with wrong then right answers ──
   await b.load(URL + 'index.html#/d01/teach/1');
@@ -240,8 +247,118 @@ try {
   await b.load(URL + 'index.html#/');
   check('home: lesson card shows mastered status', /Mastered/.test(await js(`return document.querySelector('.lesson-card').innerText;`)));
 
+
+  // ── Lesson 1 progress saved by the earlier (deployed) version is kept ──
+  await b.viewport(390, 844);
+  await js(`localStorage.clear(); localStorage.setItem('gml:v1:progress', JSON.stringify({ lessons: { d01: { teach: { screen: 18, furthest: 18, done: true },
+    practice: { sessions: 3, skills: { parts: { c: 2, t: 3 } }, recentSigs: ['M1:4'], lastDate: '2026-10-10T12:00:00.000Z' },
+    tests: [{ date: '2026-10-10T12:30:00.000Z', correct: 9, total: 10, percent: 90, mastered: true, skills: { parts: { correct: 1, total: 1 } }, missedSkills: ['model'] }], lastTestSigs: [] } } }));`);
+  await b.load(URL + 'index.html#/');
+  await b.reload();
+  r = await js(`return document.querySelector('.lesson-card').innerText;`);
+  check('saved Lesson 1 progress from the earlier version still shows on the home page', /Mastered/.test(r) && /Finished/.test(r) && /3 sessions/.test(r) && /9 of 10/.test(r), r);
+  await b.load(URL + 'index.html#/parent');
+  r = await js(`return document.getElementById('app').innerText;`);
+  check('saved Lesson 1 progress shows on Parent Progress, other lessons start empty', /Lesson 1: Understanding Decimals ★/.test(r) && /9 of 10 \(90%\)/.test(r) && /Lesson 2: Decimal Place Value[\s\S]*No test taken yet/.test(r), r.slice(0, 400));
+
+  // ── Lessons 2+: full Teach, Practice, Test, Notes and Parent run for each lesson ──
+  await b.viewport(390, 844);
+  const more = await js(`return GML.unit.lessons.filter((l) => GML.unit.available(l.id) && l.id !== 'd01').map((l) => l.id);`);
+  for (const id of more) {
+    await js('localStorage.clear();');
+    await b.load(URL + 'index.html#/' + id + '/teach/1');
+    const n = await js(`return GML.lessonContent['${id}'].screens.length;`);
+    let order = true, checksN = 0, coachedN = 0, gatedN = 0, whyShown = 0, whyN = 0, goals = 0;
+    for (let i = 1; i <= n; i++) {
+      const st = await js(`return { h: location.hash, step: !!document.querySelector('[data-act=step]:not([hidden])'), why: !!document.querySelector('.why-box'), whyHidden: (document.querySelector('.why-box') || {}).hidden, goal: !!document.querySelector('.goal'), check: !!document.querySelector('.check-host') };`);
+      if (st.h !== `#/${id}/teach/${i}`) { order = false; check(`${id} teach order`, false, st); break; }
+      if (st.goal) goals++;
+      if (st.step) await js(`let g = 0; while (document.querySelector('[data-act=step]:not([hidden])') && g++ < 10) document.querySelector('[data-act=step]').click();`);
+      if (st.why) { whyN++; if (st.whyHidden && !(await js(`return document.querySelector('.why-box').hidden;`))) whyShown++; }
+      if (st.check) {
+        checksN++;
+        const c = await js(`${H}
+          const sc = GML.lessonContent['${id}'].screens[${i - 1}];
+          const q = E.make('${id}', sc.check.t, 1, sc.check.params);
+          const host = document.querySelector('.check-host');
+          const before = document.querySelector('[data-act=next]').disabled;
+          fill(host, q, wrong(q)); host.querySelector('[data-act=check]').click();
+          const w = !!host.querySelector('.fb-wrong'), re = !!host.querySelector('.fb-wrong .remind'), still = document.querySelector('[data-act=next]').disabled;
+          fill(host, q, right(q)); host.querySelector('[data-act=check]').click();
+          return { before, w, re, still, right: !!host.querySelector('.fb-right'), open: !document.querySelector('[data-act=next]').disabled };`);
+        if (c.w && c.re) coachedN++;
+        if (c.before && c.still && c.right && c.open) gatedN++; else check(`${id} teach check on screen ${i}`, false, c);
+      }
+      if (i < n) { await js(`document.querySelector('[data-act=next]').click();`); await b.wait(100); }
+    }
+    check(`${id} teach: walked all ${n} screens in order`, order);
+    check(`${id} teach: every skill screen says what you will learn and explains why after the steps`, goals >= 5 && whyN >= 5 && whyShown === whyN, { goals, whyN, whyShown });
+    check(`${id} teach: ${checksN} guided checks coach wrong answers and unlock Next only after a right answer`, checksN >= 5 && coachedN === checksN && gatedN === checksN, { checksN, coachedN, gatedN });
+    check(`${id} teach: marked finished`, await js(`return JSON.parse(localStorage.getItem('gml:v1:progress')).lessons['${id}'].teach.done;`) === true);
+
+    // Practice: 3 hints in order on question 1; every question answered wrong first (odd ones) then right.
+    await b.load(URL + 'index.html#/' + id + '/practice');
+    let rr = await js(`${H} const q = qIn('practice', '${id}'); const host = document.querySelector('.coach-host'); const hb = host.querySelector('[data-act=hint]');
+      hb.click(); hb.click(); hb.click(); hb.click();
+      return { n: host.querySelectorAll('.hint').length, titles: [...host.querySelectorAll('.hint-title')].map((x) => x.textContent).join('|'), dis: hb.disabled, noAns: !host.querySelector('.fb-right, .fb-solution') };`);
+    check(`${id} practice: exactly 3 hints, in order, no answer shown`, rr.n === 3 && rr.titles === 'Hint 1 of 3|Hint 2 of 3|Hint 3 of 3' && rr.dis && rr.noAns, rr);
+    let feedbackOk = 0, types = new Set();
+    for (let k = 0; k < 10; k++) {
+      const res = await js(`${H} const q = qIn('practice', '${id}'); const host = document.querySelector('.coach-host'); let msg = '';
+        if (${k} % 2 === 1 || ${k} === 0) { fill(host, q, wrong(q)); host.querySelector('[data-act=check]').click();
+          const fb = host.querySelector('.fb-wrong'); msg = fb ? fb.querySelector('p:nth-of-type(2)').textContent : '';
+          if (host.querySelector('.coach-next button')) return { bad: 'advanced after wrong' }; }
+        fill(host, q, right(q)); host.querySelector('[data-act=check]').click();
+        const ok = !!host.querySelector('.fb-right'); const nb = host.querySelector('.coach-next button'); if (nb) nb.click();
+        return { ok, msg, type: q.type, wrongTried: ${k} % 2 === 1 || ${k} === 0 };`);
+      if (res.bad) { check(`${id} practice question ${k + 1}`, false, res); break; }
+      types.add(res.type);
+      if (res.ok && (!res.wrongTried || res.msg.length > 15)) feedbackOk++;
+      await b.wait(40);
+    }
+    check(`${id} practice: 10 questions; wrong answers get an explanation and do not advance; right answers explain why`, feedbackOk === 10, { feedbackOk, types: [...types] });
+    rr = await js(`return { t: document.getElementById('app').innerText, p: JSON.parse(localStorage.getItem('gml:v1:progress')).lessons['${id}'].practice };`);
+    check(`${id} practice: summary and saved session`, /Practice complete/.test(rr.t) && /4 of 10/.test(rr.t) && rr.p.sessions === 1, { s: rr.p.sessions });
+
+    // Test: no help on any screen; 8 right, 1 wrong, 1 blank -> 80%, not mastered; retake all right -> mastered.
+    await b.load(URL + 'index.html#/' + id + '/test');
+    await js(`document.querySelector('[data-act=start]').click();`);
+    const t1 = await js(`${H} return draft('test-${id}').set.map((x) => x.sig);`);
+    const leak = [];
+    for (let k = 0; k < 10; k++) {
+      const l = await js(`${H} const q = qIn('test', '${id}'); const app = document.getElementById('app'); const bad = [];
+        if (app.querySelector('[data-act=hint], .hint, .feedback, .fb-right, .fb-wrong, [data-act=check]')) bad.push('help UI');
+        const plain = (h) => h.replace(/<[^>]*>/g, '').replace(/\\s+/g, ' ').trim();
+        if (text().replace(/\\s+/g, ' ').includes(plain(q.why))) bad.push('why');
+        if (${k} < 8) fill(app.querySelector('.test-q'), q, right(q)); else if (${k} === 8) fill(app.querySelector('.test-q'), q, wrong(q));
+        document.querySelector('[data-act=next]').click(); return bad;`);
+      if (l.length) leak.push({ k, l });
+      await b.wait(40);
+    }
+    check(`${id} test: no hints, feedback or explanations before submitting`, leak.length === 0, leak);
+    await js(`document.querySelector('[data-act=submit]').click(); document.querySelector('[data-act=really]').click();`); await b.wait(80);
+    rr = await js(`return { t: document.getElementById('app').innerText, links: [...document.querySelectorAll('.skills-table a')].map((a) => a.getAttribute('href')) };`);
+    check(`${id} test: 8 of 10 scores 80%, not mastered, missed skills link to this lesson's Teach`, /Your score: 8 out of 10 \(80%\)/.test(rr.t) && /Not mastered yet/.test(rr.t) && rr.links.length >= 1 && rr.links.every((h) => h.startsWith(`#/${id}/teach/`)), rr.t.slice(0, 200));
+    await js(`document.querySelector('[data-act=new]').click();`); await b.wait(40);
+    await js(`document.querySelector('[data-act=start]').click();`); await b.wait(40);
+    const t2 = await js(`${H} return draft('test-${id}').set.map((x) => x.sig);`);
+    for (let k = 0; k < 10; k++) { await js(`${H} const q = qIn('test', '${id}'); fill(document.querySelector('.test-q'), q, right(q)); document.querySelector('[data-act=next]').click();`); await b.wait(30); }
+    await js(`document.querySelector('[data-act=submit]').click();`); await b.wait(80);
+    rr = await js(`return document.getElementById('app').innerText;`);
+    check(`${id} test: retake is fresh; 10 of 10 is mastered`, t2.every((x) => !t1.includes(x)) && /Your score: 10 out of 10 \(100%\)/.test(rr) && /mastered!/.test(rr), rr.slice(0, 150));
+
+    await b.load(URL + 'index.html#/' + id + '/notes');
+    rr = await js(`return { h: document.querySelector('h1').innerText, t: document.getElementById('app').innerText };`);
+    check(`${id} notes: printable notes with vocabulary and worked examples`, rr.h === await js(`return GML.lessonContent['${id}'].title;`) && /Vocabulary/.test(rr.t) && /Worked example/.test(rr.t));
+    await b.load(URL + 'index.html#/parent');
+    rr = await js(`return document.getElementById('app').innerText;`);
+    const ln = await js(`return GML.unit.find('${id}').n;`);
+    check(`${id} parent: shows the lesson as completed with the latest score`, new RegExp(`Lesson ${ln}: [^\\n]+★`).test(rr) && rr.includes('10 of 10 (100%)'), rr.slice(0, 300));
+  }
+
   // ── Layout on phone, tablet, laptop, desktop ──
-  const pages = ['#/', '#/d01/teach/5', '#/d01/teach/7', '#/d01/teach/10', '#/d01/practice', '#/d01/test', '#/d01/notes', '#/parent'];
+  const pages = ['#/', '#/d01/teach/5', '#/d01/teach/7', '#/d01/teach/10', '#/d01/practice', '#/d01/test', '#/d01/notes', '#/parent',
+    ...more.flatMap((id) => [`#/${id}/teach/3`, `#/${id}/teach/5`, `#/${id}/practice`, `#/${id}/test`, `#/${id}/notes`])];
   for (const [w, h, name] of [[375, 667, 'iPhone SE'], [390, 844, 'iPhone 14'], [768, 1024, 'tablet'], [1366, 768, 'laptop'], [1920, 1080, 'desktop']]) {
     await b.viewport(w, h);
     for (const p of pages) {
@@ -311,8 +428,33 @@ try {
     const nb = host.querySelector('.coach-next button'); nb.click(); nb.click(); return draft('practice-d01').i;`);
   check('practice: clicking Next twice moves only one question', r === 1, r);
 
+  // Order widget keeps keyboard focus; "answer first" notes clear when the child answers; result links are 44px on tablet.
+  await js(`localStorage.clear();`);
+  await b.load(URL + 'index.html#/d04/teach/3'); await b.reload();
+  r = await js(`const host = document.querySelector('.check-host');
+    host.querySelector('[data-act=check]').click();
+    const noteShown = !!host.querySelector('.fb-info');
+    const out = { noteShown, focus: [] };
+    for (let k = 0; k < 3; k++) { const c = host.querySelector('.order-pool [data-v]'); c.focus(); c.click(); out.focus.push(document.activeElement === document.body ? 'BODY' : document.activeElement.className); }
+    out.noteGone = !host.querySelector('.fb-info');
+    const placed = host.querySelector('.order-slots [data-k="1"]'); placed.focus(); placed.click();
+    out.afterBack = document.activeElement === document.body ? 'BODY' : document.activeElement.className;
+    return out;`);
+  check('order widget: keyboard focus never falls back to the page after placing or taking back a number', r.focus.every((x) => x !== 'BODY') && r.afterBack !== 'BODY', r);
+  check('practice/teach: the "answer first" note disappears once the child answers', r.noteShown && r.noteGone, r);
+  await b.viewport(768, 1024);
+  await js(`localStorage.removeItem('gml:v1:draft:test-d02');`);
+  await b.load(URL + 'index.html#/d02/test'); await b.reload();
+  await js(`document.querySelector('[data-act=start]').click();`);
+  await js(`${H} const d = draft('test-d02'); d.set.forEach((x, k) => { const q = E.make('d02', x.id, x.seed); d.answers[k] = k < 5 ? right(q) : wrong(q); }); d.review = true; localStorage.setItem('gml:v1:draft:test-d02', JSON.stringify(d));`);
+  await b.reload();
+  await js(`document.querySelector('[data-act=submit]').click();`); await b.wait(80);
+  r = await js(`return [...document.querySelectorAll('.skills-table a')].map((a) => Math.round(a.getBoundingClientRect().height));`);
+  check('tablet: "Review in Teach" links in test results are at least 44px tall', r.length > 0 && r.every((h) => h >= 44), r);
+  await b.viewport(390, 844);
+
   // ── Unknown routes and reset ──
-  await b.load(URL + 'index.html#/d02/teach/1');
+  await b.load(URL + 'index.html#/d05/teach/1');
   check('unready lesson route falls back to home', /Gabriella's Math Lab/.test(await js(`return document.querySelector('h1').innerText;`)));
   await b.load(URL + 'index.html#/parent');
   await js(`document.querySelector('[data-act=reset]').click(); document.querySelector('[data-act=really]').click();`);

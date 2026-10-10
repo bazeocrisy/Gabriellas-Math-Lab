@@ -61,7 +61,7 @@
       const v = D.parse(s);
       if (!v) return { status: 'invalid', message: 'Type a number using only digits and a decimal point, like 0.25.' };
       info = { value: v, th: D.toThousandths(v), raw: s };
-      ok = D.equal(v, q.answer);
+      ok = q.accept ? q.accept(v, info) : D.equal(v, q.answer);
       if (ok && q.places != null && v.places !== q.places) {
         return { status: 'wrong', message: `That is the right amount, but this question asks for exactly ${q.places} digit${q.places === 1 ? '' : 's'} after the decimal point. Count the digits after the point.` };
       }
@@ -71,6 +71,37 @@
     } else if (q.type === 'build') {
       if (resp == null || resp === 0) return { status: 'empty', message: 'Use the + buttons to shade the model first.' };
       ok = resp === q.answer;
+    } else if (q.type === 'order') {
+      const arr = Array.isArray(resp) ? resp : [];
+      if (!arr.length) return { status: 'empty', message: 'Tap the numbers to put them in order first.' };
+      if (arr.length < q.answer.length) return { status: 'invalid', message: 'Put all of the numbers in order before you check.' };
+      ok = arr.length === q.answer.length && arr.every((x, i) => x === q.answer[i]);
+      info = { order: arr };
+    } else if (q.type === 'expanded') {
+      const s = String(resp == null ? '' : resp).trim();
+      if (!s) return { status: 'empty', message: 'Type your answer in the box first.' };
+      const parts = s.split('+').map((t) => t.trim().replace(/^\((.*)\)$/, '$1').trim());
+      // A part may be a value (0.07) or digit × place value (7 × 0.01).
+      const vals = parts.map((t) => {
+        const m = /^(\d)\s*[×xX*]\s*(\d*\.?\d+)$/.exec(t);
+        if (!m) return D.parse(t);
+        const pv = D.toThousandths(m[2]);
+        if (pv === null || !/^10*$/.test(String(pv))) return null;
+        return D.parse(D.fromThousandths(Number(m[1]) * pv, 3));
+      });
+      if (parts.length > 8 || vals.some((v) => !v || v.places > 3)) return { status: 'invalid', message: 'Write each part as a number with + signs between the parts, like 4 + 0.7 + 0.03 (or 4 × 1 + 7 × 0.1 + 3 × 0.01).' };
+      const ths = vals.map((v) => D.toThousandths(v));
+      const sum = ths.reduce((a, b) => a + b, 0);
+      // In expanded form every part is one digit times a place value (like 0.03), each place used once.
+      const single = ths.every((k) => k === 0 || /^[1-9]0*$/.test(String(k)));
+      const placesUsed = ths.filter((k) => k).map((k) => String(k).length);
+      const distinct = new Set(placesUsed).size === placesUsed.length;
+      info = { parts, sum, single, distinct };
+      ok = sum === D.toThousandths(q.answer) && single && distinct;
+      if (!ok && sum === D.toThousandths(q.answer)) {
+        return { status: 'wrong', message: single ? 'Those parts add up to the right number, but each place should appear only once. Combine parts that are in the same place.'
+          : 'Those parts add up to the right number, but in expanded form each part has just one nonzero digit, like 0.03. Split the parts by place.' };
+      }
     } else if (q.type === 'chart') {
       const r = resp || {};
       const keys = ['ones', 'tenths', 'hundredths', 'thousandths'];
@@ -97,6 +128,7 @@
       if (q.model === 'strip') return `${resp} of 10 parts shaded`;
       return `${Math.floor(resp / 10)} column${Math.floor(resp / 10) === 1 ? '' : 's'} and ${resp % 10} square${resp % 10 === 1 ? '' : 's'} shaded`;
     }
+    if (q.type === 'order') return Array.isArray(resp) && resp.length ? resp.join(', ') : '(no answer)';
     if (q.type === 'chart') {
       const r = resp || {};
       const d = (k) => String(r[k] == null || r[k] === '' ? '_' : r[k]);

@@ -96,6 +96,50 @@
     } else if (q.type === 'build') {
       const b = builder(area, q.model, { onChange: changed });
       ctl = { get: b.get, set: b.set, disable: b.disable, focus: () => { const x = area.querySelector('[data-d="1"]'); if (x) x.focus(); } };
+    } else if (q.type === 'expanded') {
+      area.innerHTML = `<label class="num-label" for="${id}-in">Your answer</label>
+        <input id="${id}-in" class="num-input exp-input" type="text" inputmode="text" autocomplete="off" autocapitalize="off" spellcheck="false" aria-describedby="${id}-p ${id}-h" maxlength="60">
+        <p class="hint-small" id="${id}-h">Use a + sign between the parts, like 2 + 0.5 + 0.08 (or 2 × 1 + 5 × 0.1 + 8 × 0.01).</p>`;
+      const inp = area.querySelector('input');
+      inp.addEventListener('input', changed);
+      inp.addEventListener('keydown', (e) => { if (e.key === 'Enter' && opts.onEnter) { e.preventDefault(); opts.onEnter(); } });
+      ctl = { get: () => inp.value, set: (v) => { inp.value = v == null ? '' : v; }, disable: (d) => { inp.disabled = d; }, focus: () => inp.focus() };
+    } else if (q.type === 'order') {
+      // Tap numbers in the order asked; tap a placed number to take it back.
+      let placed = [], disabled = false;
+      area.innerHTML = `<p class="hint-small" id="${id}-oh">Tap the numbers in order, ${M.esc(q.orderText)}. Tap a number in your list to take it back.</p>
+        <p class="order-h" aria-hidden="true">Your order</p>
+        <ol class="order-slots" aria-label="Your order" aria-describedby="${id}-oh"></ol>
+        <p class="order-h" aria-hidden="true">Numbers to tap</p>
+        <div class="order-pool" role="group" aria-label="Numbers to place"></div>
+        <button type="button" class="btn btn-link order-clear">Start over</button>
+        <p class="sr-only" aria-live="polite"></p>`;
+      const slotsEl = area.querySelector('.order-slots'), poolEl = area.querySelector('.order-pool'), live = area.querySelector('[aria-live]');
+      const draw = () => {
+        slotsEl.innerHTML = q.items.map((_, k) => {
+          const v = placed[k], lab = (q.slotLabels && q.slotLabels[k]) ? ` <span class="slot-lab">(${M.esc(q.slotLabels[k])})</span>` : '';
+          return v != null ? `<li><button type="button" class="btn order-chip is-placed" data-k="${k}" aria-label="Position ${k + 1}: ${M.esc(v)}. Tap to take it back."${disabled ? ' disabled' : ''}>${M.esc(v)}</button>${lab}</li>`
+            : `<li><span class="order-empty">${k + 1}</span>${lab}</li>`;
+        }).join('');
+        poolEl.innerHTML = q.items.filter((v) => !placed.includes(v)).map((v) => `<button type="button" class="btn order-chip" data-v="${M.esc(v)}"${disabled ? ' disabled' : ''}>${M.esc(v)}</button>`).join('') ||
+          '<span class="hint-small">All numbers placed.</span>';
+        slotsEl.querySelectorAll('[data-k]').forEach((b) => b.addEventListener('click', () => {
+          const v = placed[Number(b.dataset.k)]; placed = placed.filter((x) => x !== v); live.textContent = `${v} taken back.`; draw(); changed();
+          const back = [...poolEl.querySelectorAll('[data-v]')].find((x) => x.dataset.v === v); if (back) back.focus();
+        }));
+        poolEl.querySelectorAll('[data-v]').forEach((b) => b.addEventListener('click', () => {
+          placed.push(b.dataset.v); live.textContent = `${b.dataset.v} placed in position ${placed.length}.`; draw(); changed();
+          const next = poolEl.querySelector('[data-v]') || slotsEl.querySelector(`[data-k="${placed.length - 1}"]`); if (next) next.focus();
+        }));
+      };
+      area.querySelector('.order-clear').addEventListener('click', () => { if (disabled) return; placed = []; live.textContent = 'Order cleared.'; draw(); changed(); const f = poolEl.querySelector('[data-v]'); if (f) f.focus(); });
+      draw();
+      ctl = {
+        get: () => placed.slice(),
+        set: (v) => { placed = Array.isArray(v) ? v.filter((x, i) => q.items.includes(x) && v.indexOf(x) === i) : []; draw(); },
+        disable: (d) => { disabled = d; area.querySelector('.order-clear').disabled = d; draw(); },
+        focus: () => { const b = poolEl.querySelector('[data-v]'); if (b) b.focus(); }
+      };
     } else if (q.type === 'chart') {
       const keys = ['ones', 'tenths', 'hundredths', 'thousandths'];
       area.innerHTML = `<table class="pv-chart pv-input"><thead><tr>${keys.map((k, i) => (i === 1 ? '<th class="pv-point" aria-hidden="true"></th>' : '') + `<th scope="col" id="${id}-${k}">${M.PLACE_TITLES[k]}</th>`).join('')}</tr></thead>
