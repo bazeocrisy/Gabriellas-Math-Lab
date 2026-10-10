@@ -8,31 +8,36 @@ Teach the concept clearly, provide meaningful practice, and assess independent m
 ## Learning flow
 **Teach → Practice → Test**
 
-- **Teach:** short explanations, place-value visuals, guided examples, and correct mathematical vocabulary.
-- **Practice:** varied questions with immediate feedback and explanations; attempts are not graded.
-- **Test:** independent, fresh questions without hints, with a skill-by-skill results summary.
-- **Parent view:** shows the skills covered, scores, common mistakes, and skills needing reteaching.
+- **Teach:** one idea per screen, place-value visuals, worked examples revealed step by step, shade-it-yourself models, and guided "Try it together" questions with coaching.
+- **Practice:** 10 varied questions per session, three progressive hints per question, misconception-specific feedback, unlimited retries; attempts are not graded.
+- **Test:** 10 fresh questions with no hints and no feedback until submission, then score, percent, per-skill results and explanations. Mastery benchmark: 9 of 10 (an app benchmark, not an official Milestones score).
+- **Parent Progress:** lesson status, most recent test, skills correct / needing practice, suggested next step. Stored only in this browser.
 
-## Starting topic: Decimals
-Begin with Georgia Grade 5 **Numerical Reasoning**, focusing on decimal learning expectations associated with **5.NR.4**. Work from the current official Georgia Standards of Excellence/Georgia K–12 Mathematics Standards and Milestones blueprint when finalizing coverage. See [curriculum plan](docs/CURRICULUM.md).
+## Status
+**Lesson 1 — Understanding Decimals is implemented and audited** (see [docs/STATUS.md](docs/STATUS.md) and [docs/LESSON-1-AUDIT.md](docs/LESSON-1-AUDIT.md)). Lessons 2–8 are shown as "Coming later" and are not built.
+
+## Run it
+It is a static site with no build step and no dependencies.
+
+- Serve the folder with any static web server (for example `npx serve .` or VS Code Live Server), or publish the repository with GitHub Pages. All paths are relative, so it works under `/Gabriellas-Math-Lab/`.
+- Routes: `#/` home, `#/d01/teach/1`, `#/d01/practice`, `#/d01/test`, `#/d01/notes` (printable Lesson Notes), `#/parent`.
+
+## Tests (Node 22+, no npm install needed)
+- `npm test` — verifies every question template over hundreds of seeds (answer keys, pictures match numbers, valid choices, hints never contain the answer, feedback for wrong answers), scoring, and question-set rules.
+- `npm run test:browser` — drives headless Chrome/Edge through Home, all Teach screens, Practice, Test, Parent Progress, refreshes, damaged saved data, and five viewport sizes. Set `CHROME_PATH` if the browser is not found. Screenshots go to `tests/screenshots/` (ignored by git).
+
+## Project layout
+- `index.html`, `css/styles.css`
+- `js/decimal.js` exact decimal helpers (digit strings, no floating point) · `js/words.js` number names · `js/models.js` SVG models and place-value chart
+- `js/engine.js` question generation, checking, question sets · `js/scoring.js` test scoring · `js/storage.js` local progress
+- `js/question-ui.js` answer controls · `js/coach.js` hints and feedback · `js/teach.js`, `js/practice.js`, `js/test.js`, `js/app.js` (routes, home, notes, parent page)
+- `curriculum/decimals/lessons.js` unit lesson list · `curriculum/decimals/d01/bank.js` question templates · `curriculum/decimals/d01/lesson.js` Teach screens and Lesson Notes
+- `tests/` unit and browser tests · `docs/` curriculum, status and audit
 
 ## Project principles
 - Mobile-first, accessible, and usable on desktops and tablets.
-- No account or login required.
-- Keep the home screen simple; prioritize learning over features.
-- Store optional progress on the device; do not collect identifying student data.
-- All answer keys, numerical comparisons, rounding, and feedback must be verified.
-- Do not confuse practice with test mode.
-- Build and verify one lesson end-to-end before duplicating the pattern.
-- Use relative asset paths so GitHub Pages works under `/Gabriellas-Math-Lab/`.
-
-## Project status
-**Planning / foundation only.** The app itself has not been implemented or published yet.
-
-## Suggested initial files
-- `index.html` — application entry
-- `css/styles.css` — styling
-- `js/app.js` — navigation and mode orchestration
-- `curriculum/domain-1/decimals/` — lesson definitions and verified problem banks
-- `docs/CURRICULUM.md` — instructional scope
-- `docs/STATUS.md` — implementation and verification tracking
+- No account or login required; no analytics or network calls.
+- Store progress on the device only; do not collect identifying student data.
+- All answer keys, comparisons and feedback are verified by automated tests.
+- Practice and Test stay behaviorally separate.
+- Build and verify one lesson end-to-end before adding the next.
