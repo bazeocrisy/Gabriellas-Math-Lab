@@ -188,6 +188,18 @@
       const width = Math.max(...nums.map((n) => n.length), placed.length) + 1;
       const row = (s, first = '') => '<tr>' + cell(first, 'op') + [...s.padStart(width - 1, ' ')].map((ch) => cell(ch === ' ' ? '' : ch, ch === '.' ? 'pt' : '')).join('') + '</tr>';
       rowsHtml.push(row(nums[0]), row(nums[1], sym));
+      // Carry marks for a one-digit multiplier (2.4 × 3: 4 × 3 = 12, carry 1 over the 2).
+      if (show && /^\d$/.test(nums[1])) {
+        const digits = [...nums[0].padStart(width - 1, ' ')], m = Number(nums[1]), marks = digits.map(() => '');
+        let carry = 0;
+        for (let i = digits.length - 1; i >= 0; i--) {
+          if (!/\d/.test(digits[i])) continue;
+          const p = Number(digits[i]) * m + carry; carry = Math.floor(p / 10);
+          let j = i - 1; while (j >= 0 && digits[j] === '.') j--;
+          if (carry && j >= 0 && /\d/.test(digits[j])) marks[j] = String(carry);
+        }
+        top = '<tr class="carry">' + cell('', 'op') + marks.map((x, i) => cell(x, digits[i] === '.' ? 'pt' : '')).join('') + '</tr>';
+      }
       ans = show ? row(placed).replace('<tr>', '<tr class="res">') : '<tr class="res">' + cell('', 'op') + Array(width - 1).fill('<td class="box"></td>').join('') + '</tr>';
     } else {
       const al = SM.align(nums), F = al.F;
@@ -227,6 +239,9 @@
         ans = '<tr class="res">' + digitsRow(result, '') + '</tr>';
       } else {
         ans = '<tr class="res">' + cell('', 'op') + Array(W).fill('<td class="box"></td>').join('') + cell('.', 'pt') + Array(F).fill('<td class="box"></td>').join('') + '</tr>';
+        // Practice: small boxes above the columns for carried or regrouped digits (only when needed).
+        const regroups = op === '+' ? SM.colAdd(nums).carries.some(Boolean) || SM.colAdd(nums).finalCarry : SM.colSub(nums[0], nums[1]).steps.some((s) => s.regroup);
+        if (regroups) top = '<tr class="carry">' + cell('', 'op') + Array(W).fill('<td class="cbox"></td>').join('') + cell('', 'pt') + Array(F).fill('<td class="cbox"></td>').join('') + '</tr>';
       }
     }
     return `<table class="colm${show ? ' show' : ''}">${top}${rowsHtml.join('')}${ans}</table>`;
@@ -242,7 +257,28 @@
     const top = qs.padStart(a.length, ' ');
     const cells = (s, cls) => [...s].map((ch) => `<td class="${ch === '.' ? 'pt' : ''} ${cls}">${ch === ' ' ? '' : ch}</td>`).join('');
     const qrow = el.dataset.show ? cells(top, 'q') : [...a].map((ch) => `<td class="q ${ch === '.' ? 'pt' : 'qbox'}">${ch === '.' ? '.' : ''}</td>`).join('');
-    return `<table class="ldiv"><tr><td class="dv"></td>${qrow}</tr><tr><td class="dv">${b}</td>${cells(a, 'dd')}</tr></table>`;
+    // Show How (data-show): also draw every "subtract, then bring down" row under the dividend.
+    let work = '';
+    if (el.dataset.show && /^\d+$/.test(b)) {
+      const n = Number(b), cols = [...a], digitCols = cols.map((c, i) => (c === '.' ? -1 : i)).filter((i) => i >= 0);
+      const row = (text, endCol, cls) => {
+        const cellsArr = cols.map((c) => (c === '.' ? '<td class="pt"></td>' : '<td></td>'));
+        let k = digitCols.indexOf(endCol);
+        for (let t = text.length - 1; t >= 0 && k >= 0; t--, k--) cellsArr[digitCols[k]] = `<td class="${cls}">${text[t]}</td>`;
+        return `<tr class="${cls}"><td class="dv"></td>${cellsArr.join('')}</tr>`;
+      };
+      let rem = 0, started = false;
+      digitCols.forEach((col, idx) => {
+        const prev = rem, cur = rem * 10 + Number(cols[col]), q = Math.floor(cur / n);
+        rem = cur - q * n;
+        if (!started && q === 0) return;
+        if (started) work += row(prev === 0 ? '0' + cols[col] : String(cur), col, 'wk');   // remainder + brought-down digit
+        started = true;
+        work += row(String(q * n), col, 'sub');                     // subtract this
+        if (idx === digitCols.length - 1) work += row(String(rem), col, 'wk');
+      });
+    }
+    return `<table class="ldiv"><tr><td class="dv"></td>${qrow}</tr><tr><td class="dv">${b}</td>${cells(a, 'dd').replace('class="', 'class="first ')}</tr>${work}</table>`;
   }
 
   // Area model for decimal × decimal: a 10×10 grid. data-a tenths = columns (blue), data-b tenths = rows (hatched).
@@ -255,7 +291,7 @@
     for (let i = 0; i < 100; i++) {
       const col = Math.floor(i / 10), row = i % 10, inA = col < ca, inB = row < rb;
       const fill = inA && inB ? '#2d4f74' : inA ? 'var(--shade)' : inB ? 'var(--shade-2-wash)' : '#fff';
-      body += `<rect class="cell" x="${2 + col * c}" y="${2 + row * c}" width="${c}" height="${c}" style="fill:${fill}"/>`;
+      body += `<rect class="cell" x="${2 + col * c}" y="${2 + row * c}" width="${c}" height="${c}" style="fill:${fill}${inA && inB ? ';stroke:#a9bdd3' : ''}"/>`;
     }
     body += `<rect class="m-frame" x="2" y="2" width="${S}" height="${S}"/>`;
     body += `<text x="${2 + ca * c / 2}" y="${S + 16}" text-anchor="middle" font-size="10" class="lbl">${el.dataset.a}</text>`;
@@ -263,7 +299,28 @@
     return svg(S + 36, S + 22, body, `Area model: ${el.dataset.a} by ${el.dataset.b}; the overlap is ${ca * rb} hundredths`);
   }
 
-  const MODELS = { strip, bar, grid, line, chart, column, longdiv, area };
+  // Place-value disks: one disk per unit of each digit (2.4 → two "1" disks, four "0.1" disks).
+  // data-value is the amount; data-r = disk radius in px.
+  function disks(el, v) {
+    const { whole, frac } = v;
+    if (whole.length > 1) throw new Error('disks: whole part must be 0-9');
+    const counts = [[+whole, '1', 'var(--ones)'], [+(frac[0] || 0), '0.1', 'var(--tenths)'], [+(frac[1] || 0), '0.01', 'var(--hundredths)']];
+    const r = +(el.dataset.r || 13), gap = 4;
+    let x = 2, b = '';
+    for (const [n, lbl, col] of counts) {
+      if (!n) continue;
+      const per = +(el.dataset.per || 5), cols = Math.min(n, per), rows = Math.ceil(n / per);
+      for (let i = 0; i < n; i++) {
+        const cx = x + r + (i % per) * (2 * r + gap), cy = 2 + r + Math.floor(i / per) * (2 * r + gap);
+        b += `<circle cx="${cx}" cy="${cy}" r="${r}" style="fill:${col}"/><text x="${cx}" y="${cy + 3.5}" text-anchor="middle" font-size="${lbl.length > 2 ? 8 : 10}" style="fill:#fff;font-weight:700">${lbl}</text>`;
+      }
+      x += cols * (2 * r + gap) + 8;
+      el.__h = Math.max(el.__h || 0, rows * (2 * r + gap));
+    }
+    return svg(Math.max(x, 10), (el.__h || 2 * r) + 4, b, `Place-value disks showing ${el.dataset.value}`);
+  }
+
+  const MODELS = { strip, bar, grid, line, chart, column, longdiv, area, disks };
   const errors = [];
   // Fit an SVG's box to everything drawn in it (labels included), so nothing can stick out of it.
   function fit(s) {

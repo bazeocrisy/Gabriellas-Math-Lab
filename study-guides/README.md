@@ -4,16 +4,17 @@ A printable, color fifth-grade decimals workbook that goes with the Math Lab app
 examples and practice. Each section is one HTML source file, and a build script turns it into a
 US Letter PDF.
 
-| Section | PDF | Status |
-|---|---|---|
-| 1. Decimal Place Value | [pdf/decimals/Decimals-Section-1-Decimal-Place-Value.pdf](pdf/decimals/Decimals-Section-1-Decimal-Place-Value.pdf) | Approved 2026-10-10 |
-| 2. Reading, Writing, and Comparing Decimals | [pdf/decimals/Decimals-Section-2-Reading-Writing-and-Comparing-Decimals.pdf](pdf/decimals/Decimals-Section-2-Reading-Writing-and-Comparing-Decimals.pdf) | Built and reviewed; waiting for review |
-| 3. Rounding Decimals | | Not started |
-| 4. Adding Decimals | | Not started |
-| 5. Subtracting Decimals | | Not started |
-| 6. Multiplying Decimals (supplemental) | | Not started |
-| 7. Dividing Decimals (supplemental) | | Not started |
-| 8. Mixed Decimal Practice | | Not started |
+| Section | PDF | Pages | Practice problems | Status |
+|---|---|---|---|---|
+| 1. Decimal Place Value | [Decimals-Section-1-Decimal-Place-Value.pdf](pdf/decimals/Decimals-Section-1-Decimal-Place-Value.pdf) | 24 | 82 | Approved 2026-10-10 |
+| 2. Reading, Writing, and Comparing Decimals | [Decimals-Section-2-Reading-Writing-and-Comparing-Decimals.pdf](pdf/decimals/Decimals-Section-2-Reading-Writing-and-Comparing-Decimals.pdf) | 20 | 66 | Built and reviewed |
+| 3. Rounding Decimals | [Decimals-Section-3-Rounding-Decimals.pdf](pdf/decimals/Decimals-Section-3-Rounding-Decimals.pdf) | 14 | 48 | Built and reviewed |
+| 4. Adding Decimals | [Decimals-Section-4-Adding-Decimals.pdf](pdf/decimals/Decimals-Section-4-Adding-Decimals.pdf) | 17 | 56 | Built and reviewed |
+| 5. Subtracting Decimals | [Decimals-Section-5-Subtracting-Decimals.pdf](pdf/decimals/Decimals-Section-5-Subtracting-Decimals.pdf) | 15 | 48 | Built and reviewed |
+| 6. Multiplying Decimals (supplemental) | [Decimals-Section-6-Multiplying-Decimals.pdf](pdf/decimals/Decimals-Section-6-Multiplying-Decimals.pdf) | 19 | 64 | Built and reviewed |
+| 7. Dividing Decimals (supplemental) | [Decimals-Section-7-Dividing-Decimals.pdf](pdf/decimals/Decimals-Section-7-Dividing-Decimals.pdf) | 19 | 60 | Built and reviewed |
+| 8. Mixed Decimal Practice | [Decimals-Section-8-Mixed-Decimal-Practice.pdf](pdf/decimals/Decimals-Section-8-Mixed-Decimal-Practice.pdf) | 11 | 46 | Built and reviewed |
+| **Total** | | **139** | **470** (+ 47 Let's Try One) | |
 
 ## How every skill is laid out
 
@@ -66,6 +67,16 @@ Calculators in `assets/practice.js`:
 | `same`, `cmp` | Whether two decimals are equal, or how they compare (>, <, =) |
 | `order asc …`, `order desc …` | A list in order, least to greatest or greatest to least |
 | `words`, `fromwords`, `expwords` | Word form, a decimal from its word form, or word form from expanded form |
+| `round 4.735 t` | Rounding to `whole`, `t` (tenths) or `h` (hundredths) |
+| `add`, `sub` | Column addition and subtraction, with every carry and regroup explained |
+| `mul`, `mulg`, `mula`, `x10` | Multiplying: written method, equal groups, area model, or by 10, 100, 1,000 |
+| `div`, `divg`, `d10` | Dividing: long division (digit by digit), equal groups, or by 10, 100, 1,000 |
+| `est + a b`, `est x a b` | Estimates by rounding to whole numbers |
+| `opw add a b` | Choose the operation, then solve |
+
+Multiple choice: put choices in `<div class="mc"><span data-c="A">0.8</span>…</div>`. The build checks that exactly one choice equals the computed answer, and the key shows that letter.
+
+Diagrams: `data-model="column"` (stacked +, −, ×; `data-show` shows carries and regrouping), `longdiv`, `area` (decimal × decimal), `disks` (place-value disks), plus the grids, strips, number lines and charts from Section 1.
 
 All arithmetic is exact: no floating point. For a written-answer question, use
 `data-answer="..."` with `data-why="..."` instead of a calculator.

@@ -86,8 +86,8 @@
         <div class="card q" data-calc="round 0.4 whole" data-why="0.4 is between 0 and 1. Halfway is 0.5. 0.4 is before halfway, so it rounds to 0." data-work="none" data-ans="Rounds to"><div class="below" data-model="line" data-from="0" data-to="1" data-point="0.4" data-point-label="0.4" data-size="290"></div></div>
         <div class="card q" data-calc="round 9.5 whole" data-why="9.5 is between 9 and 10. Halfway is 9.5. 9.5 is exactly halfway, and halfway rounds up, so it rounds to 10." data-work="none" data-ans="Rounds to"><div class="below" data-model="line" data-from="9" data-to="10" data-point="9.5" data-point-label="9.5" data-size="290"></div></div>
         <div class="card q" data-calc="round 12.1 whole" data-why="12.1 is between 12 and 13. Halfway is 12.5. 12.1 is before halfway, so it rounds to 12." data-work="none" data-ans="Rounds to"><div class="below" data-model="line" data-from="12" data-to="13" data-point="12.1" data-point-label="12.1" data-size="290"></div></div>
-        <div class="card q" data-calc="round 3.9 whole" data-ans="Rounds to">Round <span class="math"><span data-expr></span></span> to the nearest whole number. Draw a number line if it helps.</div>
-        <div class="card q" data-calc="round 15.5 whole" data-ans="Rounds to">Round <span class="math"><span data-expr></span></span> to the nearest whole number. Draw a number line if it helps.</div>
+        <div class="card q" data-calc="round 3.9 whole" data-why="3.9 is between 3 and 4. Halfway is 3.5. 3.9 is past halfway, so it rounds to 4." data-ans="Rounds to">Round <span class="math"><span data-expr></span></span> to the nearest whole number. Draw a number line if it helps.</div>
+        <div class="card q" data-calc="round 15.5 whole" data-why="15.5 is between 15 and 16, exactly at halfway. Halfway rounds up, so 16." data-ans="Rounds to">Round <span class="math"><span data-expr></span></span> to the nearest whole number. Draw a number line if it helps.</div>
       </div>
     </div></div>
   </div>
@@ -158,12 +158,14 @@
         <li><b>Rounding digit:</b> the <b class="d-t">tenths</b> digit, <b>7</b>. So 4.76 is between <b>4.7</b> and <b>4.8</b>.</li>
         <li><b>Digit to its right:</b> the hundredths digit, <b class="d-h">6</b>. 6 is 5 or more, so <b>round up</b>: 7 becomes 8.</li>
         <li>Drop the digits after the tenths place: <span class="math">4.76 → 4.8</span>. The number line agrees: 4.76 is past halfway (4.75).</li>
+        <li><b>Rounding up a 9?</b> Regroup, like adding 1: 2.96 → 2.9 + 0.1 = <b>3.0</b>.</li>
       </ol>
-      <div class="why"><b>Why it works:</b> it is the same rule as rounding to a whole number. Only the rounding place changes. When a 9 rounds up, carry it: 2.96 → 3.0.</div>
+      <div class="why"><b>Why it works:</b> it is the same rule as rounding to a whole number. Only the rounding place changes.</div>
     </div></div>
     <div class="box try"><div class="lbl">Let's try one</div><div class="in">
       <div class="q try" data-calc="round 5.32 t">
         <p class="problem">Round <span class="math">5.32</span> to the nearest tenth.</p>
+        <div class="center"><div data-model="line" data-from="5.3" data-to="5.4" data-point="5.32" data-point-label="5.32" data-size="480" style="display:inline-block"></div></div>
         <div class="stack" style="gap:0.12in; margin-top:0.06in">
           <p>Rounding digit (tenths): <span class="fill"></span> &nbsp; Digit to its right: <span class="fill"></span></p>
           <p>Round up or keep? <span class="fill w"></span> &nbsp; 5.32 rounds to <span class="fill"></span></p>
@@ -213,6 +215,7 @@
     <div class="box try"><div class="lbl">Let's try one</div><div class="in">
       <div class="q try" data-calc="round 2.348 h">
         <p class="problem">Round <span class="math">2.348</span> to the nearest hundredth.</p>
+        <div class="center"><div data-model="line" data-from="2.34" data-to="2.35" data-point="2.348" data-point-label="2.348" data-size="480" style="display:inline-block"></div></div>
         <div class="stack" style="gap:0.12in; margin-top:0.06in">
           <p>Rounding digit (hundredths): <span class="fill"></span> &nbsp; Digit to its right: <span class="fill"></span></p>
           <p>Round up or keep? <span class="fill w"></span> &nbsp; 2.348 rounds to <span class="fill"></span></p>
@@ -308,7 +311,7 @@
         <div class="card q" data-calc="round 1.234 h" data-ans="Rounds to">Round <span class="math"><span data-expr></span></span> to the nearest hundredth.</div>
         <div class="card q" data-calc="round 4.505 h" data-ans="Rounds to">Round <span class="math"><span data-expr></span></span> to the nearest hundredth.</div>
         <div class="card q" data-calc="round 2.65 t" data-ans="About" data-unit="kg">A backpack weighs <b>2.65 kg</b>. Round to the nearest tenth of a kilogram.</div>
-        <div class="card q" data-answer="2.5, 2.6, 2.7, 2.8, 2.9, 3.0, 3.1, 3.2, 3.3, 3.4 (any one of these)" data-why="To round to 3, a number with tenths must be at least 2.5 and less than 3.5. Any of these is correct." data-ans="Number">Write a number with <b>tenths</b> that rounds to <b>3</b> when you round to the nearest whole number.</div>
+        <div class="card q" data-answer="Any number from 2.5 up to (not including) 3.5, such as 2.8" data-why="To round to 3, a number must be at least 2.5 and less than 3.5: 2.5, 2.6, … 3.4 (and also numbers like 2.75) are all correct." data-ans="Number">Write a number with <b>tenths</b> that rounds to <b>3</b> when you round to the nearest whole number.</div>
       </div>
     </div></div>
   </div>
@@ -320,7 +323,7 @@
 <section class="page">
   <header class="pg-head"><span class="sec-tag" style="background:var(--key)">Parent answer key</span>Section 3: Rounding Decimals</header>
   <div class="body">
-    <div class="skill" style="background:var(--key)"><span class="sn">🔑</span><div><h2>Parent Answer Key</h2><div class="goal">When rounding to tenths, 8.0 and 8 are both correct (8.0 shows the rounding place). “Try” is the Let's Try One problem.</div></div></div>
+    <div class="skill" style="background:var(--key)"><span class="sn">🔑</span><div><h2>Parent Answer Key</h2><div class="goal">Zeros that show the rounding place are optional: 8.0 = 8 and 5.10 = 5.1 are both correct. “Try” is the Let's Try One problem.</div></div></div>
     <div class="key-cols" data-key-for="3.1,3.2,3.3"></div>
   </div>
   <footer class="pg-foot"><span>Gabriella's Math Lab · Decimals · Section 3: Rounding Decimals</span><span class="num">13</span></footer>

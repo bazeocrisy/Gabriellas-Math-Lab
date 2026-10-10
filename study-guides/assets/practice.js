@@ -115,7 +115,8 @@
       if (!/^10*$/.test(fmt(q))) throw new Error('times must be a power of 10');
       const placeOf = (x) => { const ds = digitsOf(x).filter(([c]) => c !== '0'); return ds[0][1]; };
       const chain = Array(k).fill('10').join(' × ');
-      return [fmt(q), `${placeOf(a)} vs ${placeOf(b)}: the digit is ${k} place${k > 1 ? 's' : ''} to the left, so ${k > 1 ? chain + ' = ' : ''}${fmt(q)} times as much.`];
+      const dg = digitsOf(a).find(([c]) => c !== '0')[0];
+      return [fmt(q), `${dg} ${placeOf(a)} vs ${dg} ${placeOf(b)}: the digit is ${k} place${k > 1 ? 's' : ''} to the left, so ${k > 1 ? chain + ' = ' : ''}${fmt(q)} times as much.`];
     },
     // "3 t h" → how many hundredths are in 3 tenths
     convert: (n, from, to) => {
@@ -230,16 +231,46 @@
       const note = P ? ` Decimal places: ${placeCount(a)} + ${placeCount(b)} = ${P}, so ${prod} → ${placed}${placed !== ans ? ' = ' + ans : ''}.` : '';
       return [ans, `Multiply as whole numbers: ${A} × ${B} = ${prod}.${note}`];
     },
+    // Equal groups: "mulg 2.4 3" → 3 groups of 2.4, multiply each place, then regroup
+    mulg: (a, n) => {
+      const { w, f } = parts(a), N = Number(n), names = ['tenths', 'hundredths', 'thousandths'];
+      const bits = [];
+      if (Number(w)) bits.push(`ones ${n} × ${w} = ${N * Number(w)}`);
+      [...f].forEach((d, i) => { if (Number(d)) bits.push(`${names[i]} ${n} × ${d} = ${N * Number(d)} ${names[i]} = ${fmt(D(String(N * Number(d))) / pow10(i + 1))}`); });
+      const ans = fmt(mul(D(a), D(n)));
+      return [ans, `${n} groups of ${a}: ${bits.join('; ')}. Add: ${ans}.`];
+    },
+    // Choose the operation, then solve: "opw sub 10 6.45"
+    opw: (op, a, b) => {
+      const names = { add: 'Add', sub: 'Subtract', mul: 'Multiply', div: 'Divide' };
+      if (!names[op]) throw new Error('opw op');
+      const [ans, why] = CALC[op](a, b);
+      return [`${names[op]}: ${ans}`, why];
+    },
+    // Equal groups: "divg 6.4 2" → 64 tenths ÷ 2 = 32 tenths
+    divg: (a, n) => {
+      const k = placeCount(a), units = Number(wholeDigits(a)), N = Number(n), unit = ['ones', 'tenths', 'hundredths', 'thousandths'][k];
+      if (units % N) throw new Error('divg needs an exact split');
+      const ans = fmt(D(a) / BigInt(N));
+      return [ans, `${a} = ${units} ${unit}. Split into ${n} equal groups: ${units} ÷ ${n} = ${units / N} ${unit} = ${ans}.`];
+    },
+    // Area model: "mula 0.3 0.4" → overlap of 3 columns and 4 rows
+    mula: (a, b) => {
+      const x = Number(parts(a).f), y = Number(parts(b).f);
+      if (parts(a).f.length !== 1 || parts(b).f.length !== 1 || Number(parts(a).w) || Number(parts(b).w)) throw new Error('mula needs tenths less than 1');
+      const ans = fmt(mul(D(a), D(b)));
+      return [ans, `${x} columns × ${y} rows overlap in ${x * y} squares = ${x * y} hundredths = ${ans}.`];
+    },
     // × or ÷ by 10, 100, 1000: "x10 3.45 100", "d10 34.5 100"
     x10: (n, p) => {
       const k = p.length - 1, ans = fmt(D(n) * BigInt(p));
-      return [ans, `× ${p}: each digit moves ${plural(k, 'place')} to the left (the point moves ${k} right): ${n} → ${ans}.`];
+      return [ans, `Multiplying by ${p}: each digit moves ${plural(k, 'place')} to the left (the point moves ${k} right): ${n} → ${ans}.`];
     },
     d10: (n, p) => {
       const k = p.length - 1, q = D(n) / BigInt(p);
       if (q * BigInt(p) !== D(n)) throw new Error('d10 not exact');
       const ans = fmt(q);
-      return [ans, `÷ ${p}: each digit moves ${plural(k, 'place')} to the right (the point moves ${k} left): ${n} → ${ans}.`];
+      return [ans, `Dividing by ${p}: each digit moves ${plural(k, 'place')} to the right (the point moves ${k} left): ${n} → ${ans}.`];
     },
     // Division: "div 6.4 2"
     div: (a, b) => {
@@ -252,8 +283,18 @@
         const a2 = fmt(x * pow10(k)), b2 = fmt(y * pow10(k));
         return [ans, `Multiply both numbers by ${10 ** k}: ${a} ÷ ${b} = ${a2} ÷ ${b2} = ${ans}. Check: ${ans} × ${b} = ${a}.`];
       }
-      const zeros = placeCount(ans) > placeCount(a) ? `Write ${a} as ${fmt(x, placeCount(ans))} so you can keep dividing. ` : '';
-      return [ans, `${zeros}${a} ÷ ${b} = ${ans}. Check: ${ans} × ${b} = ${fmt(x)}.`];
+      // Whole-number divisor: long division, digit by digit. The point in the quotient goes straight above the dividend's point.
+      const P = Math.max(placeCount(a), placeCount(ans)), dividend = fmt(x, P), n = Number(b);
+      const zeros = P > placeCount(a) ? `Write ${a} as ${dividend} so you can keep dividing. ` : '';
+      let rem = 0, started = false; const st = [];
+      for (const ch of dividend) {
+        if (ch === '.') { st.push('point goes straight up'); continue; }
+        const cur = rem * 10 + Number(ch), q = Math.floor(cur / n); rem = cur - q * n;
+        if (!started && q === 0 && ch !== dividend[dividend.indexOf('.') - 1]) { continue; }
+        started = true;
+        st.push(`${cur} ÷ ${n} = ${q}${rem ? ' r ' + rem : ''}`);
+      }
+      return [ans, `${zeros}Long division: ${st.join('; ')}. So ${a} ÷ ${b} = ${ans}. Check: ${ans} × ${b} = ${fmt(x)}.`];
     },
     // Estimate by rounding each number to the nearest whole: "est + 3.45 2.27"
     est: (op, a, b) => {
@@ -307,7 +348,7 @@
   // <span data-expr></span> inside a question shows that question's calculation ("3.45 + 2.27");
   // <span data-expr="add 3.45 2.27"></span> shows a given one. The printed problem can never differ from the answer.
   const EXPR = {
-    add: (...xs) => xs.join(' + '), sub: (a, b) => `${a} − ${b}`, mul: (a, b) => `${a} × ${b}`, div: (a, b) => `${a} ÷ ${b}`,
+    add: (...xs) => xs.join(' + '), sub: (a, b) => `${a} − ${b}`, mul: (a, b) => `${a} × ${b}`, mulg: (a, b) => `${a} × ${b}`, opw: (op, a, b) => EXPR[op](a, b), divg: (a, b) => `${a} ÷ ${b}`, mula: (a, b) => `${a} × ${b}`, div: (a, b) => `${a} ÷ ${b}`,
     x10: (n, p) => `${n} × ${p}`, d10: (n, p) => `${n} ÷ ${p}`, round: (n) => n,
     est: (op, a, b) => `${a} ${{ '+': '+', '-': '−', x: '×' }[op]} ${b}`,
   };
@@ -343,14 +384,36 @@
       if (!fn) throw new Error('unknown calc ' + name);
       const [ans, why] = (name === 'chart' || name === 'model') ? fn(q) : fn(...args);
       if (q.dataset.answer && q.dataset.answer !== ans) throw new Error(`written answer "${q.dataset.answer}" ≠ computed "${ans}"`);
+      // Multiple choice: <span data-c="A">0.405</span>... exactly one choice must equal the computed answer.
+      const choices = [...q.querySelectorAll('[data-c]')];
+      if (choices.length) {
+        const same = (t) => { try { return D(t.trim()) === D(ans); } catch { return t.trim() === ans; } };
+        const hit = choices.filter((c) => same(c.textContent));
+        if (hit.length !== 1) throw new Error(`multiple choice: ${hit.length} choices match the answer ${ans}`);
+        return { ans: `${hit[0].dataset.c} (${ans})`, why: q.dataset.why || why };
+      }
       return { ans, why: q.dataset.why || why };
     }
     if (q.dataset.answer) return { ans: q.dataset.answer, why: q.dataset.why || '' };
     throw new Error('no data-calc or data-answer');
   }
 
+  // data-start="17" continues numbering from an earlier block of the same part.
+  // Word-problem answers carry their label in the key: money keeps two places ($2.40), units are added (3.5 kg).
+  // data-unit="$" (or data-ans="$") means money; "About $" is money rounded to a whole dollar.
+  function withUnits(q, ans) {
+    const op = /^(Add|Subtract|Multiply|Divide): (.+)$/.exec(ans);
+    if (op) return op[1] + ': ' + withUnits(q, op[2]);              // "Multiply: $5.00"
+    if (/^[A-D] \(|[a-z]/i.test(ans)) return ans;                   // multiple choice or a written answer
+    if (q.dataset.ans === 'About $') return '$' + ans;
+    if (q.dataset.ans === '$' || q.dataset.unit === '$') { try { return '$' + fmt(D(ans), 2); } catch { return ans; } }
+    if (q.dataset.unit && q.dataset.unit !== 'times') return ans + ' ' + q.dataset.unit;
+    return ans;
+  }
+  // Money keeps two places, so drop a trailing "= 15.4" from the worked step.
+  const isMoney = (q) => q.dataset.ans === '$' || q.dataset.unit === '$';
   document.querySelectorAll('[data-skill]').forEach((sk) => {
-    let n = 0;
+    let n = sk.dataset.start ? Number(sk.dataset.start) - 1 : 0;
     sk.querySelectorAll('.q').forEach((q) => {
       const isTry = q.classList.contains('try');
       const label = isTry ? 'Try' : String(++n);
@@ -359,6 +422,8 @@
       if (badge && !isTry) badge.textContent = label;
       try {
         const r = solve(q);
+        r.ans = withUnits(q, r.ans);
+        if (isMoney(q) && r.why) r.why = r.why.replace(/ = \d+(\.\d)?\.$/, '.');
         all.push({ skill: sk.dataset.skill, title: sk.dataset.title || '', label, isTry, ...r });
       } catch (e) {
         errors.push(`${q.dataset.q}: ${e.message}`);
