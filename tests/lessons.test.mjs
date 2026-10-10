@@ -119,6 +119,24 @@ VERIFY.d05 = {
   A1: (q) => { const target = D.toThousandths(decs(q)[0]); for (const c of q.choices) assert.equal(c.value === q.answer, rnd(c.value, 'tenth') === target, c.value); },
   A3: (q) => { const [x, said] = decs(q); assert.equal(q.answer.startsWith('Yes'), rnd(x, 'tenth') === D.toThousandths(said)); assert.equal(q.choices.filter((c) => c.value.startsWith('Yes')).length, 2); }
 };
+// Lesson 6: sums recomputed from the numbers in the question.
+const numbersIn = (q) => (strip(q.prompt).replace(/,/g, '').match(/\d+(\.\d+)?/g) || []);
+const sumOf = (xs) => xs.reduce((t, x) => t + D.toThousandths(x), 0);
+const pointCols = (html) => [...html.matchAll(/<tr[^>]*>([\s\S]*?)<\/tr>/g)].map((m) => [...m[1].matchAll(/<td[^>]*>([^<]*)<\/td>/g)].findIndex((c) => c[1] === '.'));
+VERIFY.d06 = {
+  AL1: (q) => assert.equal(D.toThousandths(q.answer), sumOf(numbersIn(q))),
+  MX1: (q) => assert.equal(D.toThousandths(q.answer), sumOf(numbersIn(q))),
+  MX2: (q) => assert.equal(D.toThousandths(q.answer), sumOf(numbersIn(q))),
+  WP1: (q) => assert.equal(D.toThousandths(q.answer), sumOf(numbersIn(q))),
+  WP2: (q) => assert.equal(D.toThousandths(q.answer), sumOf(numbersIn(q))),
+  AL3: (q) => { const [a, b, wrong] = numbersIn(q); assert.equal(D.toThousandths(q.answer), sumOf([a, b])); assert.notEqual(D.toThousandths(wrong), sumOf([a, b])); },
+  AM1: (q) => { const [g1, g2] = q.visual.split('Second grid'); assert.equal(D.toThousandths(q.answer), ((g1.match(/class="m-on"/g) || []).length + (g2.match(/class="m-on"/g) || []).length) * 10); },
+  AM2: (q) => { assert.equal(D.toThousandths(q.answer), (q.visual.match(/class="m-on"/g) || []).length * 100); assert.equal(D.toThousandths(q.answer), sumOf(numbersIn(q))); },
+  AL2: (q) => { for (const c of q.choices) { const cols = pointCols(c.html); assert.equal(c.value === q.answer, cols.every((x) => x === cols[0]), c.text); } },
+  AM3: (q) => { const [start, jump] = decs(q); const pt = linePoints(q.visual.replace(/m-small/g, 'x'))[0]; assert.equal(pt.v, D.toThousandths(start)); assert.equal(D.toThousandths(q.answer), sumOf([start, jump])); },
+  ES1: (q) => { const [a, b] = numbersIn(q); const rw = (x) => Math.floor((D.toThousandths(x) + 500) / 1000); assert.equal(q.answer, String(rw(a) + rw(b))); },
+  ES2: (q) => { const [a, b, said] = numbersIn(q); assert.equal(q.answer.startsWith('Yes'), sumOf([a, b]) === D.toThousandths(said)); }
+};
 function decs(q) { return strip(q.prompt).match(/\d+\.\d+/g); }
 function pad(x) { const v = D.parse(x); return v.whole.padStart(2, '0').slice(-1) + '.' + v.frac.padEnd(3, '0'); }
 function symbolOk(q) { const [x, y] = decs(q); const c = D.cmp(x, y); assert.equal(q.answer, c < 0 ? '<' : c > 0 ? '>' : '='); }
