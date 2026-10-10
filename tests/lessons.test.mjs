@@ -23,7 +23,11 @@ const VERIFY = {
     V2: (q) => { const [d, n] = nums(q); assert.equal(D.toThousandths(q.answer), Number(d) * PLACE_UNIT[placeOfDigit(n, d)]); },
     V3: (q) => { const [n, d] = nums(q); const k = placeOfDigit(n, d); assert.equal(q.answer, `${k} place, value ${kit.num(Number(d) * PLACE_UNIT[k])}`); },
     V4: (q) => { const n = nums(q)[0]; const fr = n.split('.')[1]; assert.equal(q.answer, /greatest/.test(q.prompt) ? fr[0] : fr[2]); },
-    R1: (q) => { const [, a, , b] = nums(q); assert.equal(Number(q.answer) * D.toThousandths(b), D.toThousandths(a)); },
+    R1: (q) => {
+      const t = strip(q.prompt); const d = t.match(/the (\d) in/)[1]; const [a, b] = t.match(/\d+\.\d+/g);
+      const va = Number(d) * PLACE_UNIT[placeOfDigit(a, d)], vb = Number(d) * PLACE_UNIT[placeOfDigit(b, d)];
+      assert.equal(q.answer, va === vb * 10 ? '10 times as much as' : va * 10 === vb ? '1/10 as much as' : 'none');
+    },
     R2: (q) => { const base = nums(q).slice(-1)[0]; const k = D.toThousandths(base); assert.equal(D.toThousandths(q.answer), /10 times/.test(q.prompt) ? k * 10 : k / 10); },
     R3: (q) => assert.equal(q.answer, /to the left/.test(strip(q.prompt)) ? 'It becomes 10 times as much.' : 'It becomes 1/10 as much.'),
     F1: (q) => {
@@ -72,7 +76,7 @@ const VERIFY = {
     NL3: (q) => { const target = D.toThousandths(decs(q)[0]); const pts = linePoints(q.visual); assert.equal(pts.find((p) => p.v === target).label, q.answer); },
     Y1: (q) => { const [a, b] = decs(q); assert.equal(q.answer.startsWith('Yes'), D.cmp(a, b) > 0); assert.equal(q.choices.filter((c) => c.value.startsWith('Yes')).length, 2); },
     Y2: (q) => { const [x, y] = decs(q); assert.equal(D.cmp(x, y), 1); const a = pad(x), b = pad(y); const i = [...a].findIndex((ch, k) => ch !== b[k]); assert.ok(q.answer.includes(['ones', '.', 'tenths', 'hundredths', 'thousandths'][i]), q.answer); },
-    Y3: (q) => { const [x, y] = decs(q); assert.equal(D.cmp(x, y), -1, 'the student\'s claim is false'); assert.ok(q.answer.includes('whole numbers')); }
+    Y3: (q) => { const [x, y] = decs(q); assert.equal(D.cmp(x, y), -1, 'the student\'s claim is false'); assert.ok(q.answer.includes('place by place')); }
   },
   d04: {
     O1: (q) => orderOk(q), O2: (q) => orderOk(q), O3: (q) => orderOk(q), W2: (q) => orderOk(q),
@@ -162,3 +166,34 @@ for (const id of LESSONS.filter((x) => x !== 'd01')) {
     }
   });
 }
+
+test('curriculum review regressions (Lessons 2–4)', () => {
+  // Lesson 4 order feedback never says "Positions 1 to 0".
+  for (const id of ['O1', 'O2', 'O3', 'W2']) for (let seed = 1; seed <= 150; seed++) {
+    const q = engine.make('d04', id, seed);
+    const perms = [q.answer.slice().reverse(), [q.answer[1], q.answer[0], ...q.answer.slice(2)], [...q.answer.slice(1), q.answer[0]]];
+    for (const w of perms) { const m = engine.check(q, w).message || ''; assert.doesNotMatch(m, /Positions 1 to [01]/, id + ' ' + m); }
+  }
+  // R2 says how many places the digit moved.
+  const r2 = engine.make('d02', 'R2', 1, { d: 6, kind: 'times', ib: 3 });
+  assert.match(engine.check(r2, '6').message, /3 places/);
+  // F1 Hint 2 never prints "0.0." for a zero tenths digit.
+  for (let seed = 1; seed <= 400; seed++) assert.doesNotMatch(strip(engine.make('d02', 'F1', seed).hints[1]), /written 0\.0\./);
+  // Expanded form also accepts digit × place value.
+  const f3 = engine.make('d02', 'F3', 1, { num: '6.208' });
+  assert.equal(engine.check(f3, '6 × 1 + 2 × 0.1 + 8 × 0.001').status, 'correct');
+  assert.equal(engine.check(f3, '6 x 1 + 2 x 0.1 + 8 x 0.001').status, 'correct');
+  assert.equal(engine.check(f3, '6 × 1 + 2 × 0.3 + 8 × 0.001').status, 'invalid');
+  // One meaning of "placeholder zero": Lesson 4 talks about zeros at the end.
+  assert.doesNotMatch(G.lessonContent.d04.notes, /<dt>Placeholder zero<\/dt>/);
+  assert.doesNotMatch(engine.banks.d04.skills.align, /placeholder/i);
+  // Number-line questions without points say "imagine".
+  for (let seed = 1; seed <= 50; seed++) {
+    for (const [l, t] of [['d03', 'NL2'], ['d04', 'NL1']]) { const q = engine.make(l, t, seed); if (!/<circle/.test(q.visual)) assert.match(q.prompt, /Imagine/); }
+  }
+  // R1 stays with neighbouring places (5.NR.1.1).
+  for (let seed = 1; seed <= 300; seed++) assert.ok(['10 times as much as', '1/10 as much as'].includes(engine.make('d02', 'R1', seed).answer));
+  // "Between" is taught before it is practised.
+  assert.ok(G.lessonContent.d03.screens.some((x) => x.id === 'between'));
+  assert.match(engine.make('d03', 'L3', 1).prompt, /up to three decimal places/);
+});

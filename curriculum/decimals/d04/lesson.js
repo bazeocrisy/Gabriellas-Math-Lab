@@ -59,7 +59,7 @@
     },
     {
       id: 'zeros', title: 'Finding the least and the greatest', skill: 'align',
-      goal: 'how placeholder zeros help you find the least or greatest number.',
+      goal: 'how writing zeros at the end helps you find the least or greatest number.',
       body: '<p>Writing every number with the same number of places turns a tricky list into an easy one.</p>',
       example: 'Worked example: which is least, 0.09, 0.1 or 0.091?',
       exampleVisual: M.stack(['0.09', '0.1', '0.091'], { highlight: 'tenths' }),
@@ -67,7 +67,8 @@
         '<b>Step 1.</b> Write each with three places: 0.090, 0.100, 0.091.',
         '<b>Step 2.</b> Tenths: 0, 1, 0. 0.1 has the most tenths, so it is the greatest.',
         '<b>Step 3.</b> Compare 0.090 and 0.091. They match until the thousandths: 0 and 1. So 0.090 is less.',
-        '<b>Answer:</b> the least is <span class="big-num">0.09</span>'
+        '<b>Answer:</b> the least is <span class="big-num">0.09</span>',
+        '<b>The same trick finds a number between two others.</b> Between 0.4 and 0.45, write them as 0.400 and 0.450. Then 0.42 (0.420) fits, because 400 &lt; 420 &lt; 450 thousandths.'
       ],
       why: '0.1 looks small because it is short, and 0.091 looks big because it is long. With the same number of places, the digits line up and the real sizes are easy to see.'
     },
@@ -134,7 +135,7 @@
       <dt>Order</dt><dd>To list numbers from least to greatest, or from greatest to least.</dd>
       <dt>Least to greatest</dt><dd>The smallest number first: 0.67, 0.7, 0.705.</dd>
       <dt>Greatest to least</dt><dd>The biggest number first: 0.705, 0.7, 0.67.</dd>
-      <dt>Placeholder zero</dt><dd>A zero written at the end so numbers have the same number of places: 0.7 = 0.700.</dd>
+      <dt>Zeros at the end</dt><dd>Zeros written at the end so numbers have the same number of places. They do not change the value: 0.7 = 0.700. (A placeholder zero is different: it holds a place inside a number, like the 0 in 3.04.)</dd>
     </dl>
 
     <h2>How to order decimals</h2>

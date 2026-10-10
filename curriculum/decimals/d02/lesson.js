@@ -69,9 +69,9 @@
     },
     {
       id: 'check-relate', title: 'Try it together', kind: 'check', skill: 'relate',
-      check: { t: 'R1', params: { d: 6, pa: 'ones', pb: 'tenths' } },
-      reteach: `<p><b>Let's look again.</b> 1 whole is 10 tenths. So 6 wholes are 60 tenths, and 60 tenths is 10 times 6 tenths.</p>
-        <p>The 6 in 6 is one place to the left of the 6 in 0.6. How many times as much is it worth?</p>`
+      check: { t: 'R1', params: { d: 6, e: 3, ia: 0, dir: 'up' } },
+      reteach: `<p><b>Let's look again.</b> In 4.2 the 4 is in the ones place, worth 4. In 0.42 the 4 is in the tenths place, worth 0.4. 4 is 10 times 0.4, because 1 whole = 10 tenths.</p>
+        <p>Find the place of the 6 in each number the same way.</p>`
     },
     {
       id: 'expanded', title: 'Expanded form', skill: 'forms',
@@ -214,6 +214,6 @@
       // Worked examples on Teach screens, reteach cards and Lesson Notes.
       .concat(['N1:52.7161', 'N2:52.716hundredths', 'V1:4.7357', 'V2:4.7357', 'V3:4.7357', 'V1:6.4828', 'V2:6.4828', 'F1:6.208', 'F3:6.208',
         'F1:5.17', 'F3:5.17', 'F2:5.092', 'F2:5.092m', 'F2:2.043', 'F2:2.043m', 'F4:12.06', 'F5:12.06', 'F4:9.041', 'F5:9.041', 'F4:3.07', 'F5:3.07',
-        'R1:312', 'Z3:3.4', 'Z1:58tenths', 'Z1:58hundredths', 'Z1:58thousandths'])
+'Z3:3.4', 'Z1:58tenths', 'Z1:58hundredths', 'Z1:58thousandths'])
   };
 })(typeof window !== 'undefined' ? (window.GML = window.GML || {}) : (globalThis.GML = globalThis.GML || {}));

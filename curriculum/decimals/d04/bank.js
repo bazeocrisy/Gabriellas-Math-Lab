@@ -1,6 +1,6 @@
 // D04 Ordering Decimals — question bank.
 // Order sets of decimals (to thousandths) least to greatest and greatest to least by lining up places and writing
-// placeholder zeros (5.NR.4.2), on number lines, and in short word problems. Answers are exact decimal strings.
+// zeros at the end (5.NR.4.2), on number lines, and in short word problems. Answers are exact decimal strings.
 (function (G) {
   'use strict';
   const D = G.D, M = G.models;
@@ -53,7 +53,8 @@
     const wAsc = asWhole(ans).join(), wDesc = asWhole(ans).reverse().join();
     if ((r === wAsc || r === wDesc) && r !== a) return 'It looks like the digits after the point were compared as whole numbers. Write zeros so every number has the same number of places, then compare.';
     const k = resp.findIndex((x, i) => x !== ans[i]);
-    return `Positions 1 to ${k} are right. Check position ${k + 1}: compare the numbers that are left, place by place.`;
+    if (k === 0) return `Check which number should come first. Compare all of them place by place, starting with the tenths.`;
+    return `${k === 1 ? 'The first number is' : `The first ${k} numbers are`} right. Check position ${k + 1}: compare the numbers that are left, place by place.`;
   }
 
   function orderQuestion(r, xs, dir, extra = {}) {
@@ -72,7 +73,7 @@
         'Here they are lined up:' + M.stack(xs),
         `Compare the biggest place first (the whole numbers, then the tenths). Find the ${dir === 'up' ? 'least' : 'greatest'} number, then compare the rest place by place.`
       ],
-      why: `Lined up with zeros: ${xs.map((x) => `${x} = ${f(D.toThousandths(x), 3)}`).join(', ')}. In order ${dirText}: <b>${ans.join(', ')}</b>.`,
+      why: `Lined up with three places: ${xs.map((x) => (D.parse(x).places < 3 ? `${x} = ${f(D.toThousandths(x), 3)}` : x)).join(', ')}. In order ${dirText}: <b>${ans.join(', ')}</b>.`,
       diagnose: (resp) => orderDiag(resp, ans, dirText)
     }, extra);
   }
@@ -215,7 +216,7 @@
     const ans = side === 'left' ? asc(xs)[0] : desc(xs)[0];
     return {
       type: 'mc', sig: xs.slice().sort().join('|') + side,
-      prompt: `These numbers are placed on the number line from 0 to 1: ${list(xs)}. Which one is farthest to the <b>${side}</b>?`,
+      prompt: `Imagine placing ${list(xs)} on this number line from 0 to 1. Which one would be farthest to the <b>${side}</b>?`,
       visual: M.line({ from: 0, to: 1000, labels: ['0', '1'], tickLabels: true }),
       choices: textChoices(r, ans, xs.filter((x) => x !== ans)), answer: ans, answerText: ans,
       hints: [
@@ -345,7 +346,7 @@
     skills: {
       ordLG: 'Ordering from least to greatest',
       ordGL: 'Ordering from greatest to least',
-      align: 'Lining up places with placeholder zeros',
+      align: 'Lining up places with zeros at the end',
       ordLine: 'Ordering on a number line',
       ordWord: 'Ordering word problems'
     },

@@ -17,19 +17,21 @@ Number ranges that follow: place value, reading/writing, comparing and ordering 
 ## Learning sequence (as shown in the app)
 | Lesson | Topic | Core evidence of learning | Standards | Status |
 |---|---|---|---|---|
-| D01 | Understanding Decimals | Model tenths, hundredths and thousandths; connect models, place-value chart, words and numerals; equivalent decimals and zero placeholders | Foundations for 5.NR.4.1, 5.NR.4.2; 5.NR.1.1 | **Built and audited** |
-| D02 | Decimal Place Value | Value of a digit; standard and expanded form; ten-to-one place relationships | 5.NR.4.1, 5.NR.1.1 | Coming later |
-| D03 | Comparing Decimals | Compare using place value and >, <, =; justify comparisons | 5.NR.4.2 | Coming later |
-| D04 | Ordering Decimals | Order sets, including misleading digit-length cases | 5.NR.4.2 | Coming later |
+| D01 | Understanding Decimals | Model tenths, hundredths and thousandths; connect models, place-value chart, words and numerals; equivalent decimals and zero placeholders | Foundations for 5.NR.4.1, 5.NR.4.2; 5.NR.1.1 | **Built, audited, live** |
+| D02 | Decimal Place Value | Place vs value of a digit (tens to thousandths); ×10 and 1/10 between places; standard, expanded and word form; placeholder zeros | 5.NR.4.1, 5.NR.1.1 | **Built** (branch `claude/decimals-d02-d04`) |
+| D03 | Comparing Decimals | Compare to thousandths with >, <, =; different numbers of digits; equal decimals; place-value charts; number lines; explain why | 5.NR.4.2 | **Built** (branch) |
+| D04 | Ordering Decimals | Least to greatest and greatest to least; line up places with placeholder zeros; number lines; word problems | 5.NR.4.2 | **Built** (branch) |
 | D05 | Rounding Decimals | Round to tenths and hundredths using place value and number lines | 5.NR.4.3 | Coming later |
 | D06 | Adding Decimals | Add in models, equations and word problems; alignment and regrouping | 5.NR.4.4 | Coming later |
 | D07 | Subtracting Decimals | Subtract with regrouping and zeros; word problems | 5.NR.4.4 | Coming later |
-| D08 | Mixed Decimal Problems | Cumulative application and reasoning | 5.NR.4.1–4.4 | Coming later |
+| D08 | Multiplying Decimals | Supplemental: goes beyond the Grade 5 Georgia decimal standards (related: 5.NR.1.2 patterns when multiplying by powers of 10) | Supplemental | Coming later |
+| D09 | Dividing Decimals | Supplemental: goes beyond the Grade 5 Georgia decimal standards (related: 5.NR.1.2 patterns when dividing by powers of 10) | Supplemental | Coming later |
+| D10 | Mixed Decimal Review | Cumulative application and reasoning | 5.NR.4.1–4.4 | Coming later |
 
-This eight-lesson sequence (from the project brief of 2026-10-10) replaces the earlier nine-lesson outline: "Representing decimals" was folded into D01/D02 and "Decimal review" became D08. The sequence is pedagogical, not a claim that Georgia designates eight lessons.
+This ten-lesson roadmap (project brief, 2026-10-10) replaces the earlier eight-lesson list. Georgia's Grade 5 standards list decimal work only in 5.NR.4.1–4.4 (read/write, compare/order, round, add/subtract); no Grade 5 standard covers multiplying or dividing decimals (checked against the same secondary source), so Lessons 8 and 9 are marked supplemental and must not be presented as Milestones requirements. The sequence is pedagogical, not a claim that Georgia designates ten lessons.
 
 ### What D01 deliberately leaves for later lessons
-- Expanded form is shown in Teach (0.627 = 0.6 + 0.02 + 0.007) but practiced in D02.
+- Expanded form is shown in Teach (0.627 = 0.6 + 0.02 + 0.007) and practiced in D02 (built).
 - The "10 times" relationship is taught and practiced as unit conversions (6 tenths = 60 hundredths); "the 4 in 0.4 is 10 times the 4 in 0.04" questions belong to D02.
 - Decimals greater than 1 appear in Teach and in some reading/place-value questions; models of numbers greater than 1 come later.
 - Comparing appears in D01 only as transfer practice for the 0.4 vs 0.35 misconception; full comparing and ordering are D03–D04.

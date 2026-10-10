@@ -81,7 +81,14 @@
       const s = String(resp == null ? '' : resp).trim();
       if (!s) return { status: 'empty', message: 'Type your answer in the box first.' };
       const parts = s.split('+').map((t) => t.trim());
-      const vals = parts.map((t) => D.parse(t));
+      // A part may be a value (0.07) or digit × place value (7 × 0.01).
+      const vals = parts.map((t) => {
+        const m = /^(\d)\s*[×xX*]\s*(\d*\.?\d+)$/.exec(t);
+        if (!m) return D.parse(t);
+        const pv = D.toThousandths(m[2]);
+        if (pv === null || !/^10*$/.test(String(pv))) return null;
+        return D.parse(D.fromThousandths(Number(m[1]) * pv, 3));
+      });
       if (parts.length > 8 || vals.some((v) => !v || v.places > 3)) return { status: 'invalid', message: 'Write each part as a number with + signs between the parts, like 4 + 0.7 + 0.03.' };
       const ths = vals.map((v) => D.toThousandths(v));
       const sum = ths.reduce((a, b) => a + b, 0);

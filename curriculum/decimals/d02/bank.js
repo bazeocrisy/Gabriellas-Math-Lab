@@ -109,7 +109,7 @@
 
   function valueChoices(d, key) {
     const i = KEYS.indexOf(key);
-    const near = [i - 1, i + 1, i + 2, i - 2].filter((j) => j >= 0 && j < KEYS.length).slice(0, 3);
+    const near = [i - 1, i + 1, i + 2, i - 2, i + 3].filter((j) => j >= 0 && j < KEYS.length).slice(0, 3);
     return { ans: valueOf(d, key), wrongs: near.map((j) => valueOf(d, KEYS[j])) };
   }
 
@@ -128,7 +128,7 @@
       hints: [
         'A digit\'s value depends on its place. First find the place of the digit.',
         `The ${d} is ${placeAt(key)}. Name that place.`,
-        `The value is ${d} of that place. For example, ${exD} in the ${exKey} place is worth ${wordsOf(exKey, exD)} = ${valueOf(exD, exKey)}. Write the ${d} in its place with zeros in front if needed.`
+        `The value is ${d} of that place. For example, ${exD} in the ${exKey} place is worth ${wordsOf(exKey, exD)} = ${valueOf(exD, exKey)}. Write the ${d} in its place, using zeros to fill any places between it and the decimal point.`
       ],
       why: `The ${d} is in the ${key} place, so its value is ${wordsOf(key, d)} = <b>${ans}</b>.`,
       diagnose(resp) {
@@ -209,7 +209,7 @@
       hints: [
         'A digit\'s value depends on its place, not only on how big the digit is.',
         `Find each digit's value: the first digit after the point is tenths, the next is hundredths, the last is thousandths.`,
-        `Compare the values: tenths are worth more than hundredths, and hundredths are worth more than thousandths.`
+        `Write each digit's value as a decimal (like 0.4 or 0.07 or 0.009), then compare those values.`
       ],
       why: `In ${n}: ${ds[0]} is worth ${valueOf(ds[0], 'tenths')}, ${ds[1]} is worth ${valueOf(ds[1], 'hundredths')}, ${ds[2]} is worth ${valueOf(ds[2], 'thousandths')}. The ${dir} value is <b>${ans}</b>.`,
       diagnose(resp) {
@@ -225,27 +225,30 @@
 
   T('R1', 'relate', (r, p) => {
     const d = p.d || r.int(2, 9);
-    let ia = p.pa ? DEC.indexOf(p.pa) : r.int(0, 2);
-    let ib = p.pb ? DEC.indexOf(p.pb) : Math.min(3, ia + r.pick([1, 1, 2]));
-    if (ib === ia) ib = ia + 1;
-    const A = valueOf(d, DEC[ia]), B = valueOf(d, DEC[ib]);
-    const ans = String(Math.pow(10, ib - ia));
+    let e = p.e || r.int(1, 9);
+    if (e === d) e = d === 9 ? 1 : d + 1;
+    const ia = p.ia !== undefined ? p.ia : r.int(0, 1); // the d is in the ones or the tenths place of the bigger number
+    const big = num(d * BY[DEC[ia]].unit + e * BY[DEC[ia + 1]].unit); // e.g. 2.4
+    const small = num((d * BY[DEC[ia]].unit + e * BY[DEC[ia + 1]].unit) / 10); // e.g. 0.24
+    const dir = p.dir || r.pick(['up', 'down']);
+    const [A, B] = dir === 'up' ? [big, small] : [small, big];
+    const pa = placeOf(A, d), pb = placeOf(B, d);
+    const ans = dir === 'up' ? '10 times as much as' : '1/10 as much as';
+    const opts = ['10 times as much as', '1/10 as much as', '100 times as much as', 'the same as'];
     return {
-      type: 'number', sig: `${d}${ia}${ib}`,
-      prompt: `The ${d} in <b>${A}</b> is how many times the value of the ${d} in <b>${B}</b>?`,
-      answer: ans, answerText: ans,
+      type: 'mc', sig: `${d}${e}${ia}${dir}`,
+      prompt: `Complete the sentence: the ${d} in <b>${A}</b> is worth ____ the ${d} in <b>${B}</b>.`,
+      choices: opts.map((t) => ({ value: t, text: t })), answer: ans, answerText: ans,
       hints: [
-        'A digit is worth more when it is farther to the left. Think about how many of one place make one of the place to its left.',
-        `The ${d} in ${A} is in the ${DEC[ia]} place. The ${d} in ${B} is in the ${DEC[ib]} place.`,
-        'Use what you know: how many hundredths make one tenth? If the digits are two places apart, use that fact twice (multiply).'
+        'The same digit is worth a different amount in a different place. Each place is worth 10 times the place to its right.',
+        `The ${d} in ${A} is in the ${pa} place. The ${d} in ${B} is in the ${pb} place.`,
+        `Which ${d} is farther to the left (worth more)? The two places are next to each other, so the values differ by one step.`
       ],
-      why: `${DEC[ia]} are ${ib - ia === 1 ? '10' : '100'} times ${DEC[ib]}: ${A} = ${ans} × ${B}. The answer is <b>${ans}</b>.`,
-      diagnose(resp, info) {
-        const v = info.th / 1000;
-        if (info.th === 100 || info.th === 10) return `That is a fraction less than 1. The ${d} in ${A} is worth MORE, because it is farther left. How many times more?`;
-        if (v === 10 && ans === '100') return `They are two places apart, not one. Each place is 10 times the next, so two places is 10 × 10.`;
-        if (v === 100 && ans === '10') return 'They are only one place apart, so use the fact for one place just once, not twice.';
-        return 'Count the places between the two digits, and remember how many of one place make one of the place to its left.';
+      why: `The ${d} in ${A} is worth ${valueOf(d, pa)} and the ${d} in ${B} is worth ${valueOf(d, pb)}. ${valueOf(d, pa)} is <b>${ans}</b> ${valueOf(d, pb)}.`,
+      diagnose(resp) {
+        if (resp === 'the same as') return 'The digit is the same, but it is in a different place, so its value is different.';
+        if (resp.startsWith('100')) return 'The two places are next to each other, so the values differ by just one step of the place-value pattern.';
+        return `Check which ${d} is farther to the left. A digit farther left is worth more; farther right is worth less.`;
       }
     };
   });
@@ -281,7 +284,8 @@
         if (resp === base) return 'That is the same number. The digit has to move to a different place.';
         const k = D.toThousandths(resp), b = D.toThousandths(base);
         if ((kind === 'times' && k < b) || (kind === 'tenth' && k > b)) return `That moved the ${d} the wrong way. ${kind === 'times' ? '10 times as much is BIGGER, so the digit moves left.' : '1/10 of a number is SMALLER, so the digit moves right.'}`;
-        return `That moved the ${d} two places. ${cap(phrase)} moves it only one place.`;
+        const moved = Math.round(Math.log10(Math.max(k, b) / Math.min(k, b)));
+        return `That moved the ${d} ${moved} places. ${cap(phrase)} moves it only one place.`;
       }
     };
   });
@@ -333,7 +337,7 @@
       choices: textChoices(r, ans, [asWholes, allTenths, third]), answer: ans, answerText: ans,
       hints: [
         'Expanded form writes a number as the sum of the values of its digits.',
-        `Start with the whole part. Then the first digit after the point is tenths, so it is written 0.${fr[0]}.`,
+        fr[0] === '0' ? 'Start with the whole part. The tenths digit is 0, so there is no tenths part. Next look at the hundredths digit.' : `Start with the whole part. Then the first digit after the point is tenths, so it is written 0.${fr[0]}.`,
         'Write the value of each nonzero digit (hundredths look like 0.0_, thousandths look like 0.00_) and skip the zeros. Which choice matches?'
       ],
       why: `Each part is the value of one digit: ${n} = <b>${ans}</b>.`,
@@ -502,10 +506,10 @@
   });
 
   T('Z2', 'zeros', (r, p) => {
-    const w = p.w || r.int(1, 9);
-    const b = p.b || r.int(1, 9);
+    const [w0, b0, x0] = r.shuffle([1, 2, 3, 4, 5, 6, 7, 8, 9]);
+    const w = p.w || w0, b = p.b || b0;
     const zeroAt = p.zeroAt || r.pick(['tenths', 'hundredths']);
-    const n = zeroAt === 'tenths' ? `${w}.0${b}` : `${w}.${r.int(1, 9)}0${b}`;
+    const n = zeroAt === 'tenths' ? `${w}.0${b}` : `${w}.${x0}0${b}`;
     const digitPlace = zeroAt === 'tenths' ? 'hundredths' : 'thousandths';
     const without = n.replace(/\.(\d*)0(\d)$/, '.$1$2');
     const ans = `It holds the ${zeroAt} place, so the ${b} stays in the ${digitPlace} place.`;
@@ -543,7 +547,7 @@
       choices: textChoices(r, ans, wrongs), answer: ans, answerText: ans,
       hints: [
         'Equal numbers have every digit in the same place.',
-        'A zero at the END of a decimal does not move any digit.',
+        `Write ${x} in a place-value chart. Then write each choice under it, lining up the decimal points.`,
         'A zero between the decimal point and a digit DOES move that digit. Check each choice with a place-value chart.'
       ],
       why: `${ans} has the same digits in the same places as ${x}, plus a zero at the end, so they are equal.`,
@@ -573,7 +577,7 @@
         'Write the tens and ones digits, then the decimal point.',
         'Write every digit after the point in order, including zeros that come before other digits.'
       ],
-      why: `Reading the chart left to right gives <b>${n}</b>.` + (digits5(n).thousandths === '0' ? ' (A zero at the very end can be left off.)' : ''),
+      why: `Reading the chart left to right gives <b>${n}</b>.` + (digits5(n).thousandths === '0' ? (digits5(n).hundredths === '0' ? ' (The zeros at the very end can be left off.)' : ' (A zero at the very end can be left off.)') : ''),
       diagnose(resp) {
         if (droppedZero(resp, n)) return ZERO_TIP;
         return placeCheck(resp, n);

@@ -113,6 +113,7 @@
   });
 
   T('S3', 'cmpPlace', (r, p) => {
+    const wholeTip = (x, y) => `Compare the whole-number parts first: ${D.parse(x).whole} and ${D.parse(y).whole}. When they are different, they decide.`;
     let x = p.x, y = p.y;
     if (!x) {
       const w = r.int(1, 9);
@@ -127,7 +128,8 @@
         'Compare the biggest places first. The whole-number part is bigger than any part after the decimal point.',
         `Look at the whole-number parts: ${D.parse(x).whole} and ${D.parse(y).whole}.`,
         'If the whole numbers are different, they decide. You do not need to look at the digits after the point. The open side of the symbol faces the greater number.'
-      ]
+      ],
+      diagnose: (resp) => (resp === '=' ? 'These numbers are not equal. ' : '') + wholeTip(x, y)
     });
   });
 
@@ -172,7 +174,7 @@
       hints: [
         'Compare place by place from the left. The first place where the digits differ decides.',
         `The tenths are the same (${a}). So the box, in the hundredths place, decides the comparison. Compare it with the ${b} in ${y}.`,
-        `For "${W}" to be true, the digit in the box must be ${want === '>' ? 'greater' : 'less'} than ${b}.`
+        'Try each choice in the box. Compare it with the hundredths digit of the other number, and keep the one that makes the sentence true.'
       ],
       why: `With ${good} in the box, the hundredths digit ${good} is ${want === '>' ? 'greater' : 'less'} than ${b}, so 0.${a}${good}${d} ${W} ${y}.`,
       diagnose(resp) { return `With ${resp} in the box, the hundredths digits are ${resp} and ${b}, so 0.${a}${resp}${d} would be ${Number(resp) > b ? 'greater' : 'less'} than ${y}. You need it to be ${want === '>' ? 'greater' : 'less'}.`; }
@@ -242,7 +244,7 @@
     return {
       type: 'number', sig: lo,
       accept: (v) => { const k = D.toThousandths(v); return k !== null && k > loK && k < hiK; },
-      prompt: `Write a decimal that is <b>greater than ${lo}</b> and <b>less than ${hi}</b>.`,
+      prompt: `Write a decimal that is <b>greater than ${lo}</b> and <b>less than ${hi}</b>. Use up to three decimal places.`,
       answer: example, answerText: `any decimal between ${lo} and ${hi}, such as ${example}`,
       hints: [
         'There are many decimals between two decimals. Use one more decimal place to find them.',
@@ -276,8 +278,8 @@
     }
     return symbolQuestion(x, y, { hints: [
       'Two decimals are equal when every place has the same digit. An empty place counts as 0.',
-      'Line them up, writing zeros in empty places at the end:' + lineUp(x, y),
-      'Compare every place. If all the digits match, use =. If not, find the first place that is different.'
+      'Write both numbers with the same number of decimal places by adding zeros at the end, and line up the decimal points.',
+      'Compare every place. If all the digits match, use =. If not, find the first place that is different. Lined up:' + lineUp(x, y)
     ] });
   });
 
@@ -295,7 +297,7 @@
       choices: textChoices(r, ans, wrongs), answer: ans, answerText: ans,
       hints: [
         'Equal decimals have the same digit in every place.',
-        'A zero written at the END of a decimal does not move any digit.',
+        `Write ${x} in a place-value chart. Then write each choice under it, lining up the decimal points.`,
         'Check each choice place by place against ' + x + '. Which one has every digit in the same place?'
       ],
       why: `${ans} has the same digits in the same places as ${x}; only a zero at the end was added, so ${x} = ${ans}.`,
@@ -343,7 +345,7 @@
     const g = D.cmp(x, y) > 0 ? x : y;
     return {
       type: 'mc', sig: x + y,
-      prompt: `Both numbers are placed on this number line from 0 to 1. Which one is <b>farther to the right</b>: ${x} or ${y}?`,
+      prompt: `Imagine placing ${x} and ${y} on this number line from 0 to 1. Which one would be <b>farther to the right</b>?`,
       visual: M.line({ from: 0, to: 1000, labels: ['0', '1'], tickLabels: true }),
       choices: textChoices(r, g, [g === x ? y : x, 'They are at the same point']), answer: g, answerText: g,
       hints: [
@@ -400,7 +402,7 @@
     const claimTrue = p.claim !== undefined ? p.claim === 'true' : r.next() < 0.5;
     const xs = x.split('.')[1], ys = y.split('.')[1];
     const prompt = claimTrue
-      ? `${name} says <b>${x} &gt; ${y}</b> because ${x} has ${D.parse(x).frac[1]} hundredths and ${y} has only ${D.parse(y).frac[1]} hundredths. Is ${name} right?`
+      ? `${name} says <b>${x} &gt; ${y}</b> because ${x} has ${D.parse(x).frac[1]} hundredths and ${y} has ${D.parse(y).frac[1] === '0' ? 'no' : 'only ' + D.parse(y).frac[1]} hundredths. Is ${name} right?`
       : `${name} says <b>${y} &gt; ${x}</b> because ${Number(ys)} is greater than ${Number(xs)}. Is ${name} right?`;
     const right = claimTrue ? `Yes. The tenths are the same, and ${D.parse(x).frac[1]} hundredths is more than ${D.parse(y).frac[1]} hundredths.`
       : `No. Line them up as ${pad3(x)} and ${pad3(y)}: ${x} has more hundredths, so ${x} is greater.`;
@@ -462,7 +464,7 @@
       if (r.next() < 0.5) { x = `0.${a}${r.int(1, 9)}${r.int(1, 9)}`; y = `0.${t}`; }
     }
     const name = p.name || r.pick(['Maria', 'Ben', 'Ava', 'Noah', 'Zoe']);
-    const right = `${name} compared the digits as whole numbers. ${y} has more tenths, so ${x} < ${y}.`;
+    const right = `${name} did not compare place by place. ${y} has more tenths, so ${x} < ${y}.`;
     const wrongs = [`There is no mistake. ${x} > ${y} is true.`, `${name} should have compared the last digits.`, `${name} should have counted the digits after the decimal point.`];
     return {
       type: 'mc', sig: x + y,
@@ -470,7 +472,7 @@
       choices: textChoices(r, right, wrongs), answer: right, answerText: right,
       hints: [
         'First check whether the comparison is true by lining up the decimal points.',
-        `Compare the tenths: ${x} has ${D.parse(x).frac[0]} tenths and ${y} has ${D.parse(y).frac[0]} tenths.`,
+        `Compare the tenths: ${x} has ${s(Number(D.parse(x).frac[0]), 'tenth')} and ${y} has ${s(Number(D.parse(y).frac[0]), 'tenth')}.`,
         'If the comparison is false, think about how someone might have gotten it: what did they compare instead of place value?'
       ],
       why: `${reason(x, y)} The digits after the point cannot be compared as whole numbers.`,

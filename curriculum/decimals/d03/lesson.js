@@ -24,8 +24,8 @@
     },
     {
       id: 'check-symbols', title: 'Try it together', kind: 'check', skill: 'cmpPlace',
-      check: { t: 'S1', params: { x: '0.62', y: '0.68' } },
-      reteach: `<p><b>Let's look again.</b> In 0.31 and 0.36 the tenths are the same (3). In the hundredths place, 1 is less than 6, so 0.31 &lt; 0.36. The open side faces 0.36, the greater number.</p>`
+      check: { t: 'S1', params: { x: '0.3', y: '0.8' } },
+      reteach: `<p><b>Let's look again.</b> 0.6 is 6 tenths and 0.2 is 2 tenths. 6 tenths is more, so 0.6 &gt; 0.2. The open side of the symbol faces 0.6, the greater number.</p>`
     },
     {
       id: 'place', title: 'Compare place by place', skill: 'cmpPlace',
@@ -78,6 +78,24 @@
       id: 'check-length', title: 'Try it together', kind: 'check', skill: 'cmpLength',
       check: { t: 'L1', params: { x: '0.7', y: '0.689' } },
       reteach: `<p><b>Let's look again.</b> Compare 0.5 and 0.498. Write 0.5 as 0.500:</p>${M.stack(['0.5', '0.498'], { highlight: 'tenths' })}<p>Tenths: 5 is more than 4, so 0.5 &gt; 0.498.</p>`
+    },
+    {
+      id: 'between', title: 'Decimals in between', skill: 'cmpLength',
+      goal: 'how to find a decimal between two decimals.',
+      body: '<p>There are always more decimals between two decimals. Writing one more decimal place helps you find them.</p>',
+      example: 'Worked example: find a decimal greater than 0.4 and less than 0.5.',
+      exampleVisual: M.line({ from: 400, to: 500, labels: ['0.4', '0.5'], tickLabels: true }),
+      steps: [
+        '<b>Step 1.</b> Write both with one more decimal place: 0.4 = <b>0.40</b> and 0.5 = <b>0.50</b>.',
+        '<b>Step 2.</b> Any number of hundredths between 40 and 50 works: 0.41, 0.42, … 0.49.',
+        '<b>Answer:</b> for example, <span class="big-num">0.45</span> The number line shows all of them between 0.4 and 0.5.'
+      ],
+      why: 'Adding a zero at the end does not change a number, but it splits each tenth into 10 hundredths. That makes room to see the decimals in between.'
+    },
+    {
+      id: 'check-between', title: 'Try it together', kind: 'check', skill: 'cmpLength',
+      check: { t: 'L3', params: { lo: '0.6', lvl: 1 } },
+      reteach: '<p><b>Let\'s look again.</b> Between 0.2 and 0.3: write them as 0.20 and 0.30. Then 0.21, 0.25 or 0.29 all fit. Do the same with 0.6 and 0.7.</p>'
     },
     {
       id: 'equal', title: 'Equal decimals', skill: 'cmpEqual',
@@ -196,10 +214,10 @@
     teachSigs: screens.filter((s) => s.check).map((s) => G.engine.make('d03', s.check.t, 1, s.check.params).sig)
       // Worked examples on Teach screens, reteach cards and Lesson Notes, in either order.
       .concat(...[['0.9', '0.4'], ['0.31', '0.36'], ['0.364', '0.371'], ['0.472', '0.427'], ['0.8', '0.75'], ['0.6', '0.599'], ['2.1', '1.987'],
-        ['0.45', '0.4'], ['0.5', '0.498'], ['1.50', '1.5'], ['1.05', '1.5'], ['3.70', '3.7'], ['3.405', '3.45'], ['0.9', '0.85']]
+        ['0.45', '0.4'], ['0.5', '0.498'], ['0.6', '0.2'], ['1.50', '1.5'], ['1.05', '1.5'], ['3.70', '3.7'], ['3.405', '3.45'], ['0.9', '0.85']]
         .map(([a, b]) => [`S1:${a}|${b}`, `S1:${b}|${a}`, `L1:${a}|${b}`, `L1:${b}|${a}`, `E1:${a}|${b}`, `E1:${b}|${a}`, `S3:${a}|${b}`, `S3:${b}|${a}`,
           `S4:${a}${b}`, `S4:${b}${a}`, `L2:${a}${b}greater`, `L2:${b}${a}greater`, `L2:${a}${b}less`, `L2:${b}${a}less`,
           `S2:${a}${b}greater`, `S2:${b}${a}greater`, `S2:${a}${b}less`, `S2:${b}${a}less`, `Y2:${a}${b}`, `Y2:${b}${a}`, `NL2:${a}${b}`, `NL2:${b}${a}`]),
-      ['NL1:3:27', 'NL1:7:36'])
+      ['NL1:3:27', 'NL1:7:36', 'L3:0.4', 'L3:0.2'])
   };
 })(typeof window !== 'undefined' ? (window.GML = window.GML || {}) : (globalThis.GML = globalThis.GML || {}));

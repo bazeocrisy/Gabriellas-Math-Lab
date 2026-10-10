@@ -99,7 +99,7 @@
     } else if (q.type === 'expanded') {
       area.innerHTML = `<label class="num-label" for="${id}-in">Your answer</label>
         <input id="${id}-in" class="num-input exp-input" type="text" inputmode="text" autocomplete="off" autocapitalize="off" spellcheck="false" aria-describedby="${id}-p ${id}-h" maxlength="60">
-        <p class="hint-small" id="${id}-h">Use a + sign between the parts.</p>`;
+        <p class="hint-small" id="${id}-h">Use a + sign between the parts, like 2 + 0.5 + 0.08 (or 2 × 1 + 5 × 0.1 + 8 × 0.01).</p>`;
       const inp = area.querySelector('input');
       inp.addEventListener('input', changed);
       inp.addEventListener('keydown', (e) => { if (e.key === 'Enter' && opts.onEnter) { e.preventDefault(); opts.onEnter(); } });
