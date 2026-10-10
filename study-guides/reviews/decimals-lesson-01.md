@@ -75,7 +75,7 @@ Each reviewer was sent back to check the corrected build.
 
 - **Curriculum: PASS.** All new and changed math was recomputed. The reviewer made three small suggestions, all applied:
   - The p.6 box shows five ways, so its title now says "One number, five ways".
-  - The scoring note now says 8a and 8b count as one question.
+  - The scoring note now said 8a and 8b count as one question. Q8b was later removed; see the next section.
   - The p.3 subtitle now mentions wholes as well as parts.
 - **Design: PASS.** All 13 findings were confirmed fixed. Follow-ups applied:
   - The last inline font sizes became classes.
@@ -84,6 +84,21 @@ Each reviewer was sent back to check the corrected build.
   - Margins: the cover is 72 px (0.5in) from every edge. Pages 2–15 are at least 86 px from the sides and 79 px from the top, and the footer is exactly 72 px from the bottom.
 - **Hatching changed to vector lines.** It was a pattern, which Chrome turned into bitmap tiles: 225 images and 4.6 MB. As vector lines, the PDF is 1.5 MB.
 - **Final QA of the release build: PASS, 0 defects.** All 15 pages viewed again. Every hatched grid was counted cell by cell, and all 25 answers were re-worked. 15 Letter pages, fonts embedded, 1.55 MB.
+
+## Alignment with the updated curriculum (2026-10-10)
+
+The app session changed `docs/CURRICULUM.md` (not yet committed on its branch). It now has an 8-lesson
+sequence, and it lists what D01 leaves for later lessons. Treating that document as the source of truth,
+the guide was changed to match:
+
+- **Q8b removed.** Expanded form is still shown on p.4, but the curriculum leaves its practice to D02.
+  The answer key and scoring note were updated to match.
+- **Comparing is now Lesson 3 (D03).** It was Lesson 4. The parent page says so.
+- **Standards wording.** The cover and parent page now say "builds foundations for 5.NR.4.1 and 5.NR.4.2,
+  and connects to 5.NR.1.1", which is how the curriculum describes D01.
+
+- **Curriculum alignment check: PASS.** No printed page conflicts with the updated curriculum. The only fix was the out-of-date standards wording in the HTML header comment (not printed).
+- **Final QA of this build: PASS, 0 defects.** All 15 pages viewed. 15 Letter pages, fonts embedded, 1.54 MB. Margins are at least 0.5in, and all 25 key entries are correct.
 
 ## Known limitations
 
