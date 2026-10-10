@@ -123,13 +123,16 @@
         }).join('');
         poolEl.innerHTML = q.items.filter((v) => !placed.includes(v)).map((v) => `<button type="button" class="btn order-chip" data-v="${M.esc(v)}"${disabled ? ' disabled' : ''}>${M.esc(v)}</button>`).join('') ||
           '<span class="hint-small">All numbers placed.</span>';
-        slotsEl.querySelectorAll('[data-k]').forEach((b) => b.addEventListener('click', () => { const v = placed[Number(b.dataset.k)]; placed = placed.filter((x) => x !== v); live.textContent = `${v} taken back.`; draw(); changed(); }));
+        slotsEl.querySelectorAll('[data-k]').forEach((b) => b.addEventListener('click', () => {
+          const v = placed[Number(b.dataset.k)]; placed = placed.filter((x) => x !== v); live.textContent = `${v} taken back.`; draw(); changed();
+          const back = [...poolEl.querySelectorAll('[data-v]')].find((x) => x.dataset.v === v); if (back) back.focus();
+        }));
         poolEl.querySelectorAll('[data-v]').forEach((b) => b.addEventListener('click', () => {
           placed.push(b.dataset.v); live.textContent = `${b.dataset.v} placed in position ${placed.length}.`; draw(); changed();
-          const next = poolEl.querySelector('[data-v]'); if (next) next.focus();
+          const next = poolEl.querySelector('[data-v]') || slotsEl.querySelector(`[data-k="${placed.length - 1}"]`); if (next) next.focus();
         }));
       };
-      area.querySelector('.order-clear').addEventListener('click', () => { if (disabled) return; placed = []; live.textContent = 'Order cleared.'; draw(); changed(); });
+      area.querySelector('.order-clear').addEventListener('click', () => { if (disabled) return; placed = []; live.textContent = 'Order cleared.'; draw(); changed(); const f = poolEl.querySelector('[data-v]'); if (f) f.focus(); });
       draw();
       ctl = {
         get: () => placed.slice(),

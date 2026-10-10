@@ -184,6 +184,7 @@ test('curriculum review regressions (Lessons 2–4)', () => {
   assert.equal(engine.check(f3, '6 × 1 + 2 × 0.1 + 8 × 0.001').status, 'correct');
   assert.equal(engine.check(f3, '6 x 1 + 2 x 0.1 + 8 x 0.001').status, 'correct');
   assert.equal(engine.check(f3, '6 × 1 + 2 × 0.3 + 8 × 0.001').status, 'invalid');
+  assert.equal(engine.check(f3, '(6 × 1) + (2 × 0.1) + (8 × 0.001)').status, 'correct');
   // One meaning of "placeholder zero": Lesson 4 talks about zeros at the end.
   assert.doesNotMatch(G.lessonContent.d04.notes, /<dt>Placeholder zero<\/dt>/);
   assert.doesNotMatch(engine.banks.d04.skills.align, /placeholder/i);

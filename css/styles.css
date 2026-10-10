@@ -211,7 +211,7 @@ h3 { font-size: 1.1rem; margin: 1em 0 .4em; }
 .m-dot { fill: #d1495b; stroke: #fff; stroke-width: 1.5; }
 .m-text { font: 600 14px system-ui, -apple-system, "Segoe UI", sans-serif; fill: #1d2433; }
 .m-bold { font-weight: 800; font-size: 16px; }
-.m-small { font-size: 11px; font-weight: 500; }
+.m-small { font-size: 12.5px; font-weight: 600; }
 .model-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; align-items: end; }
 .model-pair .model { max-width: 260px; margin: 0 auto; }
 .model-cap { margin: 0 0 4px; font-weight: 700; text-align: center; }
@@ -299,6 +299,7 @@ h3 { font-size: 1.1rem; margin: 1em 0 .4em; }
 .skills-table { width: 100%; border-collapse: collapse; background: #fff; }
 .skills-table th, .skills-table td { border: 1px solid var(--line); padding: 8px; text-align: left; vertical-align: top; }
 .skills-table th { background: var(--info-soft); }
+.skills-table a, .next-step a { display: inline-flex; align-items: center; min-height: 44px; }
 .results-list { padding-left: 0; list-style: none; }
 .res-item { background: #fff; border: 1px solid var(--line); border-left: 6px solid; border-radius: 10px; padding: 8px 14px; margin: 12px 0; }
 .res-ok { border-left-color: var(--ok); }

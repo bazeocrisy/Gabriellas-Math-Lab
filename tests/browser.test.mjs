@@ -428,6 +428,31 @@ try {
     const nb = host.querySelector('.coach-next button'); nb.click(); nb.click(); return draft('practice-d01').i;`);
   check('practice: clicking Next twice moves only one question', r === 1, r);
 
+  // Order widget keeps keyboard focus; "answer first" notes clear when the child answers; result links are 44px on tablet.
+  await js(`localStorage.clear();`);
+  await b.load(URL + 'index.html#/d04/teach/3'); await b.reload();
+  r = await js(`const host = document.querySelector('.check-host');
+    host.querySelector('[data-act=check]').click();
+    const noteShown = !!host.querySelector('.fb-info');
+    const out = { noteShown, focus: [] };
+    for (let k = 0; k < 3; k++) { const c = host.querySelector('.order-pool [data-v]'); c.focus(); c.click(); out.focus.push(document.activeElement === document.body ? 'BODY' : document.activeElement.className); }
+    out.noteGone = !host.querySelector('.fb-info');
+    const placed = host.querySelector('.order-slots [data-k="1"]'); placed.focus(); placed.click();
+    out.afterBack = document.activeElement === document.body ? 'BODY' : document.activeElement.className;
+    return out;`);
+  check('order widget: keyboard focus never falls back to the page after placing or taking back a number', r.focus.every((x) => x !== 'BODY') && r.afterBack !== 'BODY', r);
+  check('practice/teach: the "answer first" note disappears once the child answers', r.noteShown && r.noteGone, r);
+  await b.viewport(768, 1024);
+  await js(`localStorage.removeItem('gml:v1:draft:test-d02');`);
+  await b.load(URL + 'index.html#/d02/test'); await b.reload();
+  await js(`document.querySelector('[data-act=start]').click();`);
+  await js(`${H} const d = draft('test-d02'); d.set.forEach((x, k) => { const q = E.make('d02', x.id, x.seed); d.answers[k] = k < 5 ? right(q) : wrong(q); }); d.review = true; localStorage.setItem('gml:v1:draft:test-d02', JSON.stringify(d));`);
+  await b.reload();
+  await js(`document.querySelector('[data-act=submit]').click();`); await b.wait(80);
+  r = await js(`return [...document.querySelectorAll('.skills-table a')].map((a) => Math.round(a.getBoundingClientRect().height));`);
+  check('tablet: "Review in Teach" links in test results are at least 44px tall', r.length > 0 && r.every((h) => h >= 44), r);
+  await b.viewport(390, 844);
+
   // ── Unknown routes and reset ──
   await b.load(URL + 'index.html#/d05/teach/1');
   check('unready lesson route falls back to home', /Gabriella's Math Lab/.test(await js(`return document.querySelector('h1').innerText;`)));

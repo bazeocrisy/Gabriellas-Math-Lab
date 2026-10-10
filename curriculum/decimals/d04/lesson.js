@@ -58,7 +58,7 @@
       reteach: `<p><b>Let's look again.</b> Greatest to least for 5.6, 5.06 and 5.66: with two places they are 5.60, 5.06, 5.66. 5.66 is greatest, then 5.6, then 5.06.</p>`
     },
     {
-      id: 'zeros', title: 'Finding the least and the greatest', skill: 'align',
+      id: 'zeros', title: 'Line up with zeros at the end', skill: 'align',
       goal: 'how writing zeros at the end helps you find the least or greatest number.',
       body: '<p>Writing every number with the same number of places turns a tricky list into an easy one.</p>',
       example: 'Worked example: which is least, 0.09, 0.1 or 0.091?',

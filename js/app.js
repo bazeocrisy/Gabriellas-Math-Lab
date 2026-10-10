@@ -120,7 +120,7 @@
         ${practiceSkills ? `<details><summary>Practice details (all sessions)</summary><ul>${practiceSkills}</ul></details>` : ''}
         ${p.tests.length > 1 ? `<details><summary>Test history</summary><ol>${p.tests.slice().reverse().slice(0, 10).map((t) => `<li>${fmtDate(t.date)}: ${t.correct} of ${t.total} (${t.percent}%)${t.mastered ? ' ★' : ''}</li>`).join('')}</ol></details>` : ''}
         <h3>Suggested next step</h3>
-        <p>${next}</p>
+        <p class="next-step">${next}</p>
       </section>`;
     }).join('');
     app.innerHTML = `

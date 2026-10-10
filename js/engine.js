@@ -80,7 +80,7 @@
     } else if (q.type === 'expanded') {
       const s = String(resp == null ? '' : resp).trim();
       if (!s) return { status: 'empty', message: 'Type your answer in the box first.' };
-      const parts = s.split('+').map((t) => t.trim());
+      const parts = s.split('+').map((t) => t.trim().replace(/^\((.*)\)$/, '$1').trim());
       // A part may be a value (0.07) or digit × place value (7 × 0.01).
       const vals = parts.map((t) => {
         const m = /^(\d)\s*[×xX*]\s*(\d*\.?\d+)$/.exec(t);
@@ -89,7 +89,7 @@
         if (pv === null || !/^10*$/.test(String(pv))) return null;
         return D.parse(D.fromThousandths(Number(m[1]) * pv, 3));
       });
-      if (parts.length > 8 || vals.some((v) => !v || v.places > 3)) return { status: 'invalid', message: 'Write each part as a number with + signs between the parts, like 4 + 0.7 + 0.03.' };
+      if (parts.length > 8 || vals.some((v) => !v || v.places > 3)) return { status: 'invalid', message: 'Write each part as a number with + signs between the parts, like 4 + 0.7 + 0.03 (or 4 × 1 + 7 × 0.1 + 3 × 0.01).' };
       const ths = vals.map((v) => D.toThousandths(v));
       const sum = ths.reduce((a, b) => a + b, 0);
       // In expanded form every part is one digit times a place value (like 0.03), each place used once.
