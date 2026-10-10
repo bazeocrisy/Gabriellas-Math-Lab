@@ -114,7 +114,7 @@ try {
     const hb = host.querySelector('[data-act=hint]'); const out = { n: draft('practice-d01').set.length, labels: [], hints: [] };
     for (let k = 0; k < 3; k++) { out.labels.push(hb.textContent); hb.click(); out.hints.push([...host.querySelectorAll('.hint')].map((h) => h.querySelector('.hint-title').textContent)); }
     out.disabled = hb.disabled; out.last = hb.textContent;
-    out.match = [...host.querySelectorAll('.hint > div')].map((d) => d.innerHTML).join('|') === q.hints.join('|');
+    const txt = (h) => { const e = document.createElement('div'); e.innerHTML = h; return e.textContent; }; out.match = [...host.querySelectorAll('.hint > div')].map((d) => d.textContent).join('|') === q.hints.map(txt).join('|');
     out.noAnswerYet = !host.querySelector('.fb-right, .fb-solution');
     return out;`);
   check('practice: 10 questions per session', r.n === 10, r.n);
@@ -193,7 +193,8 @@ try {
   r = await js(`${H} const p = JSON.parse(localStorage.getItem('gml:v1:progress')).lessons.d01; return { t: text(), last: p.tests[p.tests.length - 1], links: [...document.querySelectorAll('.skills-table a')].map((a) => a.getAttribute('href')) };`);
   check('test: score 8 of 10 (80%), not mastered', /Your score: 8 out of 10 \(80%\)/.test(r.t) && /Not mastered yet/.test(r.t) && r.last.correct === 8 && r.last.mastered === false, r.t.slice(0, 300));
   check('test: missed skills listed with links to Teach', r.last.missedSkills.length >= 1 && r.links.length === r.last.missedSkills.length && r.links.every((h) => /^#\/d01\/teach\/\d+$/.test(h)), r);
-  check('test: results show each answer and explanation', (r.t.match(/Your answer:/g) || []).length === 10 && /\(no answer\)/.test(r.t) && (r.t.match(/Correct answer:/g) || []).length === 2, null);
+  r.tc = await js(`return document.getElementById('app').textContent;`);
+  check('test: results explain every question (right ones folded away)', (r.tc.match(/Your answer:/g) || []).length === 10 && /\(no answer\)/.test(r.tc) && (r.tc.match(/Correct answer:/g) || []).length === 2 && /Questions you got right \(8\)/.test(r.t), null);
   await b.reload();
   check('test: results survive a refresh', /Your score: 8 out of 10/.test(await js(`return document.getElementById('app').innerText;`)));
   await b.shot(path.join(SHOTS, 'test-results-390.png'), false);
@@ -228,7 +229,7 @@ try {
   await b.load(URL + 'index.html#/parent');
   r = await js(`return document.getElementById('app').innerText;`);
   check('parent: shows lesson completed, recent score, skills, next step and device notice',
-    /Lesson completed \(mastered\)\s*Yes/.test(r) && /Most recent test\s*10 of 10 \(100%\)/.test(r) && /Skills mastered/.test(r) && /Skills needing more practice/.test(r) &&
+    /Lesson completed \(mastered\)\s*Yes/.test(r) && /Most recent test\s*10 of 10 \(100%\)/.test(r) && /Skills correct on the most recent test/.test(r) && /Skills needing more practice/.test(r) &&
     /Suggested next step/.test(r) && /Lesson 2: Decimal Place Value/.test(r) && /only in this browser on this device/.test(r), r.slice(0, 600));
   check('parent: practice sessions and tests counted', /Practice sessions\s*1/.test(r) && /Tests taken\s*4/.test(r));
   await b.reload();
@@ -260,6 +261,46 @@ try {
     await bigTargets(`iPhone SE practice ${id}`);
     await b.shot(path.join(SHOTS, `practice-${id}-375.png`), false);
   }
+
+  // ── QA regressions: damaged saved data, bad Teach URLs, saved steps, unreadable test input, double submit ──
+  await b.viewport(390, 844);
+  const bad = {
+    'gml:v1:draft:practice-d01': JSON.stringify({ set: Array.from({ length: 10 }, () => ({ id: 'ZZ9', seed: 1, sig: 'x' })), i: 42, states: [] }),
+    'gml:v1:draft:test-d01': JSON.stringify({ set: 5, started: true, submitted: true }),
+    'gml:v1:progress': JSON.stringify({ lessons: { d01: { practice: { recentSigs: 5, skills: null }, tests: [{}], teach: 'x' } } })
+  };
+  await js(`localStorage.clear(); const bad = ${JSON.stringify(bad)}; for (const k in bad) localStorage.setItem(k, bad[k]);`);
+  for (const route of ['#/', '#/d01/practice', '#/d01/test', '#/parent']) {
+    await b.load(URL + 'index.html' + route);
+    const t = await js(`return document.getElementById('app').innerText;`);
+    check(`damaged saved data does not break ${route}`, !/Something went wrong|undefined|NaN/.test(t), t.slice(0, 120));
+  }
+  await b.load(URL + 'index.html#/d01/teach/99');
+  r = await js(`return { h: location.hash, done: JSON.parse(localStorage.getItem('gml:v1:progress')).lessons.d01.teach.done };`);
+  check('teach: out-of-range screen redirects and does not mark Teach done', r.h === '#/d01/teach/19' && r.done === false, r);
+  await b.load(URL + 'index.html#/d01/teach/2');
+  await js(`let g = 0; while (document.querySelector('[data-act=step]:not([hidden])') && g++ < 9) document.querySelector('[data-act=step]').click();`);
+  await b.reload();
+  r = await js(`return { steps: document.querySelectorAll('.steps li').length, next: document.querySelector('[data-act=next]').disabled };`);
+  check('teach: revealed steps survive a refresh', r.steps === 3 && r.next === false, r);
+  await js(`localStorage.removeItem('gml:v1:draft:test-d01');`);
+  await b.reload();
+  await b.load(URL + 'index.html#/d01/test');
+  await js(`document.querySelector('[data-act=start]').click();`);
+  r = await js(`${H} const d = draft('test-d01'); const k = d.set.findIndex((x) => E.make('d01', x.id, x.seed).type === 'number');
+    if (k < 0) return { skip: true }; document.querySelector('.qnav-btn[data-k="' + k + '"]').click();
+    const i = document.querySelector('.num-input'); i.value = '0,5'; fire(i, 'input');
+    return { note: !document.querySelector('.test-note').hidden, text: document.querySelector('.test-note').textContent, done: document.querySelector('.qnav-btn[data-k="' + k + '"]').classList.contains('is-done') };`);
+  check('test: unreadable typed answer gets a note and counts as not answered', r.skip || (r.note && /digits/.test(r.text) && !r.done), r);
+  await js(`${H} const d = draft('test-d01'); d.review = true; localStorage.setItem('gml:v1:draft:test-d01', JSON.stringify(d));`);
+  await b.reload();
+  r = await js(`document.querySelector('[data-act=submit]').click(); const y = document.querySelector('[data-act=really]'); y.click(); y.click();
+    return JSON.parse(localStorage.getItem('gml:v1:progress')).lessons.d01.tests.length;`);
+  check('test: clicking Submit twice records one result', r === 1, r);
+  await b.load(URL + 'index.html#/d01/practice');
+  r = await js(`${H} const q = practiceQ(); const host = document.querySelector('.coach-host'); fill(host, q, right(q)); host.querySelector('[data-act=check]').click();
+    const nb = host.querySelector('.coach-next button'); nb.click(); nb.click(); return draft('practice-d01').i;`);
+  check('practice: clicking Next twice moves only one question', r === 1, r);
 
   // ── Unknown routes and reset ──
   await b.load(URL + 'index.html#/d02/teach/1');

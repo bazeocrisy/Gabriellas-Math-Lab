@@ -91,7 +91,7 @@
           <dt>Most recent test</dt><dd>${last ? `${last.correct} of ${last.total} (${last.percent}%) on ${fmtDate(last.date)}${last.mastered ? ' · mastered' : ' · not mastered yet'}` : 'No test taken yet'}</dd>
           <dt>Tests taken</dt><dd>${p.tests.length}</dd>
         </dl>
-        <h3>Skills mastered <span class="fine">(all correct on the most recent test)</span></h3>
+        <h3>Skills correct on the most recent test</h3>
         ${last ? (mastered.length ? `<ul>${mastered.map((sk) => `<li>${bank.skills[sk]}</li>`).join('')}</ul>` : '<p>None yet.</p>') : '<p>No test taken yet.</p>'}
         <h3>Skills needing more practice <span class="fine">(missed on the most recent test)</span></h3>
         ${last ? (needs.length ? `<ul>${needs.map((sk) => `<li>${bank.skills[sk]}</li>`).join('')}</ul>` : '<p>None. Nice work!</p>') : '<p>No test taken yet.</p>'}
@@ -106,7 +106,7 @@
       <h1 tabindex="-1">Parent Progress</h1>
       <div class="fb fb-info">
         <p><b>Progress is saved only in this browser on this device.</b> It does not transfer to other devices or browsers, and clearing browser data erases it. No account, name or personal information is collected or sent anywhere.</p>
-        ${persistent ? '' : '<p><b>This browser is blocking storage (for example, a private window), so progress will be lost when the page is closed.</b></p>'}
+        ${persistent ? '' : '<p><b>This browser cannot save progress right now (storage is blocked or full, for example in a private window), so progress will be lost when the page is closed.</b></p>'}
       </div>
       ${blocks}
       <p class="fine">Mastery means at least 9 of 10 correct on a Lesson Test. This is the app's learning benchmark, not an official Georgia Milestones score.</p>

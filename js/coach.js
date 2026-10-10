@@ -48,7 +48,7 @@
       el.innerHTML = `<div class="fb fb-wrong">
         <p class="fb-title"><span aria-hidden="true">✗</span> Not quite. That answer is not correct yet.</p>
         <p>${G.models.esc(fb.msg)}</p>
-        ${opts.remind ? `<div class="remind">${opts.remind}</div>` : ''}
+        ${(q.remind || opts.remind) ? `<details class="remind"><summary>Show me a reminder</summary>${q.remind || opts.remind}</details>` : ''}
         <p><b>Try again:</b> change your answer, then press Check answer. ${tip}</p>
         ${st.attempts >= SOLUTION_AFTER ? '<button type="button" class="btn btn-link" data-act="solution">Show me how to solve it</button>' : ''}
       </div>`;
@@ -97,6 +97,7 @@
       if (st.hints < 3) st.hints++;
       save();
       drawHints();
+      if (st.fb && st.fb.kind === 'wrong') drawFeedback();
       const all = host.querySelectorAll('.hint');
       if (all.length) all[all.length - 1].scrollIntoView && all[all.length - 1].scrollIntoView({ block: 'nearest', behavior: 'smooth' });
     });

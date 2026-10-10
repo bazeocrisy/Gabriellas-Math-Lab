@@ -134,14 +134,15 @@
     return {
       type: 'mc', sig: ia + ib + dir,
       prompt: `Which is <b>${dir}</b>: one ${A.one} or one ${B.one}?`,
-      choices: textChoices(r, ans, [other]), answer: ans, answerText: ans,
+      choices: textChoices(r, ans, [other, 'They are the same size']), answer: ans, answerText: ans,
       hints: [
         'Think about how many equal parts the same whole is cut into for each one.',
         `One ${A.one} comes from cutting a whole into ${A.n} equal parts. One ${B.one} comes from cutting the same whole into ${B.n} equal parts.`,
         'When the same whole is cut into MORE pieces, each piece is SMALLER. Which one has more pieces?'
       ],
       why: `One ${A.one} (${f(1000 / A.n)}) is bigger than one ${B.one} (${f(1000 / B.n)}): it takes ${ratio} ${B.many} to make one ${A.one}.`,
-      diagnose() {
+      diagnose(resp) {
+        if (resp === 'They are the same size') return `They are not the same size. A whole cut into ${B.n} parts has smaller pieces than a whole cut into ${A.n} parts.`;
         return `"${B.one[0].toUpperCase() + B.one.slice(1)}" sounds bigger because ${B.n} is bigger than ${A.n}. But it means the whole is cut into ${B.n} pieces instead of ${A.n}, and more pieces means each piece is smaller.`;
       }
     };
@@ -192,7 +193,7 @@
         if (th === k * 1000) return `${info.raw} would mean ${k} whole bars. The shaded part is less than one whole bar, so it needs a decimal point. Tenths go right after the decimal point.`;
         if (th === k * 10) return `${info.raw} is ${s(k, 'hundredth')}. The bar is cut into 10 parts, so each part is a tenth. Tenths are the first place after the decimal point.`;
         if (th === (10 - k) * 100) return 'It looks like you counted the parts that are NOT shaded. Count the shaded (colored) parts.';
-        if (th !== null && th % 100 === 0 && th < 1000) return 'Your answer is in tenths, which is good. Count the shaded parts again, one at a time.';
+        if (th !== null && th > 0 && th % 100 === 0 && th < 1000) return 'Your answer is in tenths, which is good. Count the shaded parts again, one at a time.';
         return 'Each part of this bar is one tenth, so the answer has one digit after the decimal point.';
       }
     };
@@ -300,7 +301,7 @@
       prompt: `Shade the grid to show <b>${shown}</b>. Use the buttons to shade full columns (tenths) and single squares (hundredths).`,
       answer: k, answerText: `${s(c, 'column')} and ${s(e, 'square')} shaded`,
       hints: [
-        `Read ${shown} place by place. Which digit is in the tenths place? Which is in the hundredths place?`,
+        (k % 10 ? `Read ${shown} place by place.` : `${shown} is the same as ${f(k * 10, 2)}. Read it place by place.`) + ' Which digit is in the tenths place? Which is in the hundredths place?',
         'The tenths digit tells you how many full columns to shade.',
         'The hundredths digit tells you how many extra single squares to shade. A 0 means shade none of that kind.'
       ],
@@ -349,7 +350,8 @@
       why: `Point A is ${s(k, 'jump')} from 0. Each jump is 0.1, so A is at ${s(k, 'tenth')} = <b>${ans}</b>.`,
       diagnose(resp, info) {
         const th = info.th;
-        if (th === (k + 1) * 100 || th === (k - 1) * 100) return 'Almost! Count the jumps (the spaces between tick marks), starting at 0. Don\'t count the tick mark at 0 as a jump.';
+        if (th === (k + 1) * 100) return 'Almost! You counted one too many. Count the jumps (the spaces between tick marks), starting at 0. Don\'t count the tick mark at 0 as a jump.';
+        if (th === (k - 1) * 100) return 'Almost! You counted one too few. Count every jump from 0, including the last jump that lands on point A.';
         if (th === k * 1000) return `${info.raw} is a whole number. Point A is between 0 and 1, so it is less than one whole and needs a decimal point.`;
         if (th === k * 10) return `${info.raw} is in hundredths. Each jump on this line is one tenth, so the answer has one digit after the decimal point.`;
         if (th === (10 - k) * 100) return 'It looks like you counted from 1 back to A. Count from 0 forward to A.';
@@ -362,7 +364,7 @@
     let a = p.a, b = p.b;
     while (a === undefined || RESERVED_HUNDREDTHS.has(10 * a + b) || 10 * a + b === 1) { a = r.int(0, 9); b = r.int(1, 9); }
     const L = a === 0 ? '0' : f(a * 100, 1), R = a === 9 ? '1' : f((a + 1) * 100, 1);
-    const Lh = f(a * 100, 2);
+    const Lh = a === 0 ? '0' : f(a * 100, 2);
     const ans = f(a * 100 + b * 10, 2);
     return {
       type: 'number', sig: a + ':' + b,
@@ -370,17 +372,18 @@
       visual: M.line({ from: a * 100, to: a * 100 + 100, point: a * 100 + b * 10, labels: [L, R] }), answer: ans, answerText: ans,
       hints: [
         `The labels ${L} and ${R} are one tenth apart. The space between them is cut into 10 equal jumps.`,
-        `10 jumps make one tenth, so each jump is one hundredth (0.01). In hundredths, the left end is ${Lh}.`,
-        `Count the jumps from ${L} to point A. Add that many hundredths to ${Lh}.`
+        `10 jumps make one tenth, so each jump is one hundredth (0.01).` + (a ? ` In hundredths, the left end is ${Lh}.` : ''),
+        a ? `Count the jumps from ${L} to point A. Add that many hundredths to ${Lh}.` : 'Count the jumps from 0 to point A. That many hundredths is the answer.'
       ],
       why: `Each jump is 0.01. Point A is ${s(b, 'jump')} past ${Lh}, so A is at <b>${ans}</b>.`,
       diagnose(resp, info) {
         const th = info.th;
-        if (th === a * 100 + (b + 1) * 10 || th === a * 100 + (b - 1) * 10) return 'Almost! Count the jumps (spaces between tick marks), starting at the left end. Don\'t count the starting tick mark.';
+        if (th === a * 100 + (b + 1) * 10) return 'Almost! You counted one too many. Count the jumps (spaces between tick marks) from the left end. Don\'t count the starting tick mark.';
+        if (th === a * 100 + (b - 1) * 10) return 'Almost! You counted one too few. Count every jump from the left end, including the last jump that lands on point A.';
         if (a > 0 && th === b * 10) return `Don't forget where the line starts. The left end is ${L}, not 0. Start there and add the jumps.`;
         if (th === a * 100 + b * 100) return 'Each jump on this line is one hundredth, not one tenth. Ten jumps fill the space between the two labels.';
         if (th === a * 100 + b) return 'Each jump is one hundredth (0.01), not one thousandth. The answer has two digits after the decimal point.';
-        return `Start at ${Lh} and count the jumps to A. Each jump adds 0.01.`;
+        return `Start at ${L} and count the jumps to A. Each jump adds 0.01.`;
       }
     };
   });
@@ -399,8 +402,10 @@
         'The zoomed square is cut into 10 slices, so each slice is one thousandth. Count the shaded slices for the thousandths digit. Write 0 for any place that has none.'
       ],
       why: `${s(a, 'full column')} (tenths), ${s(b, 'single square')} (hundredths) and ${s(c, 'slice')} (thousandths): <b>${ans}</b>.`,
+      remind: '<p><b>Remember:</b> full column = 1 tenth, single square = 1 hundredth, thin slice = 1 thousandth. Write 0 for a place with none. Example: 1 column, 0 squares and 2 slices = 0.102.</p>',
       diagnose(resp, info) {
         const v = D.parse(resp);
+        if (droppedZero(resp, ans)) return ZERO_TIP;
         if (v.places < 3) return 'Don\'t forget the thin slices. Each slice is one thousandth, the third place after the decimal point.';
         if (droppedZero(resp, ans)) return ZERO_TIP;
         return placeCheck(resp, ans);
@@ -501,11 +506,11 @@
     if (p.num) return p.num;
     let t, h, th;
     do {
-      t = r.int(0, 9); h = r.int(0, 9); th = r.int(1, 9);
+      t = r.int(0, 9); h = r.int(0, 9); th = r.next() < 0.2 ? 0 : r.int(1, 9);
       if (r.next() < 0.5) { if (r.next() < 0.5) t = 0; else h = 0; }
-    } while (!t && !h && r.next() < 0.7);
+    } while ((!t && !h && r.next() < 0.7) || (!th && (!h || !t)));
     const ones = r.next() < 0.3 ? r.int(1, 9) : 0;
-    return `${ones}.${t}${h}${th}`;
+    return D.canonical(`${ones}.${t}${h}${th}`);
   }
 
   T('PL4', 'place', (r, p) => {
@@ -571,7 +576,7 @@
         shuffled ? 'Put each digit in its own place. Careful: the parts are not listed in order!' : 'Put each digit in its own place: tenths first, then hundredths, then thousandths.',
         'Write 0 in any place that is not mentioned, so the other digits stay in their places.'
       ],
-      why: `${ds[0]} tenths, ${ds[1]} hundredths and ${ds[2]} thousandths make <b>${ans}</b>.`,
+      why: `Put each digit in its place: ${ds[0]} tenths, ${ds[1]} hundredths, ${ds[2]} thousandths. That is <b>${D.canonical(ans)}</b>.`,
       diagnose(resp) {
         const v = D.parse(resp);
         if (shuffled && v.whole === '0' && v.frac === listedDigits) return 'You wrote the digits in the order they were listed. Put each one in its own place instead: tenths, hundredths, thousandths.';
@@ -630,7 +635,7 @@
       why: `Read the number after the point (${W.intWords(k)}), then the place of the last digit (${W.placeName(pl, k)}): <b>${correct}</b>.`,
       diagnose(resp) {
         if (resp === W.intWords(k)) return `That is how you read the whole number ${k}. A decimal also needs the name of the place of its last digit.`;
-        return `The last digit of ${ans} is in the ${PL[pl].many} place, so the name must end with that place.`;
+        return `Find the last digit of ${ans} and count how many places it is after the decimal point. The name must end with that place.`;
       }
     };
   });
@@ -646,8 +651,7 @@
     const pool = [
       `${W.intWords(w)} and ${W.intWords(k)} ${W.placeName(zeroTenths ? 1 : 3, k)}`,
       W.intWords(w * 100 + k),
-      `${W.intWords(w)} and ${W.intWords(k)} ${W.placeName(zeroTenths ? 3 : 1, k)}`,
-      `${W.intWords(w * 100 + k)} hundredths`
+      `${W.intWords(w)} and ${W.intWords(k)} ${W.placeName(zeroTenths ? 3 : 1, k)}`
     ].filter((x) => x !== correct);
     const wrongs = [...new Set(pool)].slice(0, 3);
     return {
@@ -662,7 +666,7 @@
       why: `${w} is read "${W.intWords(w)}", the point is "and", and ${a}${b} after the point is ${W.intWords(k)} ${W.placeName(2, k)}: <b>${correct}</b>.`,
       diagnose(resp) {
         if (!/ and /.test(resp)) return 'The decimal point is read as "and". Read the whole number, say "and", then read the part after the point.';
-        return `Look at the place of the last digit in ${ans}. It is the second digit after the point.`;
+        return `Count how many digits come after the decimal point in ${ans}. The place of the LAST digit is the last word of the name.`;
       }
     };
   });
@@ -697,7 +701,7 @@
       correct = f(a * 100, r.next() < 0.6 ? 2 : 3);
       wrongs = [f(a * 10, 2), f(a, 3), a + '.0'];
       h2 = `Picture ${x} on a hundredths grid: ${s(a, 'full column')} shaded. How many hundredths (small squares) is that?`;
-      h3 = `${s(a, 'column')} = ${a * 10} hundredths. Look for the choice that is ${a * 10} hundredths. A digit only changes value if it moves to a different place.`;
+      h3 = `${s(a, 'column')} = ${a * 10} hundredths. Look for the choice that still has the ${a} in the tenths place. A digit only changes value if it moves to a different place.`;
     } else {
       let a = p.a, b = p.b;
       while (!a || a === b) { a = r.int(1, 9); b = r.int(1, 9); }
@@ -712,9 +716,10 @@
       prompt: `Which decimal is <b>equal</b> to ${x}?`,
       choices: textChoices(r, correct, wrongs), answer: correct, answerText: correct,
       hints: ['Equal (equivalent) decimals name exactly the same amount, even if they look different.', h2, h3],
-      why: `${correct} has the same digits in the same places as ${x}, plus a zero at the end, which does not change the value: ${x} = <b>${correct}</b>.`,
+      why: `${correct} has the same digits in the same places as ${x}, plus ${correct.length - x.length === 1 ? 'a zero' : 'zeros'} at the end, which does not change the value: ${x} = <b>${correct}</b>.`,
       diagnose(resp) {
         const v = D.parse(resp);
+        if (variant === 'ab' && resp === `0.${x[3]}${x[2]}`) return `${resp} has the digits switched. Compare the tenths digits first: ${resp} has ${resp[2]} tenths, but ${x} has ${x[2]} tenths.`;
         if (v.places === 1 && v.frac === '0') return `${resp} means ${v.whole} whole${v.whole === '1' ? '' : 's'}. ${x} is less than one whole.`;
         return `${resp} is read "${words(resp)}", but ${x} is "${words(x)}". A zero placed between the decimal point and a digit moves that digit to a smaller place.`;
       }
@@ -747,8 +752,8 @@
         `Write ${x} and ${y} in a place-value chart, one above the other.`,
         'Compare place by place: tenths with tenths, hundredths with hundredths, thousandths with thousandths. An empty place counts as 0.'
       ],
-      why: same ? `<b>Equal.</b> The digits are in the same places; ${x.length > y.length ? x : y} just has an extra zero at the end, which does not change the value.`
-        : `<b>Not equal.</b> A zero right after the decimal point pushes the digits into smaller places, so ${x} and ${y} have digits in different places.`,
+      why: same ? `<b>Equal.</b> The digits are in the same places; ${x.length > y.length ? x : y} just has ${Math.abs(x.length - y.length) === 1 ? 'an extra zero' : 'extra zeros'} at the end, which does not change the value.`
+        : `<b>Not equal.</b> In a place-value chart, the nonzero digits of ${x} and ${y} are not all in the same places. A zero in front of a digit pushes it into a smaller place.`,
       diagnose() {
         return same ? 'Put both numbers in a place-value chart. Check: is any digit in a different place, or is the only difference a zero at the end?'
           : 'Put both numbers in a place-value chart. Look carefully at which place each nonzero digit is in.';
@@ -774,6 +779,7 @@
       why: `Writing zeros at the end keeps every digit in its place: ${x} = <b>${ans}</b>.`,
       diagnose(resp, info) {
         const v = info.value;
+        if (v.whole !== '0') return `${resp} is more than one whole, but ${x} is less than one. Keep the 0 before the decimal point and keep each digit in its place.`;
         if (v.frac.length > 1 && v.frac[0] === '0' && D.parse(x).frac[0] !== '0') return `In ${resp}, the zero is right after the decimal point, so it pushes the digits into smaller places. Where can a zero go without moving any digit?`;
         return `${resp} is not equal to ${x}. Line them up in a place-value chart and compare each place.`;
       }
@@ -873,12 +879,12 @@
       choices: ['<', '>', '='].map((t) => ({ value: t, text: t, sr: names[t] })), answer: ans, answerText: `${x} ${ans} ${y}`,
       hints: [
         'Compare decimals place by place, starting with the biggest place (the tenths).',
-        `Write both with two decimal places so they are easy to compare: ${explainSame}`,
-        `Now compare ${D.parse(x2).frac} hundredths and ${D.parse(y2).frac} hundredths. Remember: the open side of < or > faces the bigger number.`
+        'Write both numbers with two decimal places, so both are in hundredths. Add a zero at the end of a number that has only one decimal place.',
+        'Then compare how many hundredths each number has. Remember: the open side of < or > faces the bigger number.'
       ],
       why: `${explainSame} So ${x} ${names[ans]} ${y}: <b>${x} ${ans} ${y}</b>.`,
       diagnose(resp) {
-        if (ans === '=') return `Adding a zero at the end of a decimal does not change its value. Write both with two decimal places and compare.`;
+        if (ans === '=') return 'Line both numbers up in a place-value chart and compare each place, starting with the tenths.';
         if (resp === '=') return 'These two numbers are not the same amount. Write both with two decimal places and compare.';
         return 'Check your symbol. Write both numbers with two decimal places, compare the hundredths, and make the open side of the symbol face the bigger number.';
       }
@@ -898,13 +904,69 @@
       choices: textChoices(r, ans, [ans === x ? y : x, 'They are equal']), answer: ans, answerText: ans,
       hints: [
         'A bigger digit does not always mean a bigger number. What matters is the digit\'s place.',
-        `Look at the tenths place first. ${x} has ${D.parse(x).frac[0]} tenths. ${y} has ${D.parse(y).frac[0]} tenths.`,
+        `Look at the tenths place first. ${x} has 0 tenths. ${y} has ${s(b, 'tenth')}.`,
         'The number with more tenths is greater, no matter what comes after.'
       ],
       why: `${x} has 0 tenths (it is ${s(a, 'hundredth')}), and ${y} has ${s(b, 'tenth')} = ${b * 10} hundredths. So ${x} < ${y}, and the ${dir} one is <b>${ans}</b>.`,
       diagnose(resp) {
         if (resp === 'They are equal') return 'They are not equal. Compare the tenths digits first.';
         return `${a} is bigger than ${b}, but in ${x} the ${a} is in the hundredths place (the zero holds the tenths place). Compare the tenths digits first.`;
+      }
+    };
+  });
+
+  // ───────────────────────── Word problem and reasoning ─────────────────────────
+
+  T('P6', 'parts', (r, p) => {
+    const stories = [
+      null,
+      (k) => `A chocolate bar is cut into 10 equal pieces. Maya eats ${k} of the pieces. What decimal names the part of the bar that Maya eats?`,
+      (k) => `A sheet has 100 stickers, all the same size. Leo uses ${k} of the stickers. What decimal names the part of the sheet that Leo uses?`,
+      (k) => `A jar holds 1,000 beads, all the same size. ${k} of the beads are red. What decimal names the part of all the beads that is red?`
+    ];
+    const pl = p.places || r.int(1, 3), P = PL[pl];
+    let k = p.k;
+    while (!k) { const c = r.int(2, P.n - 1); if ((pl === 1 && c !== 3) || (pl > 1 && c % 10)) k = c; }
+    const ans = f(k * (1000 / P.n), pl);
+    return {
+      type: 'number', sig: pl + ':' + k,
+      prompt: stories[pl](k),
+      answer: ans, answerText: ans,
+      hints: [
+        `Think of all ${P.n} together as one whole. Each one is one ${P.one} of the whole.`,
+        `${P.n} equal parts are ${P.many}, so the last digit of your decimal goes in the ${P.many} place.`,
+        `Write ${k} so that its last digit is in the ${P.many} place (the ${ORD[pl]} place after the decimal point). Use zeros as placeholders if you need them.`
+      ],
+      why: `${k} out of ${P.n} equal parts is ${s(k, P.one)} of the whole, written <b>${ans}</b>.`,
+      diagnose(resp, info) {
+        const v = info.value;
+        if (v.places === 0) return `${resp} is a whole number. The answer is a part of one whole, so it is less than 1 and needs a decimal point.`;
+        if (v.places !== pl && v.places <= 3 && v.whole.length < 4) return `${resp} is read "${words(resp)}". There are ${P.n} equal parts, so the answer should be in ${P.many}.`;
+        if (droppedZero(resp, ans)) return ZERO_TIP;
+        return placeCheck(resp, ans);
+      }
+    };
+  });
+
+  T('C4', 'compare', (r, p) => {
+    const { a, b, c, x, y } = trapPair(r, p);
+    const name = p.name || r.pick(['Sam', 'Ana', 'Jordan', 'Mia', 'Eli']);
+    const right = `No. ${x} = ${f(a * 100, 2)}, and ${a * 10} hundredths is more than ${b * 10 + c} hundredths.`;
+    const wrongs = [`Yes. ${b}${c} is greater than ${a}, so ${y} is greater.`, `Yes. ${y} has more digits, so it is greater.`, 'No. They are equal, because both start with 0.'];
+    return {
+      type: 'mc', sig: x + y,
+      prompt: `${name} says <b>${y}</b> is greater than <b>${x}</b> because ${b}${c} is greater than ${a}. Is ${name} right?`,
+      choices: textChoices(r, right, wrongs), answer: right, answerText: right,
+      hints: [
+        'Check the claim with place value instead of comparing the digits as whole numbers.',
+        `Write ${x} with two decimal places, so both numbers are in hundredths.`,
+        'Compare the number of hundredths in each. Then choose the answer whose reason is true.'
+      ],
+      why: `${x} is ${s(a, 'tenth')} = ${a * 10} hundredths, and ${y} is ${b * 10 + c} hundredths, so ${x} is greater. Comparing ${b}${c} with ${a} as whole numbers does not work, because the digits are in different places.`,
+      diagnose(resp) {
+        if (/more digits/.test(resp)) return 'More digits does not mean a bigger decimal. Compare place by place, starting with the tenths.';
+        if (/equal/.test(resp)) return `Starting with 0 only tells you both are less than 1. Compare the tenths: ${x} has ${s(a, 'tenth')}, ${y} has ${s(b, 'tenth')}.`;
+        return `${b}${c} is bigger than ${a} as whole numbers, but ${x} means ${s(a, 'tenth')} and ${y} means ${b * 10 + c} hundredths. Compare them in the same unit.`;
       }
     };
   });
@@ -930,6 +992,7 @@
       compare: 'Comparing with place value (like 0.4 and 0.35)'
     },
     plan: { parts: 1, model: 3, place: 2, words: 1, equiv: 2, compare: 1 },
+    practiceOnly: ['E2', 'E4'],
     templates, remind
   });
 })(typeof window !== 'undefined' ? (window.GML = window.GML || {}) : (globalThis.GML = globalThis.GML || {}));

@@ -7,7 +7,7 @@
     const bank = G.engine.banks[lessonId];
     const L = G.lessonContent[lessonId];
     const prog = G.store.lesson(lessonId);
-    const exclude = new Set([...L.teachSigs, ...prog.practice.recentSigs]);
+    const exclude = new Set([...L.teachSigs, ...prog.practice.recentSigs, ...prog.lastTestSigs]);
     const set = G.engine.buildSet(lessonId, { plan: bank.plan, seed: (Date.now() ^ Math.floor(Math.random() * 1e9)) >>> 0, exclude });
     const d = { set, i: 0, states: set.map(() => ({})), finished: false, recorded: false };
     G.store.setDraft(draftName(lessonId), d);
@@ -16,7 +16,9 @@
 
   function view(app, lessonId) {
     let d = G.store.getDraft(draftName(lessonId));
-    if (!d || !Array.isArray(d.set) || d.set.length !== 10) d = newSession(lessonId);
+    const ok = d && G.engine.validSet(lessonId, d.set, 10) && Number.isInteger(d.i) && d.i >= 0 && d.i < 10 &&
+      Array.isArray(d.states) && d.states.length === 10 && d.states.every((x) => x && typeof x === 'object');
+    if (!ok) d = newSession(lessonId);
     draw();
 
     function draw() {
@@ -39,7 +41,9 @@
           const next = app.querySelector('.coach-next');
           const last = d.i === d.set.length - 1;
           next.innerHTML = `<button type="button" class="btn btn-primary btn-big">${last ? 'See my results' : 'Next question →'}</button>`;
+          const at = d.i;
           next.querySelector('button').addEventListener('click', () => {
+            if (d.i !== at || d.finished || !d.states[at].solved) return; // ignore a second click
             if (last) d.finished = true; else d.i++;
             G.store.setDraft(draftName(lessonId), d);
             draw();
@@ -83,13 +87,13 @@
         <p>Practice is for learning, so hints and second tries are a good thing. The Test checks what you can do on your own.</p>
         <ol class="sum-list">${qs.map((q, k) => {
           const s = d.states[k];
-          const tag = s.firstTry ? '<span class="tag tag-ok">✓ First try</span>' : s.shown ? '<span class="tag tag-help">Solution shown</span>' : '<span class="tag tag-help">✓ After another try</span>';
+          const tag = !s.solved ? '<span class="tag tag-help">Not finished</span>' : s.firstTry ? '<span class="tag tag-ok">✓ First try</span>' : s.shown ? '<span class="tag tag-help">Solution shown</span>' : '<span class="tag tag-help">✓ After another try</span>';
           return `<li>${tag} <span class="sum-skill">${bank.skills[q.skill]}</span>${s.hints ? ` <span class="sum-hints">(${s.hints} hint${s.hints === 1 ? '' : 's'})</span>` : ''}</li>`;
         }).join('')}</ol>
         ${review.length ? `<div class="card"><h2>Worth another look</h2><ul>${review.map((sk) => `<li>${bank.skills[sk]}: <a href="#/${lessonId}/teach/${L.screens.findIndex((x) => x.id === L.skillScreen[sk]) + 1}">review in Teach</a></li>`).join('')}</ul></div>` : '<div class="card"><p>Great work! Every skill was right on the first try. You may be ready for the Test.</p></div>'}
         <div class="done-actions">
-          <button type="button" class="btn btn-primary btn-big" data-act="again">New practice session</button>
-          <a class="btn btn-big" href="#/${lessonId}/test">Take the Test</a>
+          <button type="button" class="btn btn-big ${review.length ? 'btn-primary' : ''}" data-act="again">New practice session</button>
+          <a class="btn btn-big ${review.length ? '' : 'btn-primary'}" href="#/${lessonId}/test">Take the Test</a>
           <a class="btn btn-big" href="#/">Lesson menu</a>
         </div>`;
       app.querySelector('[data-act="again"]').addEventListener('click', () => {

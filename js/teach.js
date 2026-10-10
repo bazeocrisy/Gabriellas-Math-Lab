@@ -2,20 +2,25 @@
 // and guided "Try it together" checks with coaching. Back and Next move between screens.
 (function (G) {
   'use strict';
-  const revealed = {}; // screen id -> steps shown (this visit)
+  const STEPS_KEY = 'teach-steps';
 
   function view(app, lessonId, n) {
     const L = G.lessonContent[lessonId];
     const total = L.screens.length;
     const i = Math.min(Math.max((n || 1) - 1, 0), total - 1);
+    if (i + 1 !== n) { location.replace(`#/${lessonId}/teach/${i + 1}`); return; }
     const sc = L.screens[i];
     G.store.update(lessonId, (p) => {
       p.teach.screen = i;
-      p.teach.furthest = Math.max(p.teach.furthest || 0, i);
-      if (sc.kind === 'done') p.teach.done = true;
+      // Progress only counts when screens are reached in order (not by jumping in from a link).
+      if (i <= p.teach.furthest + 1) {
+        p.teach.furthest = Math.max(p.teach.furthest, i);
+        if (sc.kind === 'done') p.teach.done = true;
+      }
     });
     const steps = sc.steps || [];
-    let shown = revealed[sc.id] != null ? revealed[sc.id] : (steps.length ? 1 : 0);
+    const revealed = G.store.getDraft(STEPS_KEY) || {};
+    let shown = Math.min(steps.length, revealed[lessonId + ':' + sc.id] || (steps.length ? 1 : 0));
     let checkSolved = false;
     const STEPBTN = '<button type="button" class="btn btn-primary step-btn" data-act="step">Show next step</button>';
 
@@ -28,7 +33,7 @@
       ${sc.visual ? `<div class="teach-visual">${sc.visual}</div>` : ''}
       ${sc.example || sc.exampleVisual ? `<section class="example">${sc.example ? `<h2>${sc.example}</h2>` : ''}${sc.exampleVisual ? `<div class="teach-visual">${sc.exampleVisual}</div>` : ''}<ol class="steps"></ol>${STEPBTN}</section>`
         : steps.length ? `<section class="example"><ol class="steps"></ol>${STEPBTN}</section>` : ''}
-      ${sc.widget ? `<section class="try-it"><h2>Try it yourself</h2><p>Use the + and − buttons to shade the model. Watch how the decimal changes.</p><div class="widget"></div></section>` : ''}
+      ${sc.widget ? `<details class="try-it"><summary>Try it yourself: shade a model</summary><p>Use the + and − buttons to shade the model. Watch how the decimal changes.</p><div class="widget"></div></details>` : ''}
       ${sc.kind === 'check' ? '<section class="guided"><p class="guided-intro">Let\'s check that idea. Answer this question. You can use hints.</p><div class="check-host"></div></section>' : ''}
       ${sc.kind === 'done' ? `<div class="done-actions">
           <a class="btn btn-primary btn-big" href="#/${lessonId}/practice">Start Practice</a>
@@ -54,13 +59,14 @@
       stepNote.hidden = !(shown < steps.length && i < total - 1);
       if (i === total - 1) { nextBtn.hidden = true; return; }
       if (shown < steps.length) { nextBtn.textContent = 'Next →'; nextBtn.disabled = true; return; }
-      if (sc.kind === 'check' && !checkSolved) { nextBtn.textContent = 'Answer the question to go on'; nextBtn.disabled = true; return; }
+      if (sc.kind === 'check' && !checkSolved) { nextBtn.textContent = 'Answer to go on'; nextBtn.disabled = true; return; }
       nextBtn.textContent = 'Next →';
       nextBtn.disabled = false;
     }
     if (stepBtn) stepBtn.addEventListener('click', () => {
       shown++;
-      revealed[sc.id] = shown;
+      revealed[lessonId + ':' + sc.id] = shown;
+      G.store.setDraft(STEPS_KEY, revealed);
       drawSteps();
       drawNext();
       const last = stepsEl.lastElementChild;

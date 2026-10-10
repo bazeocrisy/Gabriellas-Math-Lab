@@ -83,7 +83,8 @@
   }
 
   const PLACES = ['ones', 'tenths', 'hundredths', 'thousandths'];
-  const PLACE_TITLES = { ones: 'Ones', tenths: 'Tenths', hundredths: 'Hundredths', thousandths: 'Thousandths' };
+  // Soft hyphens (­) let long headings break cleanly in narrow charts.
+  const PLACE_TITLES = { ones: 'Ones', tenths: 'Tenths', hundredths: 'Hun­dredths', thousandths: 'Thou­sandths' };
   const PLACE_VALUES = { ones: '1', tenths: '0.1', hundredths: '0.01', thousandths: '0.001' };
 
   /** Place-value chart. d = { ones, tenths, hundredths, thousandths } (strings; '' leaves a cell empty). */

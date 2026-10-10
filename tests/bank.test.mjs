@@ -244,3 +244,42 @@ test('question sets: 10 questions, balanced, no repeats, no excluded questions',
     for (const x of test2) assert.ok(!set.some((y) => y.sig === x.sig));
   }
 });
+
+test('word problem and reasoning templates have correct answers', () => {
+  for (let seed = 1; seed <= 600; seed++) {
+    const q = engine.make('d01', 'P6', seed);
+    const n = Number(strip(q.prompt).match(/(10|100|1,000) /)[1].replace(',', ''));
+    const k = Number(strip(q.prompt).match(/(?:eats|uses|beads\.) (\d+)|\. (\d+) of the beads/).slice(1).find(Boolean));
+    assert.equal(D.toThousandths(q.answer), k * 1000 / n, `P6 ${seed}`);
+    const c = engine.make('d01', 'C4', seed);
+    const [y, x] = strip(c.prompt).match(/\d\.\d+/g);
+    assert.equal(D.cmp(x, y), 1, `C4 ${seed}: ${x} should be greater than ${y}`);
+    assert.ok(c.answer.startsWith('No.') && c.answer.includes('more than'), `C4 ${seed}`);
+  }
+});
+
+test('reviewer regressions: feedback matches the actual mistake', () => {
+  const msg = (id, params, resp) => engine.check(engine.make('d01', id, 1, params), resp).message;
+  assert.match(msg('M9', { a: 0, b: 5, c: 3 }, '0.53'), /placeholder/);
+  assert.match(msg('M9', { a: 4, b: 0, c: 2 }, '0.42'), /placeholder/);
+  assert.match(msg('E1', { variant: 'ab', a: 5, b: 8 }, '0.85'), /switched/);
+  assert.match(msg('M7', { k: 7 }, '0.8'), /too many/);
+  assert.match(msg('M7', { k: 7 }, '0.6'), /too few/);
+  assert.doesNotMatch(msg('M1', { k: 4 }, '0'), /which is good/);
+  assert.match(msg('E3', { variant: 'a2', a: 1 }, '1.00'), /more than one whole/);
+  const eq = engine.make('d01', 'C2', 1, { variant: 'equal', a: 6 });
+  for (const h of eq.hints) assert.doesNotMatch(strip(h), /0\.60|60 hundredths|does not change/, 'C2 equal hints give the answer');
+  assert.doesNotMatch(engine.check(eq, '<').message, /does not change/);
+  assert.doesNotMatch(strip(engine.make('d01', 'C2', 1, { variant: 'trap', a: 9, b: 1, c: 2 }).hints.join(' ')), /\b0\d hundredths/);
+});
+
+test('Teach worked examples and two-choice questions stay out of the Test', () => {
+  const L = G.lessonContent.d01;
+  const ex = new Set(L.teachSigs);
+  for (const sig of ['M1:3', 'M9:153', 'W2:0.43', 'W2:0.207', 'W1:2.5', 'P3:0:4', 'M3:4']) assert.ok(ex.has(sig), sig);
+  for (let seed = 1; seed <= 200; seed++) {
+    const set = engine.buildSet('d01', { plan: bank.plan, seed, exclude: ex, skip: bank.practiceOnly });
+    assert.ok(set.every((x) => !bank.practiceOnly.includes(x.id) && !ex.has(x.sig)));
+    for (const x of set) assert.ok(engine.make('d01', x.id, x.seed).choices === undefined || engine.make('d01', x.id, x.seed).choices.length >= 3, x.id);
+  }
+});

@@ -106,15 +106,17 @@
     return String(resp).trim() || '(no answer)';
   }
 
+  /** Answered = something checkable was entered (blank or unreadable input does not count). */
   function isAnswered(q, resp) {
-    return check(q, resp).status !== 'empty';
+    const st = check(q, resp).status;
+    return st !== 'empty' && st !== 'invalid';
   }
 
   /**
    * Choose `count` questions for a session as [{ id, seed }], spread across skills by `plan`
    * ({ skill: count }), varied templates, and no repeated question (by signature) in the set or in `exclude`.
    */
-  function buildSet(lessonId, { plan, seed, exclude }) {
+  function buildSet(lessonId, { plan, seed, exclude, skip }) {
     const bank = banks[lessonId];
     const r = rng(seed);
     const ex = exclude || new Set();
@@ -124,7 +126,7 @@
     Object.keys(plan).forEach((skill) => { for (let i = 0; i < plan[skill]; i++) slots.push(skill); });
     const out = [];
     for (const skill of r.shuffle(slots)) {
-      const ts = bank.templates.filter((t) => t.skill === skill);
+      const ts = bank.templates.filter((t) => t.skill === skill && !(skip && skip.includes(t.id)));
       let chosen = null;
       for (let tries = 0; tries < 200 && !chosen; tries++) {
         const fresh = ts.filter((t) => !usedTemplates[t.id]);
@@ -149,5 +151,15 @@
     return out;
   }
 
-  G.engine = { rng, register, make, check, describe, isAnswered, buildSet, banks };
+  /** True if a saved question list still matches the bank (e.g. after an app update renamed a template). */
+  function validSet(lessonId, set, count) {
+    const bank = banks[lessonId];
+    if (!Array.isArray(set) || set.length !== count) return false;
+    return set.every((x) => {
+      if (!x || typeof x !== 'object' || !bank.byId[x.id] || !Number.isInteger(x.seed)) return false;
+      try { return make(lessonId, x.id, x.seed).sig === x.sig; } catch (e) { return false; }
+    });
+  }
+
+  G.engine = { rng, register, make, check, describe, isAnswered, buildSet, validSet, banks };
 })(typeof window !== 'undefined' ? (window.GML = window.GML || {}) : (globalThis.GML = globalThis.GML || {}));
