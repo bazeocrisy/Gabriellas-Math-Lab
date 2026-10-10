@@ -103,14 +103,15 @@ h3 { font-size: 1.1rem; margin: 1em 0 .4em; }
 .legend-teach::before { background: var(--teach); }
 .legend-practice::before { background: var(--practice); }
 .legend-test::before { background: var(--test); }
-.lesson-grid { display: grid; gap: 16px; }
-@media (min-width: 860px) { .lesson-grid { grid-template-columns: 1fr 1fr; } }
+.lesson-grid { display: grid; gap: 16px; grid-template-columns: minmax(0, 1fr); }
+@media (min-width: 860px) { .lesson-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); } }
 .lesson-card { display: flex; flex-direction: column; background: var(--card); border: 1px solid var(--line); border-top: 6px solid var(--brand); border-radius: var(--radius); padding: 16px; box-shadow: 0 2px 6px rgba(20, 30, 60, .07); }
-.lc-head { display: flex; align-items: center; gap: 12px; }
+.lc-head { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; }
 .lc-num { flex: none; display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; border-radius: 50%; background: var(--brand-soft); color: var(--brand-dark); font-weight: 800; font-size: 1.25rem; }
 .lc-titles { flex: 1; min-width: 0; }
 .lesson-card h3 { margin: 0; font-size: 1.3rem; color: var(--brand-dark); }
 .lc-badge { flex: none; font-size: .85rem; font-weight: 800; color: #7a4d00; background: #ffefc2; border: 1px solid #e5b84b; padding: 3px 10px; border-radius: 99px; }
+.lc-extra { flex: none; font-size: .8rem; font-weight: 700; color: #5b3a00; background: #fff3d6; border: 1px dashed #c98a00; padding: 3px 8px; border-radius: 99px; }
 .lesson-num { margin: 0; color: var(--muted); font-weight: 700; text-transform: uppercase; font-size: .8rem; letter-spacing: .05em; }
 .lc-blurb { margin: 10px 0 8px; }
 .lc-progress { list-style: none; padding: 0; margin: 4px 0 2px; display: flex; flex-wrap: wrap; gap: 6px; }
@@ -222,6 +223,7 @@ h3 { font-size: 1.1rem; margin: 1em 0 .4em; }
 .m-text { font: 600 14px system-ui, -apple-system, "Segoe UI", sans-serif; fill: #1d2433; }
 .m-bold { font-weight: 800; font-size: 16px; }
 .m-small { font-size: 12.5px; font-weight: 600; }
+.bar-stack { display: grid; gap: 8px; max-width: 420px; }
 .model-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; align-items: end; }
 .model-pair .model { max-width: 260px; margin: 0 auto; }
 .model-cap { margin: 0 0 4px; font-weight: 700; text-align: center; }

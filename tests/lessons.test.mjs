@@ -150,6 +150,19 @@ VERIFY.d07 = {
   SC2: (q) => { const [a, b, said] = numbersIn(q); assert.equal(q.answer.startsWith('Yes'), diffOf(a, b) === D.toThousandths(said)); },
   SC3: (q) => { const [a, b] = numbersIn(q); const rw = (x) => Math.floor((D.toThousandths(x) + 500) / 1000); assert.equal(q.answer, String(rw(a) - rw(b))); }
 };
+// Lesson 8: products recomputed with whole-number digits.
+const prodTh = (a, b) => { const x = D.parse(a), y = D.parse(b); const P = x.places + y.places; return Number(x.whole + x.frac) * Number(y.whole + y.frac) * Math.pow(10, 3 - P); };
+const twoProd = (q) => { const [a, b] = numbersIn(q); assert.equal(D.toThousandths(q.answer), prodTh(a, b)); };
+VERIFY.d08 = {
+  P1: twoProd, P2: twoProd, W1: twoProd, A2: twoProd, D1: (q) => { const n = numbersIn(q); assert.equal(Number(n[0]) * Number(n[1]), Number(n[2])); assert.equal(D.toThousandths(q.answer), prodTh(n[3], n[4])); },
+  K1: (q) => { const [price, n] = numbersIn(q); assert.equal(D.toThousandths(q.answer), prodTh(price, n)); },
+  K2: (q) => { const [a, b] = numbersIn(q); assert.equal(D.toThousandths(q.answer), prodTh(a, b)); },
+  W2: (q) => { const n = numbersIn(q); const bars = (q.visual.match(/model-strip/g) || []).length; assert.equal(bars, Number(n[0])); assert.equal((q.visual.match(/class="m-on"/g) || []).length * 100, D.toThousandths(q.answer)); assert.equal(D.toThousandths(q.answer), prodTh(n[1], n[0])); },
+  W3: (q) => { const [a, n] = numbersIn(q); for (const c of q.choices) { const parts = c.value.split(' + '); assert.equal(c.value === q.answer, parts.length === Number(n) && parts.every((x) => x === a), c.value); } },
+  A1: (q) => { const [a, b] = numbersIn(q); assert.equal((q.visual.match(/class="m-on"/g) || []).length * 10, prodTh(a, b)); assert.equal(D.toThousandths(q.answer), prodTh(a, b)); },
+  D2: (q) => { const [a, b] = numbersIn(q); const rw = (x) => Math.floor((D.toThousandths(x) + 500) / 1000); assert.equal(q.answer, String(rw(a) * rw(b))); },
+  D3: (q) => { const [a, b] = numbersIn(q); assert.equal(Number(q.answer), D.parse(a).places + D.parse(b).places); }
+};
 function decs(q) { return strip(q.prompt).match(/\d+\.\d+/g); }
 function pad(x) { const v = D.parse(x); return v.whole.padStart(2, '0').slice(-1) + '.' + v.frac.padEnd(3, '0'); }
 function symbolOk(q) { const [x, y] = decs(q); const c = D.cmp(x, y); assert.equal(q.answer, c < 0 ? '<' : c > 0 ? '>' : '='); }

@@ -31,7 +31,7 @@
         <div class="lc-head">
           <span class="lc-num" aria-hidden="true">${l.n}</span>
           <div class="lc-titles"><p class="lesson-num">Lesson ${l.n}</p><h3 id="lc-${l.id}">${l.title}</h3></div>
-          ${mastered ? '<span class="lc-badge">★ Mastered</span>' : ''}
+          ${mastered ? '<span class="lc-badge">★ Mastered</span>' : ''}${l.supplemental ? '<span class="lc-extra">Extra: beyond Grade 5</span>' : ''}
         </div>
         <p class="lc-blurb">${l.blurb}</p>
         ${progressChips(l)}

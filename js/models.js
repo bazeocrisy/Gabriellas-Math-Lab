@@ -98,7 +98,7 @@
   const PLACES = ['ones', 'tenths', 'hundredths', 'thousandths'];
   const PLACES_T = ['tens', 'ones', 'tenths', 'hundredths', 'thousandths'];
   // Soft hyphens (­) let long headings break cleanly in narrow charts.
-  const PLACE_TITLES = { tens: 'Tens', ones: 'Ones', tenths: 'Tenths', hundredths: 'Hun­dredths', thousandths: 'Thou­sandths' };
+  const PLACE_TITLES = { thousands: 'Thou­sands', hundreds: 'Hun­dreds', tens: 'Tens', ones: 'Ones', tenths: 'Tenths', hundredths: 'Hun­dredths', thousandths: 'Thou­sandths' };
   const PLACE_VALUES = { tens: '10', ones: '1', tenths: '0.1', hundredths: '0.01', thousandths: '0.001' };
 
   /** Place-value chart. d = { ones, tenths, hundredths, thousandths } (strings; '' leaves a cell empty). */
@@ -119,18 +119,19 @@
   function stack(nums, o = {}) {
     const pad = o.pad !== false;
     const ps = nums.map((n) => G.D.parse(n));
-    const tens = ps.some((x) => x.whole.length > 1);
+    // As many whole-number columns as the longest whole part needs (ones, tens, hundreds, thousands).
+    const wl = Math.min(4, Math.max(1, ...ps.map((x) => x.whole.length)));
+    const wholeCols = ['thousands', 'hundreds', 'tens', 'ones'].slice(4 - wl);
     // Show places only as far as the longest number (or o.places), so 0.8 and 0.75 line up as 0.80 and 0.75.
     const maxP = Math.max(1, o.places || Math.max(...ps.map((x) => x.places)));
-    const cols = (tens ? PLACES_T : PLACES).slice(0, (tens ? 2 : 1) + maxP), pt = cols.indexOf('tenths');
+    const cols = wholeCols.concat(['tenths', 'hundredths', 'thousandths'].slice(0, maxP)), pt = cols.indexOf('tenths');
     const head = (o.labels ? '<th scope="col"><span class="sr-only">Number</span></th>' : '') + cols.map((p, i) => (i === pt ? '<th class="pv-point" aria-hidden="true"></th>' : '') +
       `<th scope="col" class="${o.highlight === p ? 'pv-hi' : ''}">${PLACE_TITLES[p]}</th>`).join('');
     const rows = ps.map((x, r) => {
-      const w = x.whole.padStart(tens ? 2 : 1, ' ');
+      const w = x.whole.padStart(wl, ' ');
       const cells = cols.map((p, i) => {
         let v, filler = false;
-        if (p === 'tens') v = w[0] === ' ' ? '' : w[0];
-        else if (p === 'ones') v = w[w.length - 1];
+        if (i < wl) v = w[i] === ' ' ? '' : w[i];
         else { v = x.frac[i - pt]; if (v === undefined) { v = pad ? '0' : ''; filler = pad; } }
         return (i === pt ? '<td class="pv-point" aria-label="decimal point">.</td>' : '') +
           `<td class="${[o.highlight === p ? 'pv-hi' : '', filler ? 'pv-pad' : ''].join(' ').trim()}">${esc(v)}</td>`;
