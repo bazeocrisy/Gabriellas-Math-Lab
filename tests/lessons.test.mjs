@@ -1,0 +1,98 @@
+// Lessons 2–4: every template over hundreds of seeds passes the generic checks, and each answer key is
+// recomputed independently from the question text. Plus Teach checks, notes, and question-set rules.
+// Run: npm test
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import { loadGML, LESSONS } from './lib/load.mjs';
+import { checkTemplate, strip, correctResponse } from './lib/generic.mjs';
+
+const G = loadGML([...(await import('./lib/load.mjs')).CORE, 'js/scoring.js']);
+const { D, engine, kit } = G;
+const SEEDS = 500;
+const nums = (q) => strip(q.prompt).match(/\d+\.\d+|\d+/g) || [];
+const PLACE_UNIT = { tens: 10000, ones: 1000, tenths: 100, hundredths: 10, thousandths: 1 };
+const placeOfDigit = (n, d) => { const g = kit.digits5(n); return Object.keys(PLACE_UNIT).find((k) => g[k] === String(d)); };
+
+// Independent answer checks: recompute the answer from what the student sees.
+const VERIFY = {
+  d02: {
+    N1: (q) => { const [n, d] = nums(q); assert.equal(q.answer, placeOfDigit(n, d)); },
+    N2: (q) => { const key = strip(q.prompt).match(/the (\w+) place/)[1]; const n = nums(q)[0]; assert.equal(q.answer, kit.digits5(n)[key]); },
+    N3: (q) => { const d = nums(q)[0]; const key = strip(q.prompt).match(/the (\w+) place/)[1]; assert.equal(placeOfDigit(q.answer, d), key); },
+    V1: (q) => { const [d, n] = nums(q); assert.equal(D.toThousandths(q.answer), Number(d) * PLACE_UNIT[placeOfDigit(n, d)]); },
+    V2: (q) => { const [d, n] = nums(q); assert.equal(D.toThousandths(q.answer), Number(d) * PLACE_UNIT[placeOfDigit(n, d)]); },
+    V3: (q) => { const [n, d] = nums(q); const k = placeOfDigit(n, d); assert.equal(q.answer, `${k} place, value ${kit.num(Number(d) * PLACE_UNIT[k])}`); },
+    V4: (q) => { const n = nums(q)[0]; const fr = n.split('.')[1]; assert.equal(q.answer, /greatest/.test(q.prompt) ? fr[0] : fr[2]); },
+    R1: (q) => { const [, a, , b] = nums(q); assert.equal(Number(q.answer) * D.toThousandths(b), D.toThousandths(a)); },
+    R2: (q) => { const base = nums(q).slice(-1)[0]; const k = D.toThousandths(base); assert.equal(D.toThousandths(q.answer), /10 times/.test(q.prompt) ? k * 10 : k / 10); },
+    R3: (q) => assert.equal(q.answer, /to the left/.test(strip(q.prompt)) ? 'It becomes 10 times as much.' : 'It becomes 1/10 as much.'),
+    F1: (q) => {
+      const n = nums(q)[0];
+      for (const c of q.choices) {
+        const sum = c.value.split(' + ').reduce((a, t) => a + D.toThousandths(t), 0);
+        const single = c.value.split(' + ').every((t) => /^[1-9]0*$/.test(String(D.toThousandths(t))));
+        assert.equal(c.value === q.answer, sum === D.toThousandths(n) && single, `F1 choice ${c.value} for ${n}`);
+      }
+    },
+    F2: (q) => { const expr = strip(q.prompt).split(':')[1]; const sum = expr.split('+').reduce((a, t) => a + D.toThousandths(t.trim()), 0); assert.equal(D.toThousandths(q.answer), sum); },
+    F3: (q) => assert.equal(q.answer, nums(q)[0]),
+    F4: (q) => assert.equal(G.words.decimalWords(q.answer), strip(q.prompt).replace(/^Write in standard form:\s*/, '').trim()),
+    F5: (q) => assert.equal(q.answer, G.words.decimalWords(nums(q)[0])),
+    F6: (q) => {
+      const terms = [...strip(q.prompt).matchAll(/(\d) (thousandths?|hundredths?|tenths?|tens?|ones?)\b/g)];
+      const unit = { ten: 10000, tens: 10000, one: 1000, ones: 1000, tenth: 100, tenths: 100, hundredth: 10, hundredths: 10, thousandth: 1, thousandths: 1 };
+      assert.equal(D.toThousandths(q.answer), terms.reduce((a, m) => a + Number(m[1]) * unit[m[2]], 0));
+    },
+    Z1: (q) => { const [d] = nums(q); const key = strip(q.prompt).match(/the (\w+) place/)[1]; assert.equal(placeOfDigit(q.answer, d), key); for (const c of q.choices) if (c.value !== q.answer) assert.notEqual(c.value.includes('.') ? placeOfDigit(c.value, d) : 'ones', key); },
+    Z2: (q) => { const n = nums(q).slice(-1)[0]; const fr = n.split('.')[1]; const zi = fr.indexOf('0'); assert.ok(q.answer.includes(['tenths', 'hundredths'][zi] + ' place')); },
+    Z3: (q) => { const x = nums(q)[0]; for (const c of q.choices) assert.equal(c.value === q.answer, D.equal(c.value, x)); },
+    Z4: (q) => { const cells = [...q.visual.matchAll(/<td class="[^"]*">(\d?)<\/td>/g)].map((m) => m[1]); assert.equal(D.toThousandths(q.answer), D.toThousandths(cells.slice(0, 2).join('') + '.' + cells.slice(2).join(''))); }
+  }
+};
+
+for (const id of LESSONS.filter((x) => x !== 'd01')) {
+  const bank = engine.banks[id];
+  test(`${id}: bank covers every skill, plan adds to 10, at least 12 templates`, () => {
+    assert.ok(bank.templates.length >= 12, `${bank.templates.length} templates`);
+    for (const sk of Object.keys(bank.skills)) assert.ok(bank.templates.some((t) => t.skill === sk), sk);
+    assert.equal(Object.values(bank.plan).reduce((a, b) => a + b, 0), 10);
+    for (const t of bank.templates) assert.ok(VERIFY[id] && VERIFY[id][t.id], `${id}/${t.id} has an independent answer check`);
+  });
+  for (const t of bank.templates) {
+    test(`${id}/${t.id}: ${SEEDS} seeds pass generic and answer checks`, () => {
+      checkTemplate(G, id, t, SEEDS);
+      for (let seed = 1; seed <= SEEDS; seed++) VERIFY[id][t.id](engine.make(id, t.id, seed));
+    });
+  }
+  test(`${id}: Teach screens, guided checks, notes`, () => {
+    const L = G.lessonContent[id];
+    const checks = L.screens.filter((s) => s.check);
+    assert.ok(checks.length >= Object.keys(bank.skills).length, 'a guided check for every skill');
+    for (const s of checks) {
+      const q = engine.make(id, s.check.t, 1, s.check.params);
+      assert.equal(engine.check(q, correctResponse(G, q)).status, 'correct', s.id);
+      VERIFY[id][s.check.t](q);
+      assert.ok(s.reteach, s.id + ' reteach');
+    }
+    for (const sk of Object.keys(bank.skills)) assert.ok(L.screens.some((s) => s.id === L.skillScreen[sk]), 'skill screen ' + sk);
+    for (const s of L.screens.filter((x) => x.steps)) assert.ok(s.why || s.kind, `${s.id} explains why`);
+    assert.ok(L.notes.length > 500 && /<h2>Vocabulary<\/h2>/.test(L.notes));
+    assert.equal(L.screens[L.screens.length - 1].kind, 'done');
+  });
+  test(`${id}: question sets are balanced, fresh and skip Teach examples`, () => {
+    const L = G.lessonContent[id];
+    for (let seed = 1; seed <= 200; seed++) {
+      const ex = new Set(L.teachSigs);
+      const set = engine.buildSet(id, { plan: bank.plan, seed, exclude: ex, skip: bank.practiceOnly });
+      assert.equal(set.length, 10);
+      assert.equal(new Set(set.map((x) => x.sig)).size, 10);
+      for (const x of set) assert.ok(!ex.has(x.sig) && !(bank.practiceOnly || []).includes(x.id));
+      const by = {};
+      set.forEach((x) => { const sk = bank.byId[x.id].skill; by[sk] = (by[sk] || 0) + 1; });
+      assert.deepEqual(by, bank.plan);
+      assert.ok(engine.validSet(id, set, 10));
+      const s = G.scoring.score(set.map((x) => engine.make(id, x.id, x.seed)), set.map((x) => correctResponse(G, engine.make(id, x.id, x.seed))));
+      assert.equal(s.correct, 10);
+    }
+  });
+}

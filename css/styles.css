@@ -168,6 +168,22 @@ h3 { font-size: 1.1rem; margin: 1em 0 .4em; }
 .steps li .model { margin-top: 8px; }
 .step-btn { margin-top: 8px; }
 .step-note { text-align: right; margin: 16px 0 -12px; }
+.goal { background: var(--teach-soft); border: 1px solid #b9cdf3; border-radius: 10px; padding: 8px 12px; margin: 0 0 10px; color: var(--teach-dark); }
+.why-box { margin-top: 12px; border: 2px solid #e5b84b; background: var(--warn-soft); border-radius: 10px; padding: 8px 12px; }
+.why-box p { margin: .3em 0; }
+.why-title { font-weight: 800; color: #7a4d00; }
+.place-table { border-collapse: collapse; margin: 8px 0; background: #fff; }
+.place-table th, .place-table td { border: 1px solid var(--line); padding: 6px 12px; text-align: center; }
+.place-table th { background: var(--info-soft); }
+.pv-pad { color: #8a94a6; font-style: italic; }
+.expr { white-space: nowrap; font-weight: 700; }
+.order-slots { list-style: none; padding: 0; margin: 10px 0; display: flex; flex-wrap: wrap; gap: 8px; }
+.order-slots li { display: flex; flex-direction: column; align-items: center; gap: 2px; }
+.order-empty { display: inline-flex; align-items: center; justify-content: center; min-width: 84px; min-height: 52px; border: 2px dashed #9aa3b2; border-radius: 10px; color: var(--muted); font-weight: 700; }
+.slot-lab { font-size: .8rem; color: var(--muted); }
+.order-pool { display: flex; flex-wrap: wrap; gap: 8px; margin: 6px 0; min-height: 52px; align-items: center; }
+.order-chip { min-width: 84px; min-height: 52px; font-size: 1.15rem; }
+.order-chip.is-placed { background: var(--brand-soft); }
 .facts { padding-left: 1.2em; }
 .facts li { margin: 6px 0; }
 .guided-intro { margin-top: 0; font-weight: 600; }

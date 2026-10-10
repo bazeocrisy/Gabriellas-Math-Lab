@@ -5,6 +5,8 @@
   const D = G.D, W = G.words;
 
   const f = (k, places) => D.fromThousandths(k, places);
+  /** Shortest exact form of k thousandths: 4000 -> '4', 700 -> '0.7', 30 -> '0.03'. */
+  const num = (k) => D.canonical(D.fromThousandths(k, 3));
   const ORD = ['', 'first', 'second', 'third'];
   const PL = [null,
     { n: 10, one: 'tenth', many: 'tenths', places: 1 },
@@ -64,7 +66,7 @@
     for (const p of PLACES) {
       const d = Math.floor(rest / p.unit);
       rest -= d * p.unit;
-      if (d) terms.push(f(d * p.unit));
+      if (d) terms.push(num(d * p.unit));
     }
     return terms.join(' + ') || '0';
   }
@@ -76,5 +78,5 @@
     return w + '.' + ds.slice(wholeDigits, wholeDigits + places).join('');
   }
 
-  G.kit = { f, ORD, PL, PLACES, s, list, cap, textChoices, placeCheck, droppedZero, ZERO_TIP, digits5, expanded, distinctDigits, words: W.decimalWords };
+  G.kit = { f, num, ORD, PL, PLACES, s, list, cap, textChoices, placeCheck, droppedZero, ZERO_TIP, digits5, expanded, distinctDigits, words: W.decimalWords };
 })(typeof window !== 'undefined' ? (window.GML = window.GML || {}) : (globalThis.GML = globalThis.GML || {}));

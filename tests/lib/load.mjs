@@ -6,8 +6,9 @@ import { fileURLToPath } from 'node:url';
 
 export const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '..');
 
+export const LESSONS = ['d01', 'd02', 'd03', 'd04'].filter((id) => fs.existsSync(path.join(ROOT, 'curriculum/decimals', id, 'bank.js')));
 export const CORE = ['js/decimal.js', 'js/words.js', 'js/models.js', 'js/engine.js', 'js/kit.js', 'curriculum/decimals/lessons.js',
-  'curriculum/decimals/d01/bank.js', 'curriculum/decimals/d01/lesson.js'];
+  ...LESSONS.flatMap((id) => [`curriculum/decimals/${id}/bank.js`, `curriculum/decimals/${id}/lesson.js`])];
 
 export function loadGML(files = CORE) {
   globalThis.GML = {};
