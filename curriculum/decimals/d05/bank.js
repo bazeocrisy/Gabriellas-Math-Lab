@@ -32,13 +32,13 @@
     if (got === b.lo && ans === b.hi) return `The ${NEXT[place]} digit is ${dg}, which is five or more, so round UP to the bigger ${place}.`;
     if (got === b.hi && ans === b.lo) return `The ${NEXT[place]} digit is ${dg}, which is four or less, so keep the smaller ${place} (round down).`;
     if (/10$/.test(info.raw) && ans % (unit * 10) === 0) return `When a 9 rounds up, it becomes 10 of that place, which is 1 of the next place to the left. Regroup instead of writing 10.`;
-    return `${x} is between ${b.loS} and ${b.hiS}. Your answer should be one of those (written with ${s(PLACES[place], 'decimal place')}).`;
+    return `${x} is between ${b.loS} and ${b.hiS}. Round to whichever ${place} it is closer to.`;
   }
 
   function roundQuestion(x, place, extra = {}) {
     const k = D.toThousandths(x), ans = fmt(roundK(k, UNIT[place]), place), b = bracket(k, place);
     return Object.assign({
-      type: 'number', sig: x + place,
+      type: 'number', places: PLACES[place], sig: x + place,
       prompt: `Round <b>${x}</b> to the nearest <b>${place}</b>.`,
       answer: ans, answerText: ans,
       hints: [
@@ -174,8 +174,8 @@
       sig: 'K' + x + place,
       hints: [
         `Look at the ${NEXT[place]} digit to decide whether to round up or down.`,
-        `Here it is five or more, so the ${place}s digit, a 9, goes up by one.`,
-        `Nine plus one makes ten. Ten ${place}s make one of the next place to the left, so regroup: write 0 in the ${place}s place and add one to the place on its left.`
+        `Is that digit five or more? If so, the ${place}s digit goes up by one. Here the ${place}s digit is a 9.`,
+        `Nine plus one makes ten. Ten ${place}s make one of the next place to the left, so regroup: write 0 in the ${place}s place and add one to the place on its left. If that place is also a 9, keep regrouping the same way.`
       ],
       why: `The ${NEXT[place]} digit is ${deciding(x, place)}, so round up. The 9 ${place}s become 10 ${place}s, which regroups into the next place: <b>${ans}</b>. Keep the zero${PLACES[place] > 1 ? 's' : ''} to show the number was rounded to the nearest ${place}.`
     });
@@ -194,7 +194,7 @@
       hints: [
         'Find the two tenths that the number is between.',
         `Which two tenths is ${x} between? Picture them on a number line and decide which one is closer.`,
-        `The hundredths digit is ${h}, so round up. Nine tenths plus one tenth is ten tenths, and ten tenths make one whole.`
+        `The hundredths digit is ${h}, so round up. Think: what do nine tenths and one more tenth make?`
       ],
       why: `The hundredths digit is ${h}, so round up. 9 tenths becomes 10 tenths = 1 whole, so ${x} rounds to <b>${ans}</b>.`,
       diagnose(resp) {
@@ -216,7 +216,7 @@
       sig: 'half' + x + place,
       hints: [
         `Find the two ${place}s that ${x} is between.`,
-        `${x} is exactly halfway between ${bracket(D.toThousandths(x), place).loS} and ${bracket(D.toThousandths(x), place).hiS}. The digit to check is a 5.`,
+        `${x} is exactly halfway between two ${place}s. The digit to check is a 5.`,
         'The rule says five or more rounds up, so a number exactly halfway rounds UP.'
       ]
     });
@@ -250,8 +250,8 @@
   const STORIES = [
     { t: (x) => `A pencil is ${x} cm long. How long is it to the nearest tenth of a centimeter?`, place: 'tenth', unit: 'cm', make: (r) => num(r.int(8, 19) * 1000 + r.int(0, 8) * 100 + r.int(1, 9) * 10) },
     { t: (x) => `A bag of apples weighs ${x} kg. What is its weight to the nearest tenth of a kilogram?`, place: 'tenth', unit: 'kg', make: (r) => num(r.int(1, 5) * 1000 + r.int(0, 8) * 100 + r.int(1, 9) * 10 + r.int(0, 9)) },
-    { t: (x) => `Mia's swim time was ${x} seconds. What is her time to the nearest hundredth of a second?`, place: 'hundredth', unit: 's', make: (r) => num(r.int(25, 60) * 1000 + r.int(0, 9) * 100 + r.int(0, 8) * 10 + r.int(1, 9)) },
-    { t: (x) => `A beetle is ${x} cm long. How long is it to the nearest hundredth of a centimeter?`, place: 'hundredth', unit: 'cm', make: (r) => num(r.int(1, 3) * 1000 + r.int(0, 9) * 100 + r.int(0, 8) * 10 + r.int(1, 9)) }
+    { t: (x) => `A bag of flour weighs ${x} kg on a kitchen scale. What is its weight to the nearest hundredth of a kilogram?`, place: 'hundredth', unit: 'kg', make: (r) => num(r.int(1, 4) * 1000 + r.int(0, 9) * 100 + r.int(0, 8) * 10 + r.int(1, 9)) },
+    { t: (x) => `A bottle holds ${x} liters of water. How much is that to the nearest hundredth of a liter?`, place: 'hundredth', unit: 'L', make: (r) => num(r.int(1, 2) * 1000 + r.int(0, 9) * 100 + r.int(0, 8) * 10 + r.int(1, 9)) }
   ];
 
   T('A2', 'rApply', (r, p) => {
@@ -287,7 +287,6 @@
       why: `The hundredths digit of ${x} is ${h}, so it rounds to ${right}. ${claimRight ? `${name} is right.` : `${name} is not right.`}`,
       diagnose(resp) {
         if (/tenths digit decides/.test(resp)) return 'The tenths digit is the place you round to. The digit to its right (hundredths) decides.';
-        if (/always/.test(resp)) return 'You do not always round the same way. The hundredths digit decides: five or more up, four or less down.';
         return `Round ${x} yourself using the hundredths digit, then check both the answer and the reason.`;
       }
     };

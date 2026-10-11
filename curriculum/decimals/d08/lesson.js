@@ -9,7 +9,7 @@
       goal: 'what happens to the digits when you multiply by 10, 100 or 1000. (This lesson is extra: it goes beyond the Grade 5 Georgia decimal standards.)',
       body: '<p>In Lesson 2 you learned that each place is worth 10 times the place to its right. So multiplying by 10 moves every digit <b>one place to the left</b>.</p>',
       example: 'Worked example: 3.47 × 10, 3.47 × 100 and 3.47 × 1000',
-      exampleVisual: M.stack(['3.47', '34.7', '347'], { labels: ['3.47', '× 10', '× 100'], pad: false }),
+      exampleVisual: M.stack(['3.47', '34.7', '347', '3470'], { labels: ['start', 'times 10', 'times 100', 'times 1000'], pad: false }),
       steps: [
         '<b>× 10:</b> every digit moves 1 place left: <b>34.7</b>.',
         '<b>× 100:</b> every digit moves 2 places left: <b>347</b>.',
@@ -40,7 +40,7 @@
     {
       id: 'check-whole', title: 'Try it together', kind: 'check', skill: 'mWhole',
       check: { t: 'W1', params: { a: '1.25', n: 3 } },
-      reteach: '<p><b>Let\'s look again.</b> 1.5 × 4: 15 × 4 = 60, and 1.5 has one decimal place, so the answer is 6.0 = 6. Check: about 2 × 4 = 8, close enough.</p>'
+      reteach: '<p><b>Let\'s look again.</b> 1.5 × 4: 15 × 4 = 60, and 1.5 has one decimal place, so the answer is 6.0 = 6. Check: 1.5 is between 1 and 2, so the answer is between 4 and 8. 6 fits.</p>'
     },
     {
       id: 'area', title: 'Tenths times tenths', skill: 'mTenths',
@@ -68,7 +68,7 @@
       steps: [
         '<b>Step 1.</b> The digits of the answer are 3, 2, 2 (from 322).',
         '<b>Step 2.</b> 2.3 has 1 decimal place and 1.4 has 1, so the product has 1 + 1 = <b>2 decimal places</b>: 3.22.',
-        '<b>Step 3.</b> Estimate: 2 × 1 = 2, and 3.22 is reasonable (32.2 or 0.322 would not be).',
+        '<b>Step 3.</b> Check: 2.3 × 1.4 is more than 2 × 1 = 2 and less than 3 × 2 = 6. 3.22 fits (32.2 or 0.322 would not).',
         '<b>Answer:</b> <span class="big-num">2.3 × 1.4 = 3.22</span>'
       ],
       why: '2.3 is 23 tenths and 1.4 is 14 tenths. Tenths × tenths gives hundredths, so 23 × 14 = 322 hundredths = 3.22.'

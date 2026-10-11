@@ -13,7 +13,7 @@
       { id: 'd05', n: 5, title: 'Rounding Decimals', blurb: 'Round decimals to the nearest tenth and hundredth with number lines and the rounding rule.', ready: true },
       { id: 'd06', n: 6, title: 'Adding Decimals', blurb: 'Add decimals to hundredths with models, lined-up decimal points, regrouping, estimates and word problems.', ready: true },
       { id: 'd07', n: 7, title: 'Subtracting Decimals', blurb: 'Subtract decimals to hundredths with models, regrouping, zeros, checking by adding, and word problems.', ready: true },
-      { id: 'd08', n: 8, title: 'Multiplying Decimals', blurb: 'Multiply decimals by 10, 100 and 1000, by whole numbers, and tenths by tenths. Includes supplemental skills beyond the Grade 5 Georgia decimal standards.', ready: true, supplemental: true },
+      { id: 'd08', n: 8, title: 'Multiplying Decimals', blurb: 'Supplemental (beyond the Grade 5 Georgia standards): multiply decimals by 10, 100 and 1000, by whole numbers, and tenths by tenths.', ready: true, supplemental: true },
       { id: 'd09', n: 9, title: 'Dividing Decimals', blurb: 'Includes supplemental skills beyond the Grade 5 Georgia decimal standards.', ready: false },
       { id: 'd10', n: 10, title: 'Mixed Decimal Review', blurb: 'Cumulative application and reasoning.', ready: false }
     ],

@@ -254,3 +254,37 @@ test('curriculum review regressions (Lessons 2–4)', () => {
   assert.ok(G.lessonContent.d03.screens.some((x) => x.id === 'between'));
   assert.match(engine.make('d03', 'L3', 1).prompt, /up to three decimal places/);
 });
+
+test('curriculum review regressions (Lessons 5–8)', () => {
+  // L5: a rounded answer shows the rounding place (3.0, not 3), with a message that does not give it away.
+  const k1 = engine.make('d05', 'K1', 1, { x: '2.96', place: 'tenth' });
+  assert.equal(engine.check(k1, '3.0').status, 'correct');
+  assert.equal(engine.check(k1, '3').status, 'wrong');
+  assert.match(engine.check(k1, '3').message, /right amount/);
+  assert.equal(engine.check(engine.make('d05', 'T1', 1, { x: '6.28' }), '6.30').status, 'wrong');
+  assert.match(strip(engine.make('d05', 'K1', 1, { x: '6.997', place: 'hundredth' }).hints[2]), /keep regrouping/);
+  // L6/L7: number-line hints talk about jumps, like the feedback.
+  for (let seed = 1; seed <= 50; seed++) { assert.match(engine.make('d06', 'AM3', seed).hints[2], /jumps/); assert.match(engine.make('d07', 'SM2', seed).hints[2], /jumps/); }
+  // L7: SZ1 hint regroups from the tens when the ones digit is 0, and mentions hundredths only when needed.
+  const sz = engine.make('d07', 'SZ1', 1, { a: '10', b: '5.4' });
+  assert.match(sz.hints[2], /taking one ten/); assert.doesNotMatch(sz.hints[2], /hundredths/);
+  // L7: every equation offered in SC1 is true.
+  for (let seed = 1; seed <= 300; seed++) {
+    for (const c of engine.make('d07', 'SC1', seed).choices) {
+      const m = c.value.match(/^(\S+) ([+−]) (\S+) = (\S+)$/);
+      const v = m[2] === '+' ? D.toThousandths(m[1]) + D.toThousandths(m[3]) : D.toThousandths(m[1]) - D.toThousandths(m[3]);
+      assert.equal(v, D.toThousandths(m[4]), c.value);
+    }
+  }
+  // L8: P1 feedback for an unchanged number and for one place too few.
+  const p1 = engine.make('d08', 'P1', 1, { x: '2.37', f: 100 });
+  assert.match(engine.check(p1, '2.37').message, /started with/);
+  assert.match(engine.check(p1, '23.7').message, /one place too few/);
+  assert.match(engine.check(engine.make('d08', 'P1', 1, { x: '2.37', f: 1000 }), '237').message, /one place too few/);
+  // L8: no "about 0" estimates; D1 products never end in 0 (so counting places always matches the answer).
+  for (let seed = 1; seed <= 300; seed++) {
+    for (const id of ['W1', 'K1']) { const q = engine.make('d08', id, seed); const w = num1(engine.check(q, D.fromThousandths(D.toThousandths(q.answer) * 10, 3)).message); assert.doesNotMatch(w + strip(q.why), /about 0(?![.\d])/, id); }
+    const d1 = engine.make('d08', 'D1', seed); assert.equal(D.parse(d1.answer).places, D.parse(numbersIn(d1)[3]).places + D.parse(numbersIn(d1)[4]).places);
+  }
+});
+function num1(x) { return String(x || ''); }

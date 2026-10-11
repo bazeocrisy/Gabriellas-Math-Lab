@@ -87,7 +87,7 @@
       hints: [
         'Subtracting on a number line means jumping to the left.',
         `Each tick mark is one tenth (0.1). ${jump} is ${s(jy, 'tenth')}.`,
-        `Start at A and count ${jy} tick marks to the left.`
+        `Start at A and count ${jy} jumps (spaces between tick marks) to the left.`
       ],
       why: `From ${start}, jumping ${s(jy, 'tenth')} to the left lands on <b>${ans}</b>: ${start} − ${jump} = ${ans}.`,
       diagnose(resp, info) {
@@ -164,7 +164,7 @@
       hints: [
         `A whole number has its decimal point at the end: ${a} = ${a}.00.`,
         `Write ${a} as ${a}.00 and line up the decimal points with ${b}. The top has zeros, so you will need to regroup.`,
-        'Regroup across the zeros: take one from the ones, which makes ten tenths; then take one tenth, which makes ten hundredths. Then subtract each column.'
+        (Number(a) % 10 === 0 ? 'The ones digit is 0 too, so start by taking one ten: it makes ten ones. Then take one of those ones, which makes ten tenths' : 'Regroup across the zeros: take one from the ones, which makes ten tenths') + (D.parse(b).places === 2 ? '; then take one tenth, which makes ten hundredths.' : '.') + ' Then subtract each column.'
       ]
     });
   });
@@ -187,7 +187,7 @@
     if (!a) for (;;) { a = dec(r, r.int(1, 2), 3, 12); b = dec(r, 2, 0, 3); if (D.cmp(a, b) > 0) break; }
     const d = sub(a, b);
     const right = `${d} + ${b} = ${a}`;
-    const wrongs = [`${d} + ${a} = ${add(d, a)}`, `${a} + ${b} = ${add(a, b)}`, `${d} − ${b} = ${num(Math.max(0, D.toThousandths(d) - D.toThousandths(b)))}`];
+    const wrongs = [`${d} + ${a} = ${add(d, a)}`, `${a} + ${b} = ${add(a, b)}`, D.cmp(d, b) > 0 ? `${d} − ${b} = ${sub(d, b)}` : `${a} − ${d} = ${b}`];
     return {
       type: 'mc', sig: a + '-' + b,
       prompt: `${a} − ${b} = ${d}. Which addition <b>checks</b> this answer?`,

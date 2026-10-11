@@ -47,7 +47,8 @@
       steps: [
         '<b>6.28:</b> the tenths digit is 2. The digit to its right (hundredths) is <b>8</b>, which is 5 or more, so round up: <b>6.3</b>.',
         '<b>5.73:</b> the tenths digit is 7. The hundredths digit is <b>3</b>, which is 4 or less, so keep the 7: <b>5.7</b>.',
-        'Notice: for 5.73 the tenths digit (7) is big, but it does not decide. Only the digit to its right decides.'
+        'Notice: for 5.73 the tenths digit (7) is big, but it does not decide. Only the digit to its right decides.',
+        '<b>Nearest whole number:</b> the same rule works one place over. Look at the tenths digit: 4.82 rounds to <b>5</b> (8 is five or more) and 3.17 rounds to <b>3</b> (1 is four or less). You will use this for estimating in Lessons 6–8.'
       ],
       why: 'The digit to the right tells you whether the number is past the halfway point. A 5 or more in that place means at least halfway, so the number is closer to the bigger value.'
     },
@@ -84,7 +85,8 @@
         '<b>Step 1.</b> The hundredths digit is 6, so round up.',
         '<b>Step 2.</b> 9 tenths + 1 tenth = 10 tenths. Ten tenths make <b>1 whole</b>.',
         '<b>Step 3.</b> So the 2 ones become 3 ones, and the tenths digit becomes 0.',
-        '<b>Answer:</b> <span class="big-num">3.0</span> Writing the 0 shows the number was rounded to the nearest tenth.'
+        '<b>Answer:</b> <span class="big-num">3.0</span> Writing the 0 shows the number was rounded to the nearest tenth.',
+        '<b>Two 9s:</b> 4.996 to the nearest hundredth. The 6 means round up. 9 hundredths + 1 = 10 hundredths = 1 tenth, and the 9 tenths + 1 = 10 tenths = 1 whole. Keep regrouping: <b>5.00</b>.'
       ],
       why: 'Rounding up adds one unit of the rounding place. When that place already has 9, the 10 regroups into the next place to the left, just like carrying in addition.'
     },
@@ -116,7 +118,7 @@
       goal: 'how rounding helps with measurements and how to work backward.',
       body: '<p>Measurements are often rounded. You can also work backward: which numbers round to a given answer?</p>',
       example: 'Worked examples',
-      exampleVisual: M.line({ from: 4200, to: 4400, mid: true, labels: ['4.2', '4.4'], tickLabels: true }),
+      exampleVisual: M.line({ from: 4200, to: 4400, labels: ['4.2', '4.4'], points: [{ label: '4.25', v: 4250 }, { label: '4.3', v: 4300 }, { label: '4.35', v: 4350 }] }),
       steps: [
         '<b>A pencil is 14.68 cm long.</b> To the nearest tenth: the hundredths digit is 8, so round up: <b>14.7 cm</b>.',
         '<b>Which numbers round to 4.3?</b> Halfway below 4.3 is 4.25, and halfway above is 4.35.',

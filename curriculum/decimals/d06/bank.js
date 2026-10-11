@@ -106,7 +106,7 @@
       hints: [
         'Adding on a number line means jumping to the right.',
         `Each tick mark on this line is one tenth (0.1). ${jump} is ${s(jy, 'tenth')}.`,
-        `Start at A and count ${jy} tick marks to the right.`
+        `Start at A and count ${jy} jumps (spaces between tick marks) to the right.`
       ],
       why: `From ${start}, jumping ${s(jy, 'tenth')} to the right lands on <b>${ans}</b>: ${start} + ${jump} = ${ans}.`,
       diagnose(resp, info) {

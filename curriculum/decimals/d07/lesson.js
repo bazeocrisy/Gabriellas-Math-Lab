@@ -13,7 +13,8 @@
       steps: [
         '<b>Step 1.</b> 0.75 is 75 shaded squares. 0.3 is 3 columns = 30 hundredths. Cross out 30 squares.',
         '<b>Step 2.</b> 75 hundredths − 30 hundredths = 45 hundredths.',
-        '<b>Answer:</b> <span class="big-num">0.75 − 0.3 = 0.45</span>'
+        '<b>Answer:</b> <span class="big-num">0.75 − 0.3 = 0.45</span>',
+        '<b>On a number line:</b> to subtract 0.3 from 4.8, start at 4.8 and make 3 jumps of 0.1 to the left: <b>4.5</b>.'
       ],
       why: 'Like adding, subtracting works on parts of the same size. Writing 0.3 as 30 hundredths lets you take hundredths away from hundredths.'
     },
@@ -27,7 +28,7 @@
       goal: 'how to subtract decimals in columns, regrouping when a digit is too small.',
       body: '<p>Line up the decimal points, bigger number on top. Subtract from the right. If a top digit is smaller than the one below it, <b>regroup</b>: take one from the next place to the left, which becomes ten of this place.</p>',
       example: 'Worked example: 5.32 − 2.67',
-      exampleVisual: M.vertical(['5.32', '2.67'], '−', { answer: '2.65' }),
+      exampleVisual: M.vertical(['5.32', '2.67'], '−', { answer: '2.65', carry: { 0: '4', 2: '12', 3: '12' } }),
       steps: [
         '<b>Step 1.</b> Hundredths: 2 is less than 7. Take 1 tenth from the 3 tenths (leaving 2 tenths); it becomes 10 hundredths. 12 − 7 = <b>5</b>.',
         '<b>Step 2.</b> Tenths: now 2 is less than 6. Take 1 one from the 5 ones (leaving 4 ones); it becomes 10 tenths. 12 − 6 = <b>6</b>.',
@@ -72,6 +73,11 @@
         '<b>Answer:</b> <span class="big-num">2.26</span>'
       ],
       why: 'The zero at the end of 1.80 does not change its value. It just fills the hundredths column so you do not line the digits up the wrong way.'
+    },
+    {
+      id: 'check-places', title: 'Try it together', kind: 'check', skill: 'subZeros',
+      check: { t: 'SZ2', params: { a: '6.07', b: '2.4' } },
+      reteach: '<p><b>Let\'s look again.</b> 5.03 − 1.6: write 1.6 as 1.60. Hundredths 3 − 0 = 3. Tenths 0 &lt; 6, so take 1 one (5 becomes 4): 10 − 6 = 4. Ones 4 − 1 = 3. Answer 3.43.</p>'
     },
     {
       id: 'check', title: 'Check by adding', skill: 'subCheck',
@@ -138,7 +144,8 @@
       <li>Subtract from the right. Regroup when the top digit is smaller.</li>
       <li>Bring the decimal point straight down. Check by adding.</li>
     </ol>
-    ${M.vertical(['5.32', '2.67'], '−', { answer: '2.65' })}
+    ${M.vertical(['5.32', '2.67'], '−', { answer: '2.65', carry: { 0: '4', 2: '12', 3: '12' } })}
+    <p class="fine">The small numbers show the top number after regrouping: 4 ones, 12 tenths, 12 hundredths.</p>
 
     <h2>Worked examples</h2>
     <div class="note-ex"><h3>With a model</h3><p>0.75 − 0.3 = 75 hundredths − 30 hundredths = <b>0.45</b>.</p></div>

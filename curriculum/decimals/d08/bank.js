@@ -19,6 +19,11 @@
   const places = (x) => D.parse(x).places;
   const digitsOnly = (x) => String(Number(x.replace('.', '')));
   const roundWhole = (x) => Math.floor((D.toThousandths(x) + 500) / 1000);
+  /** A friendly estimate of x × n: round x to a whole number, or to a tenth when x is less than 1. */
+  const estimate = (x, n) => { const k = D.toThousandths(x); const r = k >= 500 ? Math.floor((k + 500) / 1000) * 1000 : Math.floor((k + 50) / 100) * 100; return num(Math.max(100, r) * n); };
+  /** Words for the estimate in feedback; a range when the estimate would equal the exact answer. */
+  const estPhrase = (x, n) => { const e = estimate(x, n), exact = num(D.toThousandths(x) * n); const k = D.toThousandths(x); return D.equal(e, exact) ? `between ${Math.floor(k / 1000) * n} and ${Math.ceil(k / 1000 + 0.0001) * n}` : `about ${e}`; };
+  const roundFriendly = (x) => { const k = D.toThousandths(x); return k >= 500 ? String(Math.floor((k + 500) / 1000)) : num(Math.max(100, Math.floor((k + 50) / 100) * 100)); };
   const FACT = [10, 100, 1000];
   const WORD = ['zero', 'one', 'two', 'three', 'four'];
   const ws = (n, w) => WORD[n] + ' ' + w + (n === 1 ? '' : 's');
@@ -51,7 +56,8 @@
       why: `× ${fac} moves each digit ${s(shift, 'place')} to the left: ${x} × ${fac} = <b>${ans}</b>.`,
       diagnose(resp, info) {
         const k = D.toThousandths(x);
-        if (info.th === k * fac / 100 && fac >= 100) return `That moved the digits only ${shift - 1 === 1 ? 'one place' : (shift - 1) + ' places'}. ${fac} has ${shift} zeros, so move ${shift} places.`;
+        if (info.th === k) return `That is the number you started with. Multiplying by ${fac} moves every digit ${ws(shift, 'place')} to the left.`;
+        if (fac >= 100 && info.th === k * fac / 10) return `That moved the digits one place too few. ${fac} has ${ws(shift, 'zero')}, so move ${ws(shift, 'place')}.`;
         if (info.th === k * fac * 10) return `That moved the digits too far. ${fac} has ${s(shift, 'zero')}, so move ${s(shift, 'place')}.`;
         if (fac > 1 && D.toThousandths(x) % fac === 0 && info.th === k / fac) return 'That moved the digits to the right, which makes the number smaller. Multiplying by 10, 100 or 1000 makes it bigger.';
         if (info.value && info.value.frac === D.parse(x).frac + '0'.repeat(shift)) return 'Writing zeros at the end of a decimal does not change its value. The digits themselves must move to the left.';
@@ -98,17 +104,17 @@
       prompt: `Multiply: <span class="expr">${a} × ${n}</span>`,
       answer: ans, answerText: ans,
       hints: [
-        `Estimate first: round ${a} to the nearest whole number and multiply by ${n}.`,
+        `Estimate first: round ${a} to ${D.toThousandths(a) >= 500 ? 'the nearest whole number' : 'the nearest tenth'} and multiply by ${n}.`,
         `Multiply as if there were no decimal point: ${digitsOnly(a)} × ${n}.`,
         `${a} has ${ws(pl, 'decimal place')}, so the answer needs ${ws(pl, 'decimal place')} too. Put the point in, then check it is close to your estimate.`
       ],
-      why: `${digitsOnly(a)} × ${n} = ${Number(digitsOnly(a)) * n}. ${a} has ${s(pl, 'decimal place')}, so ${a} × ${n} = <b>${ans}</b> (about ${roundWhole(a) * n}).`,
+      why: `${digitsOnly(a)} × ${n} = ${Number(digitsOnly(a)) * n}. ${a} has ${s(pl, 'decimal place')}, so ${a} × ${n} = <b>${ans}</b> (about ${roundFriendly(a)} × ${n} = ${estimate(a, n)}).`,
       diagnose(resp, info) {
         const whole = Number(digitsOnly(a)) * n * 1000;
         if (info.th === whole) return `That is ${digitsOnly(a)} × ${n} without the decimal point. ${a} has ${s(pl, 'decimal place')}, so the answer needs ${pl === 1 ? 'one' : pl}.`;
-        if (info.th === whole / 10 || info.th === whole / 100 || info.th === whole / 1000) return `The digits are right, but the decimal point is in the wrong place. Use your estimate (about ${roundWhole(a) * n}) to check.`;
+        if (info.th === whole / 10 || info.th === whole / 100 || info.th === whole / 1000) return `The digits are right, but the decimal point is in the wrong place. Use an estimate to check: the answer should be ${estPhrase(a, n)}.`;
         if (info.th === D.toThousandths(a) + n * 1000) return 'That adds the two numbers. This problem asks you to multiply.';
-        return `Multiply ${digitsOnly(a)} × ${n} first, then place the decimal point so the answer is close to ${roundWhole(a) * n}.`;
+        return `Multiply ${digitsOnly(a)} × ${n} first, then place the decimal point so the answer is ${estPhrase(a, n)}.`;
       }
     };
   });
@@ -208,7 +214,7 @@
 
   T('D1', 'mPoint', (r, p) => {
     let a = p.a, b = p.b;
-    if (!a) for (;;) { a = num(r.int(1, 9) * 1000 + r.int(1, 9) * 100); b = r.next() < 0.5 ? num(r.int(1, 9) * 1000 + r.int(1, 9) * 100) : f(r.int(11, 99) * 10, 2); if (places(a) + places(b) <= 3) break; }
+    if (!a) for (;;) { a = num(r.int(1, 9) * 1000 + r.int(1, 9) * 100); b = r.next() < 0.7 ? num(r.int(1, 9) * 1000 + r.int(1, 9) * 100) : f(r.int(1, 9) * 100, 1); if ((Number(digitsOnly(a)) * Number(digitsOnly(b))) % 10 !== 0) break; }
     const ia = digitsOnly(a), ib = digitsOnly(b), prod = Number(ia) * Number(ib);
     const ans = mul(a, b);
     const P = places(a) + places(b);
@@ -220,7 +226,7 @@
       hints: [
         'The digits of the answer are the same as in the whole-number product. Only the decimal point is different.',
         `Count the decimal places: ${a} has ${places(a)}, ${b} has ${places(b)}.`,
-        `Add the two counts to get the number of decimal places in the answer, then check your choice with an estimate: about ${roundWhole(a)} × ${Math.max(1, roundWhole(b))}.`
+        `Add the two counts to get the number of decimal places in the answer. Check: the answer must be between ${Math.floor(D.toThousandths(a) / 1000)} × ${Math.floor(D.toThousandths(b) / 1000)} and ${Math.ceil(D.toThousandths(a) / 1000)} × ${Math.ceil(D.toThousandths(b) / 1000)}.`
       ],
       why: `${a} has ${s(places(a), 'decimal place')} and ${b} has ${s(places(b), 'decimal place')}, so the product has ${P}: <b>${ans}</b>.`,
       diagnose(resp) { return `${resp} has ${s(places(resp), 'decimal place')}. Count the decimal places in ${a} and ${b} and add them.`; }
@@ -268,8 +274,9 @@
   // ───────────────────────── Skill: word problems (mWord) ─────────────────────────
 
   T('K1', 'mWord', (r, p) => {
-    const price = p.price || f(r.int(11, 95) * 10, 2);
-    const n = p.n || r.int(3, 9);
+    let price = p.price || f(r.int(11, 95) * 10, 2);
+    let n = p.n || r.int(3, 9);
+    while (!p.price && smallWhole(D.toThousandths(price) * n)) { price = f(r.int(11, 95) * 10, 2); n = r.int(3, 9); }
     const item = p.item || r.pick(['pencils', 'stickers', 'erasers', 'apples', 'bookmarks']);
     const q = templates.find((t) => t.id === 'W1').make(r, { a: price, n });
     const money = '$' + f(D.toThousandths(q.answer), 2);

@@ -14,7 +14,9 @@
       steps: [
         '<b>Step 1.</b> 0.3 is 3 columns = 30 hundredths. 0.45 is 45 hundredths.',
         '<b>Step 2.</b> 30 hundredths + 45 hundredths = 75 hundredths.',
-        '<b>Answer:</b> <span class="big-num">0.3 + 0.45 = 0.75</span>'
+        '<b>Answer:</b> <span class="big-num">0.3 + 0.45 = 0.75</span>',
+        '<b>With tenths bars:</b> 0.7 + 0.6 is 7 tenths + 6 tenths = 13 tenths. Ten tenths make one whole, so 13 tenths = <b>1.3</b>.',
+        '<b>On a number line:</b> to add 0.3 to 2.4, start at 2.4 and make 3 jumps of 0.1 to the right: <b>2.7</b>.'
       ],
       why: 'You can only add parts of the same size: hundredths with hundredths, tenths with tenths. Writing 0.3 as 30 hundredths makes the parts the same size.'
     },

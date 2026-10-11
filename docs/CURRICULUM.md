@@ -21,10 +21,10 @@ Number ranges that follow: place value, reading/writing, comparing and ordering 
 | D02 | Decimal Place Value | Place vs value of a digit (tens to thousandths); ×10 and 1/10 between places; standard, expanded and word form; placeholder zeros | 5.NR.4.1, 5.NR.1.1 | **Built, live** |
 | D03 | Comparing Decimals | Compare to thousandths with >, <, =; different numbers of digits; equal decimals; place-value charts; number lines; explain why | 5.NR.4.2 | **Built, live** |
 | D04 | Ordering Decimals | Least to greatest and greatest to least; line up places with placeholder zeros; number lines; word problems | 5.NR.4.2 | **Built, live** |
-| D05 | Rounding Decimals | Round to tenths and hundredths using place value and number lines | 5.NR.4.3 | Coming later |
-| D06 | Adding Decimals | Add in models, equations and word problems; alignment and regrouping | 5.NR.4.4 | Coming later |
-| D07 | Subtracting Decimals | Subtract with regrouping and zeros; word problems | 5.NR.4.4 | Coming later |
-| D08 | Multiplying Decimals | Supplemental: goes beyond the Grade 5 Georgia decimal standards (related: 5.NR.1.2 patterns when multiplying by powers of 10) | Supplemental | Coming later |
+| D05 | Rounding Decimals | Round to tenths and hundredths with number lines (halfway point) and the rounding rule; 9s and exactly-halfway cases; working backward | 5.NR.4.3 | **Built** (branch `claude/decimals-d05-d08`) |
+| D06 | Adding Decimals | Add to hundredths with grids and number lines; line up decimal points; regroup; different numbers of places; estimate; word problems | 5.NR.4.4 | **Built** (branch) |
+| D07 | Subtracting Decimals | Subtract to hundredths with grids and number lines; regroup, including across zeros; check by adding; estimate; change and comparison problems | 5.NR.4.4 | **Built** (branch) |
+| D08 | Multiplying Decimals | Supplemental: ×10/×100/×1000, decimal × whole number, tenths × tenths (area model), placing the decimal point, word problems. Goes beyond the Grade 5 Georgia decimal standards (related: 5.NR.1.2) | Supplemental | **Built** (branch), labelled "Extra: beyond Grade 5" |
 | D09 | Dividing Decimals | Supplemental: goes beyond the Grade 5 Georgia decimal standards (related: 5.NR.1.2 patterns when dividing by powers of 10) | Supplemental | Coming later |
 | D10 | Mixed Decimal Review | Cumulative application and reasoning | 5.NR.4.1–4.4 | Coming later |
 
