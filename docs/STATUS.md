@@ -2,6 +2,32 @@
 
 Updated: 2026-10-11 · Live (Lessons 1–10): https://bazeocrisy.github.io/Gabriellas-Math-Lab/ · Full audit: [audits/decimals-full-audit](audits/decimals-full-audit/AUDIT-SUMMARY.md) · Lesson 1 audit: [LESSON-1-AUDIT.md](LESSON-1-AUDIT.md)
 
+## Branch `claude/numbernova`: NumberNova redesign, built and tested, NOT merged or deployed (awaiting approval)
+- **What:** rebrand to **NumberNova: Learn. Practice. Shine.**, with four sections: Learn, Practice, Study Guides and Parent Progress. Details are in [NUMBERNOVA-IMPLEMENTATION.md](NUMBERNOVA-IMPLEMENTATION.md).
+- [x] **Identity:**
+  - Original SVG logo, icon, favicon, app icons and manifest (`assets/brand/`).
+  - New landing page, navigation (a Menu button on phones) and footer.
+  - No student name on the app's public screens.
+- [x] **Learn:** the ten lessons are unchanged at `#/learn`. "Start Lesson Over", lesson "Start New Practice" (confirms first) and "Retake Test" are added; the audited Test protections are unchanged.
+- [x] **Practice Center:**
+  - 7 modes (Adding, Subtracting, Multiplying, Dividing, Mixed, Challenge by operation, Practice My Misses) × 10/25/50 questions, through a three-step wizard.
+  - 33 seeded templates over five levels and three challenge tiers.
+  - Hints, feedback, worked solutions, pause and resume, results and history.
+  - It never counts toward mastery.
+- [x] **Study Guides:** the eight existing PDFs, with Open, Download and Print, linked from the matching lessons and practice results.
+- [x] **Parent Progress:** a separate Practice Center section; existing data loads unchanged.
+- [x] **Automated tests:** `npm test` **236/236**; `npm run test:browser` **705/705** (simulated devices, 320–1920 px).
+- [x] **Two independent reviews:**
+  - Mathematics and instruction: 66,000 answers and solutions recomputed with 0 mismatches; 1 major and 7 minor findings.
+  - UX, functional QA and accessibility: 2 major, 4 minor and 5 cosmetic findings.
+  - Fixed in `77d7325`, except the study-guide PDF branding, which was not changed by instruction.
+- [ ] **Open for owner decisions:**
+  - The study-guide PDFs still say "Gabriella's Math Lab".
+  - The reference copy of the original Decimal Lab says "Hi, Gabriella!".
+  - Separate student profiles (proposal in [STUDENT-PROFILES-PROPOSAL.md](STUDENT-PROFILES-PROPOSAL.md)).
+  - Renaming the repository.
+- [ ] Merge and deploy: **waiting for owner approval**; re-run the live suite after deploying.
+
 ## Audit corrections: live
 - **Deployed and verified live (2026-10-11).**
   - PR #11 merged into `main` (merge commit `2686431`); the GitHub Pages build of `2686431` succeeded.
