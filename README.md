@@ -41,7 +41,7 @@ NumberNova (formerly Gabriella's Math Lab) is a friendly Grade 5 mathematics pla
 
 ## Status
 
-All ten decimal lessons, with the audit corrections, are live at https://bazeocrisy.github.io/Gabriellas-Math-Lab/ under the old name. The NumberNova redesign is on branch `claude/numbernova`, awaiting approval. See [docs/STATUS.md](docs/STATUS.md) and [docs/NUMBERNOVA-IMPLEMENTATION.md](docs/NUMBERNOVA-IMPLEMENTATION.md).
+NumberNova is live at https://bazeocrisy.github.io/Gabriellas-Math-Lab/: all ten decimal lessons with the audit corrections, the Practice Center, Study Guides and Parent Progress. See [docs/STATUS.md](docs/STATUS.md) and [docs/NUMBERNOVA-IMPLEMENTATION.md](docs/NUMBERNOVA-IMPLEMENTATION.md).
 
 ## Run it
 

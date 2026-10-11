@@ -2,7 +2,13 @@
 
 Updated: 2026-10-11 · Live (Lessons 1–10): https://bazeocrisy.github.io/Gabriellas-Math-Lab/ · Full audit: [audits/decimals-full-audit](audits/decimals-full-audit/AUDIT-SUMMARY.md) · Lesson 1 audit: [LESSON-1-AUDIT.md](LESSON-1-AUDIT.md)
 
-## Branch `claude/numbernova`: NumberNova redesign, built and tested, NOT merged or deployed (awaiting approval)
+## NumberNova: live (2026-10-11)
+- **Deployed and verified live.**
+  - PR #13 merged into `main` (merge commit `4b23347`); the GitHub Pages build of `4b23347` succeeded.
+  - All 47 app and asset files served live match the merge commit.
+  - The full browser suite ran against the live URL with **705/705 pass**; Learn, Practice, Study Guides and Parent Progress all load with no console errors.
+  - Saved progress keys are unchanged (no migration needed).
+  - Known limitation accepted by the owner for live testing: the study-guide PDFs still carry the old name.
 - **What:** rebrand to **NumberNova: Learn. Practice. Shine.**, with four sections: Learn, Practice, Study Guides and Parent Progress. Details are in [NUMBERNOVA-IMPLEMENTATION.md](NUMBERNOVA-IMPLEMENTATION.md).
 - [x] **Identity:**
   - Original SVG logo, icon, favicon, app icons and manifest (`assets/brand/`).
@@ -26,7 +32,6 @@ Updated: 2026-10-11 · Live (Lessons 1–10): https://bazeocrisy.github.io/Gabri
   - The reference copy of the original Decimal Lab says "Hi, Gabriella!".
   - Separate student profiles (proposal in [STUDENT-PROFILES-PROPOSAL.md](STUDENT-PROFILES-PROPOSAL.md)).
   - Renaming the repository.
-- [ ] Merge and deploy: **waiting for owner approval**; re-run the live suite after deploying.
 
 ## Audit corrections: live
 - **Deployed and verified live (2026-10-11).**
