@@ -30,7 +30,7 @@
       const item = d.set[d.i];
       const q = G.engine.make(lessonId, item.id, item.seed);
       app.innerHTML = `
-        <div class="crumbs"><a href="#/">← Lesson menu</a></div>
+        <div class="crumbs"><a href="#/learn">← Lesson menu</a></div>
         <p class="mode-label">Lesson ${G.unit.find(lessonId).n} · Practice <span class="screen-count">Question ${d.i + 1} of ${d.set.length}</span></p>
         <div class="progress" role="progressbar" aria-label="Practice progress" aria-valuemin="1" aria-valuemax="${d.set.length}" aria-valuenow="${d.i + 1}"><span style="width:${((d.i + 1) / d.set.length) * 100}%"></span></div>
         <h1 tabindex="-1" class="q-heading">Question ${d.i + 1}</h1>
@@ -55,7 +55,7 @@
           });
         }
       });
-      document.title = `Practice ${d.i + 1} of 10 · Gabriella's Math Lab`;
+      document.title = `Practice ${d.i + 1} of 10 · NumberNova`;
     }
 
     function summary() {
@@ -90,7 +90,7 @@
       }
       const review = Object.keys(bySkill).filter((sk) => bySkill[sk].c < bySkill[sk].t);
       app.innerHTML = `
-        <div class="crumbs"><a href="#/">← Lesson menu</a></div>
+        <div class="crumbs"><a href="#/learn">← Lesson menu</a></div>
         <p class="mode-label">Lesson ${G.unit.find(lessonId).n} · Practice</p>
         <h1 tabindex="-1">Practice complete</h1>
         <p class="score-line">You answered <b>${first} of ${qs.length}</b> correctly on the first try${first ? `, ${clean === first ? (clean === 1 ? 'with no hints' : 'all with no hints') : `${clean} of them with no hints`}` : ''}.</p>
@@ -105,7 +105,7 @@
         <div class="done-actions">
           <button type="button" class="btn btn-big ${review.length ? 'btn-primary' : ''}" data-act="again">New practice session</button>
           <a class="btn btn-big ${review.length ? '' : 'btn-primary'}" href="#/${lessonId}/test">Take the Test</a>
-          <a class="btn btn-big" href="#/">Lesson menu</a>
+          <a class="btn btn-big" href="#/learn">Lesson menu</a>
         </div>`;
       app.querySelector('[data-act="again"]').addEventListener('click', () => {
         d = newSession(lessonId);
@@ -113,7 +113,7 @@
         window.scrollTo(0, 0);
         const h = app.querySelector('h1'); if (h) h.focus();
       });
-      document.title = `Practice results · Gabriella's Math Lab`;
+      document.title = `Practice results · NumberNova`;
     }
   }
 

@@ -83,14 +83,28 @@ try {
   await js('localStorage.clear();');
   await b.load(URL + 'index.html#/');
 
-  // ── Home ──
-  let r = await js(`${H} return { t: text(), modes: [...document.querySelectorAll('.btn-mode')].map((a) => a.textContent + '>' + a.getAttribute('href')),
+  // ── NumberNova landing page ──
+  let r = await js(`return { t: document.getElementById('app').innerText, h1: document.querySelector('h1').innerText, title: document.title,
+    logo: (document.querySelector('.nn-hero-logo') || {}).complete && document.querySelector('.nn-hero-logo').naturalWidth > 0,
+    headerIcon: (document.querySelector('.brand-icon') || {}).naturalWidth > 0, favicon: [...document.querySelectorAll('link[rel=icon]')].map((l) => l.getAttribute('href')),
+    pillars: [...document.querySelectorAll('.pillar')].map((a) => a.querySelector('.pillar-title').innerText + '>' + a.getAttribute('href')),
+    brand: document.querySelector('.brand').innerText.replace(/\s+/g, '') };`);
+  check('NumberNova: brand name, tagline and welcome on the landing page', r.brand === 'NumberNova' && /Ready to make your next math discovery\?/.test(r.h1) && /NumberNova/.test(r.title) && !/Gabriella/.test(r.t + r.title), r);
+  check('NumberNova: logo, header icon and favicon load', r.logo && r.headerIcon && r.favicon.includes('assets/brand/favicon.svg'), r);
+  check('NumberNova: the four main sections are on the landing page', JSON.stringify(r.pillars) === JSON.stringify(['Learn>#/learn', 'Practice>#/practice', 'Study Guides>#/guides', 'Parent Progress>#/parent']), r.pillars);
+  r = await js(`return Promise.all(['assets/brand/favicon.svg', 'assets/brand/favicon-32.png', 'assets/brand/numbernova-icon.svg', 'assets/brand/numbernova-logo.svg', 'assets/brand/apple-touch-icon.png', 'assets/brand/icon-192.png', 'assets/brand/icon-512.png', 'assets/brand/site.webmanifest']
+    .map((u) => fetch(u, { cache: 'no-store' }).then((x) => u + ' ' + x.status)));`);
+  check('NumberNova: every brand asset loads', r.every((x) => / 200$/.test(x)), r);
+  await b.load(URL + 'index.html#/learn');
+
+  // ── Learn (the ten lessons) ──
+  r = await js(`${H} return { t: text(), modes: [...document.querySelectorAll('.btn-mode')].map((a) => a.textContent + '>' + a.getAttribute('href')),
     later: document.querySelectorAll('.later-list li').length, laterButtons: document.querySelectorAll('.later-list a, .later-list button').length,
     avail: GML.unit.lessons.filter((l) => GML.unit.available(l.id)).map((l) => l.id), total: GML.unit.lessons.length };`);
-  check('home shows title and subtitles', /Gabriella's Math Lab/.test(r.t) && /Grade 5 Mathematics/.test(r.t) && /Georgia Milestones Preparation/.test(r.t), r.t.slice(0, 200));
-  check('home: every available lesson has TEACH | PRACTICE | TEST', JSON.stringify(r.modes) === JSON.stringify(r.avail.flatMap((id) => [`TEACH>#/${id}/teach/1`, `PRACTICE>#/${id}/practice`, `TEST>#/${id}/test`])), r.modes);
-  check('home: all 10 lessons listed; the rest say Coming later with no buttons', r.total === 10 && r.later === r.total - r.avail.length && r.laterButtons === 0, r);
-  check('home: Lesson Notes button for each available lesson', (await js(`return document.querySelectorAll('.btn-notes').length;`)) === r.avail.length);
+  check('learn: Decimal lessons page with grade and Milestones subtitles', /Decimal lessons/.test(r.t) && /Grade 5 Mathematics/.test(r.t) && /Georgia Milestones Preparation/.test(r.t), r.t.slice(0, 200));
+  check('learn: every available lesson has TEACH | PRACTICE | TEST', JSON.stringify(r.modes) === JSON.stringify(r.avail.flatMap((id) => [`TEACH>#/${id}/teach/1`, `PRACTICE>#/${id}/practice`, `TEST>#/${id}/test`])), r.modes);
+  check('learn: all 10 lessons listed; the rest say Coming later with no buttons', r.total === 10 && r.later === r.total - r.avail.length && r.laterButtons === 0, r);
+  check('learn: Lesson Notes button for each available lesson', (await js(`return document.querySelectorAll('.btn-notes').length;`)) === r.avail.length);
 
   // ── Teach: every screen, step reveal, guided checks with wrong then right answers ──
   await b.load(URL + 'index.html#/d01/teach/1');
@@ -259,8 +273,8 @@ try {
   check('parent: practice sessions and tests counted', /Practice sessions\s*1/.test(r) && /Tests taken\s*4/.test(r));
   await b.reload();
   check('parent: progress survives a refresh', /Tests taken\s*4/.test(await js(`return document.getElementById('app').innerText;`)));
-  await b.load(URL + 'index.html#/');
-  check('home: lesson card shows mastered status', /Mastered/.test(await js(`return document.querySelector('.lesson-card').innerText;`)));
+  await b.load(URL + 'index.html#/learn');
+  check('learn: lesson card shows mastered status', /Mastered/.test(await js(`return document.querySelector('.lesson-card').innerText;`)));
 
 
   // ── Lesson 1 progress saved by the earlier (deployed) version is kept ──
@@ -268,10 +282,10 @@ try {
   await js(`localStorage.clear(); localStorage.setItem('gml:v1:progress', JSON.stringify({ lessons: { d01: { teach: { screen: 18, furthest: 18, done: true },
     practice: { sessions: 3, skills: { parts: { c: 2, t: 3 } }, recentSigs: ['M1:4'], lastDate: '2026-10-10T12:00:00.000Z' },
     tests: [{ date: '2026-10-10T12:30:00.000Z', correct: 9, total: 10, percent: 90, mastered: true, skills: { parts: { correct: 1, total: 1 } }, missedSkills: ['model'] }], lastTestSigs: [] } } }));`);
-  await b.load(URL + 'index.html#/');
+  await b.load(URL + 'index.html#/learn');
   await b.reload();
   r = await js(`return document.querySelector('.lesson-card').innerText;`);
-  check('saved Lesson 1 progress from the earlier version still shows on the home page', /Mastered/.test(r) && /Finished/.test(r) && /3 sessions/.test(r) && /9 of 10/.test(r), r);
+  check('saved Lesson 1 progress from the earlier version still shows on the Learn page', /Mastered/.test(r) && /Finished/.test(r) && /3 sessions/.test(r) && /9 of 10/.test(r), r);
   await b.load(URL + 'index.html#/parent');
   r = await js(`return document.getElementById('app').innerText;`);
   check('saved Lesson 1 progress shows on Parent Progress, other lessons start empty', /Lesson 1: Understanding Decimals ★/.test(r) && /9 of 10 \(90%\)/.test(r) && /Lesson 2: Decimal Place Value[\s\S]*No test taken yet/.test(r), r.slice(0, 400));
@@ -489,7 +503,7 @@ try {
   r = { t: await js(`return document.getElementById('app').innerText;`), p: await progOf('d09') };
   check('integrity: 10 of 10 with a lesson page opened keeps the score but is not ★ Mastered', /Your score: 10 out of 10/.test(r.t) && /counts as practice/.test(r.t) &&
     r.p.tests[0].goalMet === true && r.p.tests[0].mastered === false && !r.p.masteredOn, r.p);
-  await b.load(URL + 'index.html#/');
+  await b.load(URL + 'index.html#/learn');
   check('integrity: the home card shows no ★ Mastered for a test with lesson pages opened', !/Mastered/.test(await js(`return [...document.querySelectorAll('.lesson-card')][8].innerText;`)));
   await b.load(URL + 'index.html#/parent');
   r = await js(`return document.getElementById('app').innerText;`);
@@ -596,7 +610,7 @@ try {
   }
   // Lesson 1 progress saved before the new screens were added still shows as finished.
   await js(`localStorage.setItem('gml:v1:progress', JSON.stringify({ lessons: { d01: { teach: { screen: 18, furthest: 18, done: true }, practice: { sessions: 0, skills: {}, recentSigs: [] }, tests: [], lastTestSigs: [] } } }));`);
-  await b.load(URL + 'index.html#/');
+  await b.load(URL + 'index.html#/learn');
   check('saved progress: Lesson 1 Teach finished before the new screens still shows as finished', /Teach Finished/.test(await js(`return document.querySelector('.lesson-card').innerText.replace(/\\s+/g, ' ');`)));
 
   // ── Keyboard focus and announcements (audit D-25, D-26) ──
@@ -682,7 +696,7 @@ try {
 
   // ── Unknown routes and reset ──
   await b.load(URL + 'index.html#/d11/teach/1');
-  check('unready lesson route falls back to home', /Gabriella's Math Lab/.test(await js(`return document.querySelector('h1').innerText;`)));
+  check('unready lesson route falls back to home', /Ready to make your next math discovery/.test(await js(`return document.querySelector('h1').innerText;`)));
   await b.load(URL + 'index.html#/parent');
   await js(`document.querySelector('[data-act=reset]').click(); document.querySelector('[data-act=really]').click();`);
   check('parent: erase progress works', /No test taken yet/.test(await js(`return document.getElementById('app').innerText;`)) && (await js(`return Object.keys(localStorage).filter((k) => k.startsWith('gml:')).length;`)) === 0);

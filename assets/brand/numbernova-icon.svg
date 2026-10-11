@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="nn-icon-title">
+  <title id="nn-icon-title">NumberNova</title>
+  <defs>
+    <linearGradient id="nn-icon-bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#2450d0"/>
+      <stop offset="1" stop-color="#6a33c8"/>
+    </linearGradient>
+  </defs>
+  <!-- Rounded tile in the brand blue-to-purple. -->
+  <rect width="64" height="64" rx="16" fill="url(#nn-icon-bg)"/>
+  <!-- Orbit: a tilted arc that sweeps around the letter. -->
+  <path d="M7.5 44.5C11 54 33 52 47 38.5 55.5 30.3 58.5 22.5 56.5 18" fill="none" stroke="#7de2cf" stroke-width="2.6" stroke-linecap="round"/>
+  <!-- The N: three strokes on a square grid (two uprights and a diagonal), with rounded joints. -->
+  <path d="M19 46.5V19.5l25 27V19.5" fill="none" stroke="#ffffff" stroke-width="7.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Nova: a four-point star sparking off the top of the N. -->
+  <path d="M50.5 6.5l2.5 6.4 6.4 2.5-6.4 2.5-2.5 6.4-2.5-6.4-6.4-2.5 6.4-2.5z" fill="#ffc83a"/>
+  <circle cx="57.5" cy="27" r="1.9" fill="#ffc83a"/>
+</svg>

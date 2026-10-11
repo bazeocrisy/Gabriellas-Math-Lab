@@ -24,7 +24,45 @@
       <li class="chip chip-test"><span class="chip-k">Test</span> ${test}</li></ul>`;
   }
 
-  function home() {
+  // Icons for the four main sections (drawn here, so no extra files or network requests).
+  const PILLAR_ICONS = {
+    learn: '<svg viewBox="0 0 48 48" aria-hidden="true" focusable="false"><path d="M6 11c7-3 13-2 18 2 5-4 11-5 18-2v26c-7-3-13-2-18 2-5-4-11-5-18-2z" fill="#fff" stroke="currentColor" stroke-width="3" stroke-linejoin="round"/><path d="M24 13v26" stroke="currentColor" stroke-width="3"/><path d="M11 18h7M11 24h7M30 18h7M30 24h7" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></svg>',
+    practice: '<svg viewBox="0 0 48 48" aria-hidden="true" focusable="false"><circle cx="22" cy="26" r="16" fill="#fff" stroke="currentColor" stroke-width="3"/><circle cx="22" cy="26" r="9" fill="none" stroke="currentColor" stroke-width="3"/><circle cx="22" cy="26" r="3" fill="currentColor"/><path d="M24 24l15-15M33 8h7v7" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+    guides: '<svg viewBox="0 0 48 48" aria-hidden="true" focusable="false"><path d="M13 6h17l8 8v26H13z" fill="#fff" stroke="currentColor" stroke-width="3" stroke-linejoin="round"/><path d="M30 6v8h8" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round"/><path d="M8 12v30h24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M19 22h12M19 28h12M19 34h8" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></svg>',
+    parent: '<svg viewBox="0 0 48 48" aria-hidden="true" focusable="false"><rect x="6" y="8" width="36" height="32" rx="5" fill="#fff" stroke="currentColor" stroke-width="3"/><path d="M13 32V24M21 32V18M29 32v-9M37 32V14" stroke="currentColor" stroke-width="4" stroke-linecap="round"/></svg>'
+  };
+  const PILLARS = [
+    { key: 'learn', href: '#/learn', title: 'Learn', text: '10 interactive decimal lessons. Each one has Teach, Practice and Test.', go: 'Start learning' },
+    { key: 'practice', href: '#/practice', title: 'Practice', text: 'Pick a skill and 10, 25 or 50 questions. Get hints and step-by-step help.', go: 'Start practicing' },
+    { key: 'guides', href: '#/guides', title: 'Study Guides', text: '8 colorful printable decimal workbooks to open, download and print.', go: 'Open the guides' },
+    { key: 'parent', href: '#/parent', title: 'Parent Progress', text: 'Test results, mastery, practice activity and skills to review.', go: 'See progress' }
+  ];
+
+  /** The NumberNova landing page: brand, a welcome, and the four main sections. */
+  function landing() {
+    const pausedHtml = G.practiceCenter && G.practiceCenter.pausedSummary ? G.practiceCenter.pausedSummary() : '';
+    app.innerHTML = `
+      <section class="nn-hero">
+        <img class="nn-hero-logo" src="assets/brand/numbernova-logo.svg" alt="NumberNova. Learn. Practice. Shine." width="330" height="76">
+        <h1 tabindex="-1">Ready to make your next math discovery?</h1>
+        <p class="nn-hero-text">Learn step by step, sharpen your skills, and see how far you can go.</p>
+        <p class="nn-hero-tags"><span>Grade 5 Mathematics</span><span>Decimals</span><span>Georgia Milestones Preparation</span></p>
+      </section>
+      ${pausedHtml}
+      <nav class="nn-pillars" aria-label="Main sections">
+        ${PILLARS.map((p) => `<a class="pillar pillar-${p.key}" href="${p.href}">
+          <span class="pillar-icon">${PILLAR_ICONS[p.key]}</span>
+          <span class="pillar-title">${p.title}</span>
+          <span class="pillar-text">${p.text}</span>
+          <span class="pillar-go">${p.go} <span aria-hidden="true">→</span></span>
+        </a>`).join('')}
+      </nav>`;
+    app.classList.add('page-home');
+    document.title = 'NumberNova · Learn. Practice. Shine.';
+  }
+
+  /** Learn: the ten decimal lessons, each with Teach, Practice, Test and Lesson Notes. */
+  function learn() {
     const cards = unit.lessons.filter((l) => ready(l.id)).map((l) => {
       const mastered = !!G.store.lesson(l.id).masteredOn;
       return `<article class="lesson-card" aria-labelledby="lc-${l.id}">
@@ -45,10 +83,12 @@
     }).join('');
     const later = unit.lessons.filter((l) => !ready(l.id)).map((l) => `<li><span class="later-num">Lesson ${l.n}</span><span class="later-title">${l.title}${/supplemental/.test(l.blurb) ? '<span class="later-note">Includes supplemental skills</span>' : ''}</span><span class="later-tag">Coming later</span></li>`).join('');
     app.innerHTML = `
-      <section class="hero">
-        <h1 tabindex="-1">Gabriella's Math Lab</h1>
-        <p class="hero-sub">Grade 5 Mathematics</p>
-        <p class="hero-sub2">Georgia Milestones Preparation</p>
+      <div class="crumbs"><a href="#/">← Home</a></div>
+      <section class="hero hero-learn">
+        <p class="section-kicker">Learn</p>
+        <h1 tabindex="-1">Decimal lessons</h1>
+        <p class="hero-sub">Grade 5 Mathematics · Georgia Milestones Preparation</p>
+        <p class="hero-sub2">Each lesson explains an idea, shows how, guides you through it, lets you practice with hints, and ends with a test you do on your own.</p>
       </section>
       <section aria-labelledby="unit-h">
         <h2 id="unit-h" class="unit-title">${unit.title} <span class="unit-count">${unit.lessons.length} lessons</span></h2>
@@ -57,13 +97,13 @@
         ${later ? `<h3 class="later-h">Coming later</h3>\n        <ul class="later-list">${later}</ul>` : ''}
       </section>`;
     app.classList.add('page-home');
-    document.title = "Gabriella's Math Lab";
+    document.title = 'Learn · NumberNova';
   }
 
   function notes(lessonId) {
     const L = G.lessonContent[lessonId];
     app.innerHTML = `
-      <div class="crumbs no-print"><a href="#/">← Lesson menu</a></div>
+      <div class="crumbs no-print"><a href="#/learn">← Lesson menu</a></div>
       <article class="notes">
         <p class="mode-label">${lessonName(lessonId)} · Lesson Notes</p>
         <h1 tabindex="-1">${L.title}</h1>
@@ -131,7 +171,7 @@
       </section>`;
     }).join('');
     app.innerHTML = `
-      <div class="crumbs"><a href="#/">← Lesson menu</a></div>
+      <div class="crumbs"><a href="#/">← Home</a></div>
       <h1 tabindex="-1">Parent Progress</h1>
       <div class="fb fb-info">
         <p><b>Progress is saved only in this browser on this device.</b> It does not transfer to other devices or browsers, and clearing browser data erases it. No account, name or personal information is collected or sent anywhere.</p>
@@ -163,7 +203,7 @@
     app.querySelector('[data-act="reset"]').addEventListener('click', () => { conf.hidden = false; });
     app.querySelector('[data-act="cancel"]').addEventListener('click', () => { conf.hidden = true; });
     app.querySelector('[data-act="really"]').addEventListener('click', () => { G.store.resetAll(); parent(); });
-    document.title = "Parent Progress · Gabriella's Math Lab";
+    document.title = 'Parent Progress · NumberNova';
   }
 
   const ASSIST = { teach: 'Teach', practice: 'Practice', notes: 'Lesson Notes' };
@@ -192,19 +232,35 @@
       else if ((m = h.match(/^#\/(d\d\d)\/test$/)) && ready(m[1])) G.views.test(app, m[1]);
       else if ((m = h.match(/^#\/(d\d\d)\/notes$/)) && ready(m[1])) notes(m[1]);
       else if (h === '#/parent') parent();
-      else home();
+      else if (h === '#/learn') learn();
+      else if (h === '#/guides' && G.views.guides) G.views.guides(app);
+      else if ((m = h.match(/^#\/practice(?:\/(session|results))?$/)) && G.views.practiceCenter) G.views.practiceCenter(app, m[1] || '');
+      else landing();
     } catch (e) {
       console.error(e);
-      app.innerHTML = '<h1 tabindex="-1">Something went wrong</h1><p>Please go back to the <a href="#/">lesson menu</a>.</p>';
+      app.innerHTML = '<h1 tabindex="-1">Something went wrong</h1><p>Please go back to the <a href="#/">home page</a>.</p>';
     }
     const mm = h.match(/^#\/d\d\d\/(teach|practice|test|notes)/);
     app.dataset.mode = mm && app.innerHTML.indexOf('Something went wrong') < 0 ? mm[1] : '';
+    const section = /^#\/(d\d\d|learn)\b/.test(h) ? 'learn' : /^#\/practice\b/.test(h) ? 'practice' : h === '#/guides' ? 'guides' : h === '#/parent' ? 'parent' : 'home';
+    document.body.dataset.section = section;
     window.scrollTo(0, 0);
     const h1 = app.querySelector('h1');
     if (h1 && document.activeElement !== h1 && route.started) h1.focus({ preventScroll: true });
     route.started = true;
-    document.querySelectorAll('.site-nav a').forEach((a) => a.toggleAttribute('aria-current', a.getAttribute('href') === (h === '#/parent' ? '#/parent' : '#/')));
+    document.querySelectorAll('.site-nav a').forEach((a) => { if (a.dataset.nav === section) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current'); });
+    setMenu(false);
   }
+
+  // Small screens: the main navigation opens from a Menu button.
+  const toggle = document.querySelector('.nav-toggle');
+  function setMenu(open) {
+    if (!toggle) return;
+    toggle.setAttribute('aria-expanded', String(open));
+    document.querySelector('.site-header').classList.toggle('nav-open', open);
+  }
+  if (toggle) toggle.addEventListener('click', () => setMenu(toggle.getAttribute('aria-expanded') !== 'true'));
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && toggle && toggle.getAttribute('aria-expanded') === 'true') { setMenu(false); toggle.focus(); } });
 
   window.addEventListener('hashchange', route);
   route();

@@ -31,7 +31,7 @@
     const STEPBTN = '<button type="button" class="btn btn-primary step-btn" data-act="step">Show next step</button>';
 
     app.innerHTML = `
-      <div class="crumbs"><a href="#/">← Lesson menu</a></div>
+      <div class="crumbs"><a href="#/learn">← Lesson menu</a></div>
       <p class="mode-label">Lesson ${G.unit.find(lessonId).n} · Teach <span class="screen-count">Screen ${i + 1} of ${total}</span></p>
       <div class="progress" role="progressbar" aria-label="Lesson progress" aria-valuemin="1" aria-valuemax="${total}" aria-valuenow="${i + 1}"><span style="width:${((i + 1) / total) * 100}%"></span></div>
       <h1 tabindex="-1">${title}</h1>
@@ -45,7 +45,7 @@
       ${sc.kind === 'done' ? `<div class="done-actions">
           <a class="btn btn-primary btn-big" href="#/${lessonId}/practice">Start Practice</a>
           <a class="btn btn-big" href="#/${lessonId}/notes">Lesson Notes</a>
-          <a class="btn btn-big" href="#/">Lesson menu</a></div>` : ''}
+          <a class="btn btn-big" href="#/learn">Lesson menu</a></div>` : ''}
       <p class="step-note fine" hidden>Show all the steps of the example to go on.</p>
       <nav class="pager" aria-label="Teach screens">
         <a class="btn" href="#/${lessonId}/teach/${i}" ${i === 0 ? 'hidden' : ''}>← Back</a>
@@ -105,7 +105,7 @@
     }
     drawSteps();
     drawNext();
-    document.title = `${title} · Teach · Gabriella's Math Lab`;
+    document.title = `${title} · Teach · NumberNova`;
   }
 
   G.views = G.views || {};
