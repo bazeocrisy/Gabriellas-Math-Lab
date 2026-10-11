@@ -134,7 +134,7 @@
       ],
       why: `${t} tenths shared into ${n} groups is ${s(t / n, 'tenth')} each: ${a} ÷ ${n} = <b>${ans}</b>.`,
       diagnose(resp, info) {
-        if (info.th === t / n * 10) return `That is ${t / n} hundredths. The pieces are tenths, so each group gets ${t / n === 1 ? 'one tenth' : 'that many tenths'}, written with one decimal place.`;
+        if (info.th === t / n * 10) return `That is ${s(t / n, 'hundredth')}. The pieces are tenths, not hundredths. Count the tenths in one group again and write them with one decimal place.`;
         if (info.th === t * n * 100) return 'That multiplied. Sharing into groups makes each group smaller: divide.';
         return `Share the ${t} tenths into ${n} equal groups and count the tenths in one group.`;
       }
@@ -156,7 +156,7 @@
       ],
       why: `${k} hundredths ÷ ${n} = ${k / n} hundredths, so ${a} ÷ ${n} = <b>${ans}</b>.`,
       diagnose(resp, info) {
-        if (info.th === k / n * 100) return `That is ${k / n} tenths. The squares are hundredths, so the answer is ${k / n} hundredths.`;
+        if (info.th === k / n * 100) return `That is ${s(k / n, 'tenth')}. The squares are hundredths, not tenths. Write the squares in one group as hundredths (two decimal places).`;
         return `Share the ${k} hundredths into ${n} groups: how many hundredths in each?`;
       }
     };
@@ -209,6 +209,7 @@
     const q = num(D.toThousandths(a) / n);
     const whole = Number(digitsOnly(a)) / n;
     const P = places(a);
+    const est = Math.max(1, Math.round(D.toThousandths(a) / 1000 / n)) * n;
     const cands = [0, 1, 2, 3].filter((k) => k !== P).map((k) => num(whole * Math.pow(10, 3 - k)));
     return {
       type: 'mc', sig: a + '/' + n,
@@ -217,7 +218,7 @@
       hints: [
         'The digits of the answer are the same. Only the decimal point is different.',
         `When you divide by a whole number, the decimal point in the answer goes straight above the decimal point in ${a}.`,
-        `Check by estimating: ${a} ÷ ${n} should be about ${Math.round(D.toThousandths(a) / 1000)} ÷ ${n}.`
+        `Check by estimating: ${a} is close to ${est}, and ${est} ÷ ${n} = ${est / n}.`
       ],
       why: `The decimal point stays in the same place as in ${a}: ${a} ÷ ${n} = <b>${q}</b>. Check: ${q} × ${n} = ${a}.`,
       diagnose(resp) { return `Check it by multiplying: ${resp} × ${n} is not ${a}. Keep the decimal point above the decimal point in ${a}.`; }
@@ -229,7 +230,8 @@
   T('C1', 'dCheck', (r, p) => {
     const { a, n, q } = p.a ? { a: p.a, n: p.n, q: num(D.toThousandths(p.a) / p.n) } : exactDiv(r, {});
     const right = `${q} × ${n} = ${a}`;
-    const wrongs = [`${a} × ${n} = ${num(D.toThousandths(a) * n)}`, `${q} + ${n} = ${num(D.toThousandths(q) + n * 1000)}`, `${a} − ${q} = ${num(D.toThousandths(a) - D.toThousandths(q))}`];
+    const q10 = num(D.toThousandths(q) * 10);
+    const wrongs = [`${a} × ${n} = ${num(D.toThousandths(a) * n)}`, `${q10} × ${n} = ${num(D.toThousandths(q10) * n)}`, `${q} × 10 = ${q10}`];
     return {
       type: 'mc', sig: a + '/' + n,
       prompt: `${a} ÷ ${n} = ${q}. Which multiplication <b>checks</b> this answer?`,
@@ -237,13 +239,13 @@
       hints: [
         'Multiplication and division undo each other.',
         `If ${n} equal groups of ${q} make ${a}, the division is right.`,
-        `So multiply the answer (${q}) by the number you divided by (${n}).`
+        'So multiply the answer of the division by the number you divided by. Which choice does that, and gives the starting number?'
       ],
       why: `${n} groups of ${q} make ${a}: ${q} × ${n} = ${a}, so ${a} ÷ ${n} = ${q} is right.`,
       diagnose(resp) {
-        if (resp.includes('+')) return 'A division is checked with multiplication, not addition.';
-        if (resp.includes('−')) return 'A division is checked with multiplication, not subtraction.';
-        return 'Multiply the ANSWER by the number you divided by, not the starting number.';
+        if (resp.startsWith(a + ' ×')) return 'Multiply the ANSWER by the number you divided by, not the starting number.';
+        if (resp.includes('× 10 =')) return `Multiply by the number you divided by, ${n}, not by 10.`;
+        return `Look at the product: it should be the starting number, ${a}. Check where the decimal point is in the number being multiplied.`;
       }
     };
   });
@@ -258,7 +260,7 @@
     const name = p.name || r.pick(['Ava', 'Leo', 'Mia', 'Sam', 'Eli']);
     const ans = claimRight ? `Yes. ${said} × ${n} = ${a}.` : `No. ${said} × ${n} = ${back}, not ${a}.`;
     const wrongs = claimRight
-      ? [`No. ${said} × ${a} should be ${n}.`, `No. The answer must be bigger than ${a}.`, `Yes, because ${said} has one decimal place.`]
+      ? [`No. ${said} × ${a} should be ${n}.`, `No. The answer must be bigger than ${a}.`, `No, because ${said} has only one decimal place.`]
       : [`Yes, because ${said} has the same digits as ${q}.`, `Yes, because division answers are always bigger.`, `No. The answer must be bigger than ${a}.`];
     return {
       type: 'mc', sig: a + '/' + n + (claimRight ? 'r' : 'w'),
@@ -284,13 +286,14 @@
     if (!a) for (;;) { n = r.int(2, 6); const qk = r.int(1, 20) * 1000 + r.int(0, 99) * 10; const ak = qk * n; if (qk % 1000 && ak <= 60000 && D.parse(num(ak)).places >= D.parse(num(qk)).places) { a = num(ak); break; } }
     const q = num(D.toThousandths(a) / n);
     const money = (v) => '$' + f(D.toThousandths(v), 2);
-    const qq = divQuestion(a, n, q);
+    const qq = divQuestion(a, n, q), baseDiagnose = qq.diagnose;
     return Object.assign(qq, {
       sig: 'share' + a + '/' + n,
       prompt: `${n} friends share <b>${money(a)}</b> equally. How much does each friend get?`,
       answerText: money(q),
       hints: [`"Share equally" means divide: ${money(a)} ÷ ${n}.`, `Start with the whole dollars in ${money(a)}. How many groups of ${n} fit? Write that, then the decimal point straight above the one in ${money(a)}.`, `Then share the dimes (tenths) and the cents (hundredths), one place at a time. Check by multiplying your answer by ${n}.`],
-      why: `${money(a)} ÷ ${n} = <b>${money(q)}</b>. Check: ${money(q)} × ${n} = ${money(a)}.`
+      why: `${money(a)} ÷ ${n} = <b>${money(q)}</b>. Check: ${money(q)} × ${n} = ${money(a)}.`,
+      diagnose: (resp, info) => baseDiagnose(resp, info).replace(`should equal ${a}.`, `should equal ${money(a)}.`)
     });
   });
 

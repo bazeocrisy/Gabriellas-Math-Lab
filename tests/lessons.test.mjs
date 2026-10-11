@@ -350,3 +350,24 @@ test('curriculum review regressions (Lessons 9–10)', () => {
   // L10 reviews greatest-to-least ordering and halfway rounding.
   assert.ok(engine.banks.d10.byId.RC4 && engine.banks.d10.byId.RR4);
 });
+
+test('mathematics review regressions (Lessons 9–10, second pass)', () => {
+  for (let seed = 1; seed <= 300; seed++) {
+    // L9 C1: every choice is a multiplication; the last hint names no numbers from the right choice.
+    const c1 = engine.make('d09', 'C1', seed);
+    for (const c of c1.choices) assert.match(c.value, /×/);
+    assert.doesNotMatch(c1.hints[2], /\d/);
+    // L9 M1/M2: the "wrong unit" feedback does not name the answer's count.
+    const m1 = engine.make('d09', 'M1', seed), m2 = engine.make('d09', 'M2', seed);
+    assert.doesNotMatch(m1.diagnose(String(D.toThousandths(m1.answer) / 10000), { th: D.toThousandths(m1.answer) / 10 }), /each group gets/);
+    assert.doesNotMatch(m2.diagnose('x', { th: D.toThousandths(m2.answer) * 10 }), /answer is/);
+    // L9 K1: fallback feedback keeps dollars.
+    const k1 = engine.make('d09', 'K1', seed);
+    assert.match(k1.diagnose('1', { th: 1000 }), /should equal \$\d+\.\d\d\./);
+    // L10 X4: the ones digit of the difference never equals the asked digit.
+    const x4 = engine.make('d10', 'X4', seed); const [a, b] = numbersIn(x4); const k = D.toThousandths(a) - D.toThousandths(b);
+    assert.notEqual(String(Math.floor(k / 1000) % 10), x4.answer, `X4/${seed}`);
+  }
+  // L9 C2: no wrong "Yes" choice has a true reason.
+  for (let seed = 1; seed <= 300; seed++) for (const c of engine.make('d09', 'C2', seed).choices) assert.doesNotMatch(c.value, /^Yes, because .* has one decimal place/);
+});

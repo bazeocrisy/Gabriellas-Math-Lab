@@ -121,7 +121,7 @@
 
   T('X4', 'rvMulti', (r, p) => {
     let a = p.a, b = p.b;
-    if (!a) for (;;) { a = dec2(r, 2, 12); b = dec2(r, 1, 9); if (D.cmp(a, b) > 0) break; }
+    if (!a) for (;;) { a = dec2(r, 2, 12); b = dec2(r, 1, 9); if (D.cmp(a, b) <= 0) continue; const dk = D.toThousandths(a) - D.toThousandths(b), o = Math.floor(dk / 1000) % 10; if (o !== Math.floor(dk / 100) % 10 && o !== Math.floor(dk / 10) % 10) break; } // a misread ones digit never scores
     const diff = num(D.toThousandths(a) - D.toThousandths(b));
     const dg = D.parse(f(D.toThousandths(diff), 2)).frac;
     const place = p.place || r.pick(['tenths', 'hundredths']);
@@ -129,7 +129,8 @@
     const other = place === 'tenths' ? dg[1] : dg[0];
     const nb = D.parse(f(D.toThousandths(K.noBorrowSub(a, b)), 2)).frac;
     const flip = place === 'tenths' ? nb[0] : nb[1];
-    const pool = [other, flip, String((Number(ans) + 1) % 10), String((Number(ans) + 9) % 10)];
+    const ones = String(Math.floor(D.toThousandths(diff) / 1000) % 10);
+    const pool = [other, flip, ones, String((Number(ans) + 1) % 10), String((Number(ans) + 9) % 10)];
     const wrongDigits = [...new Set(pool)].filter((d) => d !== ans).slice(0, 3);
     return {
       type: 'mc', sig: a + '-' + b + place,
@@ -144,6 +145,8 @@
       why: `${a} − ${b} = ${f(D.toThousandths(diff), 2)}, so the ${place} digit is <b>${ans}</b>.`,
       diagnose(resp) {
         if (resp === other && other !== flip) return `That is the digit in the ${place === 'tenths' ? 'hundredths' : 'tenths'} place. Tenths are the first digit after the decimal point; hundredths are the second.`;
+        if (resp === other) return `Check two things: tenths are the first digit after the decimal point and hundredths the second, and when the top digit is smaller, take one from the next place to the left.`;
+        if (resp === ones) return 'That is the ones digit, before the decimal point. Tenths and hundredths come after it.';
         if (resp === flip) return 'It looks like a column was flipped instead of regrouped. When the top digit is smaller, take one from the next place to the left.';
         return 'Subtract carefully (check by adding), then count places from the decimal point in your answer.';
       }
