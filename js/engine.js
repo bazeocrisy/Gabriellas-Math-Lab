@@ -47,6 +47,11 @@
     q.skill = t.skill;
     q.lesson = lessonId;
     q.sig = templateId + ':' + q.sig;
+    // A typed answer that must show a set number of decimal places says so (unless the prompt already does).
+    if (q.type === 'number' && q.places != null && !/decimal place|after the decimal point/.test(q.prompt)) {
+      const n = ['no', 'one', 'two', 'three'][q.places];
+      q.prompt += ` <span class="fmt-note">(Write your answer with ${n} digit${q.places === 1 ? '' : 's'} after the decimal point, even if ${q.places === 1 ? 'it is' : 'the last one is'} a zero.)</span>`;
+    }
     return q;
   }
 
@@ -148,11 +153,14 @@
   /**
    * Choose `count` questions for a session as [{ id, seed }], spread across skills by `plan`
    * ({ skill: count }), varied templates, and no repeated question (by signature) in the set or in `exclude`.
+   * `avoid` lists questions to leave out when possible (recently seen ones); a small bank may still reuse them
+   * rather than fail.
    */
-  function buildSet(lessonId, { plan, seed, exclude, skip }) {
+  function buildSet(lessonId, { plan, seed, exclude, avoid, skip }) {
     const bank = banks[lessonId];
     const r = rng(seed);
     const ex = exclude || new Set();
+    const soft = avoid || new Set();
     const used = new Set();
     const usedTemplates = {};
     const slots = [];
@@ -161,12 +169,12 @@
     for (const skill of r.shuffle(slots)) {
       const ts = bank.templates.filter((t) => t.skill === skill && !(skip && skip.includes(t.id)));
       let chosen = null;
-      for (let tries = 0; tries < 200 && !chosen; tries++) {
+      for (let tries = 0; tries < 300 && !chosen; tries++) {
         const fresh = ts.filter((t) => !usedTemplates[t.id]);
         const t = r.pick(tries < 100 && fresh.length ? fresh : ts);
         const s = r.int(1, 2147483646);
         const q = make(lessonId, t.id, s);
-        if (used.has(q.sig) || ex.has(q.sig)) continue;
+        if (used.has(q.sig) || ex.has(q.sig) || (tries < 200 && soft.has(q.sig))) continue;
         chosen = { id: t.id, seed: s, sig: q.sig };
       }
       if (!chosen) throw new Error('could not build a question for ' + skill);

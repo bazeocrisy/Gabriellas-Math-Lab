@@ -48,6 +48,27 @@
         <p>The tenths are the same (4). In the hundredths, 7 is more than 2, so 0.472 is greater.</p>`
     },
     {
+      id: 'missing', title: 'A missing digit', skill: 'cmpPlace',
+      goal: 'how to find a digit that makes a comparison true.',
+      body: '<p>Sometimes one digit is hidden in a box. Use place value to decide which digits can go in the box and still make the comparison true.</p>',
+      example: 'Worked example: which digit can go in the box? 0.5▢8 &lt; 0.546. Choices: 7, 2, 9, 6',
+      exampleVisual: `<div class="chart-stack">${M.chart({ ones: '0', tenths: '5', hundredths: '?', thousandths: '8' }, { caption: '0.5▢8 (the box is in the hundredths place)' })}${M.chart({ ones: '0', tenths: '5', hundredths: '4', thousandths: '6' }, { caption: '0.546' })}</div>`,
+      steps: [
+        '<b>Step 1.</b> Line up the two numbers by place value, as in the charts.',
+        '<b>Step 2.</b> Compare from the left. Ones: both 0. Tenths: both 5. These places do not decide.',
+        '<b>Step 3.</b> The next place is the hundredths, where the box is. For 0.5▢8 to be <b>less</b>, the box digit must be <b>less than 4</b>: 0, 1, 2 or 3.',
+        '<b>Step 4.</b> Check the choices: 7, 9 and 6 are all greater than 4, so they make 0.5▢8 greater. Only <b>2</b> is less than 4.',
+        '<b>Answer:</b> <span class="big-num">2</span> Check: 0.528 &lt; 0.546 ✓ (5 tenths = 5 tenths, and 2 hundredths &lt; 4 hundredths).'
+      ],
+      why: 'The first place where two decimals have different digits decides the comparison. The tenths are the same, so the hundredths place, where the box is, decides it. (If the box held the same digit, 4, the thousandths would decide instead: 0.548 is greater than 0.546.)'
+    },
+    {
+      id: 'check-missing', title: 'Try it together', kind: 'check', skill: 'cmpPlace',
+      check: { t: 'S5', params: { want: '>', a: 7, b: 4, c: 5, d: 2 } },
+      reteach: `<p><b>Let's look again.</b> For 0.3▢1 &gt; 0.362, the tenths are the same (3), so the box (the hundredths place) decides. It must be greater than 6: 7, 8 or 9.</p>
+        <p>Do the same with your problem: find the first place that is different, and compare the box with the digit in that place.</p>`
+    },
+    {
       id: 'zeros', title: 'Different numbers of digits', skill: 'cmpLength',
       goal: 'how to compare decimals that have different numbers of digits.',
       body: '<p>When two decimals have different numbers of digits, write <b>zeros at the end</b> so they have the same number of places. Zeros at the end do not change a decimal.</p>',
@@ -218,6 +239,6 @@
         .map(([a, b]) => [`S1:${a}|${b}`, `S1:${b}|${a}`, `L1:${a}|${b}`, `L1:${b}|${a}`, `E1:${a}|${b}`, `E1:${b}|${a}`, `S3:${a}|${b}`, `S3:${b}|${a}`,
           `S4:${a}${b}`, `S4:${b}${a}`, `L2:${a}${b}greater`, `L2:${b}${a}greater`, `L2:${a}${b}less`, `L2:${b}${a}less`,
           `S2:${a}${b}greater`, `S2:${b}${a}greater`, `S2:${a}${b}less`, `S2:${b}${a}less`, `Y2:${a}${b}`, `Y2:${b}${a}`, `NL2:${a}${b}`, `NL2:${b}${a}`]),
-      ['NL1:3:27', 'NL1:7:36', 'L3:0.4', 'L3:0.2'])
+      ['NL1:3:27', 'NL1:7:36', 'L3:0.4', 'L3:0.2', 'S5:<5468', 'S5:>3621'])
   };
 })(typeof window !== 'undefined' ? (window.GML = window.GML || {}) : (globalThis.GML = globalThis.GML || {}));

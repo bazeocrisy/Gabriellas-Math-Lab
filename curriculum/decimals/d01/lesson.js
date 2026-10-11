@@ -72,6 +72,43 @@
         ${M.grid(13)}<p>1 column = 1 tenth, and 3 squares = 3 hundredths, so it shows 0.13. Count your grid the same way: full columns first, then extra squares.</p>`
     },
     {
+      id: 'line', title: 'Decimals on a number line', skill: 'model',
+      body: `<p>A <b>number line</b> shows numbers in order: smaller numbers on the left, greater numbers on the right.</p>
+        <p>This line starts at <b>0</b> and ends at <b>1</b>. The <b>tick marks</b> cut it into <b>10 equal jumps</b> (a jump is the space between two tick marks). 10 equal jumps make one whole, so each jump is <b>one tenth (0.1)</b>.</p>`,
+      visual: M.line({ from: 0, to: 1000, labels: ['0', '1'], tickLabels: true, label: 'A number line from 0 to 1 with 10 equal jumps. The tick marks are labelled 0.1, 0.2, 0.3 and so on up to 0.9.' }),
+      example: 'Worked example: what decimal is at point A?',
+      exampleVisual: M.line({ from: 0, to: 1000, point: 600, labels: ['0', '1'] }),
+      steps: [
+        '<b>Step 1.</b> Read the numbers at the ends of the line: 0 and 1.',
+        '<b>Step 2.</b> Count the equal jumps between 0 and 1: there are 10. So each jump is one tenth (0.1).',
+        '<b>Step 3.</b> Start at 0 and count the jumps (the spaces, not the tick marks) to point A: 1, 2, 3, 4, 5, 6.',
+        '<b>Step 4.</b> 6 jumps of one tenth is 6 tenths: <span class="big-num">0.6</span>'
+      ],
+      why: 'All the jumps are the same size, so counting jumps is like counting the shaded parts of a tenths bar: 6 jumps of one tenth make 6 tenths.'
+    },
+    {
+      id: 'zoom', title: 'Zooming in on a number line', skill: 'model',
+      body: `<p>We can <b>zoom in</b> on one jump. Here is the last jump of the 0 to 1 line, from <b>0.9</b> to <b>1</b>, made much bigger.</p>
+        <p>This piece of the line is also cut into <b>10 equal jumps</b>. One tenth cut into 10 equal parts makes hundredths, so each small jump is <b>one hundredth (0.01)</b>.</p>`,
+      visual: M.line({ from: 900, to: 1000, labels: ['0.9', '1'], tickLabels: true, label: 'A zoomed-in number line from 0.9 to 1 with 10 equal jumps. The tick marks are labelled 0.91, 0.92 and so on up to 0.99.' }),
+      example: 'Worked example: what decimal is at point A?',
+      exampleVisual: M.line({ from: 900, to: 1000, point: 930, labels: ['0.9', '1'] }),
+      steps: [
+        '<b>Step 1.</b> Read the ends: 0.9 and 1. They are one tenth apart.',
+        '<b>Step 2.</b> There are 10 equal jumps between them, so each jump is one hundredth (0.01).',
+        '<b>Step 3.</b> Write the left end in hundredths: 0.9 = 0.90. Count the jumps from 0.90 to point A: 1, 2, 3.',
+        '<b>Step 4.</b> 0.90 and 3 more hundredths is <span class="big-num">0.93</span>'
+      ],
+      why: '10 hundredths make one tenth, so the space from 0.90 to 1.00 holds 10 hundredths: 0.91, 0.92, 0.93, and so on.'
+    },
+    {
+      id: 'check-line', title: 'Try it together', kind: 'check', skill: 'model',
+      check: { t: 'M8', params: { a: 6, b: 8 } },
+      reteach: `<p><b>Let's look again.</b> First find the size of one jump. This line goes from 0.3 to 0.4, one tenth, cut into 10 equal jumps, so each jump is 0.01.</p>
+        ${M.line({ from: 300, to: 400, point: 340, labels: ['0.3', '0.4'] })}
+        <p>Point A is 4 jumps past 0.30, so A is at 0.34. Count your line the same way: start at the left label and count the jumps.</p>`
+    },
+    {
       id: 'thousandths', title: 'Thousandths', skill: 'model',
       body: `<p>Now cut <b>one hundredth</b> (one small square) into 10 thin equal slices. Each slice is <b>one thousandth</b>, written <span class="big-num">0.001</span></p>
         <p>A whole has 1000 thousandths. They are too small to draw all at once, so we <b>zoom in</b> on one square.</p>`,
@@ -121,11 +158,11 @@
       ]
     },
     {
-      id: 'check-chart', title: 'Try it together', kind: 'check', skill: 'place',
-      check: { t: 'PL3', params: { num: '0.481', pl: 2 } },
-      reteach: `<p><b>Let's look again.</b> Put the number in a chart to see each digit's place.</p>
-        ${M.chart({ ones: '0', tenths: '4', hundredths: '8', thousandths: '1' }, { caption: '0.481' })}
-        <p>For example, the 4 is in the tenths place, so it is worth 4 tenths = 0.4. Now find the 8. Which place is it in, and what is it worth?</p>`
+      id: 'check-chart-typed', title: 'Try it together', kind: 'check', skill: 'place',
+      check: { t: 'PL5', params: { num: '0.481' } },
+      reteach: `<p><b>Let's look again.</b> Here is 0.635 in a chart. The digit left of the point goes in Ones, and the digits after the point go in Tenths, Hundredths and Thousandths, in order.</p>
+        ${M.chart({ ones: '0', tenths: '6', hundredths: '3', thousandths: '5' }, { caption: '0.635' })}
+        <p>Type each digit of your number into its box the same way.</p>`
     },
     {
       id: 'sixvs', title: '0.6 and 0.06 are different', skill: 'place',
@@ -171,7 +208,8 @@
     },
     {
       id: 'careful', title: 'Watch out: 0.4 and 0.35', skill: 'compare',
-      body: '<p>Some students think 0.35 is bigger than 0.4 because 35 is bigger than 4. Let\'s check with place value.</p>',
+      body: `<p>Some students think 0.35 is bigger than 0.4 because 35 is bigger than 4. Let's check with place value.</p>
+        <p>We write comparisons with symbols: <b>&gt;</b> means "is greater than", <b>&lt;</b> means "is less than", and <b>=</b> means "is equal to". The open side of &gt; or &lt; faces the greater number.</p>`,
       exampleVisual: pair(M.grid(40), M.grid(35), '0.4', '0.35'),
       example: 'Worked example: which is greater, 0.4 or 0.35?',
       steps: [
@@ -180,6 +218,12 @@
         '<b>Step 3.</b> 40 hundredths is more than 35 hundredths, so <span class="big-num">0.4 &gt; 0.35</span> The grids show it too.',
         'Or compare the tenths first: 0.4 has 4 tenths, 0.35 has only 3 tenths. More tenths means greater.'
       ]
+    },
+    {
+      id: 'check-compare', title: 'Try it together', kind: 'check', skill: 'compare',
+      check: { t: 'C2', params: { variant: 'zero', a: 3, b: 2 } },
+      reteach: `<p><b>Let's look again.</b> Compare 0.6 and 0.08. Write both with two decimal places: 0.60 and 0.08.</p>
+        <p>60 hundredths is more than 8 hundredths, so 0.6 &gt; 0.08. The open side of &gt; faces 0.6, the greater number.</p>`
     },
     {
       id: 'words', title: 'Reading and writing decimals', skill: 'words',
@@ -206,7 +250,8 @@
           <li>After the decimal point: tenths, hundredths, thousandths.</li>
           <li>A zero after the point holds a place: 0.05 is not 0.5.</li>
           <li>A zero at the end does not change the value: 0.5 = 0.50.</li>
-          <li>Compare place by place: 0.4 &gt; 0.35.</li>
+          <li>On a number line from 0 to 1 with 10 equal jumps, each jump is 0.1. Zoom in on one jump and each small jump is 0.01.</li>
+          <li>Compare place by place: 0.4 &gt; 0.35 (&gt; means "is greater than", &lt; means "is less than").</li>
         </ul>
         <p>You finished the lesson! Next, practice with hints, or read the Lesson Notes.</p>`
     }
@@ -226,6 +271,8 @@
       <dt>Thousandth</dt><dd>One of 1000 equal parts of a whole. Written 0.001. 10 thousandths = 1 hundredth.</dd>
       <dt>Place value</dt><dd>The value of a digit depends on its place. The 6 in 0.6 is 6 tenths; the 6 in 0.06 is 6 hundredths.</dd>
       <dt>Equivalent decimals</dt><dd>Decimals that name the same amount, like 0.5 = 0.50 = 0.500.</dd>
+      <dt>Number line</dt><dd>A line that shows numbers in order. Tick marks cut it into equal jumps; count the jumps from the left end.</dd>
+      <dt>&gt; and &lt;</dt><dd>&gt; means "is greater than" and &lt; means "is less than". The open side faces the greater number: 0.4 &gt; 0.35.</dd>
     </dl>
 
     <h2>The place-value chart</h2>
@@ -247,6 +294,13 @@
       <h3>Thousandths</h3>
       ${M.grid(15, { thou: 3 })}
       <p>1 column (1 tenth), 5 squares (5 hundredths), 3 thin slices (3 thousandths): <b>0.153</b>.</p>
+    </div>
+    <div class="note-ex">
+      <h3>Number lines</h3>
+      ${M.line({ from: 0, to: 1000, point: 600, labels: ['0', '1'] })}
+      <p>10 equal jumps from 0 to 1, so each jump is 0.1. Point A is 6 jumps from 0: <b>0.6</b>.</p>
+      ${M.line({ from: 900, to: 1000, point: 930, labels: ['0.9', '1'] })}
+      <p>Zoomed in from 0.9 to 1: each jump is 0.01. Point A is 3 jumps past 0.90: <b>0.93</b>.</p>
     </div>
     <div class="note-ex">
       <h3>Equivalent decimals</h3>
@@ -275,6 +329,7 @@
     // Sets used by Teach checks, so Practice and Test do not repeat them.
     teachSigs: screens.filter((s) => s.check).map((s) => G.engine.make('d01', s.check.t, 1, s.check.params).sig)
       // Worked examples on Teach screens, reteach cards and Lesson Notes.
-      .concat(['M1:3', 'M1:2', 'M2:13', 'M3:4', 'M9:153', 'P3:0:4', 'P3:0:2', 'W1:0.06', 'W1:2.5', 'W1:0.4', 'W1:0.004', 'W2:0.43', 'W2:0.207', 'W4:0.43', 'W4:0.207', 'C2:0.5|0.50', 'C2:0.50|0.5', 'E2:0.5|0.50', 'E2:0.50|0.5'])
+      .concat(['M1:3', 'M1:2', 'M2:13', 'M3:4', 'M9:153', 'P3:0:4', 'P3:0:2', 'W1:0.06', 'W1:2.5', 'W1:0.4', 'W1:0.004', 'W2:0.43', 'W2:0.207', 'W4:0.43', 'W4:0.207', 'C2:0.5|0.50', 'C2:0.50|0.5', 'E2:0.5|0.50', 'E2:0.50|0.5',
+        'M7:6', 'M8:9:3', 'M8:3:4', 'C2:0.08|0.6', 'C2:0.6|0.08', 'PL5:0.635', 'PL3:0.481'])
   };
 })(typeof window !== 'undefined' ? (window.GML = window.GML || {}) : (globalThis.GML = globalThis.GML || {}));

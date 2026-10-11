@@ -10,6 +10,9 @@
     const i = Math.min(Math.max((n || 1) - 1, 0), total - 1);
     if (i + 1 !== n) { location.replace(`#/${lessonId}/teach/${i + 1}`); return; }
     const sc = L.screens[i];
+    // A guided check is named after the teaching screen just before it, so every page title is different.
+    const topic = sc.kind === 'check' ? (L.screens.slice(0, i).reverse().find((x) => !x.kind) || {}).title : '';
+    const title = topic && sc.title === 'Try it together' ? `Try it together: ${topic}` : sc.title;
     G.store.update(lessonId, (p) => {
       p.teach.screen = i;
       // Progress only counts when screens are reached in order (not by jumping in from a link).
@@ -31,12 +34,12 @@
       <div class="crumbs"><a href="#/">← Lesson menu</a></div>
       <p class="mode-label">Lesson ${G.unit.find(lessonId).n} · Teach <span class="screen-count">Screen ${i + 1} of ${total}</span></p>
       <div class="progress" role="progressbar" aria-label="Lesson progress" aria-valuemin="1" aria-valuemax="${total}" aria-valuenow="${i + 1}"><span style="width:${((i + 1) / total) * 100}%"></span></div>
-      <h1 tabindex="-1">${sc.title}</h1>
+      <h1 tabindex="-1">${title}</h1>
       ${sc.goal ? `<p class="goal"><b>You will learn:</b> ${sc.goal}</p>` : ''}
       <div class="teach-body">${sc.body || ''}</div>
       ${sc.visual ? `<div class="teach-visual">${sc.visual}</div>` : ''}
-      ${sc.example || sc.exampleVisual ? `<section class="example">${sc.example ? `<h2>${sc.example}</h2>` : ''}${sc.exampleVisual ? `<div class="teach-visual">${sc.exampleVisual}</div>` : ''}<ol class="steps"></ol>${STEPBTN}${WHY}</section>`
-        : steps.length ? `<section class="example"><ol class="steps"></ol>${STEPBTN}${WHY}</section>` : ''}
+      ${sc.example || sc.exampleVisual ? `<section class="example">${sc.example ? `<h2>${sc.example}</h2>` : ''}${sc.exampleVisual ? `<div class="teach-visual">${sc.exampleVisual}</div>` : ''}<ol class="steps" aria-live="polite"></ol>${STEPBTN}${WHY}</section>`
+        : steps.length ? `<section class="example"><ol class="steps" aria-live="polite"></ol>${STEPBTN}${WHY}</section>` : ''}
       ${sc.widget ? `<details class="try-it"><summary>Try it yourself: shade a model</summary><p>Use the + and − buttons to shade the model. Watch how the decimal changes.</p><div class="widget"></div></details>` : ''}
       ${sc.kind === 'check' ? '<section class="guided"><p class="guided-intro">Let\'s check that idea. Answer this question. You can use hints.</p><div class="check-host"></div></section>' : ''}
       ${sc.kind === 'done' ? `<div class="done-actions">
@@ -54,6 +57,8 @@
     function drawSteps() {
       if (!stepsEl) return;
       stepsEl.innerHTML = steps.slice(0, shown).map((s) => `<li>${s}</li>`).join('');
+      // Steps that say "Step 1." themselves are not numbered again by the list.
+      stepsEl.classList.toggle('steps-labelled', steps.some((s) => /^<b>Step \d/.test(s)));
       // "Why it works" appears once the whole example has been shown.
       const why = app.querySelector('.why-box');
       if (why) why.hidden = shown < steps.length;
@@ -78,7 +83,10 @@
       drawNext();
       const last = stepsEl.lastElementChild;
       if (last && last.scrollIntoView) last.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
-      if (shown >= steps.length) nextBtn.focus({ preventScroll: true });
+      if (shown >= steps.length) {
+        const why = app.querySelector('.why-box');
+        if (why) { why.tabIndex = -1; why.focus({ preventScroll: true }); } else nextBtn.focus({ preventScroll: true });
+      }
     });
     nextBtn.addEventListener('click', () => { location.hash = `#/${lessonId}/teach/${i + 2}`; });
 
@@ -91,12 +99,13 @@
         state: G.store.getDraft(draftKey) || {},
         remind: sc.reteach,
         onChange: (st) => G.store.setDraft(draftKey, st),
+        focusAfter: () => nextBtn,
         onSolved: () => { checkSolved = true; drawNext(); }
       });
     }
     drawSteps();
     drawNext();
-    document.title = `${sc.title} · Teach · Gabriella's Math Lab`;
+    document.title = `${title} · Teach · Gabriella's Math Lab`;
   }
 
   G.views = G.views || {};

@@ -252,7 +252,7 @@ test('curriculum review regressions (Lessons 2–4)', () => {
   for (const id of ['O1', 'O2', 'O3', 'W2']) for (let seed = 1; seed <= 150; seed++) {
     const q = engine.make('d04', id, seed);
     const perms = [q.answer.slice().reverse(), [q.answer[1], q.answer[0], ...q.answer.slice(2)], [...q.answer.slice(1), q.answer[0]]];
-    for (const w of perms) { const m = engine.check(q, w).message || ''; assert.doesNotMatch(m, /Positions 1 to [01]/, id + ' ' + m); }
+    for (const w of perms) { const m = engine.check(q, w).message || ''; assert.doesNotMatch(m, /Positions 1 to [01]\b/, id + ' ' + m); }
   }
   // R2 says how many places the digit moved.
   const r2 = engine.make('d02', 'R2', 1, { d: 6, kind: 'times', ib: 3 });

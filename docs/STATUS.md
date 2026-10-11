@@ -1,8 +1,52 @@
 # Project status
 
-Updated: 2026-10-10 · Live (Lessons 1–8): https://bazeocrisy.github.io/Gabriellas-Math-Lab/ · Lessons 9–10: branch `claude/decimals-d09-d10` · Lesson 1 audit: [LESSON-1-AUDIT.md](LESSON-1-AUDIT.md)
+Updated: 2026-10-11 · Live (Lessons 1–10): https://bazeocrisy.github.io/Gabriellas-Math-Lab/ · Full audit: [audits/decimals-full-audit](audits/decimals-full-audit/AUDIT-SUMMARY.md) · Lesson 1 audit: [LESSON-1-AUDIT.md](LESSON-1-AUDIT.md)
 
-## Branch `claude/decimals-d09-d10`: Lessons 9–10, built and tested, NOT merged or deployed (awaiting approval)
+## Branch `claude/decimals-audit-corrections`: audit corrections, built and tested, NOT merged or deployed (awaiting approval)
+- **What it fixes:** all 34 findings of the full 10-lesson audit of `79abadc` (6 major, 22 minor, 6 cosmetic). Details are in [CORRECTION-RESULTS.md](audits/decimals-full-audit/CORRECTION-RESULTS.md).
+- **Owner decisions applied:**
+  - Number lines are taught in Lesson 1.
+  - A Test may be left and resumed. Opening Teach, Practice or Lesson Notes during it keeps the score but does not earn ★ Mastered.
+  - Lessons 8–9 stay labelled supplemental until the official standards can be checked.
+- [x] **Test integrity:**
+  - Practice never shows an open Test's questions.
+  - A second or stale tab cannot overwrite or re-submit a Test; each attempt is recorded once.
+  - Mastery and the test count survive the 20-test history.
+  - Retakes avoid the last 3 tests' questions.
+  - No answer is given away by choice length, position or whole part.
+  - Practice separates "first try" from "first try with no hints".
+  - Re-checking the same wrong answer is not a new try.
+- [x] **Teach what is tested:** Lessons 1, 3 and 9 gained screens (now 147 screens, including 63 guided checks), and Lessons 6, 7 and 8 gained pictures and examples:
+  - Lesson 1: number lines (tenths and a zoomed hundredths line), comparison symbols with a guided check, and the typed chart as a guided check;
+  - Lesson 2: typed expanded form as a guided check;
+  - Lesson 3: missing-digit comparisons;
+  - Lessons 6–7: number-line jump pictures;
+  - Lesson 8: an area example;
+  - Lesson 9: a division layout, vocabulary, dividing hundredths and related whole-number facts;
+  - "Show me how" shows the worked columns, step by step.
+- [x] **Feedback and accessibility:**
+  - Number-line descriptions give exact positions.
+  - Rounding prompts state the format.
+  - Halfway feedback, subtraction hints and adding feedback are corrected.
+  - Alignment choices are described neutrally.
+  - Focus is kept after answers and hints; revealed steps are announced.
+  - The focus ring and diagram marks have at least 3:1 contrast.
+- [x] **Usability:**
+  - The expanded-form box wraps and grows.
+  - Number-line labels are at least 10 px on a 320 px screen.
+  - Guided checks are titled with their topic.
+  - Steps are not numbered twice.
+- [x] **Automated tests:** `npm test` **226/226** (new `tests/integrity.test.mjs`); `npm run test:browser` **658/658** (simulated devices, 320–1920 px).
+- [x] **Two targeted independent reviews:**
+  - Mathematics and instruction: 0 critical or major findings; 0 mismatches in about 61,000 recomputed solutions.
+  - Functional QA and accessibility: 1 major upgrade issue and 6 minor issues.
+  - All findings were fixed and covered by tests in `079c67a`. There was no second review round.
+- [ ] Merge and deploy: **waiting for owner approval**; re-run the live suite after deploying.
+
+## Lessons 9–10: live
+- **Deployed and verified live (2026-10-10).**
+  - PR #9 merged into `main` (merge commit `79abadc`); the GitHub Pages build of `79abadc` succeeded.
+  - The full browser suite ran against the live URL with **609/609 pass**. It covers every lesson from 1 to 10, the homepage and saved progress, layouts at 375–1920 px, no console errors, and all scripts and styles loading.
 - [x] **Lesson 9, Dividing Decimals: SUPPLEMENTAL** (beyond the Grade 5 Georgia standards; extends 5.NR.1.2 and 5.NR.2.2):
   - Labelled on the home card ("Extra: beyond Grade 5"), in the lesson description, on the first Teach screen, in the Notes, on the review screen and on its Parent Progress block.
   - 13 screens: 6 Teach screens and 6 guided checks, plus the review screen. Topics: ÷10/100/1000; sharing with tenths bars (up to 1.8, two stacked bars) and hundredths grids; a decimal ÷ a whole number with the decimal point lined up; answers less than 1; checking by multiplying; sharing word problems with money.
@@ -37,7 +81,7 @@ Updated: 2026-10-10 · Live (Lessons 1–8): https://bazeocrisy.github.io/Gabrie
   - 13 Teach screens and 6 guided checks: grids, tenths bars and number-line jumps; lining up decimal points and regrouping (3.48 + 2.75); different numbers of places (2.5 + 1.37, plus the lined-up-from-the-right mistake); whole numbers and three addends; estimating; money.
   - 12 templates.
 - [x] **Lesson 7, Subtracting Decimals** (5.NR.4.4, to hundredths):
-  - 14 Teach screens and 6 guided checks: taking away on grids and number lines; regrouping (5.32 − 2.67 with regrouping marks); across zeros (5 − 2.37); different numbers of places (4.06 − 1.8); checking by adding; change and comparison problems.
+  - 13 screens (6 Teach screens, 6 guided checks and the review screen): taking away on grids and number lines; regrouping (5.32 − 2.67 with regrouping marks); across zeros (5 − 2.37); different numbers of places (4.06 − 1.8); checking by adding; change and comparison problems.
   - 12 templates.
 - [x] **Lesson 8, Multiplying Decimals: SUPPLEMENTAL** (beyond the Grade 5 Georgia standards; extends 5.NR.1.2):
   - Labelled on the home card ("Extra: beyond Grade 5"), in the lesson description, on the first Teach screen, in the Notes and on the review screen.
@@ -104,7 +148,6 @@ Updated: 2026-10-10 · Live (Lessons 1–8): https://bazeocrisy.github.io/Gabrie
   - Answers can be worked out from the browser console.
   - Number-line "imagine placing" questions show the line without points, on purpose.
   - Expanded form does not accept fraction style (2/10).
-- [ ] Merge `claude/decimals-d09-d10` and deploy Lessons 9–10: **waiting for owner approval**; re-run the live suite after deploying.
 
 ## Definition of done for each lesson
 - Instruction and answer explanations mathematically audited

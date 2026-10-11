@@ -325,16 +325,21 @@
     const fr = ['tenths', 'hundredths', 'thousandths'].map((k) => dg[k]);
     const asWholes = [whole, ...fr.filter((x) => x !== '0')].join(' + ');
     const allTenths = [whole, ...fr.filter((x) => x !== '0').map((x) => '0.' + x)].join(' + ');
-    let third;
+    let third, fourth = asWholes;
     if (fr.slice(0, 2).includes('0')) {
       third = expanded(D.canonical(n.split('.')[0] + '.' + fr.join('').replace(/0(?=.*[1-9])/, ''))); // the zero dropped
+      // Whole digits one place too far left (tens written as hundreds, ones as tens).
+      const big = [dg.tens ? dg.tens + '00' : '', dg.ones !== '0' ? dg.ones + '0' : ''].filter((x) => x);
+      if (big.length) fourth = [...big, ...fr.map((x, i) => (x === '0' ? '' : '0.' + '0'.repeat(i) + x)).filter((x) => x)].join(' + ');
+    } else if (fr[1] !== fr[2]) {
+      third = [whole, '0.' + fr[0], '0.00' + fr[1], '0.0' + fr[2]].join(' + '); // hundredths and thousandths swapped
     } else {
       third = [whole, '0.' + fr[0], '0.0' + fr[1], '0.0' + fr[2]].join(' + ');
     }
     return {
       type: 'mc', sig: n,
       prompt: `Which shows <b>${n}</b> in <b>expanded form</b>?`,
-      choices: textChoices(r, ans, [asWholes, allTenths, third]), answer: ans, answerText: ans,
+      choices: textChoices(r, ans, [fourth, allTenths, third]), answer: ans, answerText: ans,
       hints: [
         'Expanded form writes a number as the sum of the values of its digits.',
         fr[0] === '0' ? 'Start with the whole part. The tenths digit is 0, so there is no tenths part. Next look at the hundredths digit.' : `Start with the whole part. Then the first digit after the point is tenths, so it is written 0.${fr[0]}.`,
@@ -343,6 +348,7 @@
       why: `Each part is the value of one digit: ${n} = <b>${ans}</b>.`,
       diagnose(resp) {
         if (resp === asWholes) return 'Those parts use the digits as if they were whole numbers. The digits after the point are worth less than 1.';
+        if (resp === fourth) return 'Check the whole-number part. Each whole digit is worth its own place: a ones digit is just that many ones.';
         if (resp === allTenths) return 'That treats every decimal digit as tenths. Only the first digit after the point is in the tenths place.';
         return 'One part has a digit in the wrong place. Check each part against the place-value chart, and remember that a zero holds a place.';
       }
@@ -513,7 +519,7 @@
     const digitPlace = zeroAt === 'tenths' ? 'hundredths' : 'thousandths';
     const without = n.replace(/\.(\d*)0(\d)$/, '.$1$2');
     const ans = `It holds the ${zeroAt} place, so the ${b} stays in the ${digitPlace} place.`;
-    const wrongs = ['It makes the number 10 times greater.', `It does nothing, so ${n} is the same as ${without}.`, `It means the ${b} is worth 0.`];
+    const wrongs = [`It makes ${n} ten times greater, like a zero at the end of a whole number.`, `It does nothing, so ${n} is the same number as ${without}.`, `It means the ${b} is worth 0, because a zero next to a digit cancels it.`];
     return {
       type: 'mc', sig: n,
       prompt: `What does the <b>0</b> do in <b>${n}</b>?`,
@@ -525,8 +531,8 @@
       ],
       why: `The 0 is in the ${zeroAt} place. Without it, the ${b} would slide left into the ${zeroAt} place and the number would change (${without} is not ${n}).`,
       diagnose(resp) {
-        if (/same as/.test(resp)) return `Without the zero, the ${b} moves one place to the left and is worth 10 times as much. ${without} and ${n} are different numbers.`;
-        if (/10 times/.test(resp)) return 'This zero is between the decimal point and a digit. It does not multiply the number; it keeps the digits in their places.';
+        if (/same number as|same as/.test(resp)) return `Without the zero, the ${b} moves one place to the left and is worth 10 times as much. ${without} and ${n} are different numbers.`;
+        if (/ten times/.test(resp)) return 'This zero is between the decimal point and a digit. It does not multiply the number; it keeps the digits in their places.';
         return `The zero itself is worth nothing, but the ${b} still has a value. The zero just keeps it in its place.`;
       }
     };

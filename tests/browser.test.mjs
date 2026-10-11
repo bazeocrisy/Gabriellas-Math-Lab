@@ -33,6 +33,16 @@ const H = `
     if (q.accept) { for (let k = 0; ; k += 7) { const v = D.fromThousandths(k, 3); if (!q.accept(D.parse(v), {})) return v; } }
     return D.fromThousandths(D.toThousandths(q.answer) + 1, 3);
   };
+  // A k-th different wrong answer (null when the question has only one wrong choice).
+  const wrongN = (q, k) => {
+    if (q.type === 'mc') { const ws = q.choices.filter((c) => c.value !== q.answer).map((c) => c.value); return ws.length > 1 ? ws[k % ws.length] : k ? null : ws[0]; }
+    if (q.type === 'build') { const m = q.model === 'grid' ? 100 : 10; return [q.answer - 1, q.answer + 1].filter((x) => x >= 1 && x <= m)[k % 2] ?? (q.answer === 1 ? 2 + k : q.answer - 1 - k); }
+    if (q.type === 'chart') { const d = D.digits(q.answer); return { ...d, tenths: String((Number(d.tenths) + 1 + k) % 10) }; }
+    if (q.type === 'order') { const a = q.answer.slice(); return k % 2 ? [a[1], a[0], ...a.slice(2)] : a.reverse(); }
+    if (q.type === 'expanded') return GML.kit.expanded(D.fromThousandths(D.toThousandths(q.answer) + 1 + k, 3));
+    if (q.accept) { let n = 0; for (let v = 0; ; v += 7) { const s = D.fromThousandths(v, 3); if (!q.accept(D.parse(s), {}) && n++ === k) return s; } }
+    return D.fromThousandths(D.toThousandths(q.answer) + 1 + k, 3);
+  };
   const fire = (el, t) => el.dispatchEvent(new Event(t, { bubbles: true }));
   function fill(host, q, resp) {
     if (q.type === 'mc') { const i = [...host.querySelectorAll('input[type=radio]')].find((x) => x.value === resp); i.click(); }
@@ -133,15 +143,20 @@ try {
   r = await js(`${H} const q = practiceQ(); const host = document.querySelector('.coach-host');
     host.querySelector('[data-act=check]').click();
     const blank = host.querySelector('.feedback').innerText; const att0 = draft('practice-d01').states[0].attempts || 0;
-    fill(host, q, wrong(q)); host.querySelector('[data-act=check]').click();
+    fill(host, q, wrongN(q, 0)); host.querySelector('[data-act=check]').click();
     const w = { wrong: !!host.querySelector('.fb-wrong'), msg: host.querySelector('.fb-wrong p:nth-of-type(2)').textContent, next: host.querySelector('.coach-next').innerHTML.trim(), idx: draft('practice-d01').i };
-    fill(host, q, wrong(q)); host.querySelector('[data-act=check]').click();
-    fill(host, q, wrong(q)); host.querySelector('[data-act=check]').click();
+    // The same wrong answer checked again is not a new try.
+    host.querySelector('[data-act=check]').click(); host.querySelector('[data-act=check]').click();
+    w.sameAgain = draft('practice-d01').states[0].attempts;
+    w.solEarly = !!host.querySelector('[data-act=solution]');
+    w.skip = wrongN(q, 1) === null;
+    if (!w.skip) { fill(host, q, wrongN(q, 1)); host.querySelector('[data-act=check]').click(); fill(host, q, wrongN(q, 0)); host.querySelector('[data-act=check]').click(); }
     w.sol = !!host.querySelector('[data-act=solution]');
     return { blank, att0, ...w };`);
   check('practice: blank answer asks for an answer and is not counted', /first|Choose|shade|Type/.test(r.blank) && r.att0 === 0, r);
   check('practice: wrong answer says not correct, explains, stays on the question', r.wrong && r.msg.length > 15 && r.next === '' && r.idx === 0, r);
-  check('practice: "Show me how" appears only after 3 wrong tries', r.sol);
+  check('practice: checking the same wrong answer again is not counted and cannot unlock the solution', r.sameAgain === 1 && !r.solEarly, r);
+  check('practice: "Show me how" appears only after 3 different wrong tries', r.skip || r.sol, r);
   // Refresh in the middle: same question, same hints and attempts.
   await b.reload();
   r = await js(`${H} return { idx: draft('practice-d01').i, hints: document.querySelectorAll('.hint').length, wrongShown: !!document.querySelector('.fb-wrong') };`);
@@ -396,8 +411,8 @@ try {
     check(`damaged saved data does not break ${route}`, !/Something went wrong|undefined|NaN/.test(t), t.slice(0, 120));
   }
   await b.load(URL + 'index.html#/d01/teach/99');
-  r = await js(`return { h: location.hash, done: JSON.parse(localStorage.getItem('gml:v1:progress')).lessons.d01.teach.done };`);
-  check('teach: out-of-range screen redirects and does not mark Teach done', r.h === '#/d01/teach/19' && r.done === false, r);
+  r = await js(`return { h: location.hash, last: GML.lessonContent.d01.screens.length, done: JSON.parse(localStorage.getItem('gml:v1:progress')).lessons.d01.teach.done };`);
+  check('teach: out-of-range screen redirects and does not mark Teach done', r.h === '#/d01/teach/' + r.last && r.done === false, r);
   await b.load(URL + 'index.html#/d01/teach/2');
   await js(`let g = 0; while (document.querySelector('[data-act=step]:not([hidden])') && g++ < 9) document.querySelector('[data-act=step]').click();`);
   await b.reload();
@@ -452,6 +467,218 @@ try {
   r = await js(`return [...document.querySelectorAll('.skills-table a')].map((a) => Math.round(a.getBoundingClientRect().height));`);
   check('tablet: "Review in Teach" links in test results are at least 44px tall', r.length > 0 && r.every((h) => h >= 44), r);
   await b.viewport(390, 844);
+
+  // ── Assessment integrity (audit D-01, D-02, D-14, D-15, Decision 2) ──
+  const setAll = (id, how) => `${H} const d = draft('test-${id}'); d.set.forEach((x, k) => { const q = E.make('${id}', x.id, x.seed); d.answers[k] = ${how}; }); d.review = true; localStorage.setItem('gml:v1:draft:test-${id}', JSON.stringify(d));`;
+  const progOf = (id) => js(`const p = JSON.parse(localStorage.getItem('gml:v1:progress') || '{}'); return (p.lessons || {})['${id}'] || null;`);
+  await js(`localStorage.clear();`);
+  // D-01: Practice opened during an unfinished Test never shows one of its questions.
+  await b.load(URL + 'index.html#/d09/test'); await b.reload();
+  await js(`document.querySelector('[data-act=start]').click();`);
+  await b.load(URL + 'index.html#/d09/practice');
+  r = await js(`${H} const open = draft('test-d09').set.map((x) => x.sig); let bad = draft('practice-d09').set.filter((x) => open.includes(x.sig)).length;
+    for (let k = 0; k < 50; k++) { localStorage.removeItem('gml:v1:draft:practice-d09'); bad += GML.views.practice.newSession('d09').set.filter((x) => open.includes(x.sig)).length; }
+    return bad;`);
+  check('integrity: Practice opened during an unfinished Test never repeats its questions (51 sessions)', r === 0, r);
+  // Decision 2: the Practice visit above is noted on the open test; it is scored but not mastered.
+  await b.load(URL + 'index.html#/d09/test');
+  r = await js(`return { note: (document.querySelector('.assist-note') || {}).innerText || '', assist: JSON.parse(localStorage.getItem('gml:v1:draft:test-d09')).assist };`);
+  check('integrity: opening Practice during a Test is noted on the Test, with a friendly message', /Lesson 9 Practice/.test(r.note) && !/cheat/i.test(r.note) && r.assist.includes('Lesson 9 Practice'), r);
+  await js(setAll('d09', 'right(q)')); await b.reload();
+  await js(`document.querySelector('[data-act=submit]').click();`); await b.wait(60);
+  r = { t: await js(`return document.getElementById('app').innerText;`), p: await progOf('d09') };
+  check('integrity: 10 of 10 with a lesson page opened keeps the score but is not ★ Mastered', /Your score: 10 out of 10/.test(r.t) && /counts as practice/.test(r.t) &&
+    r.p.tests[0].goalMet === true && r.p.tests[0].mastered === false && !r.p.masteredOn, r.p);
+  await b.load(URL + 'index.html#/');
+  check('integrity: the home card shows no ★ Mastered for a test with lesson pages opened', !/Mastered/.test(await js(`return [...document.querySelectorAll('.lesson-card')][8].innerText;`)));
+  await b.load(URL + 'index.html#/parent');
+  r = await js(`return document.getElementById('app').innerText;`);
+  check('integrity: Parent Progress explains the rule and labels the test', /How Tests and mastery work/.test(r) && /lesson pages opened during the test/.test(r) && /goal met, but/.test(r), r.slice(0, 300));
+  // A refresh during a test is not counted as opening a lesson page; a test done on its own is mastered.
+  await b.load(URL + 'index.html#/d09/test');
+  await js(`document.querySelector('[data-act=new]').click(); document.querySelector('[data-act=start]').click();`);
+  await b.reload(); await b.load(URL + 'index.html#/'); await b.load(URL + 'index.html#/d09/test');
+  r = await js(`return JSON.parse(localStorage.getItem('gml:v1:draft:test-d09')).assist;`);
+  check('integrity: refreshing, or visiting Home, during a test is not counted', Array.isArray(r) && r.length === 0, r);
+  await js(setAll('d09', 'right(q)')); await b.reload();
+  await js(`document.querySelector('[data-act=submit]').click();`); await b.wait(60);
+  r = await progOf('d09');
+  check('integrity: a test done on its own with 10 of 10 is ★ Mastered', r.tests[1].mastered === true && !!r.masteredOn && r.testsTaken === 2, r);
+
+  // D-02: a stale page (another tab submitted the same test) cannot change or re-submit it.
+  await b.load(URL + 'index.html#/d05/test'); await b.reload();
+  await js(`document.querySelector('[data-act=start]').click();`);
+  await js(`${H} const d = draft('test-d05'); d.submitted = true; d.result = { id: d.id, date: new Date().toISOString(), correct: 3, total: 10, percent: 30, goalMet: false, mastered: false, skills: {}, missedSkills: [] };
+    localStorage.setItem('gml:v1:draft:test-d05', JSON.stringify(d));
+    const p = JSON.parse(localStorage.getItem('gml:v1:progress')); p.lessons.d05 = Object.assign(p.lessons.d05 || {}, { tests: [d.result], testsTaken: 1 }); localStorage.setItem('gml:v1:progress', JSON.stringify(p));`);
+  r = await js(`${H} const q = qIn('test', 'd05'); fill(document.querySelector('.test-q'), q, right(q)); const nb = document.querySelector('[data-act=next]'); if (nb) nb.click();
+    return { h: document.querySelector('h1').innerText, n: JSON.parse(localStorage.getItem('gml:v1:progress')).lessons.d05.tests.length, sub: JSON.parse(localStorage.getItem('gml:v1:draft:test-d05')).result.correct };`);
+  check('integrity: a stale tab shows the submitted result instead of changing it', /Your score: 3 out of 10/.test(r.h) && r.n === 1 && r.sub === 3, r);
+  // The same on the review screen: Submit in a stale tab records nothing new.
+  await js(`document.querySelector('[data-act=new]').click(); document.querySelector('[data-act=start]').click();`);
+  await js(setAll('d05', 'right(q)')); await b.reload();
+  await js(`${H} const d = draft('test-d05'); d.submitted = true; d.result = { id: d.id, date: new Date().toISOString(), correct: 2, total: 10, percent: 20, goalMet: false, mastered: false, skills: {}, missedSkills: [] };
+    localStorage.setItem('gml:v1:draft:test-d05', JSON.stringify(d));
+    const p = JSON.parse(localStorage.getItem('gml:v1:progress')); p.lessons.d05.tests.push(d.result); p.lessons.d05.testsTaken = 2; localStorage.setItem('gml:v1:progress', JSON.stringify(p));`);
+  r = await js(`document.querySelector('[data-act=submit]').click(); return { h: document.querySelector('h1').innerText, p: JSON.parse(localStorage.getItem('gml:v1:progress')).lessons.d05 };`);
+  check('integrity: Submit in a stale tab records no second result and keeps the first', r.p.tests.length === 2 && r.p.tests[1].correct === 2 && /Your score: 2 out of 10/.test(r.h) && !r.p.masteredOn, r);
+  // A real second tab (a same-site frame shares storage and storage events): it switches to the results when this tab submits.
+  await b.load(URL + 'index.html#/d06/test'); await b.reload();
+  await js(`document.querySelector('[data-act=start]').click();
+    const f = document.createElement('iframe'); f.id = 'tab2'; f.style.width = '380px'; f.style.height = '600px'; f.src = location.href.split('#')[0] + '#/d06/test'; document.body.appendChild(f);`);
+  await b.wait(700);
+  r = await js(`return document.getElementById('tab2').contentDocument.querySelector('h1').innerText;`);
+  const tab2Before = r;
+  await js(setAll('d06', 'right(q)'));
+  await js(`document.getElementById('tab2').remove(); location.reload();`); await b.wait(400);
+  await js(`const f = document.createElement('iframe'); f.id = 'tab2'; f.style.width = '380px'; f.style.height = '600px'; f.src = location.href.split('#')[0] + '#/d06/test'; document.body.appendChild(f);`);
+  await b.wait(700);
+  await js(`document.querySelector('[data-act=submit]').click();`); await b.wait(500);
+  r = await js(`return { tab2: document.getElementById('tab2').contentDocument.querySelector('h1').innerText, n: JSON.parse(localStorage.getItem('gml:v1:progress')).lessons.d06.tests.length };`);
+  check('integrity: a second open tab switches to the results when the test is submitted elsewhere', /Question 1/.test(tab2Before) && /Your score: 10 out of 10/.test(r.tab2) && r.n === 1, { tab2Before, ...r });
+  await js(`const f = document.getElementById('tab2'); if (f) f.remove();`);
+
+  // D-14 / D-15 and saved progress from the previous build (no attempt ids, counts or mastery dates).
+  await js(`localStorage.clear();
+    const t = (c, day) => ({ date: '2026-09-' + String(day).padStart(2, '0') + 'T12:00:00Z', correct: c, total: 10, percent: c * 10, mastered: c >= 9, skills: {}, missedSkills: [] });
+    const d03 = []; for (let k = 0; k < 20; k++) d03.push(t(k === 0 ? 10 : 4, k + 1));
+    localStorage.setItem('gml:v1:progress', JSON.stringify({ lessons: { d03: { teach: { screen: 0, furthest: 15, done: true }, practice: { sessions: 1, skills: {}, recentSigs: [] }, tests: d03, lastTestSigs: [] },
+      d10: { teach: { screen: 0, furthest: 12, done: true }, practice: { sessions: 0, skills: {}, recentSigs: [] }, tests: [t(10, 25)], lastTestSigs: [] } } }));`);
+  await b.load(URL + 'index.html#/parent');
+  r = await js(`return { l10: document.querySelector('#pl-d10').closest('section').innerText, l3: document.querySelector('#pl-d03').closest('section').innerText };`);
+  check('integrity: with only Lessons 3 and 10 mastered, Lesson 10 does not say "All lessons complete"', !/All lessons complete/.test(r.l10) && /Lesson 1: Understanding Decimals is not mastered yet/.test(r.l10), r.l10);
+  check('integrity: older saved progress keeps its mastery and test count', /Yes ★/.test(r.l3) && /Tests taken\s*20/.test(r.l3), r.l3);
+  await b.load(URL + 'index.html#/d03/test'); await b.reload();
+  await js(`document.querySelector('[data-act=start]').click();`);
+  await js(setAll('d03', 'wrong(q)')); await b.reload();
+  await js(`document.querySelector('[data-act=submit]').click();`); await b.wait(60);
+  await b.load(URL + 'index.html#/parent');
+  r = await js(`return document.querySelector('#pl-d03').closest('section').innerText;`);
+  check('integrity: mastery and the count survive when the mastered test leaves the 20-test history', /Yes ★/.test(r) && /Tests taken\s*21/.test(r), r);
+  // A test that was in progress when the app was updated (saved without an attempt id) can still be finished once.
+  await js(`${H} const set = E.buildSet('d04', { plan: E.banks.d04.plan, seed: 99 });
+    localStorage.setItem('gml:v1:draft:test-d04', JSON.stringify({ set, answers: set.map(() => null), i: 0, started: true, submitted: false, review: false }));`);
+  await b.load(URL + 'index.html#/d04/test');
+  await js(setAll('d04', 'right(q)')); await b.reload();
+  r = await js(`const b1 = document.querySelector('[data-act=submit]'); b1.click(); return { h: document.querySelector('h1').innerText, p: JSON.parse(localStorage.getItem('gml:v1:progress')).lessons.d04 };`);
+  check('integrity: a test saved by the previous version can be finished and is recorded once', /10 out of 10/.test(r.h) && r.p.tests.length === 1 && !!r.p.tests[0].id && r.p.testsTaken === 1, r.p);
+
+  // ── Teaching corrections (audit D-04, D-05, D-18 to D-24) ──
+  const screenOf = (id, sid) => js(`return GML.lessonContent['${id}'].screens.findIndex((s) => s.id === '${sid}') + 1;`);
+  await js(`localStorage.clear();`);
+  for (const [id, sid, sel, label] of [['d01', 'line', '.model-line', 'Lesson 1 number line (tenths)'], ['d01', 'zoom', '.model-line', 'Lesson 1 zoomed number line (hundredths)'],
+    ['d03', 'missing', '.pv-chart', 'Lesson 3 missing digit'], ['d06', 'models', '.m-hop', 'Lesson 6 number-line jumps'], ['d07', 'models', '.m-hop', 'Lesson 7 number-line jumps'],
+    ['d08', 'word', '.model-grid', 'Lesson 8 area example'], ['d09', 'whole', '.ldiv-model', 'Lesson 9 division layout'], ['d09', 'hundredths', '.ldiv-model', 'Lesson 9 hundredths and related fact']]) {
+    await b.load(URL + `index.html#/${id}/teach/${await screenOf(id, sid)}`);
+    r = await js(`for (let k = 0; k < 8; k++) { const s = document.querySelector('[data-act=step]'); if (s && !s.hidden) s.click(); }
+      return { n: document.querySelectorAll('${sel}').length, h: document.querySelector('h1').innerText, why: !!document.querySelector('.why-box:not([hidden])'), next: !document.querySelector('[data-act=next]').disabled };`);
+    check(`teach: ${label} screen draws its picture and explains why`, r.n > 0 && r.next && (r.why || sid === 'models' || sid === 'word'), r);
+  }
+  // The new guided checks work like the others: a wrong answer coaches, a right answer unlocks Next.
+  for (const [id, sid] of [['d01', 'check-line'], ['d01', 'check-compare'], ['d01', 'check-chart-typed'], ['d02', 'check-expanded-typed'], ['d03', 'check-missing'], ['d09', 'check-hundredths']]) {
+    await b.load(URL + `index.html#/${id}/teach/${await screenOf(id, sid)}`); await b.reload();
+    r = await js(`${H} const sc = GML.lessonContent['${id}'].screens.find((s) => s.id === '${sid}'); const q = E.make('${id}', sc.check.t, 1, sc.check.params);
+      const host = document.querySelector('.check-host'); const nb = document.querySelector('[data-act=next]');
+      fill(host, q, wrong(q)); host.querySelector('[data-act=check]').click(); const coached = !!host.querySelector('.fb-wrong') && nb.disabled;
+      fill(host, q, right(q)); host.querySelector('[data-act=check]').click(); return { coached, right: !!host.querySelector('.fb-right'), open: !nb.disabled };`);
+    check(`teach: new guided check ${id}/${sid} coaches a wrong answer and unlocks Next when right`, r.coached && r.right && r.open, r);
+  }
+  // D-24: "Show me how" for column work shows the lined-up columns, carry or regroup marks and steps.
+  for (const [id, t, seed] of [['d06', 'AL1', 5], ['d07', 'SZ1', 3]]) {
+    await js(`${H} const q = E.make('${id}', '${t}', ${seed}); const set = E.buildSet('${id}', { plan: E.banks['${id}'].plan, seed: 7 }).filter((x) => x.id !== '${t}').slice(0, 9);
+      set.unshift({ id: '${t}', seed: ${seed}, sig: q.sig }); localStorage.setItem('gml:v1:draft:practice-${id}', JSON.stringify({ id: 'x', set, i: 0, states: set.map(() => ({})), finished: false, recorded: false }));`);
+    await b.load(URL + `index.html#/${id}/practice`); await b.reload();
+    r = await js(`${H} const q = qIn('practice', '${id}'); const host = document.querySelector('.coach-host');
+      for (let k = 0; k < 3; k++) { fill(host, q, wrongN(q, k)); host.querySelector('[data-act=check]').click(); }
+      host.querySelector('[data-act=solution]').click();
+      const w = host.querySelector('.solution-work'); return { work: !!w, cols: !!(w && w.querySelector('.vcalc-model')), steps: w ? w.querySelectorAll('.sol-steps li').length : 0, marks: w ? w.querySelector('.v-carry') !== null : false };`);
+    check(`practice: "Show me how" for ${id}/${t} shows the columns, ${id === 'd06' ? 'carries' : 'regrouping'} and each step`, r.work && r.cols && r.steps >= 3 && r.marks, r);
+  }
+  // Lesson 1 progress saved before the new screens were added still shows as finished.
+  await js(`localStorage.setItem('gml:v1:progress', JSON.stringify({ lessons: { d01: { teach: { screen: 18, furthest: 18, done: true }, practice: { sessions: 0, skills: {}, recentSigs: [] }, tests: [], lastTestSigs: [] } } }));`);
+  await b.load(URL + 'index.html#/');
+  check('saved progress: Lesson 1 Teach finished before the new screens still shows as finished', /Teach Finished/.test(await js(`return document.querySelector('.lesson-card').innerText.replace(/\\s+/g, ' ');`)));
+
+  // ── Keyboard focus and announcements (audit D-25, D-26) ──
+  await js(`localStorage.clear();`);
+  await b.load(URL + 'index.html#/d01/teach/3'); await b.reload();
+  r = await js(`${H} const sc = GML.lessonContent.d01.screens[2]; const q = E.make('d01', sc.check.t, 1, sc.check.params); const host = document.querySelector('.check-host');
+    const c = host.querySelector('[data-act=check]'); c.focus(); fill(host, q, right(q)); c.click();
+    const a = document.activeElement; return { body: a === document.body, next: a.dataset.act === 'next' };`);
+  check('a11y: after a correct guided check in Teach, keyboard focus moves to Next (not lost)', !r.body && r.next, r);
+  await b.load(URL + 'index.html#/d01/practice');
+  r = await js(`${H} const q = practiceQ(); const host = document.querySelector('.coach-host'); const c = host.querySelector('[data-act=check]'); c.focus(); fill(host, q, right(q)); c.click();
+    const a = document.activeElement; return { body: a === document.body, inFeedback: !!a.closest('.feedback') };`);
+  check('a11y: after a correct Practice answer, keyboard focus moves to the feedback (not lost)', !r.body && r.inFeedback, r);
+
+  // ── Review regressions (upgrade from the previous version, second tab, small screens) ──
+  await js(`localStorage.clear();`);
+  // An unfinished test saved by the previous version with a choice whose wording changed: asked again, not scored wrong.
+  await js(`${H} const E2 = GML.engine; let seed = 1, q; for (;; seed++) { q = E2.make('d03', 'Y1', seed); if (q) break; }
+    const set = E2.buildSet('d03', { plan: E2.banks.d03.plan, seed: 5 }).filter((x) => x.id !== 'Y1').slice(0, 9); set.unshift({ id: 'Y1', seed, sig: q.sig });
+    localStorage.setItem('gml:v1:draft:test-d03', JSON.stringify({ set, answers: ['Yes. An old wording of a choice.', ...set.slice(1).map(() => null)], i: 0, started: true, submitted: false, review: false }));`);
+  await b.load(URL + 'index.html#/d03/test');
+  r = await js(`return { note: (document.querySelector('.reset-note') || {}).innerText || '', a0: JSON.parse(localStorage.getItem('gml:v1:draft:test-d03')).answers[0] };`);
+  check('upgrade: an old answer that matches no choice is asked for again (not scored as wrong)', /question 1 again/.test(r.note) && r.a0 === null, r);
+  // An unfinished test the updated app cannot rebuild says so.
+  await js(`localStorage.setItem('gml:v1:draft:test-d03', JSON.stringify({ set: [{ id: 'E1', seed: 1, sig: 'E1:old' }], answers: [null], i: 0, started: true, submitted: false, review: false }));`);
+  await b.load(URL + 'index.html#/'); await b.load(URL + 'index.html#/d03/test');
+  check('upgrade: an unfinished test that cannot be continued explains why', /could not be continued/.test(await js(`return document.getElementById('app').innerText;`)));
+  // Old saved state for a guided check whose question type changed does not show on the new check.
+  await js(`localStorage.setItem('gml:v1:draft:teach-d01-check-chart', JSON.stringify({ solved: true, fb: { kind: 'correct' }, resp: 'hundredths' }));`);
+  await b.load(URL + 'index.html#/d01/teach/' + await screenOf('d01', 'check-chart-typed'));
+  check('upgrade: the new typed-chart check starts fresh (old saved answer not shown)', await js(`return !document.querySelector('.check-host .fb-right') && !document.querySelector('.check-host input:disabled');`));
+  // A practice session finished in two tabs is counted once.
+  await js(`${H} const set = E.buildSet('d02', { plan: E.banks.d02.plan, seed: 3 });
+    localStorage.setItem('gml:v1:draft:practice-d02', JSON.stringify({ id: 'dup1', set, i: 9, states: set.map(() => ({ solved: true, firstTry: true, hints: 0 })), finished: true, recorded: false }));
+    localStorage.setItem('gml:v1:progress', JSON.stringify({ lessons: { d02: { teach: { screen: 0, furthest: 0, done: false }, practice: { sessions: 1, skills: {}, recentSigs: [], lastId: 'dup1' }, tests: [], lastTestSigs: [] } } }));`);
+  await b.load(URL + 'index.html#/d02/practice');
+  r = await progOf('d02');
+  check('practice: a session already counted in another tab is not counted again', r.practice.sessions === 1, r.practice);
+  // The expanded-form box grows so a long answer stays visible on a small screen.
+  await b.viewport(320, 568);
+  await b.load(URL + 'index.html#/d02/teach/' + await screenOf('d02', 'check-expanded-typed')); await b.reload();
+  r = await js(`const i = document.querySelector('.exp-input'); i.value = '8 × 10 + 9 × 1 + 4 × 0.1 + 6 × 0.01 + 2 × 0.001'; i.dispatchEvent(new Event('input', { bubbles: true })); return { sh: i.scrollHeight, ch: i.clientHeight, sw: i.scrollWidth, cw: i.clientWidth };`);
+  check('expanded form: a long answer is fully visible at 320px (the box grows)', r.sh <= r.ch + 2 && r.sw <= r.cw + 1, r);
+  await b.viewport(390, 844);
+  await b.load(URL + 'index.html#/d01/practice');
+  r = await js(`const h = document.querySelector('[data-act=hint]'); h.focus(); h.click(); h.click(); h.click();
+    const a = document.activeElement; return { body: a === document.body, hint: a.classList.contains('hint'), disabled: h.disabled };`);
+  check('a11y: after the last hint, keyboard focus moves to that hint (not lost)', !r.body && r.hint && r.disabled, r);
+  await b.load(URL + 'index.html#/d02/teach/1');
+  r = await js(`const live = document.querySelector('.steps').getAttribute('aria-live'); const s = document.querySelector('[data-act=step]'); s.focus();
+    for (let k = 0; k < 8; k++) if (!s.hidden) s.click();
+    const a = document.activeElement; return { live, why: a.classList.contains('why-box'), body: a === document.body };`);
+  check('a11y: new worked-example steps are announced, and focus goes to "Why it works" after the last step', r.live === 'polite' && r.why && !r.body, r);
+
+  // ── Usability and cosmetic corrections (audit D-17, D-31, D-32, D-33) ──
+  await js(`localStorage.clear();`);
+  for (const [w, h] of [[320, 568], [1366, 768]]) {
+    await b.viewport(w, h);
+    await b.load(URL + 'index.html#/d02/teach/' + await screenOf('d02', 'check-expanded-typed')); await b.reload();
+    r = await js(`const i = document.querySelector('.exp-input'); i.value = '80 + 6 + 0.7 + 0.02 + 0.003'; i.dispatchEvent(new Event('input', { bubbles: true })); return { sw: i.scrollWidth, cw: i.clientWidth };`);
+    check(`expanded form: a five-part answer fits in the box at ${w}px`, r.sw <= r.cw + 1, r);
+  }
+  await b.viewport(320, 568);
+  const smallest = `let m = 99; document.querySelectorAll('#app svg text').forEach((t) => { if (t.getBoundingClientRect().height) m = Math.min(m, parseFloat(getComputedStyle(t).fontSize) * t.getScreenCTM().a); }); return +m.toFixed(1);`;
+  for (const [id, sid] of [['d01', 'zoom'], ['d06', 'models'], ['d07', 'models'], ['d05', 'tenths']]) {
+    await b.load(URL + `index.html#/${id}/teach/${await screenOf(id, sid)}`);
+    await js(`for (let k = 0; k < 8; k++) { const s = document.querySelector('[data-act=step]'); if (s && !s.hidden) s.click(); }`);
+    r = await js(smallest);
+    check(`number-line labels are at least 10px on a 320px screen: ${id}/${sid}`, r >= 10, r);
+  }
+  await b.viewport(390, 844);
+  r = await js(`return GML.unit.lessons.map((l) => l.id);`);
+  const titles = [];
+  for (const id of r) {
+    const L = await js(`return GML.lessonContent['${id}'].screens.map((s, k) => s.kind === 'check' ? k + 1 : 0).filter(Boolean);`);
+    for (const n of L.slice(0, 2)) { await b.load(URL + `index.html#/${id}/teach/${n}`); titles.push(await js(`return document.querySelector('h1').innerText + ' | ' + document.title;`)); }
+  }
+  check('guided checks are titled with their topic, and page titles differ', titles.every((t) => /^Try it together: \S/.test(t)) && new Set(titles.map((t) => t.split(' | ')[0])).size >= titles.length - 2, titles.slice(0, 6));
+  await b.load(URL + 'index.html#/d01/teach/2');
+  r = await js(`for (let k = 0; k < 5; k++) { const s = document.querySelector('[data-act=step]'); if (s && !s.hidden) s.click(); }
+    const ol = document.querySelector('.steps'); return { style: getComputedStyle(ol).listStyleType, first: ol.querySelector('li').innerText.slice(0, 7) };`);
+  check('worked-example steps labelled "Step 1." are not numbered twice', r.style === 'none' && /^Step 1/.test(r.first), r);
 
   // ── Unknown routes and reset ──
   await b.load(URL + 'index.html#/d11/teach/1');

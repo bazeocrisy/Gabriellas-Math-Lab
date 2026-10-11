@@ -35,9 +35,10 @@
 
   function diffQuestion(a, b, extra = {}) {
     const ans = sub(a, b);
+    const solution = K.columnSolution([a, b], '−');
     const P = Math.max(D.parse(a).places, D.parse(b).places);
     return Object.assign({
-      type: 'number', sig: a + '-' + b,
+      type: 'number', sig: a + '-' + b, solution,
       prompt: `Subtract: <span class="expr">${a} − ${b}</span>`,
       visual: M.vertical([a, b], '−', { answer: '' }),
       answer: ans, answerText: ans,
@@ -113,7 +114,8 @@
     let a = p.a, b = p.b;
     if (!a) { a = num(r.int(10, 40) * 1000 + r.int(0, 9) * 100 + r.int(1, 9) * 10); b = num(r.int(1, 9) * 1000 + r.int(1, 9) * 100); }
     const leftHtml = (() => { const L = Math.max(a.length, b.length); const pad = (x) => x.padEnd(L, ' '); return `<table class="vcalc-model" role="img" aria-label="${a} minus ${b} with the first digits lined up on the left"><tbody>${[a, b].map((x, k) => `<tr class="${k === 1 ? 'v-last' : ''}"><td class="v-op">${k === 1 ? '−' : ''}</td>${pad(x).split('').map((c) => `<td class="${c === '.' ? 'v-pt' : ''}">${c === ' ' ? '' : c}</td>`).join('')}</tr>`).join('')}</tbody></table>`; })();
-    const opts = [{ key: 'ok', html: M.vertical([a, b], '−', {}) }, { key: 'right', html: M.vertical([a, b], '−', { misaligned: true }) }, { key: 'left', html: leftHtml }];
+    const opts = [{ key: 'ok', html: M.vertical([a, b], '−', {}) }, { key: 'right', html: M.vertical([a, b], '−', { misaligned: true }) }, { key: 'left', html: leftHtml }]
+      .map((o) => Object.assign(o, { html: M.columnsLabel(o.html) }));
     const order = r.shuffle([0, 1, 2]);
     const letters = ['A', 'B', 'C'];
     const choices = order.map((i, pos) => ({ value: letters[pos], text: 'Way ' + letters[pos], html: opts[i].html, key: opts[i].key }));
@@ -136,6 +138,20 @@
     };
   });
 
+  /** Hints 2 and 3 for a two-place subtraction, built from the columns that really need regrouping. */
+  function slHints(a, b) {
+    const { da, db } = K.aligned(a, b), n = da.length, h = n - 1, t = n - 2;
+    const hRegroup = da[h] < db[h];
+    const two = !hRegroup ? `Start with the hundredths: ${da[h]} is not less than ${db[h]}, so no regrouping is needed there. Subtract them.`
+      : da[t] ? `Start with the hundredths: ${da[h]} is less than ${db[h]}, so regroup. Take 1 tenth from the tenths place (the ${da[t]} becomes ${da[t] - 1}); that makes 10 more hundredths.`
+        : `Start with the hundredths: ${da[h]} is less than ${db[h]}, but the tenths digit is 0. Regroup across it: take 1 from the ones to make 10 tenths, then take 1 of those tenths to make 10 more hundredths (9 tenths are left).`;
+    const top = hRegroup ? (da[t] ? da[t] - 1 : 9) : da[t];
+    const three = `Now the tenths: the top digit is ${top}${hRegroup ? ' after regrouping' : ''}. ` + (top < db[t]
+      ? `It is less than ${db[t]}, so take 1 from the ones to make 10 more tenths. Then finish the ones.`
+      : `It is not less than ${db[t]}, so just subtract. Then finish the ones.`);
+    return [two, three];
+  }
+
   T('SL3', 'subAlign', (r, p) => {
     let a = p.a, b = p.b;
     if (!a) for (;;) { a = dec(r, 2, 3, 9); b = dec(r, 2, 1, 2); if (needsRegroup(a, b) && K.noBorrowSub(a, b) !== sub(a, b)) break; }
@@ -147,8 +163,8 @@
       visual: M.vertical([a, b], '−', { answer: wrong, label: `${name}'s work: ${a} minus ${b} equals ${wrong}.` }),
       hints: [
         `${name}'s mistake: when the top digit is smaller, you cannot just flip the subtraction. You have to regroup.`,
-        'Start with the hundredths. If the top digit is smaller, take one tenth from the tenths place: it becomes ten hundredths.',
-        'Remember that the tenths digit is now one less. Keep going column by column.'
+        slHints(a, b)[0],
+        slHints(a, b)[1]
       ]
     });
   });

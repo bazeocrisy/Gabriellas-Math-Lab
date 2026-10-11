@@ -33,7 +33,7 @@
         '<b>Step 1.</b> 0.8 is 8 tenths.',
         '<b>Step 2.</b> Share 8 tenths into 4 equal groups: each group gets 2 tenths.',
         '<b>Answer:</b> <span class="big-num">0.8 ÷ 4 = 0.2</span>',
-        'With hundredths: 0.36 ÷ 4 is 36 hundredths shared into 4 groups, so 9 hundredths each = <b>0.09</b>.'
+        'With hundredths: 0.36 ÷ 4 is 36 hundredths (36 small squares) shared into 4 groups, so 9 hundredths each = <b>0.09</b>.' + M.grid(36)
       ],
       why: 'Thinking in tenths or hundredths turns the decimal into a whole number of equal pieces, and sharing whole pieces is just whole-number division.'
     },
@@ -45,11 +45,13 @@
     {
       id: 'whole', title: 'A decimal divided by a whole number', skill: 'dWhole',
       goal: 'how to divide a decimal by a whole number, step by step.',
-      body: '<p>Divide just like whole numbers. Put the decimal point in the answer <b>straight above</b> the decimal point in the number you are dividing.</p>',
+      body: `<p>Divide just like whole numbers. Put the decimal point in the answer <b>straight above</b> the decimal point in the number you are dividing.</p>
+        <p>Words to know: in 7.5 ÷ 3 = 2.5, the number you divide (7.5) is the <b>dividend</b>, the number you divide by (3) is the <b>divisor</b>, and the answer (2.5) is the <b>quotient</b>.</p>`,
       example: 'Worked example: 7.5 ÷ 3',
+      exampleVisual: M.longDiv('7.5', 3, '2.5'),
       steps: [
         '<b>Step 1.</b> Estimate: 7.5 is between 6 and 9, so 7.5 ÷ 3 is between 2 and 3.',
-        '<b>Step 2.</b> Ones: 7 ÷ 3 = 2, with 1 left over (2 × 3 = 6). Write 2, then the decimal point above the decimal point.',
+        '<b>Step 2.</b> Ones: 7 ÷ 3 is 2 with 1 left over (2 × 3 = 6). Write 2 above the 7, then the decimal point straight above the decimal point.',
         '<b>Step 3.</b> The 1 left over is 10 tenths. Add the 5 tenths: 15 tenths ÷ 3 = 5 tenths.',
         '<b>Answer:</b> <span class="big-num">7.5 ÷ 3 = 2.5</span> Check: 2.5 × 3 = 7.5 ✓'
       ],
@@ -59,6 +61,27 @@
       id: 'check-whole', title: 'Try it together', kind: 'check', skill: 'dWhole',
       check: { t: 'W1', params: { a: '9.6', n: 4 } },
       reteach: '<p><b>Let\'s look again.</b> 8.4 ÷ 4: ones 8 ÷ 4 = 2; tenths 4 ÷ 4 = 1. The answer is 2.1. Check: 2.1 × 4 = 8.4.</p>'
+    },
+    {
+      id: 'hundredths', title: 'Dividing hundredths', skill: 'dWhole',
+      goal: 'how to divide a number with hundredths, and how to use a division fact you already know.',
+      body: '<p>The same steps work for hundredths: divide one place at a time, from left to right, and keep the decimal point straight above.</p>',
+      example: 'Worked example: 8.52 ÷ 4',
+      exampleVisual: M.longDiv('8.52', 4, '2.13'),
+      steps: [
+        '<b>Step 1.</b> Estimate: 8.52 ÷ 4 is about 8 ÷ 4 = 2.',
+        '<b>Step 2.</b> Ones: 8 ÷ 4 = 2. Write 2 above the 8 and the decimal point straight above the decimal point.',
+        '<b>Step 3.</b> Tenths: 5 ÷ 4 is 1 with 1 left over. Write 1 in the tenths place. The 1 tenth left over is 10 hundredths.',
+        '<b>Step 4.</b> Hundredths: 10 + 2 = 12 hundredths. 12 ÷ 4 = 3. Write 3 in the hundredths place.',
+        '<b>Answer:</b> <span class="big-num">8.52 ÷ 4 = 2.13</span> Check: 2.13 × 4 = 8.52 ✓',
+        '<b>Using a fact you know:</b> if you know 852 ÷ 4 = 213, then 8.52 ÷ 4 has the same digits, 2, 1, 3. The decimal point goes straight above the one in 8.52, so the answer is 2.13. The estimate (about 2) agrees.'
+      ],
+      why: 'A leftover tenth is 10 hundredths, so it can still be shared. 8.52 is 852 hundredths, so 8.52 ÷ 4 is 852 ÷ 4 = 213 hundredths, which is 2.13.'
+    },
+    {
+      id: 'check-hundredths', title: 'Try it together', kind: 'check', skill: 'dWhole',
+      check: { t: 'W3', params: { a: '31.32', n: 9 } },
+      reteach: '<p><b>Let\'s look again.</b> 1248 ÷ 4 = 312, so 12.48 ÷ 4 has the digits 3, 1, 2. 12.48 ÷ 4 is about 12 ÷ 4 = 3, so the answer is 3.12. Check: 3.12 × 4 = 12.48.</p>'
     },
     {
       id: 'small', title: 'When the answer is less than 1', skill: 'dWhole',
@@ -101,7 +124,7 @@
       example: 'Worked example: 3 friends share $7.50 equally. How much does each get?',
       steps: [
         '<b>Step 1.</b> Share equally means divide: $7.50 ÷ 3.',
-        '<b>Step 2.</b> 7 ÷ 3 = 2 with 1 left; 15 tenths ÷ 3 = 5 tenths; 0 hundredths ÷ 3 = 0.',
+        '<b>Step 2.</b> 7 ÷ 3 is 2 with 1 left over; that 1 is 10 tenths, and 10 + 5 = 15 tenths ÷ 3 = 5 tenths; 0 hundredths ÷ 3 = 0.',
         '<b>Answer:</b> <span class="big-num">$2.50</span> each. Check: $2.50 × 3 = $7.50 ✓'
       ],
       why: 'Sharing a total equally into groups is exactly what division means, so the amount in each group is total ÷ number of groups.'
@@ -116,7 +139,8 @@
       body: `<ul class="facts">
           <li>÷ 10, ÷ 100, ÷ 1000 move every digit 1, 2 or 3 places to the right: 45 ÷ 100 = 0.45.</li>
           <li>Dividing is sharing equally: 0.8 ÷ 4 = 0.2.</li>
-          <li>Divide like whole numbers and keep the decimal point straight above: 7.5 ÷ 3 = 2.5.</li>
+          <li>Divide like whole numbers and keep the decimal point straight above: 7.5 ÷ 3 = 2.5 and 8.52 ÷ 4 = 2.13.</li>
+          <li>The dividend is the number you divide, the divisor is the number you divide by, and the quotient is the answer.</li>
           <li>Check by multiplying: 2.5 × 3 = 7.5.</li>
         </ul>
         <p>You finished Lesson 9! This lesson was extra practice beyond the Grade 5 standards. Next, practice with hints, or read the Lesson Notes.</p>`
@@ -161,6 +185,7 @@
     screens, skillScreen, notes,
     teachSigs: screens.filter((s) => s.check).map((s) => G.engine.make('d09', s.check.t, 1, s.check.params).sig)
       .concat(['P1:45/10', 'P1:45/100', 'P1:45/1000', 'P2:45/10', 'P2:45/100', 'P2:45/1000', 'P1:52/100', 'M1:8/4', 'M1:9/3', 'M2:36/4', 'W1:7.5/3', 'W1:8.4/4', 'W2:z2.4/8', 'W2:z0.35/5',
-        'C1:8.4/4', 'C1:9.6/3', 'K1:share7.5/3', 'K2:cut3.5/5'])
+        'C1:8.4/4', 'C1:9.6/3', 'K1:share7.5/3', 'K2:cut3.5/5',
+        'W1:8.52/4', 'W3:8.52/4', 'W1:31.32/9', 'W3:12.48/4', 'W1:12.48/4'])
   };
 })(typeof window !== 'undefined' ? (window.GML = window.GML || {}) : (globalThis.GML = globalThis.GML || {}));

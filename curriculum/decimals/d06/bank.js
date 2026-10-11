@@ -31,9 +31,10 @@
 
   function sumQuestion(a, b, extra = {}) {
     const ans = add(a, b);
+    const solution = K.columnSolution([a, b], '+');
     const P = Math.max(D.parse(a).places, D.parse(b).places);
     return Object.assign({
-      type: 'number', sig: [a, b].sort().join('+'),
+      type: 'number', sig: [a, b].sort().join('+'), solution,
       prompt: `Add: <span class="expr">${a} + ${b}</span>`,
       visual: M.vertical([a, b], '+', { answer: '' }),
       answer: ans, answerText: ans,
@@ -85,10 +86,11 @@
         `${a} is ${s(ta, 'tenth')} and ${b} is ${s(tb, 'tenth')}. Add the numbers of tenths.`,
         'If you have ten tenths or more, ten of them make one whole. Write the wholes before the decimal point and the leftover tenths after it.'
       ],
-      why: `${ta} tenths + ${tb} tenths = ${ta + tb} tenths${ta + tb >= 10 ? ` = 1 whole and ${ta + tb - 10} tenths` : ''} = <b>${ans}</b>.`,
+      why: `${ta} tenths + ${tb} tenths = ${ta + tb} tenths${ta + tb >= 10 ? ` = 1 whole and ${s(ta + tb - 10, 'tenth')}` : ''} = <b>${ans}</b>.`,
       diagnose(resp, info) {
         if (info.th === (ta + tb - 10) * 100 && ta + tb > 10) return 'You found the leftover tenths, but 10 tenths make 1 whole. Don\'t forget the whole.';
-        if (info.th === (ta + tb) * 10) return `That would be ${ta + tb} hundredths. These are tenths, so ${ta + tb} tenths is written with the tenths place right after the point${ta + tb >= 10 ? ' (and 10 tenths make 1 whole)' : ''}.`;
+        if (info.th === (ta + tb) * 10) return ta + tb >= 10 ? 'That would be hundredths, but these bars show tenths. Ten tenths make one whole, so write the wholes before the decimal point and the leftover tenths after it.'
+          : `That would be ${ta + tb} hundredths. These bars show tenths, so the answer has one digit after the decimal point.`;
         return `Count the tenths in both bars: ${ta} + ${tb}. Then write that many tenths as a decimal.`;
       }
     };
@@ -140,7 +142,7 @@
     ];
     const order = r.shuffle([0, 1, 2]);
     const letters = ['A', 'B', 'C'];
-    const choices = order.map((i, pos) => ({ value: letters[pos], text: 'Way ' + letters[pos], html: opts[i].html, key: opts[i].key }));
+    const choices = order.map((i, pos) => ({ value: letters[pos], text: 'Way ' + letters[pos], html: M.columnsLabel(opts[i].html, `Way ${letters[pos]}.`), key: opts[i].key }));
     const ans = choices.find((c) => c.key === 'ok').value;
     return {
       type: 'mc', layout: 'models', sig: a + '+' + b,
@@ -198,7 +200,7 @@
     const xs = p.xs || [dec(r, 2, 9), dec(r, 1, 9), dec(r, 2, 9)];
     const ans = num(xs.reduce((t, x) => t + D.toThousandths(x), 0));
     return {
-      type: 'number', sig: '3:' + xs.slice().sort().join('+'),
+      type: 'number', sig: '3:' + xs.slice().sort().join('+'), solution: K.columnSolution(xs, '+'),
       prompt: `Add: <span class="expr">${xs.join(' + ')}</span>`,
       answer: ans, answerText: ans,
       hints: [
@@ -253,8 +255,8 @@
     const est = roundWhole(a) + roundWhole(b);
     const ans = claimRight ? `Yes. ${a} + ${b} is about ${est}, and ${said} is close to ${est}.` : `No. ${a} + ${b} is about ${est}, but ${said} is far from ${est}.`;
     const wrongs = claimRight
-      ? [`No. ${said} has too many digits to be right.`, `No. The sum must be more than ${est + 5}.`, `Yes, because ${said} has two decimal places.`]
-      : [`Yes. ${said} has two decimal places, so it must be right.`, `Yes, because it uses all the same digits.`, `No. The sum must be less than ${Math.max(1, est - 4)}.`];
+      ? [`No. ${said} has too many digits after the decimal point to be the right sum.`, `No. The sum must be more than ${est + 5}.`, `Yes, because ${said} has two decimal places.`]
+      : [`Yes. ${said} has two decimal places, so it must be right.`, `Yes, because it uses all the same digits as the numbers that were added.`, `No. The sum must be less than ${Math.max(1, est - 4)}.`];
     return {
       type: 'mc', sig: [a, b].sort().join('+') + (claimRight ? 'r' : 'w'),
       prompt: `${name} added <span class="expr">${a} + ${b}</span> and got <b>${said}</b>. Is that answer reasonable?`,
@@ -266,6 +268,7 @@
       ],
       why: `${a} + ${b} is about ${roundWhole(a)} + ${roundWhole(b)} = ${est}. The exact sum is ${right}. ${claimRight ? 'So the answer is reasonable.' : `So ${said} is not reasonable; it probably came from not lining up the decimal points.`}`,
       diagnose(resp) {
+        if (/same digits/.test(resp)) return 'Using the same digits does not make a sum right: digits in the wrong places make a very different number. Compare the answer with an estimate.';
         if (/decimal places|digits/.test(resp)) return 'The number of digits does not tell you if a sum is reasonable. Compare the answer with an estimate.';
         return `Round both numbers to whole numbers, add them, and compare that estimate with ${said}.`;
       }

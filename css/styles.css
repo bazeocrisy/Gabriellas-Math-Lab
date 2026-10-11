@@ -30,7 +30,8 @@
   --notes-soft: #eaf6f6;
   --hero-bg: #eef3fd;
   --radius: 12px;
-  --focus: 3px solid #f2a900;
+  --focus: 3px solid #1d2433;
+  --focus-halo: 0 0 0 6px #f2a900;
 }
 * { box-sizing: border-box; }
 html { -webkit-text-size-adjust: 100%; }
@@ -41,7 +42,7 @@ body {
 }
 a { color: var(--brand); }
 a:hover { color: var(--brand-dark); }
-:focus-visible { outline: var(--focus); outline-offset: 2px; }
+:focus-visible { outline: var(--focus); outline-offset: 2px; box-shadow: var(--focus-halo); }
 h1, h2, h3 { line-height: 1.25; }
 h1 { font-size: 1.7rem; margin: .3em 0 .5em; }
 h1:focus { outline: none; }
@@ -165,6 +166,7 @@ h3 { font-size: 1.1rem; margin: 1em 0 .4em; }
 .res-right > summary { font-size: 1.1rem; }
 .remind summary { color: var(--brand-dark); }
 .steps { padding-left: 1.3em; margin: 8px 0 0; }
+.steps.steps-labelled { list-style: none; padding-left: 0; }
 .steps li { margin: 8px 0; padding: 8px 10px; background: var(--brand-soft); border-radius: 8px; }
 .steps li .model { margin-top: 8px; }
 .step-btn { margin-top: 8px; }
@@ -206,13 +208,14 @@ h3 { font-size: 1.1rem; margin: 1em 0 .4em; }
 .m-off { fill: var(--shade-off); stroke: #8a94a6; stroke-width: .6; }
 .m-frame { fill: none; stroke: #1d2433; stroke-width: 2; }
 .m-col { stroke: #4c566a; stroke-width: 1; }
-.m-focus { fill: none; stroke: #e08a00; stroke-width: 2.5; }
-.m-zoomline { stroke: #e08a00; stroke-width: 1.2; stroke-dasharray: 4 3; }
+.m-focus { fill: none; stroke: #a35f00; stroke-width: 2.5; }
+.m-zoomline { stroke: #a35f00; stroke-width: 1.2; stroke-dasharray: 4 3; }
 .m-axis, .m-tick { stroke: #1d2433; stroke-width: 2; }
-.m-x { stroke: #a3271d; stroke-width: 2.5; stroke-linecap: round; }
-.m-mid { stroke: #e08a00; stroke-width: 3; }
-.m-a { fill: #dbe8fb; stroke: #8a94a6; stroke-width: .6; }
-.m-b { fill: #fff0c7; stroke: #8a94a6; stroke-width: .6; }
+.m-x { stroke: #8f1d14; stroke-width: 2.5; stroke-linecap: round; }
+.m-x-halo { stroke: #fff; stroke-width: 6; stroke-linecap: round; }
+.m-mid { stroke: #a35f00; stroke-width: 3; }
+.m-a { fill: url(#gml-hatch-a); stroke: #5b6475; stroke-width: .6; }
+.m-b { fill: url(#gml-hatch-b); stroke: #5b6475; stroke-width: .6; }
 .vcalc-model { border-collapse: collapse; font-size: 1.6rem; font-weight: 800; margin: 8px 0; font-variant-numeric: tabular-nums; }
 .vcalc-model td { width: 1.1em; height: 1.5em; text-align: center; padding: 0 1px; }
 .vcalc-model .v-op { width: 1.2em; color: var(--muted); }
@@ -253,7 +256,7 @@ h3 { font-size: 1.1rem; margin: 1em 0 .4em; }
 .choice-body::before { content: ""; }
 .choice input:checked + .choice-body { border-color: var(--brand); background: var(--brand-soft); box-shadow: inset 0 0 0 2px var(--brand); }
 .choice input:checked + .choice-body .choice-text::before, .choice input:checked + .choice-body .choice-title::before { content: "● "; color: var(--brand); }
-.choice input:focus-visible + .choice-body { outline: var(--focus); outline-offset: 2px; }
+.choice input:focus-visible + .choice-body { outline: var(--focus); outline-offset: 2px; box-shadow: var(--focus-halo); }
 .choice input:disabled + .choice-body { cursor: default; opacity: .85; }
 .choices-models { grid-template-columns: 1fr 1fr; }
 .choices-models .model { max-width: 180px; margin: 6px auto 0; }
@@ -265,6 +268,7 @@ h3 { font-size: 1.1rem; margin: 1em 0 .4em; }
 .num-label { display: block; font-weight: 700; margin: 8px 0 4px; }
 .num-input { font: inherit; font-size: 1.4rem; font-weight: 700; padding: 8px 12px; width: 100%; max-width: 220px; min-height: 52px; border: 2px solid var(--brand); border-radius: 10px; }
 .num-input:disabled { background: #f1f3f7; }
+.exp-input { max-width: 100%; resize: none; line-height: 1.35; overflow-wrap: anywhere; font-family: inherit; }
 
 /* Model builder */
 .builder { display: grid; gap: 10px; }
@@ -363,4 +367,21 @@ details[open] > summary::before { content: "▾"; }
   a { color: inherit; text-decoration: none; }
   .m-on { fill: #9aa7bb; }
   h2 { break-after: avoid; }
+}
+
+/* Number-line jump arrows, division layout, and worked column solutions (audit corrections). */
+.m-hop { fill: none; stroke: #b4441c; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+.ldiv-model { border-collapse: collapse; margin: .5rem 0; font-size: 1.35rem; font-variant-numeric: tabular-nums; }
+.ldiv-model td { min-width: 1.15em; padding: .05em .12em; text-align: center; }
+.ldiv-model .ld-q td { color: var(--ink, #1d2433); font-weight: 700; }
+.ldiv-model .ld-div { padding-right: .35em; }
+.ldiv-model .ld-top { border-top: 2px solid currentColor; }
+.ldiv-model .ld-first { border-left: 2px solid currentColor; }
+.solution-work .vcalc-model { margin: .5rem 0; }
+.sol-steps { margin: .4rem 0 .6rem 1.2rem; padding: 0; }
+.sol-steps li { margin: .2rem 0; }
+/* Small screens: number lines show every other tick label, larger, so labels stay readable (at least 10px). */
+@media (max-width: 480px) {
+  .model-line .m-odd { display: none; }
+  .model-line .m-tick-label, .model-line .m-mid-label { font-size: 17px; }
 }

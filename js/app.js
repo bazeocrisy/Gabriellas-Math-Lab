@@ -17,7 +17,7 @@
     const last = p.tests[p.tests.length - 1];
     const teach = p.teach.done ? 'Finished ✓' : p.teach.furthest > 0 ? `Screen ${p.teach.furthest + 1} of ${L.screens.length}` : 'Not started';
     const practice = p.practice.sessions ? `${p.practice.sessions} session${p.practice.sessions === 1 ? '' : 's'}` : 'Not started';
-    const test = last ? `${last.correct} of ${last.total}${last.mastered ? ' ★' : ''}` : 'Not taken';
+    const test = last ? `${last.correct} of ${last.total}${last.mastered ? ' ★' : last.assisted ? ' (lesson pages opened)' : ''}` : 'Not taken';
     return `<ul class="lc-progress" aria-label="Lesson ${l.n} progress">
       <li class="chip chip-teach"><span class="chip-k">Teach</span> ${teach}</li>
       <li class="chip chip-practice"><span class="chip-k">Practice</span> ${practice}</li>
@@ -26,7 +26,7 @@
 
   function home() {
     const cards = unit.lessons.filter((l) => ready(l.id)).map((l) => {
-      const mastered = G.store.lesson(l.id).tests.some((t) => t.mastered);
+      const mastered = !!G.store.lesson(l.id).masteredOn;
       return `<article class="lesson-card" aria-labelledby="lc-${l.id}">
         <div class="lc-head">
           <span class="lc-num" aria-hidden="true">${l.n}</span>
@@ -82,7 +82,7 @@
   function parent() {
     const persistent = G.store.persistent();
     const shown = unit.lessons.filter((l) => ready(l.id));
-    const done = shown.filter((l) => G.store.lesson(l.id).tests.some((t) => t.mastered));
+    const done = shown.filter((l) => G.store.lesson(l.id).masteredOn);
     const blocks = shown.map((l) => {
       const bank = G.engine.banks[l.id];
       const L = G.lessonContent[l.id];
@@ -91,33 +91,41 @@
       const skills = Object.keys(bank.skills);
       const mastered = last ? skills.filter((sk) => last.skills[sk] && last.skills[sk].correct === last.skills[sk].total) : [];
       const needs = last ? skills.filter((sk) => last.skills[sk] && last.skills[sk].correct < last.skills[sk].total) : [];
-      const everMastered = p.tests.some((t) => t.mastered);
+      const everMastered = !!p.masteredOn;
       const teachState = p.teach.done ? 'Finished' : p.teach.furthest > 0 ? `In progress (reached screen ${p.teach.furthest + 1} of ${L.screens.length})` : 'Not started';
-      const practiceSkills = skills.filter((sk) => p.practice.skills[sk]).map((sk) => `<li>${bank.skills[sk]}: ${p.practice.skills[sk].c} of ${p.practice.skills[sk].t} right on the first try</li>`).join('');
+      const practiceSkills = skills.filter((sk) => p.practice.skills[sk]).map((sk) => {
+        const s = p.practice.skills[sk];
+        return `<li>${bank.skills[sk]}: ${s.c} of ${s.t} right on the first try (hints allowed)${s.it ? `; ${s.i} of ${s.it} right on the first try with no hints` : ''}</li>`;
+      }).join('');
       let next;
       if (!p.teach.done && !p.tests.length) next = `Work through <a href="#/${l.id}/teach/1">Lesson ${l.n} Teach</a>.`;
       else if (!p.tests.length) next = `Do a <a href="#/${l.id}/practice">practice session</a>, then take the <a href="#/${l.id}/test">Lesson ${l.n} Test</a>.`;
+      else if (!last.mastered && last.goalMet && last.assisted) next = `The last test met the goal, but lesson pages were opened during it. Take a <a href="#/${l.id}/test">new test</a> on your own to earn ★ Mastered.`;
       else if (!last.mastered) next = `Review ${needs.map((sk) => `<a href="#/${l.id}/teach/${L.screens.findIndex((x) => x.id === L.skillScreen[sk]) + 1}">${bank.skills[sk].toLowerCase()}</a>`).join(', ') || 'the lesson'} and practice, then take a new test (goal: 9 of 10).`;
       else {
         const nl = unit.lessons.find((x) => x.n === l.n + 1);
+        // After the last lesson, point to the first lesson not mastered yet (if any) instead of declaring the unit complete.
+        const open = shown.find((x) => !G.store.lesson(x.id).masteredOn);
         next = nl ? (ready(nl.id) ? `Start <a href="#/${nl.id}/teach/1">Lesson ${nl.n}: ${nl.title}</a>. An occasional Lesson ${l.n} practice session keeps skills fresh.`
-          : `Lesson ${nl.n}: ${nl.title} (coming later). Until then, an occasional Lesson ${l.n} practice session keeps skills fresh.`) : 'All lessons complete.';
+          : `Lesson ${nl.n}: ${nl.title} (coming later). Until then, an occasional Lesson ${l.n} practice session keeps skills fresh.`)
+          : open ? `Lesson ${open.n}: ${open.title} is not mastered yet. <a href="#/${open.id}/teach/1">Go to Lesson ${open.n}</a>.` : 'All lessons complete.';
       }
+      const testLine = (t) => `${t.correct} of ${t.total} (${t.percent}%)${t.mastered ? ' · mastered' : t.assisted ? ` · ${t.goalMet ? 'goal met, but ' : ''}lesson pages opened during the test (${t.assisted.join(', ')})` : ' · not mastered yet'}`;
       return `<section class="card parent-lesson" aria-labelledby="pl-${l.id}">
         <h2 id="pl-${l.id}">Lesson ${l.n}: ${l.title}${l.supplemental ? ' <span class="lc-extra">Extra: beyond Grade 5</span>' : ''}</h2>
         <dl class="facts-dl">
           <dt>Lesson completed (mastered)</dt><dd>${everMastered ? '<b>Yes ★</b>' : 'Not yet'}</dd>
           <dt>Teach</dt><dd>${teachState}</dd>
           <dt>Practice sessions</dt><dd>${p.practice.sessions}${p.practice.lastDate ? ` (last on ${fmtDate(p.practice.lastDate)})` : ''}</dd>
-          <dt>Most recent test</dt><dd>${last ? `${last.correct} of ${last.total} (${last.percent}%) on ${fmtDate(last.date)}${last.mastered ? ' · mastered' : ' · not mastered yet'}` : 'No test taken yet'}</dd>
-          <dt>Tests taken</dt><dd>${p.tests.length}</dd>
+          <dt>Most recent test</dt><dd>${last ? `${testLine(last)} on ${fmtDate(last.date)}` : 'No test taken yet'}</dd>
+          <dt>Tests taken</dt><dd>${p.testsTaken}</dd>
         </dl>
         <h3>Skills correct on the most recent test</h3>
         ${last ? (mastered.length ? `<ul>${mastered.map((sk) => `<li>${bank.skills[sk]}</li>`).join('')}</ul>` : '<p>None yet.</p>') : '<p>No test taken yet.</p>'}
         <h3>Skills needing more practice <span class="fine">(missed on the most recent test)</span></h3>
         ${last ? (needs.length ? `<ul>${needs.map((sk) => `<li>${bank.skills[sk]}</li>`).join('')}</ul>` : '<p>None. Nice work!</p>') : '<p>No test taken yet.</p>'}
         ${practiceSkills ? `<details><summary>Practice details (all sessions)</summary><ul>${practiceSkills}</ul></details>` : ''}
-        ${p.tests.length > 1 ? `<details><summary>Test history</summary><ol>${p.tests.slice().reverse().slice(0, 10).map((t) => `<li>${fmtDate(t.date)}: ${t.correct} of ${t.total} (${t.percent}%)${t.mastered ? ' ★' : ''}</li>`).join('')}</ol></details>` : ''}
+        ${p.tests.length > 1 ? `<details><summary>Test history</summary><ol>${p.tests.slice().reverse().slice(0, 10).map((t) => `<li>${fmtDate(t.date)}: ${testLine(t)}${t.mastered ? ' ★' : ''}</li>`).join('')}</ol></details>` : ''}
         <h3>Suggested next step</h3>
         <p class="next-step">${next}</p>
       </section>`;
@@ -135,7 +143,16 @@
         <p class="fine">Lessons available now: ${shown.map((l) => l.n).join(', ')}.${unit.lessons.some((l) => !ready(l.id)) ? ` Lessons ${unit.lessons.filter((l) => !ready(l.id)).map((l) => l.n).join(', ')} are coming later.` : ' All lessons in this unit are available.'}${shown.some((l) => l.supplemental) ? ` Lessons ${shown.filter((l) => l.supplemental).map((l) => l.n).join(' and ')} are supplemental (beyond the Grade 5 Georgia standards).` : ''}</p>
       </section>
       ${blocks}
-      <p class="fine">Mastery means at least 9 of 10 correct on a Lesson Test. This is the app's learning benchmark, not an official Georgia Milestones score.</p>
+      <section class="card" aria-labelledby="rules-h">
+        <h2 id="rules-h">How Tests and mastery work</h2>
+        <ul>
+          <li><b>★ Mastered</b> means at least 9 of 10 correct on a Lesson Test done on its own. This is the app's learning benchmark, not an official Georgia Milestones score.</li>
+          <li>A student may leave a Test and come back later; answers are saved.</li>
+          <li>If Teach, Practice or Lesson Notes is opened in this app while a Test is unfinished, the Test is still scored and shown here, marked "lesson pages opened during the test", but it does not count for ★ Mastered. This is not treated as cheating: looking back at a lesson is a good way to learn. It just means the score is not an independent result.</li>
+          <li>The app only knows about pages opened in this app. Refreshing the page or closing the browser is not counted, and help from outside the app cannot be seen. Tests taken before this rule was added have no such record and are shown as they were.</li>
+          <li>Practice shows two numbers: right on the first try (hints allowed), and right on the first try with no hints. The second number is counted only for practice sessions finished since it was added.</li>
+        </ul>
+      </section>
       <section class="reset">
         <button type="button" class="btn" data-act="reset">Erase all progress on this device</button>
         <div class="confirm" hidden><p>Erase all saved progress? This cannot be undone.</p>
@@ -149,10 +166,26 @@
     document.title = "Parent Progress · Gabriella's Math Lab";
   }
 
+  const ASSIST = { teach: 'Teach', practice: 'Practice', notes: 'Lesson Notes' };
+  /** Opening Teach, Practice or Lesson Notes while a Test is unfinished is noted on that Test (only pages in this app). */
+  function noteAssist(lessonId, mode) {
+    const label = `${lessonName(lessonId)} ${ASSIST[mode]}`;
+    unit.lessons.filter((l) => ready(l.id)).forEach((l) => {
+      const d = G.store.openTest(l.id);
+      if (!d) return;
+      const a = Array.isArray(d.assist) ? d.assist.filter((x) => typeof x === 'string') : [];
+      if (a.includes(label) || a.length >= 12) return;
+      d.assist = a.concat(label);
+      G.store.setDraft('test-' + l.id, d);
+    });
+  }
+
   function route() {
     const h = location.hash || '#/';
     let m;
     app.classList.remove('page-home');
+    const am = h.match(/^#\/(d\d\d)\/(teach|practice|notes)(?:\/\d+)?$/);
+    if (am && ready(am[1])) noteAssist(am[1], am[2]);
     try {
       if ((m = h.match(/^#\/(d\d\d)\/teach(?:\/(\d+))?$/)) && ready(m[1])) G.views.teach(app, m[1], Number(m[2] || 1));
       else if ((m = h.match(/^#\/(d\d\d)\/practice$/)) && ready(m[1])) G.views.practice(app, m[1]);

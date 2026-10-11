@@ -39,7 +39,7 @@
         return;
       }
       if (fb.kind === 'solution') {
-        el.innerHTML = `<div class="fb fb-solution"><p class="fb-title">Here is how to solve it</p><p>${q.why}</p>
+        el.innerHTML = `<div class="fb fb-solution"><p class="fb-title">Here is how to solve it</p>${q.solution || ''}<p>${q.why}</p>
           <p>The answer is <b>${G.models.esc(q.answerText)}</b>. Read the steps again, then try the next one on your own.</p></div>`;
         return;
       }
@@ -56,10 +56,17 @@
       if (sol) sol.addEventListener('click', showSolution);
     }
 
-    function finish() {
+    function finish(moveFocus) {
       ctl.disable(true);
       $('.coach-actions').hidden = true;
       if (opts.onSolved) opts.onSolved(st);
+      // The button that was pressed is now hidden. Put keyboard focus on what comes next: the page's Next button when
+      // the page says so (Teach), otherwise the feedback (Practice; Tab then reaches "Next question").
+      if (!moveFocus) return;
+      const next = opts.focusAfter && opts.focusAfter();
+      const fb = $('.feedback .fb');
+      if (next && !next.disabled) next.focus({ preventScroll: true });
+      else if (fb) { fb.tabIndex = -1; fb.focus({ preventScroll: true }); }
     }
 
     function doCheck() {
@@ -73,12 +80,19 @@
         st.firstTry = st.attempts === 0;
         st.fb = { kind: 'correct' };
       } else {
-        st.attempts++;
-        st.fb = { kind: 'wrong', msg: r.message };
+        // Checking the same wrong answer again is not a new try, so tapping Check cannot unlock the solution.
+        const key = JSON.stringify(st.resp);
+        if (st.lastWrong === key) {
+          st.fb = { kind: 'wrong', msg: 'That is the same answer you already checked. Change your answer before you check again. ' + r.message };
+        } else {
+          st.attempts++;
+          st.lastWrong = key;
+          st.fb = { kind: 'wrong', msg: r.message };
+        }
       }
       save();
       drawFeedback();
-      if (st.solved) finish();
+      if (st.solved) finish(true);
       else $('.feedback .fb') && $('.feedback .fb').scrollIntoView && $('.feedback .fb').scrollIntoView({ block: 'nearest', behavior: 'smooth' });
     }
 
@@ -89,7 +103,7 @@
       st.fb = { kind: 'solution' };
       save();
       drawFeedback();
-      finish();
+      finish(true);
     }
 
     $('[data-act="check"]').addEventListener('click', doCheck);
@@ -100,6 +114,8 @@
       if (st.fb && st.fb.kind === 'wrong') drawFeedback();
       const all = host.querySelectorAll('.hint');
       if (all.length) all[all.length - 1].scrollIntoView && all[all.length - 1].scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+      // After the last hint the hint button is disabled; move focus to that hint so keyboard users keep their place.
+      if (st.hints >= 3 && all.length) { const h = all[all.length - 1]; h.tabIndex = -1; h.focus({ preventScroll: true }); }
     });
     drawHints();
     drawFeedback();

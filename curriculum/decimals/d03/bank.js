@@ -183,16 +183,16 @@
 
   // ───────────────────────── Skill: different numbers of digits (cmpLength) ─────────────────────────
 
-  function lengthPair(r) {
+  function lengthPair(r, shortP = 0.65) {
     const la = r.int(1, 2), lb = r.int(la + 1, 3);
     const at = r.int(0, la - 1);
     let [x, y] = pair(r, at, la, lb);
     // Most often the shorter number is the greater one, which is where the "more digits" mistake shows up.
-    const shortGreater = r.next() < 0.65;
+    const shortGreater = r.next() < shortP;
     if ((D.cmp(x, y) > 0) !== shortGreater) {
       const [w, fx] = x.split('.'), fy = y.split('.')[1];
       x = `${w}.${fx.slice(0, at)}${fy[at]}${fx.slice(at + 1)}`; y = `${w}.${fy.slice(0, at)}${fx[at]}${fy.slice(at + 1)}`;
-      if (/0$/.test(x) || /0$/.test(y)) return lengthPair(r);
+      if (/0$/.test(x) || /0$/.test(y)) return lengthPair(r, shortP);
     }
     return r.next() < 0.5 ? [x, y] : [y, x];
   }
@@ -271,7 +271,7 @@
       const w = r.int(0, 9), a = r.int(1, 9);
       const b = r.int(0, 9);
       const base = b ? `${w}.${a}${b}` : `${w}.${a}`;
-      const kind = r.pick(['eq', 'eq', 'eq2', 'ne']);
+      const kind = r.pick(['eq', 'eq2', 'ne', 'ne']);
       x = base;
       y = kind === 'eq' ? base + '0' : kind === 'eq2' ? base + (base.split('.')[1].length === 1 ? '00' : '0') : (b ? `${w}.${a}0${b}` : `${w}.0${a}`);
       if (r.next() < 0.5) [x, y] = [y, x];
@@ -341,7 +341,7 @@
 
   T('NL2', 'cmpLine', (r, p) => {
     let x = p.x, y = p.y;
-    if (!x) { [x, y] = lengthPair(r); const w = 0; x = `${w}.${x.split('.')[1]}`; y = `${w}.${y.split('.')[1]}`; }
+    if (!x) { [x, y] = lengthPair(r, 0.5); const w = 0; x = `${w}.${x.split('.')[1]}`; y = `${w}.${y.split('.')[1]}`; }
     const g = D.cmp(x, y) > 0 ? x : y;
     return {
       type: 'mc', sig: x + y,
@@ -405,10 +405,10 @@
       ? `${name} says <b>${x} &gt; ${y}</b> because ${x} has ${D.parse(x).frac[1]} hundredths and ${y} has ${D.parse(y).frac[1] === '0' ? 'no' : 'only ' + D.parse(y).frac[1]} hundredths. Is ${name} right?`
       : `${name} says <b>${y} &gt; ${x}</b> because ${Number(ys)} is greater than ${Number(xs)}. Is ${name} right?`;
     const right = claimTrue ? `Yes. The tenths are the same, and ${D.parse(x).frac[1]} hundredths is more than ${D.parse(y).frac[1]} hundredths.`
-      : `No. Line them up as ${pad3(x)} and ${pad3(y)}: ${x} has more hundredths, so ${x} is greater.`;
+      : `No. Lined up, ${pad3(x)} has more hundredths than ${pad3(y)}, so ${x} is greater.`;
     const wrongs = claimTrue
-      ? [`No. ${y} has more digits, so it is greater.`, `No. ${Number(ys)} is greater than ${Number(xs)}, so ${y} is greater.`, `Yes. ${x} has fewer digits, so it is greater.`]
-      : [`Yes. ${Number(ys)} is greater than ${Number(xs)}, so ${y} is greater.`, `Yes. ${y} has more digits, so it is greater.`, `No. ${x} is greater because it has fewer digits.`];
+      ? [`No. ${y} has more digits after the decimal point, so ${y} is greater.`, `No. ${Number(ys)} is greater than ${Number(xs)} as whole numbers, so ${y} is greater.`, `Yes. ${x} is greater, because a decimal with fewer digits is always greater.`]
+      : [`Yes. ${Number(ys)} is greater than ${Number(xs)} as whole numbers, so ${y} is greater.`, `Yes. ${y} has more digits after the decimal point, so ${y} is greater.`, `No. ${x} is greater because a decimal with fewer digits is always greater.`];
     return {
       type: 'mc', sig: x + y + (claimTrue ? 't' : 'f'),
       prompt, choices: textChoices(r, right, wrongs), answer: right, answerText: right,
@@ -465,7 +465,7 @@
     }
     const name = p.name || r.pick(['Maria', 'Ben', 'Ava', 'Noah', 'Zoe']);
     const right = `${name} did not compare place by place. ${y} has more tenths, so ${x} < ${y}.`;
-    const wrongs = [`There is no mistake. ${x} > ${y} is true.`, `${name} should have compared the last digits.`, `${name} should have counted the digits after the decimal point.`];
+    const wrongs = [`There is no mistake. ${x} > ${y} is true, because ${Number(x.split('.')[1])} is greater than ${Number(y.split('.')[1])}.`, `${name} should have compared the last digits of ${x} and ${y} instead of the first ones.`, `${name} should have counted the digits after the decimal point in each number.`];
     return {
       type: 'mc', sig: x + y,
       prompt: `${name} wrote <b>${x} &gt; ${y}</b>. What mistake did ${name} make?`,

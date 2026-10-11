@@ -29,7 +29,10 @@
       teach: { screen: 0, furthest: 0, done: false },
       practice: { sessions: 0, skills: {}, recentSigs: [] },
       tests: [],
-      lastTestSigs: []
+      testsTaken: 0,
+      masteredOn: undefined,
+      lastTestSigs: [],
+      recentTestSigs: []
     };
   }
 
@@ -51,12 +54,27 @@
     const b = blankLesson();
     const t = isObj(l.teach) ? l.teach : {}, p = isObj(l.practice) ? l.practice : {};
     const skills = {};
-    if (isObj(p.skills)) Object.keys(p.skills).forEach((k) => { const s = p.skills[k]; if (isObj(s) && Number.isInteger(s.c) && Number.isInteger(s.t)) skills[k] = { c: s.c, t: s.t }; });
+    // c of t: right on the first try (hints allowed), as always recorded. i of it: right on the first try with no
+    // hints, recorded only since this was added (older sessions are not guessed at).
+    if (isObj(p.skills)) Object.keys(p.skills).forEach((k) => {
+      const s = p.skills[k];
+      if (!isObj(s) || !Number.isInteger(s.c) || !Number.isInteger(s.t)) return;
+      skills[k] = { c: s.c, t: s.t };
+      if (Number.isInteger(s.i) && Number.isInteger(s.it) && s.i <= s.it) { skills[k].i = s.i; skills[k].it = s.it; }
+    });
+    const tests = Array.isArray(l.tests) ? l.tests.filter(validTest) : b.tests;
+    // The history keeps the last 20 tests; the count and the first mastery are kept separately so they are never lost.
+    // Older saved data has neither, so they are filled in from the history that is there.
+    const firstMastered = tests.find((x) => x.mastered);
+    const lastTestSigs = strings(l.lastTestSigs);
     return {
       teach: { screen: num(t.screen, 0), furthest: num(t.furthest, 0), done: t.done === true },
-      practice: { sessions: num(p.sessions, 0), skills, recentSigs: strings(p.recentSigs), lastDate: typeof p.lastDate === 'string' ? p.lastDate : undefined },
-      tests: Array.isArray(l.tests) ? l.tests.filter(validTest) : b.tests,
-      lastTestSigs: strings(l.lastTestSigs)
+      practice: { sessions: num(p.sessions, 0), skills, recentSigs: strings(p.recentSigs), lastDate: typeof p.lastDate === 'string' ? p.lastDate : undefined, lastId: typeof p.lastId === 'string' ? p.lastId : undefined },
+      tests,
+      testsTaken: Math.max(Number.isInteger(l.testsTaken) ? l.testsTaken : 0, tests.length),
+      masteredOn: typeof l.masteredOn === 'string' ? l.masteredOn : firstMastered ? (firstMastered.date || 'yes') : undefined,
+      lastTestSigs,
+      recentTestSigs: Array.isArray(l.recentTestSigs) ? strings(l.recentTestSigs) : lastTestSigs
     };
   }
 
@@ -74,8 +92,14 @@
     try { const k = '__gml_test__'; window.localStorage.setItem(k, '1'); window.localStorage.removeItem(k); return true; } catch (e) { return false; }
   }
 
+  /** The unfinished Test of a lesson (started, not submitted), or null. */
+  function openTest(id) {
+    const d = read(DRAFT + 'test-' + id, null);
+    return d && typeof d === 'object' && d.started && !d.submitted && Array.isArray(d.set) ? d : null;
+  }
+
   G.store = {
-    lesson, update, persistent,
+    lesson, update, persistent, openTest,
     getDraft: (name) => read(DRAFT + name, null),
     setDraft: (name, v) => rawSet(DRAFT + name, JSON.stringify(v)),
     clearDraft: (name) => rawDel(DRAFT + name),
