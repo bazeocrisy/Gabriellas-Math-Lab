@@ -24,10 +24,12 @@
   reuse('RC1', 'rvCompare', 'd03', 'L1'); // symbols with different lengths
   reuse('RC2', 'rvCompare', 'd04', 'O1'); // order three decimals
   reuse('RC3', 'rvCompare', 'd03', 'Y1'); // explain a comparison
+  reuse('RC4', 'rvCompare', 'd04', 'O3'); // order greatest to least
   // Rounding (Lesson 5).
   reuse('RR1', 'rvRound', 'd05', 'T1');
   reuse('RR2', 'rvRound', 'd05', 'H1');
   reuse('RR3', 'rvRound', 'd05', 'K1');
+  reuse('RR4', 'rvRound', 'd05', 'K3'); // exactly halfway
   // Adding and subtracting (Lessons 6–7).
   reuse('RA1', 'rvAddSub', 'd06', 'MX1');
   reuse('RA2', 'rvAddSub', 'd07', 'SZ2');
@@ -41,7 +43,7 @@
 
   T('X1', 'rvMulti', (r, p) => {
     let a = p.a, b = p.b;
-    if (!a) for (;;) { a = dec2(r, 1, 20); b = dec2(r, 1, 20); const sk = D.toThousandths(a) + D.toThousandths(b); if (sk % 100 !== 50) break; }
+    if (!a) for (;;) { a = dec2(r, 1, 20); b = dec2(r, 1, 20); const sk = D.toThousandths(a) + D.toThousandths(b); if (sk % 100 !== 0) break; } // the sum always has a hundredths digit to round
     const sum = num(D.toThousandths(a) + D.toThousandths(b));
     const ans = f(roundK(D.toThousandths(sum), 100), 1);
     return {
@@ -124,10 +126,15 @@
     const dg = D.parse(f(D.toThousandths(diff), 2)).frac;
     const place = p.place || r.pick(['tenths', 'hundredths']);
     const ans = place === 'tenths' ? dg[0] : dg[1];
+    const other = place === 'tenths' ? dg[1] : dg[0];
+    const nb = D.parse(f(D.toThousandths(K.noBorrowSub(a, b)), 2)).frac;
+    const flip = place === 'tenths' ? nb[0] : nb[1];
+    const pool = [other, flip, String((Number(ans) + 1) % 10), String((Number(ans) + 9) % 10)];
+    const wrongDigits = [...new Set(pool)].filter((d) => d !== ans).slice(0, 3);
     return {
       type: 'mc', sig: a + '-' + b + place,
       prompt: `Subtract <span class="expr">${a} − ${b}</span>. Which digit is in the <b>${place}</b> place of the answer?`,
-      choices: textChoices(r, ans, r.shuffle(['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'].filter((d) => d !== ans)).slice(0, 3)),
+      choices: textChoices(r, ans, wrongDigits),
       answer: ans, answerText: ans,
       hints: [
         'Two steps: subtract, then find the place in your answer.',
@@ -135,7 +142,11 @@
         `Step 2: in your answer, the tenths are the first digit after the decimal point and the hundredths the second.`
       ],
       why: `${a} − ${b} = ${f(D.toThousandths(diff), 2)}, so the ${place} digit is <b>${ans}</b>.`,
-      diagnose() { return 'Subtract carefully (check by adding), then count places from the decimal point in your answer.'; }
+      diagnose(resp) {
+        if (resp === other && other !== flip) return `That is the digit in the ${place === 'tenths' ? 'hundredths' : 'tenths'} place. Tenths are the first digit after the decimal point; hundredths are the second.`;
+        if (resp === flip) return 'It looks like a column was flipped instead of regrouped. When the top digit is smaller, take one from the next place to the left.';
+        return 'Subtract carefully (check by adding), then count places from the decimal point in your answer.';
+      }
     };
   });
 

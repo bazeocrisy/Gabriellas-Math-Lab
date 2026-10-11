@@ -78,7 +78,8 @@
       example: 'Worked example: 12.5 − 3.75',
       steps: [
         'Write 12.5 as 12.50 and line up the decimal points.',
-        'Hundredths: 0 &lt; 5, so regroup. Then subtract each column: 8.75.',
+        'Hundredths: 0 &lt; 5, so take 1 tenth (5 tenths become 4): 10 − 5 = 5.',
+        'Tenths: 4 &lt; 7, so take 1 one (2 ones become 1): 14 − 7 = 7. Ones: 1 &lt; 3, so take 1 ten (1 ten becomes 0): 11 − 3 = 8. Answer: 8.75.',
         'Check: 8.75 + 3.75 = 12.50 ✓'
       ],
       why: 'Lining up the decimal points makes sure you add or subtract digits that are in the same place.'
@@ -132,8 +133,8 @@
   const skillScreen = { rvPlace: 'place', rvCompare: 'compare', rvRound: 'round', rvAddSub: 'addsub', rvMulti: 'multi' };
 
   const notes = `
-    <h2>Vocabulary</h2>
-    <p>A review sheet of every decimal skill from Lessons 1–7.</p>
+    <h2>Review sheet</h2>
+    <p>Every decimal skill from Lessons 1–7 on one page.</p>
     <dl class="vocab">
       <dt>Place value</dt><dd>4.735 = 4 + 0.7 + 0.03 + 0.005 (four and seven hundred thirty-five thousandths).</dd>
       <dt>Compare</dt><dd>Line up the decimal points and compare from the left: 0.8 = 0.80 &gt; 0.75.</dd>

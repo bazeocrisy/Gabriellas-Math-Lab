@@ -4,7 +4,7 @@
   'use strict';
   G.unit = {
     title: 'Decimals',
-    standards: 'Georgia K-12 Mathematics Standards, Grade 5 Numerical Reasoning: 5.NR.4 (with 5.NR.1.1)',
+    standards: 'Georgia K-12 Mathematics Standards, Grade 5 Numerical Reasoning: 5.NR.4 (with 5.NR.1.1); supplemental Lessons 8–9 extend 5.NR.1.2',
     lessons: [
       { id: 'd01', n: 1, title: 'Understanding Decimals', blurb: 'Tenths, hundredths and thousandths, decimal models, the place-value chart, and equivalent decimals like 0.5 = 0.50.', ready: true },
       { id: 'd02', n: 2, title: 'Decimal Place Value', blurb: 'The place and the value of a digit, how places relate (×10), and standard, expanded and word form.', ready: true },

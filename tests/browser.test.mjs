@@ -349,7 +349,7 @@ try {
 
     await b.load(URL + 'index.html#/' + id + '/notes');
     rr = await js(`return { h: document.querySelector('h1').innerText, t: document.getElementById('app').innerText };`);
-    check(`${id} notes: printable notes with vocabulary and worked examples`, rr.h === await js(`return GML.lessonContent['${id}'].title;`) && /Vocabulary/.test(rr.t) && /Worked example/.test(rr.t));
+    check(`${id} notes: printable notes with vocabulary and worked examples`, rr.h === await js(`return GML.lessonContent['${id}'].title;`) && /Vocabulary|Review sheet/.test(rr.t) && /Worked example/.test(rr.t));
     await b.load(URL + 'index.html#/parent');
     rr = await js(`return document.getElementById('app').innerText;`);
     const ln = await js(`return GML.unit.find('${id}').n;`);

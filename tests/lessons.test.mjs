@@ -179,7 +179,7 @@ VERIFY.d09 = {
 VERIFY.d10 = {
   RP1: (q) => VERIFY.d02.V2(q), RP2: (q) => VERIFY.d02.F3(q), RP3: (q) => VERIFY.d02.F4(q), RP4: (q) => { const k = D.toThousandths(q.answer); assert.equal((q.visual.match(/class="m-on"/g) || []).length, Math.floor(k / 10) + 2 * (k % 10)); },
   RC1: (q) => VERIFY.d03.L1(q), RC2: (q) => VERIFY.d04.O1(q), RC3: (q) => VERIFY.d03.Y1(q),
-  RR1: (q) => VERIFY.d05.T1(q), RR2: (q) => VERIFY.d05.H1(q), RR3: (q) => VERIFY.d05.K1(q),
+  RR1: (q) => VERIFY.d05.T1(q), RR2: (q) => VERIFY.d05.H1(q), RR3: (q) => VERIFY.d05.K1(q), RR4: (q) => VERIFY.d05.K3(q), RC4: (q) => VERIFY.d04.O3(q),
   RA1: (q) => VERIFY.d06.MX1(q), RA2: (q) => VERIFY.d07.SZ2(q), RA3: (q) => VERIFY.d07.SW1(q),
   X1: (q) => { const [a, b] = numbersIn(q); const k = sumOf([a, b]); const rm = k % 100; assert.equal(D.toThousandths(q.answer), rm * 2 >= 100 ? k - rm + 100 : k - rm); assert.equal(D.parse(q.answer).places, 1); },
   X2: (q) => { const [a, b, c] = numbersIn(q); const v = sumOf([a, b]) - D.toThousandths(c); assert.equal(q.answer, v < 0 ? '<' : v > 0 ? '>' : '='); },
@@ -226,7 +226,7 @@ for (const id of LESSONS.filter((x) => x !== 'd01')) {
     }
     for (const sk of Object.keys(bank.skills)) assert.ok(L.screens.some((s) => s.id === L.skillScreen[sk]), 'skill screen ' + sk);
     for (const s of L.screens.filter((x) => x.steps)) assert.ok(s.why || s.kind, `${s.id} explains why`);
-    assert.ok(L.notes.length > 500 && /<h2>Vocabulary<\/h2>/.test(L.notes));
+    assert.ok(L.notes.length > 500 && /<h2>(Vocabulary|Review sheet)<\/h2>/.test(L.notes));
     assert.equal(L.screens[L.screens.length - 1].kind, 'done');
   });
   test(`${id}: question sets are balanced, fresh and skip Teach examples`, () => {
@@ -329,4 +329,24 @@ test('QA review regressions (Lessons 5–8)', () => {
   }
   // Stacked charts: no decimal point after a whole number when zeros are not written.
   assert.doesNotMatch(G.models.stack(['3.47', '347'], { pad: false }), /<td>7<\/td><td class="pv-point" aria-label="decimal point">\.<\/td><\/tr>/);
+});
+
+test('curriculum review regressions (Lessons 9–10)', () => {
+  // L9: no dividend needs extra zeros written on it; every dividend has a decimal point.
+  for (const id of ['W1', 'W2', 'K1', 'K2']) for (let seed = 1; seed <= 400; seed++) {
+    const q = engine.make('d09', id, seed);
+    const xs = numbersIn(q); const a = id === 'K1' ? xs[1] : xs[0];
+    assert.ok(D.parse(a).places >= 1 && D.parse(a).places >= D.parse(q.answer).places, `${id}/${seed}: ${a} -> ${q.answer}`);
+  }
+  // L9: no division by a decimal among the C1 choices.
+  for (let seed = 1; seed <= 200; seed++) for (const c of engine.make('d09', 'C1', seed).choices) assert.doesNotMatch(c.value, /÷/);
+  // L10: X1 always needs a rounding step; the halfway case can appear.
+  let halfway = 0;
+  for (let seed = 1; seed <= 600; seed++) {
+    const q = engine.make('d10', 'X1', seed); const [a, b] = numbersIn(q); const k = sumOf([a, b]);
+    assert.notEqual(k % 100, 0, `X1/${seed}`); if (k % 100 === 50) halfway++;
+  }
+  assert.ok(halfway > 0, 'X1 includes the halfway case');
+  // L10 reviews greatest-to-least ordering and halfway rounding.
+  assert.ok(engine.banks.d10.byId.RC4 && engine.banks.d10.byId.RR4);
 });

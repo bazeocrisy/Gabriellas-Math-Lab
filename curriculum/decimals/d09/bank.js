@@ -26,7 +26,9 @@
       const ak = qk * n;
       if (ak % 10 !== 0) continue; // dividend within hundredths
       if (opts.small && qk >= 1000) continue;
-      if (opts.decimalA && num(ak).indexOf('.') < 0) continue; // the dividend itself has decimal places
+      const A = D.parse(num(ak));
+      if (A.places === 0 || A.places < qp) continue; // no zeros need to be written onto the dividend
+      if (opts.decimalA && num(ak).indexOf('.') < 0) continue;
       if (opts.aPlaces && D.parse(num(ak)).places !== opts.aPlaces) continue;
       return { a: num(ak), n, q: num(qk) };
     }
@@ -119,12 +121,12 @@
 
   T('M1', 'dModel', (r, p) => {
     let t = p.t, n = p.n;
-    if (!t) for (;;) { n = r.int(2, 5); const g = r.int(1, 4); t = g * n; if (t <= 9) break; }
+    if (!t) for (;;) { n = r.int(2, 6); const g = r.int(1, 6); t = g * n; if (t <= 18 && t !== 10) break; }
     const a = f(t * 100, 1), ans = f(t / n * 100, 1);
     return {
       type: 'number', sig: t + '/' + n,
-      prompt: `The bar shows <b>${a}</b>. Share it equally into <b>${n} groups</b>. What is <span class="expr">${a} ÷ ${n}</span>?`,
-      visual: M.strip(t), answer: ans, answerText: ans,
+      prompt: `${t > 10 ? 'Each bar is one whole. The bars show' : 'The bar shows'} <b>${a}</b>. Share it equally into <b>${n} groups</b>. What is <span class="expr">${a} ÷ ${n}</span>?`,
+      visual: t > 10 ? `<div class="bar-stack">${M.strip(10)}${M.strip(t - 10)}</div>` : M.strip(t), answer: ans, answerText: ans,
       hints: [
         `${a} ÷ ${n} means sharing ${a} equally into ${n} groups.`,
         `${a} is ${s(t, 'tenth')}. Share the ${t} shaded tenths into ${n} equal groups.`,
@@ -173,7 +175,7 @@
         `Start with the whole-number part of ${a}. How many groups of ${n} fit in it? Write that above it (write 0 if none fit).`,
         'Then bring down the next digit after the decimal point and keep dividing, one digit at a time. Check by multiplying your answer by ' + n + '.'
       ],
-      why: `${digitsOnly(a)} ÷ ${n} = ${Number(digitsOnly(a)) / n}, and the decimal point stays above the decimal point, so ${a} ÷ ${n} = <b>${q}</b>. Check: ${q} × ${n} = ${a}.`,
+      why: `${a} is ${digitsOnly(a)} ${places(a) === 1 ? 'tenths' : 'hundredths'}, and ${digitsOnly(a)} ÷ ${n} = ${Number(digitsOnly(a)) / n}, so ${a} ÷ ${n} = <b>${q}</b> (the decimal point stays straight above). Check: ${q} × ${n} = ${a}.`,
       diagnose(resp, info) {
         const qk = D.toThousandths(q);
         if (info.th === qk * 10 || info.th === qk * 100 || info.th * 10 === qk) return 'The digits are right, but the decimal point is in the wrong place. In the quotient it goes straight above the decimal point in the number you are dividing.';
@@ -227,7 +229,7 @@
   T('C1', 'dCheck', (r, p) => {
     const { a, n, q } = p.a ? { a: p.a, n: p.n, q: num(D.toThousandths(p.a) / p.n) } : exactDiv(r, {});
     const right = `${q} × ${n} = ${a}`;
-    const wrongs = [`${a} × ${n} = ${num(D.toThousandths(a) * n)}`, `${q} + ${n} = ${num(D.toThousandths(q) + n * 1000)}`, `${a} ÷ ${q} = ${n}`];
+    const wrongs = [`${a} × ${n} = ${num(D.toThousandths(a) * n)}`, `${q} + ${n} = ${num(D.toThousandths(q) + n * 1000)}`, `${a} − ${q} = ${num(D.toThousandths(a) - D.toThousandths(q))}`];
     return {
       type: 'mc', sig: a + '/' + n,
       prompt: `${a} ÷ ${n} = ${q}. Which multiplication <b>checks</b> this answer?`,
@@ -240,7 +242,7 @@
       why: `${n} groups of ${q} make ${a}: ${q} × ${n} = ${a}, so ${a} ÷ ${n} = ${q} is right.`,
       diagnose(resp) {
         if (resp.includes('+')) return 'A division is checked with multiplication, not addition.';
-        if (resp.includes('÷')) return 'That is another division. To check, multiply the answer by the number you divided by.';
+        if (resp.includes('−')) return 'A division is checked with multiplication, not subtraction.';
         return 'Multiply the ANSWER by the number you divided by, not the starting number.';
       }
     };
@@ -257,7 +259,7 @@
     const ans = claimRight ? `Yes. ${said} × ${n} = ${a}.` : `No. ${said} × ${n} = ${back}, not ${a}.`;
     const wrongs = claimRight
       ? [`No. ${said} × ${a} should be ${n}.`, `No. The answer must be bigger than ${a}.`, `Yes, because ${said} has one decimal place.`]
-      : [`Yes. ${said} is a whole lot less than ${a}.`, `Yes, because division answers are always bigger.`, `No. The answer must be bigger than ${a}.`];
+      : [`Yes, because ${said} has the same digits as ${q}.`, `Yes, because division answers are always bigger.`, `No. The answer must be bigger than ${a}.`];
     return {
       type: 'mc', sig: a + '/' + n + (claimRight ? 'r' : 'w'),
       prompt: `${name} worked out <span class="expr">${a} ÷ ${n}</span> and got <b>${said}</b>. Check by multiplying. Is ${name} right?`,
@@ -279,7 +281,7 @@
 
   T('K1', 'dWord', (r, p) => {
     let a = p.a, n = p.n;
-    if (!a) for (;;) { n = r.int(2, 6); const qk = r.int(1, 20) * 1000 + r.int(0, 99) * 10; const ak = qk * n; if (ak % 10 === 0 && qk % 1000 && ak <= 60000) { a = num(ak); break; } }
+    if (!a) for (;;) { n = r.int(2, 6); const qk = r.int(1, 20) * 1000 + r.int(0, 99) * 10; const ak = qk * n; if (qk % 1000 && ak <= 60000 && D.parse(num(ak)).places >= D.parse(num(qk)).places) { a = num(ak); break; } }
     const q = num(D.toThousandths(a) / n);
     const money = (v) => '$' + f(D.toThousandths(v), 2);
     const qq = divQuestion(a, n, q);
@@ -287,7 +289,7 @@
       sig: 'share' + a + '/' + n,
       prompt: `${n} friends share <b>${money(a)}</b> equally. How much does each friend get?`,
       answerText: money(q),
-      hints: [`"Share equally" means divide: ${money(a)} ÷ ${n}.`, qq.hints[1], qq.hints[2]],
+      hints: [`"Share equally" means divide: ${money(a)} ÷ ${n}.`, `Start with the whole dollars in ${money(a)}. How many groups of ${n} fit? Write that, then the decimal point straight above the one in ${money(a)}.`, `Then share the dimes (tenths) and the cents (hundredths), one place at a time. Check by multiplying your answer by ${n}.`],
       why: `${money(a)} ÷ ${n} = <b>${money(q)}</b>. Check: ${money(q)} × ${n} = ${money(a)}.`
     });
   });

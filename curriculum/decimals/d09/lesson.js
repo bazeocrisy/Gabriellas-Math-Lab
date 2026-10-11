@@ -126,7 +126,7 @@
   const skillScreen = { dPow: 'pow', dModel: 'model', dWhole: 'whole', dCheck: 'check-by', dWord: 'word' };
 
   const notes = `
-    <p class="fine"><b>Supplemental lesson:</b> Georgia's Grade 5 standards do not require dividing decimals. This lesson extends 5.NR.1.2 (dividing by powers of 10) for students who are ready.</p>
+    <p class="fine"><b>Supplemental lesson:</b> Georgia's Grade 5 standards do not require dividing decimals. This lesson extends 5.NR.1.2 (dividing by powers of 10) and 5.NR.2.2 (whole-number division) for students who are ready.</p>
     <h2>Vocabulary</h2>
     <dl class="vocab">
       <dt>Quotient</dt><dd>The answer to a division problem. In 7.5 ÷ 3 = 2.5, the quotient is 2.5.</dd>
