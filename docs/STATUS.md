@@ -1,13 +1,16 @@
 # Project status
 
-Updated: 2026-10-10 · Live (Lessons 1–4): https://bazeocrisy.github.io/Gabriellas-Math-Lab/ · Lessons 5–8: branch `claude/decimals-d05-d08` · Lesson 1 audit: [LESSON-1-AUDIT.md](LESSON-1-AUDIT.md)
+Updated: 2026-10-10 · Live (Lessons 1–8): https://bazeocrisy.github.io/Gabriellas-Math-Lab/ · Lesson 1 audit: [LESSON-1-AUDIT.md](LESSON-1-AUDIT.md)
 
 ## Live site (main)
 - **Lessons 1–4 and the new homepage are live:** https://bazeocrisy.github.io/Gabriellas-Math-Lab/
 - PR #5 merged into `main` (merge commit `b61b65e`, 2026-10-10). The GitHub Pages build of `b61b65e` succeeded.
 - **Verified live:** the full browser suite ran against the live URL with **297/297 pass**. It covers Teach, Practice, Test, Notes and Parent Progress for Lessons 1–4, the homepage, saved Lesson 1 progress, layouts at 375–1920 px, no console errors, and all scripts and styles loading with HTTP 200.
 
-## Branch `claude/decimals-d05-d08`: Lessons 5–8, built and tested, NOT merged or deployed (awaiting approval)
+## Lessons 5–8: live
+- **Deployed and verified live (2026-10-10).**
+  - PR #7 merged into `main` (merge commit `882a1bf`); the GitHub Pages build of `882a1bf` succeeded.
+  - The full browser suite ran against the live URL with **505/505 pass**. It covers every lesson from 1 to 8, the homepage and saved progress, layouts at 375–1920 px, no console errors, and all 31 scripts and styles loading with HTTP 200.
 - [x] **Lesson 5, Rounding Decimals** (5.NR.4.3):
   - 14 Teach screens and 6 guided checks: what rounding is, nearest tenth with a halfway mark, the rounding rule (also to the nearest whole number), nearest hundredth, rounding up 9s (2.96 → 3.0, 4.996 → 5.00), exactly halfway, working backward.
   - 12 templates. Answers must show the rounding place (3.0, not 3).
@@ -82,7 +85,6 @@ Updated: 2026-10-10 · Live (Lessons 1–4): https://bazeocrisy.github.io/Gabrie
   - Answers can be worked out from the browser console.
   - Number-line "imagine placing" questions show the line without points, on purpose.
   - Expanded form does not accept fraction style (2/10).
-- [ ] Merge `claude/decimals-d05-d08` and deploy Lessons 5–8: **waiting for owner approval**; re-run the live suite after deploying.
 - [ ] Lessons 9–10 (not started)
 
 ## Definition of done for each lesson

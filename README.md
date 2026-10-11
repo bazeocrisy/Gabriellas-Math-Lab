@@ -14,7 +14,7 @@ Teach the concept clearly, provide meaningful practice, and assess independent m
 - **Parent Progress:** lesson status, most recent test, skills correct / needing practice, suggested next step. Stored only in this browser.
 
 ## Status
-**Decimals Lessons 1–4 are live** at https://bazeocrisy.github.io/Gabriellas-Math-Lab/. **Lessons 5–8** (Rounding, Adding, Subtracting, and supplemental Multiplying) are built on branch `claude/decimals-d05-d08`, awaiting approval to go live. Lessons 9–10 are shown as "Coming later". See [docs/STATUS.md](docs/STATUS.md).
+**Decimals Lessons 1–8 are live** at https://bazeocrisy.github.io/Gabriellas-Math-Lab/ (Lesson 8, Multiplying, is supplemental). Lessons 9–10 are shown as "Coming later". See [docs/STATUS.md](docs/STATUS.md).
 
 ## Run it
 It is a static site with no build step and no dependencies.
