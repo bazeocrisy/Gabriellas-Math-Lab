@@ -1,8 +1,11 @@
 # Project status
 
-Updated: 2026-10-10 · Live (Lessons 1–8): https://bazeocrisy.github.io/Gabriellas-Math-Lab/ · Lessons 9–10: branch `claude/decimals-d09-d10` · Lesson 1 audit: [LESSON-1-AUDIT.md](LESSON-1-AUDIT.md)
+Updated: 2026-10-10 · Live (Lessons 1–10): https://bazeocrisy.github.io/Gabriellas-Math-Lab/ · Lesson 1 audit: [LESSON-1-AUDIT.md](LESSON-1-AUDIT.md)
 
-## Branch `claude/decimals-d09-d10`: Lessons 9–10, built and tested, NOT merged or deployed (awaiting approval)
+## Lessons 9–10: live
+- **Deployed and verified live (2026-10-10).**
+  - PR #9 merged into `main` (merge commit `79abadc`); the GitHub Pages build of `79abadc` succeeded.
+  - The full browser suite ran against the live URL with **609/609 pass**. It covers every lesson from 1 to 10, the homepage and saved progress, layouts at 375–1920 px, no console errors, and all scripts and styles loading.
 - [x] **Lesson 9, Dividing Decimals: SUPPLEMENTAL** (beyond the Grade 5 Georgia standards; extends 5.NR.1.2 and 5.NR.2.2):
   - Labelled on the home card ("Extra: beyond Grade 5"), in the lesson description, on the first Teach screen, in the Notes, on the review screen and on its Parent Progress block.
   - 13 screens: 6 Teach screens and 6 guided checks, plus the review screen. Topics: ÷10/100/1000; sharing with tenths bars (up to 1.8, two stacked bars) and hundredths grids; a decimal ÷ a whole number with the decimal point lined up; answers less than 1; checking by multiplying; sharing word problems with money.
@@ -104,7 +107,6 @@ Updated: 2026-10-10 · Live (Lessons 1–8): https://bazeocrisy.github.io/Gabrie
   - Answers can be worked out from the browser console.
   - Number-line "imagine placing" questions show the line without points, on purpose.
   - Expanded form does not accept fraction style (2/10).
-- [ ] Merge `claude/decimals-d09-d10` and deploy Lessons 9–10: **waiting for owner approval**; re-run the live suite after deploying.
 
 ## Definition of done for each lesson
 - Instruction and answer explanations mathematically audited
