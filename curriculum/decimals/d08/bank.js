@@ -23,6 +23,8 @@
   const estimate = (x, n) => { const k = D.toThousandths(x); const r = k >= 500 ? Math.floor((k + 500) / 1000) * 1000 : Math.floor((k + 50) / 100) * 100; return num(Math.max(100, r) * n); };
   /** Words for the estimate in feedback; a range when the estimate would equal the exact answer. */
   const estPhrase = (x, n) => { const e = estimate(x, n), exact = num(D.toThousandths(x) * n); const k = D.toThousandths(x); return D.equal(e, exact) ? `between ${Math.floor(k / 1000) * n} and ${Math.ceil(k / 1000 + 0.0001) * n}` : `about ${e}`; };
+  /** The product written with all its counted decimal places, then simplified if that changes it: '0.20 = 0.2'. */
+  const full = (ans, P) => { const w = f(D.toThousandths(ans), P); return w === ans ? `<b>${ans}</b>` : `${w} = <b>${ans}</b>`; };
   const roundFriendly = (x) => { const k = D.toThousandths(x); return k >= 500 ? String(Math.floor((k + 500) / 1000)) : num(Math.max(100, Math.floor((k + 50) / 100) * 100)); };
   const FACT = [10, 100, 1000];
   const WORD = ['zero', 'one', 'two', 'three', 'four'];
@@ -108,7 +110,7 @@
         `Multiply as if there were no decimal point: ${digitsOnly(a)} × ${n}.`,
         `${a} has ${ws(pl, 'decimal place')}, so the answer needs ${ws(pl, 'decimal place')} too. Put the point in, then check it is close to your estimate.`
       ],
-      why: `${digitsOnly(a)} × ${n} = ${Number(digitsOnly(a)) * n}. ${a} has ${s(pl, 'decimal place')}, so ${a} × ${n} = <b>${ans}</b> (about ${roundFriendly(a)} × ${n} = ${estimate(a, n)}).`,
+      why: `${digitsOnly(a)} × ${n} = ${Number(digitsOnly(a)) * n}. ${a} has ${s(pl, 'decimal place')}, so ${a} × ${n} = ${full(ans, pl)} (about ${roundFriendly(a)} × ${n} = ${estimate(a, n)}).`,
       diagnose(resp, info) {
         const whole = Number(digitsOnly(a)) * n * 1000;
         if (info.th === whole) return `That is ${digitsOnly(a)} × ${n} without the decimal point. ${a} has ${s(pl, 'decimal place')}, so the answer needs ${pl === 1 ? 'one' : pl}.`;
@@ -199,7 +201,7 @@
         `Multiply the digits as whole numbers: ${digitsOnly(a)} × ${digitsOnly(b)}.`,
         `Count the decimal places in both numbers (${WORD[places(a)]} and ${WORD[places(b)]}) and add them. The answer has that many decimal places.`
       ],
-      why: `${digitsOnly(a)} × ${digitsOnly(b)} = ${Number(digitsOnly(a)) * Number(digitsOnly(b))}, and there are ${places(a) + places(b)} decimal places in all, so ${a} × ${b} = <b>${ans}</b>.`,
+      why: `${digitsOnly(a)} × ${digitsOnly(b)} = ${Number(digitsOnly(a)) * Number(digitsOnly(b))}, and there are ${places(a) + places(b)} decimal places in all, so ${a} × ${b} = ${full(ans, places(a) + places(b))}.`,
       diagnose(resp, info) {
         const prod = Number(digitsOnly(a)) * Number(digitsOnly(b));
         if (info.th === prod * 100) return `The digits are right, but tenths × tenths makes hundredths. The answer needs ${places(a) + places(b)} decimal places.`;

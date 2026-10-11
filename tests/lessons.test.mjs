@@ -288,3 +288,21 @@ test('curriculum review regressions (Lessons 5–8)', () => {
   }
 });
 function num1(x) { return String(x || ''); }
+
+test('QA review regressions (Lessons 5–8)', () => {
+  // The area model's screen-reader text never states the overlap count (the answer in a test question).
+  for (let seed = 1; seed <= 200; seed++) assert.doesNotMatch(engine.make('d08', 'A1', seed).visual, /overlap in \d/);
+  // Lesson 8 explanations show the counted decimal places before simplifying.
+  assert.match(strip(engine.make('d08', 'A2', 1, { a: '0.4', b: '0.5' }).why), /0\.20 = 0\.2/);
+  assert.match(strip(engine.make('d08', 'W1', 1, { a: '6.5', n: 8 }).why), /52\.0 = 52/);
+  for (let seed = 1; seed <= 300; seed++) {
+    for (const id of ['W1', 'A2']) {
+      const q = engine.make('d08', id, seed); const t = strip(q.why);
+      const P = Number((t.match(/(\d) decimal place/) || [])[1]);
+      const shown = t.match(/= ([\d.]+)(?: = [\d.]+)?(?: \(|\.$)/)[1];
+      assert.equal(D.parse(shown).places, P, `${id}/${seed}: ${t}`);
+    }
+  }
+  // Stacked charts: no decimal point after a whole number when zeros are not written.
+  assert.doesNotMatch(G.models.stack(['3.47', '347'], { pad: false }), /<td>7<\/td><td class="pv-point" aria-label="decimal point">\.<\/td><\/tr>/);
+});

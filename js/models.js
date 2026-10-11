@@ -133,7 +133,8 @@
         let v, filler = false;
         if (i < wl) v = w[i] === ' ' ? '' : w[i];
         else { v = x.frac[i - pt]; if (v === undefined) { v = pad ? '0' : ''; filler = pad; } }
-        return (i === pt ? '<td class="pv-point" aria-label="decimal point">.</td>' : '') +
+        const point = x.places === 0 && !pad ? '<td class="pv-point"></td>' : '<td class="pv-point" aria-label="decimal point">.</td>';
+        return (i === pt ? point : '') +
           `<td class="${[o.highlight === p ? 'pv-hi' : '', filler ? 'pv-pad' : ''].join(' ').trim()}">${esc(v)}</td>`;
       }).join('');
       return `<tr>${o.labels ? `<th scope="row">${esc(o.labels[r])}</th>` : ''}${cells}</tr>`;
@@ -182,7 +183,7 @@
       parts.push(`<rect x="${col * 20}" y="${row * 20}" width="20" height="20" class="${inA && inB ? 'm-on' : inA ? 'm-a' : inB ? 'm-b' : 'm-off'}"/>`);
     }
     for (let k = 1; k < 10; k++) parts.push(`<line x1="${k * 20}" y1="0" x2="${k * 20}" y2="200" class="m-col"/>`);
-    const label = o.label || `A grid of 100 squares. ${a} of the 10 rows and ${b} of the 10 columns are marked. They overlap in ${a * b} squares.`;
+    const label = o.label || `A grid of 100 squares. ${a} of the 10 rows and ${b} of the 10 columns are marked; the squares where they overlap are dark.`;
     return `<svg class="model model-grid" viewBox="-2 -2 204 204" role="img" aria-label="${esc(label)}">${parts.join('')}<rect x="0" y="0" width="200" height="200" class="m-frame"/></svg>`;
   }
 
