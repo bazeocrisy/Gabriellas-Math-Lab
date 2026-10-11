@@ -849,6 +849,28 @@ try {
   r = await js(`return JSON.parse(localStorage.getItem('gml:v1:draft:test-d05')).assist;`);
   check('integrity: opening the Practice Center or Study Guides during a lesson Test is noted on it', r.includes('the Practice Center') && r.includes('the Study Guides'), r);
 
+  // ── NumberNova review regressions ──
+  await js(`localStorage.setItem('gml:v1:draft:pc-history', JSON.stringify({ sessions: [{ n: 10, completed: 'abc', clean: 'x' }], skills: { 'add.basic': null, 'sub.basic': { r: 'xx' } } }));`);
+  await b.load(URL + 'index.html#/parent');
+  r = await js(`return document.getElementById('app').innerText;`);
+  check('review: damaged practice history does not break Parent Progress (no NaN or junk)', !/Something went wrong|NaN|abc/.test(r) && /Practice Center/.test(r), r.slice(0, 200));
+  await b.load(URL + 'index.html#/practice'); await b.reload();
+  await js(`document.getElementById('pc-mode-misses').click(); document.querySelector('.pc-form button[type=submit]').click();`);
+  check('review: damaged practice history does not break Practice My Misses', /Step 2 of 3/.test(await js(`return document.getElementById('app').innerText;`)));
+  // A stale tab never writes its old session over a newer one.
+  await pcStart('add', 10);
+  r = await js(`const d = JSON.parse(localStorage.getItem('gml:v1:draft:pc-session')); const other = Object.assign({}, d, { id: 'newer-tab' }); localStorage.setItem('gml:v1:draft:pc-session', JSON.stringify(other));
+    document.querySelector('[data-act=hint]').click(); return JSON.parse(localStorage.getItem('gml:v1:draft:pc-session')).id;`);
+  check('review: a stale Practice Center tab does not overwrite a newer session', r === 'newer-tab', r);
+  // The phone menu closes after choosing the current page, and unknown lesson routes highlight Home.
+  await b.viewport(390, 844);
+  await b.load(URL + 'index.html#/learn');
+  r = await js(`document.querySelector('.nav-toggle').click(); const open = document.querySelector('.nav-toggle').getAttribute('aria-expanded');
+    document.querySelector('.site-nav a[data-nav=learn]').click(); return { open, after: document.querySelector('.nav-toggle').getAttribute('aria-expanded') };`);
+  check('review: the phone menu closes after tapping the current page', r.open === 'true' && r.after === 'false', r);
+  await b.load(URL + 'index.html#/d11/teach/1');
+  check('review: an unknown lesson route shows Home and highlights Home', (await js(`return document.querySelector('.site-nav a[aria-current]').dataset.nav;`)) === 'home');
+
   // ── Unknown routes and reset ──
   await b.load(URL + 'index.html#/d11/teach/1');
   check('unready lesson route falls back to home', /Ready to make your next math discovery/.test(await js(`return document.querySelector('h1').innerText;`)));

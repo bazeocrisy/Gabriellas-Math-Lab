@@ -117,7 +117,7 @@
         <a class="btn btn-big btn-test" href="#/${lessonId}/test">Test</a>
       </div>`;
     app.querySelector('[data-act="print"]').addEventListener('click', () => window.print());
-    document.title = `${L.title} · Lesson Notes`;
+    document.title = `${L.title} · Lesson Notes · NumberNova`;
   }
 
   /** Parent Progress: Practice Center activity (practice only, never mastery). */
@@ -141,11 +141,11 @@
         </dl>
         <h3>Recent practice</h3>
         <div class="table-wrap"><table class="skills-table pp-table"><thead><tr><th scope="col">Date</th><th scope="col">Practice</th><th scope="col">Questions</th><th scope="col">Correct</th><th scope="col">No hints</th><th scope="col">Hints</th></tr></thead><tbody>
-          ${list.slice(0, 10).map((s) => `<tr><td>${fmtDate(s.date)}</td><td>${G.models.esc(s.label || s.mode)}</td><td>${s.completed} of ${s.n}</td><td>${s.correct}</td><td>${s.clean}</td><td>${s.hints}</td></tr>`).join('')}
+          ${list.slice(0, 10).map((s) => `<tr><td>${fmtDate(s.date)}</td><td>${G.models.esc(s.label)}</td><td>${s.completed} of ${s.n}</td><td>${s.correct}</td><td>${s.clean}</td><td>${s.hints}</td></tr>`).join('')}
         </tbody></table></div>` : '<p>No Practice Center sessions finished yet.</p>'}
       ${paused && !paused.finished ? `<p>In progress: ${G.models.esc(paused.label)}, question ${paused.i + 1} of ${paused.n}.</p>` : ''}
       <h3>Skills to review <span class="fine">(from practice mistakes)</span></h3>
-      ${weak.length ? `<ul>${weak.map((w) => `<li>${G.models.esc(PG.SKILLS[w.skill].name)} <span class="fine">(${G.models.esc(w.from)})</span></li>`).join('')}</ul><p><a href="#/practice">Practice these in the Practice Center</a> (choose Practice My Misses).</p>` : '<p>None recorded yet.</p>'}
+      ${weak.length ? `<ul>${weak.map((w) => `<li>${G.models.esc(PG.SKILLS[w.skill].name)} <span class="fine">(${G.models.esc(w.from)})</span></li>`).join('')}</ul><p><a class="btn" href="#/practice">Practice these in the Practice Center</a> <span class="fine">(choose Practice My Misses)</span></p>` : '<p>None recorded yet.</p>'}
     </section>`;
   }
 
@@ -276,7 +276,8 @@
     }
     const mm = h.match(/^#\/d\d\d\/(teach|practice|test|notes)/);
     app.dataset.mode = mm && app.innerHTML.indexOf('Something went wrong') < 0 ? mm[1] : '';
-    const section = /^#\/(d\d\d|learn)\b/.test(h) ? 'learn' : /^#\/practice\b/.test(h) ? 'practice' : h === '#/guides' ? 'guides' : h === '#/parent' ? 'parent' : 'home';
+    const shownHome = !!app.querySelector('.nn-hero');
+    const section = shownHome ? 'home' : /^#\/(d\d\d|learn)\b/.test(h) ? 'learn' : /^#\/practice\b/.test(h) ? 'practice' : h === '#/guides' ? 'guides' : h === '#/parent' ? 'parent' : 'home';
     document.body.dataset.section = section;
     window.scrollTo(0, 0);
     const h1 = app.querySelector('h1');
@@ -294,6 +295,8 @@
     document.querySelector('.site-header').classList.toggle('nav-open', open);
   }
   if (toggle) toggle.addEventListener('click', () => setMenu(toggle.getAttribute('aria-expanded') !== 'true'));
+  document.querySelectorAll('.site-nav a').forEach((a) => a.addEventListener('click', () => setMenu(false)));
+  document.addEventListener('click', (e) => { if (toggle && toggle.getAttribute('aria-expanded') === 'true' && !e.target.closest('.site-header')) setMenu(false); });
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && toggle && toggle.getAttribute('aria-expanded') === 'true') { setMenu(false); toggle.focus(); } });
 
   window.addEventListener('hashchange', route);

@@ -149,3 +149,66 @@ test('Practice Center: history, results and the review list (no invented misses)
   // Practice Center history never touches lesson Test records.
   for (const id of LESSONS) assert.equal(P.store.lesson(id).tests.length, 0);
 });
+
+test('review regressions: sessions never fail, never repeat a problem, never repeat an answer back to back', () => {
+  for (const n of [10, 25, 50]) for (let seed = 1; seed <= 40; seed++) {
+    const set = PG.buildSession({ mode: 'misses', n, skills: ['div.share'], seed });
+    assert.equal(set.length, n, `div.share misses ${n}/${seed}`);
+  }
+  const key = (sig) => sig.replace(/^[A-Z0-9]+:/, '');
+  for (const [mode, op] of [['challenge', 'mul'], ['challenge', 'div'], ['mul'], ['div'], ['mix'], ['challenge', 'mix']]) for (const n of [25, 50]) for (let seed = 1; seed <= 60; seed++) {
+    const set = PG.buildSession({ mode, op, n, seed });
+    assert.equal(new Set(set.map((x) => key(x.sig))).size, n, `${mode}/${op}/${n}/${seed}: same problem twice`);
+    const answers = set.map((x) => E.make('pc', x.id, x.seed).answer);
+    for (let k = 1; k < n; k++) assert.notEqual(answers[k], answers[k - 1], `${mode}/${op}/${n}/${seed}: same answer twice in a row at ${k}`);
+  }
+});
+
+test('review regressions: feedback, solutions and word problems', () => {
+  for (let seed = 1; seed <= 400; seed++) {
+    // A dropped internal zero (1.4 for 1.04) gets its own message.
+    const q = E.make('pc', 'DC1', seed);
+    const zeroless = q.answer.replace(/\.0/, '.');
+    if (zeroless !== q.answer) assert.match(E.check(q, zeroless).message, /zero is missing/, `DC1/${seed}`);
+    // Subtracting from a whole number without regrouping is named as a regrouping mistake, even when it equals the sum.
+    const s = E.make('pc', 'SC2', seed);
+    const [a, b] = stripHtml(s.prompt).match(/\d+\.\d+|\d+/g);
+    const nb = D.toThousandths(P.kit.noBorrowSub(a, b));
+    if (nb !== D.toThousandths(s.answer)) assert.match(E.check(s, D.fromThousandths(nb, 3)).message, /regroup/, `SC2/${seed}`);
+    // No estimate of "about 0 × n".
+    for (const id of ['M2', 'M3', 'M4', 'MC2']) assert.doesNotMatch(stripHtml(E.make('pc', id, seed).solution), /about 0 ×|× 0 =/, `${id}/${seed}`);
+    // Two-digit divisors get a hint about trying multiples.
+    assert.match(E.make('pc', 'DC2', seed).hints[1], /two-digit divisor/);
+    // Plausible stories: the plant grows less than its height; walks, bags and prices are at least 1.
+    const w = E.make('pc', 'A5', seed), ns = (stripHtml(w.prompt).replace(/\$/g, '').match(/\d+\.\d+|\d+/g) || []).map(Number);
+    if (/plant/.test(w.prompt)) assert.ok(ns[1] < ns[0], `A5/${seed} ${stripHtml(w.prompt)}`);
+    else assert.ok(ns.every((x) => x >= 1), `A5/${seed} ${stripHtml(w.prompt)}`);
+  }
+  // Review Related Lesson goes to the most exact screen; Lesson 8 area-model practice feeds Practice My Misses.
+  assert.equal(PG.SKILLS['add.whole'].screen, 'whole');
+  assert.equal(PG.SKILLS['div.small'].screen, 'small');
+  P.store.resetAll();
+  P.store.update('d08', (p) => { p.practice.skills.mTenths = { c: 1, t: 5 }; });
+  assert.ok(P.practiceCenter.weakSkills().some((w) => w.skill === 'mul.dec'));
+});
+
+test('review regressions: damaged practice history is repaired, and a session is recorded once', () => {
+  const C = P.practiceCenter;
+  for (const junk of ['{"sessions":[],"skills":{"add.basic":null}}', '{"skills":{"add.basic":{"r":"xx"}}}', '{"skills":{"add.basic":{"r":5}}}', '[1,2]', 'not json',
+    '{"sessions":[{"n":10,"completed":"abc","clean":"x","label":5}],"skills":{}}']) {
+    P.store.resetAll();
+    window.localStorage.setItem('gml:v1:draft:pc-history', junk);
+    const h = C.history();
+    assert.ok(Array.isArray(h.sessions) && typeof h.skills === 'object');
+    assert.doesNotThrow(() => C.weakSkills(), junk);
+    for (const s of h.sessions) { assert.ok(Number.isInteger(s.completed) && Number.isInteger(s.clean)); assert.equal(typeof s.label, 'string'); }
+  }
+  P.store.resetAll();
+  const mk = (id, seed) => { const set = PG.buildSession({ mode: 'add', n: 10, seed }); return { id, mode: 'add', n: 10, label: 'Adding Decimals', set, i: 9, states: set.map(() => ({ solved: true, firstTry: true })), finished: true, recorded: false }; };
+  const X = mk('X', 1), Y = mk('Y', 2);
+  C.record(X); C.record(Y); C.record(Object.assign(mk('X', 1), { recorded: false })); // an old tab finishes X again
+  assert.deepEqual(C.history().sessions.map((s) => s.id), ['X', 'Y']);
+  // Junk in a saved question state is never counted as right or as hints.
+  const s = C.summarize(Object.assign(mk('Z', 3), { states: Array(10).fill({ solved: 'yes', hints: 'many' }) }));
+  assert.deepEqual([s.correct, s.hints], [0, 0]);
+});

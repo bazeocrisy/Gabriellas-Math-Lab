@@ -15,7 +15,7 @@
     'add.basic': { name: 'Adding tenths', lesson: 'd06', ls: 'addModel' },
     'add.regroup': { name: 'Adding with regrouping', lesson: 'd06', ls: 'addAlign' },
     'add.places': { name: 'Adding decimals with different numbers of places', lesson: 'd06', ls: 'addMixed' },
-    'add.whole': { name: 'Adding whole numbers and decimals, and three numbers', lesson: 'd06', ls: 'addMixed' },
+    'add.whole': { name: 'Adding whole numbers and decimals, and three numbers', lesson: 'd06', ls: 'addMixed', screen: 'whole' },
     'add.word': { name: 'Addition word problems', lesson: 'd06', ls: 'addWord' },
     'add.chal': { name: 'Challenge: adding', lesson: 'd06', ls: 'addAlign' },
     'sub.basic': { name: 'Subtracting tenths', lesson: 'd07', ls: 'subModel' },
@@ -26,13 +26,13 @@
     'sub.chal': { name: 'Challenge: subtracting', lesson: 'd07', ls: 'subZeros' },
     'mul.pow10': { name: 'Multiplying by 10, 100 and 1000', lesson: 'd08', ls: 'mPow' },
     'mul.whole': { name: 'A decimal times a whole number', lesson: 'd08', ls: 'mWhole' },
-    'mul.dec': { name: 'A decimal times a decimal', lesson: 'd08', ls: 'mPoint' },
+    'mul.dec': { name: 'A decimal times a decimal', lesson: 'd08', ls: 'mPoint', alsoLs: ['mTenths'] },
     'mul.word': { name: 'Multiplication word problems', lesson: 'd08', ls: 'mWord' },
     'mul.chal': { name: 'Challenge: multiplying', lesson: 'd08', ls: 'mPoint' },
     'div.pow10': { name: 'Dividing by 10, 100 and 1000', lesson: 'd09', ls: 'dPow' },
     'div.share': { name: 'Sharing tenths equally', lesson: 'd09', ls: 'dModel' },
     'div.whole': { name: 'A decimal divided by a whole number', lesson: 'd09', ls: 'dWhole' },
-    'div.small': { name: 'Division answers less than 1', lesson: 'd09', ls: 'dWhole' },
+    'div.small': { name: 'Division answers less than 1', lesson: 'd09', ls: 'dWhole', screen: 'small' },
     'div.fact': { name: 'Using a related whole-number fact', lesson: 'd09', ls: 'dWhole' },
     'div.word': { name: 'Division word problems', lesson: 'd09', ls: 'dWord' },
     'div.chal': { name: 'Challenge: dividing', lesson: 'd09', ls: 'dWhole' }
@@ -96,6 +96,8 @@
         const got = info.th;
         if (got === null) return 'Sums and differences here have at most two decimal places.';
         if (plus && ks.length === 2 && got === Math.abs(ks[0] - ks[1])) return 'That is the difference. This problem asks you to add (put the amounts together).';
+        // A no-regrouping answer can equal the sum (100 − 13.65 → 113.65); name the regrouping mistake first.
+        if (!plus && got === D.toThousandths(K.noBorrowSub(nums[0], nums[1])) && got !== total) return 'Check your regrouping. When the top digit is smaller (a 0 counts too), take 1 from the next place to the left; do not subtract the top digit from the bottom one.';
         if (!plus && got === ks[0] + ks[1]) return 'That is the sum. This problem asks you to subtract (take away, or find the difference).';
         if (ks.length === 2 && placesOf(ks[0]) !== placesOf(ks[1])) {
           const mis = K.misaligned(nums[0], nums[1], plus ? '+' : '-');
@@ -133,9 +135,12 @@
     (a, b) => ({ prompt: `One bag of apples weighs <b>${num(a)} kg</b> and another weighs <b>${num(b)} kg</b>. What is the <b>total</b> weight in kilograms?`, unit: 'kg' }),
     (a, b) => ({ prompt: `A plant was <b>${num(a)} m</b> tall. It grew <b>${num(b)} m</b>. How tall is it <b>now</b>, in meters?`, unit: 'm' })
   ];
+  // Sensible amounts for each story: prices of at least $1, walks and bags of at least 1, a plant that grows less than its height.
   T('A5', 'add.word', 'add', 5, (r) => {
     const k = r.int(0, ADD_STORIES.length - 1);
-    const a = k === 0 ? hund(r, 1, 15) : r.next() < 0.5 ? tenths(r, 0, 9) : hund(r, 0, 9), b = k === 0 ? hund(r, 0, 9) : hund(r, 0, 9);
+    const any = (w0, w1) => (r.next() < 0.5 ? tenths(r, w0, w1) : hund(r, w0, w1));
+    const a = k === 0 ? hund(r, 1, 15) : k === 3 ? any(1, 3) : any(1, 9);
+    const b = k === 0 ? hund(r, 1, 9) : k === 3 ? hund(r, 0, 0) : hund(r, 1, 9);
     const st = ADD_STORIES[k](a, b);
     return addSub('add', [a, b], Object.assign({ word: true, sigPrefix: 'w' + k + ':' }, st));
   });
@@ -214,7 +219,7 @@
       <li>Multiply as if there were no decimal points: ${A} × ${B} = ${prod}.</li>
       <li>Count the decimal places: ${num(ka)} has ${pa} and ${num(kb)} has ${pb}, so the product has ${P}.</li>
       <li>Start at the right end of ${prod} and move the decimal point ${plural(P, 'place')} to the left${String(prod).length <= P ? ' (write zeros in front, because there are not enough digits)' : ''}: ${raw}${raw !== ans ? ` = ${ans}` : ''}.</li>
-      <li>Check with an estimate: the answer ${ans} should be about ${round1(ka)} × ${round1(kb)}${ka < 1000 || kb < 1000 ? ', or smaller when a factor is less than 1' : ''}.</li></ol>`;
+      <li>${ka < 1000 || kb < 1000 ? `Check: ${ka < 1000 && kb < 1000 ? 'both factors are less than 1, so the answer is smaller than both of them' : `one factor is less than 1, so the answer is smaller than ${num(Math.max(ka, kb))}`}.` : `Check with an estimate: about ${round1(ka)} × ${round1(kb)} = ${round1(ka) * round1(kb)}, and ${ans} is close to that.`}</li></ol>`;
   }
   function mul(ka, kb, o = {}) {
     const prodK = ka * kb / 1000;
@@ -296,7 +301,8 @@
       `Move the point one place at a time, writing zeros in front if you run out of digits. The answer is smaller than ${a}.`
     ] : [
       (o.word ? `This is a division problem: ${a} ÷ ${n}. ` : '') + `Divide as with whole numbers, and put the decimal point in the answer straight above the decimal point in ${a}.`,
-      ka < n * 1000 ? `${a} is less than ${n}, so the answer is less than 1: it starts with 0 and a decimal point.` : `Estimate: ${a} ÷ ${n} is about ${Math.max(1, Math.round(ka / 1000 / n))}.`,
+      n >= 10 ? `With a two-digit divisor, try multiples of ${n} at each step: ${n} × 2 = ${n * 2}, ${n} × 3 = ${n * 3}, ${n} × 4 = ${n * 4}, and so on, to see how many groups of ${n} fit.`
+        : ka < n * 1000 ? `${a} is less than ${n}, so the answer is less than 1: it starts with 0 and a decimal point.` : `Estimate: ${a} ÷ ${n} is about ${Math.max(1, Math.round(ka / 1000 / n))}.`,
       `Start with the ${ka >= 1000 ? 'whole-number part' : 'first digit after the point'}: how many groups of ${n} fit? Bring down one digit at a time, and check by multiplying your answer by ${n}.`
     ]);
     return {
@@ -310,6 +316,7 @@
         const got = info.th;
         if (got === null) return 'Answers here have at most three decimal places.';
         if (got === ka * n) return pow ? `That made the number bigger. Dividing by ${n} makes it smaller: move the decimal point to the left.` : 'That multiplied. This problem asks you to divide (share equally), so the answer is smaller.';
+        if (!pow && info.raw && K.droppedZero(info.raw, q)) return 'A zero is missing in your answer. When the number of groups does not fit into a place, write 0 in that place of the answer, then keep dividing.';
         if ([10, 100, 1000].some((m) => got === kq * m || got * m === kq)) return pow ? `The digits are right, but the point moved the wrong number of places. ${n} has ${z} zero${z === 1 ? '' : 's'}.` : 'The digits look right, but the decimal point is in the wrong place. In the answer it goes straight above the decimal point in the number you are dividing.';
         return `Divide one place at a time, keeping the decimal point lined up. Then check: your answer × ${n} should equal ${a}.`;
       }
@@ -320,8 +327,8 @@
     return placesOf(x) + String(n).length - 1 <= 3 ? div(x, n, { pow: true }) : null;
   });
   T('D2', 'div.share', 'div', 2, (r) => {
-    const n = r.int(2, 6), g = r.int(1, 9), t = g * n;
-    if (t % 10 === 0 || t > 40) return null;
+    const n = r.int(2, 9), g = r.int(1, 9), t = g * n;
+    if (t % 10 === 0) return null;
     const ka = t * 100;
     return div(ka, n, { sigPrefix: 'share:', prompt: `Share <b>${num(ka)}</b> equally into <b>${n} groups</b>. How much is in each group? <span class="expr">${num(ka)} ÷ ${n}</span>`,
       hints: [`Think in tenths: ${num(ka)} is ${t} tenths.`, `Share the ${t} tenths into ${n} equal groups. How many tenths go in each group?`, 'Write that many tenths as a decimal, with one digit after the decimal point.'] });
@@ -384,25 +391,34 @@
     if (mode === 'misses') {
       const targets = skills && skills.length ? skills : null;
       if (!targets) throw new Error('no skills to practice');
-      // Spread the positions over the skills (round robin), easier skills first within each round.
+      // Spread the positions over the skills (round robin).
       const ids = targets.map((sk) => templates.filter((t) => t.skill === sk).map((t) => t.id)).filter((x) => x.length);
       plan = Array.from({ length: n }, (_, k) => ids[k % ids.length]);
     } else {
       const ops = baseOp === 'mix' ? mixedOps(r, n) : Array(n).fill(baseOp);
       plan = ops.map((o, k) => choicesFor(o, k, n, challenge));
     }
+    // A question is a repeat if its numbers match an earlier one, even from another template (4.4 × 1.9 is one problem).
+    const key = (sig) => sig.replace(/^[A-Z0-9]+:/, '');
     const used = new Set(), out = [];
+    let lastAnswer = null;
     plan.forEach((ids) => {
       let chosen = null;
-      for (let tries = 0; tries < 80 && !chosen; tries++) {
-        const id = r.pick(ids), sd = r.int(1, 2147483646);
+      // If a small skill runs out of new questions (Practice My Misses on one skill, 50 questions), widen to the other
+      // regular levels of the same operation rather than fail.
+      const op = META[ids[0]].op, wider = [1, 2, 3, 4, 5].flatMap((L) => BY_LEVEL[op][L]);
+      for (let tries = 0; tries < 240 && !chosen; tries++) {
+        const pool = tries < 120 ? ids : wider;
+        const id = r.pick(pool), sd = r.int(1, 2147483646);
         const q = G.engine.make('pc', id, sd);
-        if (used.has(q.sig)) continue;
-        chosen = { id, seed: sd, sig: q.sig };
+        if (used.has(key(q.sig))) continue;
+        if (tries < 60 && q.answer === lastAnswer) continue; // no two questions in a row with the same answer
+        chosen = { id, seed: sd, sig: q.sig, answer: q.answer };
       }
       if (!chosen) throw new Error('could not build a practice question');
-      used.add(chosen.sig);
-      out.push(chosen);
+      used.add(key(chosen.sig));
+      lastAnswer = chosen.answer;
+      out.push({ id: chosen.id, seed: chosen.seed, sig: chosen.sig });
     });
     return out;
   }

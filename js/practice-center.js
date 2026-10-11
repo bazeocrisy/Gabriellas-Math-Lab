@@ -39,23 +39,37 @@
     const ok = d && typeof d === 'object' && MODES.some((m) => m.key === d.mode) && [10, 25, 50].includes(d.n) &&
       G.engine.validSet('pc', d.set, d.n) && Number.isInteger(d.i) && d.i >= 0 && d.i < d.n && Array.isArray(d.states) && d.states.length === d.n;
     if (!ok) { if (d) G.store.clearDraft(SESSION); return null; }
+    if (typeof d.label !== 'string' || !d.label) d.label = labelFor(d.mode, d.op, d.general === true);
     return d;
   }
   const saveSession = (d) => G.store.setDraft(SESSION, d);
+  /** The practice history, repaired field by field so damaged saved data can never break a page. */
   function history() {
     const h = G.store.getDraft(HISTORY);
-    return { sessions: h && Array.isArray(h.sessions) ? h.sessions.filter((x) => x && typeof x === 'object' && Number.isInteger(x.n)) : [],
-      skills: h && h.skills && typeof h.skills === 'object' ? h.skills : {}, lastId: h && typeof h.lastId === 'string' ? h.lastId : undefined };
+    const obj = (x) => !!x && typeof x === 'object' && !Array.isArray(x);
+    const n0 = (x) => (Number.isInteger(x) && x >= 0 ? x : 0);
+    const sessions = obj(h) && Array.isArray(h.sessions) ? h.sessions.filter((x) => obj(x) && [10, 25, 50].includes(x.n)).map((x) => ({
+      id: typeof x.id === 'string' ? x.id : '', date: typeof x.date === 'string' ? x.date : '', mode: typeof x.mode === 'string' ? x.mode : '',
+      op: typeof x.op === 'string' ? x.op : null, label: typeof x.label === 'string' && x.label ? x.label : 'Practice', n: x.n,
+      completed: Math.min(n0(x.completed), x.n), correct: n0(x.correct), clean: n0(x.clean), helped: n0(x.helped), missed: n0(x.missed), hints: n0(x.hints) })) : [];
+    const skills = {};
+    if (obj(h) && obj(h.skills)) Object.keys(h.skills).forEach((sk) => {
+      const v = h.skills[sk];
+      if (obj(v) && Array.isArray(v.r)) skills[sk] = { r: v.r.filter((x) => x === 0 || x === 1).slice(-10), last: typeof v.last === 'string' ? v.last : undefined };
+    });
+    const ids = obj(h) && Array.isArray(h.ids) ? h.ids.filter((x) => typeof x === 'string').slice(-60) : [];
+    return { sessions, skills, ids, lastId: obj(h) && typeof h.lastId === 'string' ? h.lastId : undefined };
   }
 
   /** How one question went: clean (first try, no hints), helped (right after hints or another try), or missed (solution shown). */
   function outcome(st) {
-    if (!st || !st.solved) return 'unfinished';
-    if (st.shown) return 'missed';
-    return st.firstTry && !st.hints ? 'clean' : 'helped';
+    if (!st || st.solved !== true) return 'unfinished';
+    if (st.shown === true) return 'missed';
+    return st.firstTry === true && !hintsOf(st) ? 'clean' : 'helped';
   }
+  const hintsOf = (st) => (st && Number.isInteger(st.hints) && st.hints > 0 ? Math.min(st.hints, 3) : 0);
   /** A question counts as a miss for "Practice My Misses" when it needed a second try or the solution. */
-  const isMiss = (st) => !!st && (st.shown || (st.attempts || 0) > 0);
+  const isMiss = (st) => !!st && (st.shown === true || (Number.isInteger(st.attempts) && st.attempts > 0));
 
   function summarize(d) {
     const qs = d.set.map((x) => G.engine.make('pc', x.id, x.seed));
@@ -64,7 +78,7 @@
       const st = d.states[k] || {}, o = outcome(st);
       if (o !== 'unfinished') s.completed++;
       if (o === 'clean') s.clean++; else if (o === 'helped') s.helped++; else if (o === 'missed') s.missed++;
-      s.hints += st.hints || 0;
+      s.hints += hintsOf(st);
       const b = s.bySkill[q.skill] || (s.bySkill[q.skill] = { t: 0, ok: 0, miss: 0 });
       b.t++; if (o === 'clean' || o === 'helped') b.ok++; if (isMiss(st)) b.miss++;
       const p = s.byOp[q.pcOp] || (s.byOp[q.pcOp] = { t: 0, ok: 0, clean: 0 });
@@ -77,7 +91,7 @@
   /** Save a finished session to the history once (also when a second tab finishes the same session). */
   function record(d) {
     const h = history();
-    if (d.recorded || h.lastId === d.id) return;
+    if (d.recorded || h.lastId === d.id || h.ids.includes(d.id)) return; // recorded once, even from an old tab
     const s = summarize(d);
     h.sessions.push({ id: d.id, date: new Date().toISOString(), mode: d.mode, op: d.op || null, label: d.label, n: d.n,
       completed: s.completed, correct: s.correct, clean: s.clean, helped: s.helped, missed: s.missed, hints: s.hints });
@@ -90,6 +104,7 @@
       rec.last = new Date().toISOString();
     });
     h.lastId = d.id;
+    h.ids = [...h.ids, d.id].slice(-60);
     G.store.setDraft(HISTORY, h);
     d.recorded = true;
     saveSession(d);
@@ -113,7 +128,7 @@
       Object.keys(ps).forEach((ls) => {
         const v = ps[ls];
         if (v.t < 3 || v.c / v.t >= 0.7) return;
-        Object.keys(SK).filter((sk) => SK[sk].lesson === id && SK[sk].ls === ls && !/\.chal$/.test(sk) && !out.some((o) => o.skill === sk))
+        Object.keys(SK).filter((sk) => SK[sk].lesson === id && (SK[sk].ls === ls || (SK[sk].alsoLs || []).includes(ls)) && !/\.chal$/.test(sk) && !out.some((o) => o.skill === sk))
           .forEach((sk) => out.push({ skill: sk, rate: v.c / v.t, from: `Lesson ${G.unit.find(id).n} Practice` }));
       });
     });
@@ -282,12 +297,19 @@
     G.coach(app.querySelector('.coach-host'), q, {
       state: d.states[d.i],
       remind: REMIND[q.pcOp],
-      onChange: (st) => { d.states[d.i] = st; saveSession(d); },
+      onChange: (st) => {
+        // Another tab may have started a different session: show that one instead of writing over it.
+        const cur = G.store.getDraft(SESSION);
+        if (!cur || cur.id !== d.id) { session(app); return; }
+        d.states[d.i] = st; saveSession(d);
+      },
       onSolved: () => {
         const next = app.querySelector('.coach-next'), last = d.i === d.n - 1, at = d.i;
         next.innerHTML = `<button type="button" class="btn btn-practice btn-big">${last ? 'See my results' : 'Next question →'}</button>`;
         next.querySelector('button').addEventListener('click', () => {
           if (d.i !== at || d.finished || !d.states[at].solved) return; // a second click does nothing
+          const cur = G.store.getDraft(SESSION);
+          if (!cur || cur.id !== d.id) { session(app); return; } // replaced in another tab
           if (last) { d.finished = true; saveSession(d); location.hash = '#/practice/results'; return; }
           d.i++; saveSession(d); session(app); window.scrollTo(0, 0); const h = app.querySelector('h1'); if (h) h.focus();
         });
@@ -315,7 +337,7 @@
     const top = review[0] || Object.keys(s.bySkill)[0];
     const lessonLink = (() => {
       const m = SK[top]; if (!m) return '';
-      const L = G.lessonContent[m.lesson], idx = L.screens.findIndex((x) => x.id === L.skillScreen[m.ls]) + 1;
+      const L = G.lessonContent[m.lesson], idx = L.screens.findIndex((x) => x.id === (m.screen || L.skillScreen[m.ls])) + 1;
       return `<a class="btn btn-big btn-teach" href="#/${m.lesson}/teach/${idx}">Review Related Lesson<span class="sr-only">: Lesson ${G.unit.find(m.lesson).n}, ${esc(m.name)}</span></a>`;
     })();
     const guideOp = ops.length === 1 ? ops[0] : 'mix';

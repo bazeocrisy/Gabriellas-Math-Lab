@@ -524,7 +524,7 @@ body { background: var(--nn-bg); display: flex; flex-direction: column; min-heig
 .pc-card.op-misses { --c: var(--op-miss); --cs: var(--op-miss-soft); }
 .pc-sym { font-size: 1.7rem; font-weight: 800; line-height: 1.1; color: var(--c); font-variant-numeric: tabular-nums; }
 .pc-card.op-mix .pc-sym { background: linear-gradient(90deg, var(--op-add), var(--op-sub), var(--op-mul), var(--op-div)); -webkit-background-clip: text; background-clip: text; color: transparent; }
-.pc-card.op-challenge .pc-sym { color: #c98a00; }
+.pc-card.op-challenge .pc-sym { color: #a86b00; }
 .pc-name { font-weight: 800; font-size: 1.08rem; color: var(--c); }
 .pc-ex { font-size: .92rem; color: #3d475c; }
 .pc-big { font-size: 2.2rem; font-weight: 800; line-height: 1; color: var(--practice-c); }
