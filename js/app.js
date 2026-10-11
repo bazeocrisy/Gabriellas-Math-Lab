@@ -104,7 +104,7 @@
           : `Lesson ${nl.n}: ${nl.title} (coming later). Until then, an occasional Lesson ${l.n} practice session keeps skills fresh.`) : 'All lessons complete.';
       }
       return `<section class="card parent-lesson" aria-labelledby="pl-${l.id}">
-        <h2 id="pl-${l.id}">Lesson ${l.n}: ${l.title}</h2>
+        <h2 id="pl-${l.id}">Lesson ${l.n}: ${l.title}${l.supplemental ? ' <span class="lc-extra">Extra: beyond Grade 5</span>' : ''}</h2>
         <dl class="facts-dl">
           <dt>Lesson completed (mastered)</dt><dd>${everMastered ? '<b>Yes ★</b>' : 'Not yet'}</dd>
           <dt>Teach</dt><dd>${teachState}</dd>

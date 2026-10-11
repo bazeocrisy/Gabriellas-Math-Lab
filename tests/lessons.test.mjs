@@ -371,3 +371,15 @@ test('mathematics review regressions (Lessons 9–10, second pass)', () => {
   // L9 C2: no wrong "Yes" choice has a true reason.
   for (let seed = 1; seed <= 300; seed++) for (const c of engine.make('d09', 'C2', seed).choices) assert.doesNotMatch(c.value, /^Yes, because .* has one decimal place/);
 });
+
+test('QA review regressions (Lessons 9–10)', () => {
+  // L10 X4: always four choices, and the answer is not given away by its neighbouring digits.
+  let middle = 0;
+  for (let seed = 1; seed <= 2000; seed++) {
+    const q = engine.make('d10', 'X4', seed); const vs = q.choices.map((c) => c.value);
+    assert.equal(new Set(vs).size, 4, `X4/${seed}`);
+    const n = Number(q.answer);
+    if (vs.includes(String((n + 1) % 10)) && vs.includes(String((n + 9) % 10))) middle++;
+  }
+  assert.ok(middle < 2000 * 0.2, `X4 answer sits between its neighbours in ${middle} of 2000`);
+});

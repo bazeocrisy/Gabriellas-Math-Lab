@@ -1,6 +1,25 @@
 # Project status
 
-Updated: 2026-10-10 · Live (Lessons 1–8): https://bazeocrisy.github.io/Gabriellas-Math-Lab/ · Lesson 1 audit: [LESSON-1-AUDIT.md](LESSON-1-AUDIT.md)
+Updated: 2026-10-10 · Live (Lessons 1–8): https://bazeocrisy.github.io/Gabriellas-Math-Lab/ · Lessons 9–10: branch `claude/decimals-d09-d10` · Lesson 1 audit: [LESSON-1-AUDIT.md](LESSON-1-AUDIT.md)
+
+## Branch `claude/decimals-d09-d10`: Lessons 9–10, built and tested, NOT merged or deployed (awaiting approval)
+- [x] **Lesson 9, Dividing Decimals: SUPPLEMENTAL** (beyond the Grade 5 Georgia standards; extends 5.NR.1.2 and 5.NR.2.2):
+  - Labelled on the home card ("Extra: beyond Grade 5"), in the lesson description, on the first Teach screen, in the Notes, on the review screen and on its Parent Progress block.
+  - 13 screens: 6 Teach screens and 6 guided checks, plus the review screen. Topics: ÷10/100/1000; sharing with tenths bars (up to 1.8, two stacked bars) and hundredths grids; a decimal ÷ a whole number with the decimal point lined up; answers less than 1; checking by multiplying; sharing word problems with money.
+  - 12 templates in 5 skills. Divisors are whole numbers (2–9, or 10/100/1000), every quotient is exact, there is no division by a decimal, and no dividend needs zeros written onto it.
+- [x] **Lesson 10, Mixed Decimal Review** (5.NR.4.1–4.4, 5.NR.1.1):
+  - Reviews Lessons 1–7 only (place value, comparing and ordering, rounding, adding and subtracting). Supplemental Lessons 8–9 are not reviewed.
+  - 13 screens: a map of the unit, 5 Teach screens, 5 guided checks, test tips and the review screen.
+  - 19 templates in 5 skills: 15 reused, already-verified question types from Lessons 1–7 (including ordering greatest to least and exactly-halfway rounding), plus 4 new multi-step ones (add then round, add then compare, money change, subtract then read a place).
+- [x] With all ten lessons available, the home page hides the empty "Coming later" section and Parent Progress says Lessons 8 and 9 are supplemental.
+- [x] **Automated tests:**
+  - `npm test` **208/208** pass. Every template of every lesson is checked over 500 seeds with independent answer recomputation, plus regression tests for every review below.
+  - `npm run test:browser` **609/609** pass (headless Chrome). It runs Teach → Practice → Test → Notes → Parent for all ten lessons, at layouts from 375 to 1920 px.
+- [x] **Independent reviews** (after the build commit):
+  - Curriculum review, first pass: fixed in `348dded`. The fixes cover dividends needing written zeros, the model range, distractors, money hints, rounding in X1, the reviewed skills, the regrouping example and the notes.
+  - Mathematics review, second pass: recomputed 135,000 answers with 0 mismatches. It found no critical or major issues, and its 9 minor findings are all fixed (feedback or hints that hinted at the answer, distractors, money wording, an estimate hint, the standards reference).
+  - QA in a real browser: Teach, Practice (hints, feedback, equivalent answers), Test scoring 0–10 with mastery at 9, retakes, Review-in-Teach links, notes and print styles, saved progress, home and parent, all 40 lesson links for Lessons 1–10, 375 px layouts and the console. It found 1 medium defect, introduced by `348dded`: X4's wrong choices were neighbouring digits, so the answer could be guessed. It also suggested a parent label. Both are fixed.
+  - The fixes were re-checked by regression tests and the full suites, not by another review round.
 
 ## Live site (main)
 - **Lessons 1–4 and the new homepage are live:** https://bazeocrisy.github.io/Gabriellas-Math-Lab/
@@ -85,7 +104,7 @@ Updated: 2026-10-10 · Live (Lessons 1–8): https://bazeocrisy.github.io/Gabrie
   - Answers can be worked out from the browser console.
   - Number-line "imagine placing" questions show the line without points, on purpose.
   - Expanded form does not accept fraction style (2/10).
-- [ ] Lessons 9–10 (not started)
+- [ ] Merge `claude/decimals-d09-d10` and deploy Lessons 9–10: **waiting for owner approval**; re-run the live suite after deploying.
 
 ## Definition of done for each lesson
 - Instruction and answer explanations mathematically audited

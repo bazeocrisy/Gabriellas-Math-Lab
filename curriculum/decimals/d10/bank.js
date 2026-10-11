@@ -130,8 +130,8 @@
     const nb = D.parse(f(D.toThousandths(K.noBorrowSub(a, b)), 2)).frac;
     const flip = place === 'tenths' ? nb[0] : nb[1];
     const ones = String(Math.floor(D.toThousandths(diff) / 1000) % 10);
-    const pool = [other, flip, ones, String((Number(ans) + 1) % 10), String((Number(ans) + 9) % 10)];
-    const wrongDigits = [...new Set(pool)].filter((d) => d !== ans).slice(0, 3);
+    const likely = [...new Set([other, flip, ones])].filter((d) => d !== ans); // digits from real mistakes first, then random fill
+    const wrongDigits = [...likely, ...r.shuffle('0123456789'.split('').filter((d) => d !== ans && !likely.includes(d)))].slice(0, 3);
     return {
       type: 'mc', sig: a + '-' + b + place,
       prompt: `Subtract <span class="expr">${a} − ${b}</span>. Which digit is in the <b>${place}</b> place of the answer?`,
