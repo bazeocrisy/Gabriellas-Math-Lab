@@ -694,6 +694,24 @@ try {
     const ol = document.querySelector('.steps'); return { style: getComputedStyle(ol).listStyleType, first: ol.querySelector('li').innerText.slice(0, 7) };`);
   check('worked-example steps labelled "Step 1." are not numbered twice', r.style === 'none' && /^Step 1/.test(r.first), r);
 
+  // ── NumberNova: Study Guides ──
+  await b.load(URL + 'index.html#/guides');
+  r = await js(`const cards = [...document.querySelectorAll('.guide-card')];
+    return { h1: document.querySelector('h1').innerText, n: cards.length, titles: cards.map((c) => c.querySelector('h2').innerText),
+      open: cards.map((c) => c.querySelector('.btn-guide').getAttribute('href')), dl: cards.map((c) => c.querySelector('[download]').getAttribute('download')),
+      nav: document.querySelector('.site-nav a[aria-current]').dataset.nav, title: document.title };`);
+  check('guides: eight numbered guide cards with titles', r.n === 8 && r.titles[0] === 'Decimal Place Value' && r.titles[7] === 'Mixed Decimal Practice' && r.nav === 'guides' && /Study Guides/.test(r.title), r);
+  const pdfs = await js(`return Promise.all([...document.querySelectorAll('.btn-guide')].map((a) => fetch(a.href, { cache: 'no-store' }).then((x) => [a.getAttribute('href'), x.status, x.headers.get('content-type')])));`);
+  check('guides: all eight PDFs load (HTTP 200, application/pdf)', pdfs.length === 8 && pdfs.every((x) => x[1] === 200 && /pdf/.test(x[2])), pdfs);
+  check('guides: Download names each PDF file, and links are repository-relative', r.dl.every((d) => /^Decimals-Section-\d.*\.pdf$/.test(d)) && r.open.every((u) => /^study-guides\/pdf\/decimals\//.test(u)), r);
+  r = await js(`document.querySelector('[data-print]').click(); const f = document.getElementById('pdf-print-frame');
+    return { frame: !!f, src: f && f.getAttribute('src'), status: document.getElementById('guide-status').textContent };`);
+  check('guides: Print loads the PDF into a print frame and tells the student what happens', r.frame && /Section-1/.test(r.src) && /print/.test(r.status), r);
+  r = await js(`const f = document.getElementById('pdf-print-frame'); if (f) f.remove(); return true;`);
+  await b.load(URL + 'index.html#/d06/notes');
+  r = await js(`const a = document.querySelector('.guide-link a'); return a ? a.getAttribute('href') : null;`);
+  check('guides: Lesson 6 Notes link to the matching guide (Section 4, Adding)', r === 'study-guides/pdf/decimals/Decimals-Section-4-Adding-Decimals.pdf', r);
+
   // ── Unknown routes and reset ──
   await b.load(URL + 'index.html#/d11/teach/1');
   check('unready lesson route falls back to home', /Ready to make your next math discovery/.test(await js(`return document.querySelector('h1').innerText;`)));

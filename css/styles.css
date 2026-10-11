@@ -469,3 +469,26 @@ body { background: var(--nn-bg); display: flex; flex-direction: column; min-heig
   *, *::before, *::after { transition: none !important; animation: none !important; scroll-behavior: auto !important; }
   .pillar:hover { transform: none; }
 }
+
+/* Study Guides */
+.hero-guides { background: var(--guides-soft); }
+.hero-guides h1 { color: var(--guides); }
+.guide-grid { list-style: none; padding: 0; margin: 16px 0; display: grid; gap: 16px; grid-template-columns: minmax(0, 1fr); }
+@media (min-width: 700px) { .guide-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.guide-card { display: flex; flex-direction: column; gap: 6px; background: #fff; border: 1px solid var(--line); border-left: 7px solid var(--guides); border-radius: 16px; padding: 16px; box-shadow: 0 3px 10px rgba(28, 47, 122, .07); }
+.guide-head { display: flex; align-items: center; gap: 12px; }
+.guide-num { flex: none; display: inline-flex; align-items: center; justify-content: center; width: 48px; height: 48px; border-radius: 14px; background: linear-gradient(135deg, #6a33c8, #2450d0); color: #fff; font-size: 1.4rem; font-weight: 800; }
+.guide-sec { margin: 0; font-size: .8rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+.guide-card h2 { margin: 0; font-size: 1.2rem; color: var(--guides); }
+.guide-text { margin: 4px 0 0; flex: 1; }
+.guide-lessons { margin: 0; font-size: .92rem; color: var(--muted); }
+.guide-lessons a { display: inline-flex; min-height: 44px; align-items: center; }
+.guide-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 6px; }
+.guide-actions .btn { flex: 1 1 auto; border-color: var(--guides); color: var(--guides); }
+.guide-actions .btn-guide { background: var(--guides); color: #fff; }
+.guide-actions .btn-guide:hover { background: #52307d; color: #fff; }
+.print-frame { position: fixed; right: 0; bottom: 0; width: 1px; height: 1px; border: 0; opacity: 0; pointer-events: none; }
+.guide-link { display: flex; align-items: center; gap: 10px; margin: 14px 0; padding: 10px 12px; background: var(--guides-soft); border: 1px solid #d9c9ef; border-radius: 12px; }
+.guide-link a { color: var(--guides); font-weight: 700; display: inline-flex; min-height: 44px; align-items: center; }
+.guide-link-badge { flex: none; display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; border-radius: 9px; background: var(--guides); color: #fff; font-weight: 800; }
+.done-actions .guide-link { flex-basis: 100%; }

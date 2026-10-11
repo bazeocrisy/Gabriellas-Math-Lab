@@ -110,6 +110,7 @@
         <p class="no-print"><button type="button" class="btn" data-act="print">Print these notes</button></p>
         ${L.notes}
       </article>
+      <div class="no-print">${G.guides ? G.guides.link(G.guides.forLesson(lessonId), 'Matching printable study guide') : ''}</div>
       <div class="done-actions no-print">
         <a class="btn btn-big btn-teach" href="#/${lessonId}/teach/1">Teach</a>
         <a class="btn btn-big btn-practice" href="#/${lessonId}/practice">Practice</a>

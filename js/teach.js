@@ -45,6 +45,7 @@
       ${sc.kind === 'done' ? `<div class="done-actions">
           <a class="btn btn-primary btn-big" href="#/${lessonId}/practice">Start Practice</a>
           <a class="btn btn-big" href="#/${lessonId}/notes">Lesson Notes</a>
+          ${G.guides ? G.guides.link(G.guides.forLesson(lessonId), 'Matching printable study guide') : ''}
           <a class="btn btn-big" href="#/learn">Lesson menu</a></div>` : ''}
       <p class="step-note fine" hidden>Show all the steps of the example to go on.</p>
       <nav class="pager" aria-label="Teach screens">
