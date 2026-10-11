@@ -83,14 +83,28 @@ try {
   await js('localStorage.clear();');
   await b.load(URL + 'index.html#/');
 
-  // ── Home ──
-  let r = await js(`${H} return { t: text(), modes: [...document.querySelectorAll('.btn-mode')].map((a) => a.textContent + '>' + a.getAttribute('href')),
+  // ── NumberNova landing page ──
+  let r = await js(`return { t: document.getElementById('app').innerText, h1: document.querySelector('h1').innerText, title: document.title,
+    logo: (document.querySelector('.nn-hero-logo') || {}).complete && document.querySelector('.nn-hero-logo').naturalWidth > 0,
+    headerIcon: (document.querySelector('.brand-icon') || {}).naturalWidth > 0, favicon: [...document.querySelectorAll('link[rel=icon]')].map((l) => l.getAttribute('href')),
+    pillars: [...document.querySelectorAll('.pillar')].map((a) => a.querySelector('.pillar-title').innerText + '>' + a.getAttribute('href')),
+    brand: document.querySelector('.brand').innerText.replace(/\s+/g, '') };`);
+  check('NumberNova: brand name, tagline and welcome on the landing page', r.brand === 'NumberNova' && /Ready to make your next math discovery\?/.test(r.h1) && /NumberNova/.test(r.title) && !/Gabriella/.test(r.t + r.title), r);
+  check('NumberNova: logo, header icon and favicon load', r.logo && r.headerIcon && r.favicon.includes('assets/brand/favicon.svg'), r);
+  check('NumberNova: the four main sections are on the landing page', JSON.stringify(r.pillars) === JSON.stringify(['Learn>#/learn', 'Practice>#/practice', 'Study Guides>#/guides', 'Parent Progress>#/parent']), r.pillars);
+  r = await js(`return Promise.all(['assets/brand/favicon.svg', 'assets/brand/favicon-32.png', 'assets/brand/numbernova-icon.svg', 'assets/brand/numbernova-logo.svg', 'assets/brand/apple-touch-icon.png', 'assets/brand/icon-192.png', 'assets/brand/icon-512.png', 'assets/brand/site.webmanifest']
+    .map((u) => fetch(u, { cache: 'no-store' }).then((x) => u + ' ' + x.status)));`);
+  check('NumberNova: every brand asset loads', r.every((x) => / 200$/.test(x)), r);
+  await b.load(URL + 'index.html#/learn');
+
+  // ── Learn (the ten lessons) ──
+  r = await js(`${H} return { t: text(), modes: [...document.querySelectorAll('.btn-mode')].map((a) => a.textContent + '>' + a.getAttribute('href')),
     later: document.querySelectorAll('.later-list li').length, laterButtons: document.querySelectorAll('.later-list a, .later-list button').length,
     avail: GML.unit.lessons.filter((l) => GML.unit.available(l.id)).map((l) => l.id), total: GML.unit.lessons.length };`);
-  check('home shows title and subtitles', /Gabriella's Math Lab/.test(r.t) && /Grade 5 Mathematics/.test(r.t) && /Georgia Milestones Preparation/.test(r.t), r.t.slice(0, 200));
-  check('home: every available lesson has TEACH | PRACTICE | TEST', JSON.stringify(r.modes) === JSON.stringify(r.avail.flatMap((id) => [`TEACH>#/${id}/teach/1`, `PRACTICE>#/${id}/practice`, `TEST>#/${id}/test`])), r.modes);
-  check('home: all 10 lessons listed; the rest say Coming later with no buttons', r.total === 10 && r.later === r.total - r.avail.length && r.laterButtons === 0, r);
-  check('home: Lesson Notes button for each available lesson', (await js(`return document.querySelectorAll('.btn-notes').length;`)) === r.avail.length);
+  check('learn: Decimal lessons page with grade and Milestones subtitles', /Decimal lessons/.test(r.t) && /Grade 5 Mathematics/.test(r.t) && /Georgia Milestones Preparation/.test(r.t), r.t.slice(0, 200));
+  check('learn: every available lesson has TEACH | PRACTICE | TEST', JSON.stringify(r.modes) === JSON.stringify(r.avail.flatMap((id) => [`TEACH>#/${id}/teach/1`, `PRACTICE>#/${id}/practice`, `TEST>#/${id}/test`])), r.modes);
+  check('learn: all 10 lessons listed; the rest say Coming later with no buttons', r.total === 10 && r.later === r.total - r.avail.length && r.laterButtons === 0, r);
+  check('learn: Lesson Notes button for each available lesson', (await js(`return document.querySelectorAll('.btn-notes').length;`)) === r.avail.length);
 
   // ── Teach: every screen, step reveal, guided checks with wrong then right answers ──
   await b.load(URL + 'index.html#/d01/teach/1');
@@ -259,8 +273,8 @@ try {
   check('parent: practice sessions and tests counted', /Practice sessions\s*1/.test(r) && /Tests taken\s*4/.test(r));
   await b.reload();
   check('parent: progress survives a refresh', /Tests taken\s*4/.test(await js(`return document.getElementById('app').innerText;`)));
-  await b.load(URL + 'index.html#/');
-  check('home: lesson card shows mastered status', /Mastered/.test(await js(`return document.querySelector('.lesson-card').innerText;`)));
+  await b.load(URL + 'index.html#/learn');
+  check('learn: lesson card shows mastered status', /Mastered/.test(await js(`return document.querySelector('.lesson-card').innerText;`)));
 
 
   // ── Lesson 1 progress saved by the earlier (deployed) version is kept ──
@@ -268,10 +282,10 @@ try {
   await js(`localStorage.clear(); localStorage.setItem('gml:v1:progress', JSON.stringify({ lessons: { d01: { teach: { screen: 18, furthest: 18, done: true },
     practice: { sessions: 3, skills: { parts: { c: 2, t: 3 } }, recentSigs: ['M1:4'], lastDate: '2026-10-10T12:00:00.000Z' },
     tests: [{ date: '2026-10-10T12:30:00.000Z', correct: 9, total: 10, percent: 90, mastered: true, skills: { parts: { correct: 1, total: 1 } }, missedSkills: ['model'] }], lastTestSigs: [] } } }));`);
-  await b.load(URL + 'index.html#/');
+  await b.load(URL + 'index.html#/learn');
   await b.reload();
   r = await js(`return document.querySelector('.lesson-card').innerText;`);
-  check('saved Lesson 1 progress from the earlier version still shows on the home page', /Mastered/.test(r) && /Finished/.test(r) && /3 sessions/.test(r) && /9 of 10/.test(r), r);
+  check('saved Lesson 1 progress from the earlier version still shows on the Learn page', /Mastered/.test(r) && /Finished/.test(r) && /3 sessions/.test(r) && /9 of 10/.test(r), r);
   await b.load(URL + 'index.html#/parent');
   r = await js(`return document.getElementById('app').innerText;`);
   check('saved Lesson 1 progress shows on Parent Progress, other lessons start empty', /Lesson 1: Understanding Decimals ★/.test(r) && /9 of 10 \(90%\)/.test(r) && /Lesson 2: Decimal Place Value[\s\S]*No test taken yet/.test(r), r.slice(0, 400));
@@ -489,7 +503,7 @@ try {
   r = { t: await js(`return document.getElementById('app').innerText;`), p: await progOf('d09') };
   check('integrity: 10 of 10 with a lesson page opened keeps the score but is not ★ Mastered', /Your score: 10 out of 10/.test(r.t) && /counts as practice/.test(r.t) &&
     r.p.tests[0].goalMet === true && r.p.tests[0].mastered === false && !r.p.masteredOn, r.p);
-  await b.load(URL + 'index.html#/');
+  await b.load(URL + 'index.html#/learn');
   check('integrity: the home card shows no ★ Mastered for a test with lesson pages opened', !/Mastered/.test(await js(`return [...document.querySelectorAll('.lesson-card')][8].innerText;`)));
   await b.load(URL + 'index.html#/parent');
   r = await js(`return document.getElementById('app').innerText;`);
@@ -596,7 +610,7 @@ try {
   }
   // Lesson 1 progress saved before the new screens were added still shows as finished.
   await js(`localStorage.setItem('gml:v1:progress', JSON.stringify({ lessons: { d01: { teach: { screen: 18, furthest: 18, done: true }, practice: { sessions: 0, skills: {}, recentSigs: [] }, tests: [], lastTestSigs: [] } } }));`);
-  await b.load(URL + 'index.html#/');
+  await b.load(URL + 'index.html#/learn');
   check('saved progress: Lesson 1 Teach finished before the new screens still shows as finished', /Teach Finished/.test(await js(`return document.querySelector('.lesson-card').innerText.replace(/\\s+/g, ' ');`)));
 
   // ── Keyboard focus and announcements (audit D-25, D-26) ──
@@ -680,9 +694,186 @@ try {
     const ol = document.querySelector('.steps'); return { style: getComputedStyle(ol).listStyleType, first: ol.querySelector('li').innerText.slice(0, 7) };`);
   check('worked-example steps labelled "Step 1." are not numbered twice', r.style === 'none' && /^Step 1/.test(r.first), r);
 
+  // ── NumberNova: Study Guides ──
+  await b.load(URL + 'index.html#/guides');
+  r = await js(`const cards = [...document.querySelectorAll('.guide-card')];
+    return { h1: document.querySelector('h1').innerText, n: cards.length, titles: cards.map((c) => c.querySelector('h2').innerText),
+      open: cards.map((c) => c.querySelector('.btn-guide').getAttribute('href')), dl: cards.map((c) => c.querySelector('[download]').getAttribute('download')),
+      nav: document.querySelector('.site-nav a[aria-current]').dataset.nav, title: document.title };`);
+  check('guides: eight numbered guide cards with titles', r.n === 8 && r.titles[0] === 'Decimal Place Value' && r.titles[7] === 'Mixed Decimal Practice' && r.nav === 'guides' && /Study Guides/.test(r.title), r);
+  const pdfs = await js(`return Promise.all([...document.querySelectorAll('.btn-guide')].map((a) => fetch(a.href, { cache: 'no-store' }).then((x) => [a.getAttribute('href'), x.status, x.headers.get('content-type')])));`);
+  check('guides: all eight PDFs load (HTTP 200, application/pdf)', pdfs.length === 8 && pdfs.every((x) => x[1] === 200 && /pdf/.test(x[2])), pdfs);
+  check('guides: Download names each PDF file, and links are repository-relative', r.dl.every((d) => /^Decimals-Section-\d.*\.pdf$/.test(d)) && r.open.every((u) => /^study-guides\/pdf\/decimals\//.test(u)), r);
+  r = await js(`document.querySelector('[data-print]').click(); const f = document.getElementById('pdf-print-frame');
+    return { frame: !!f, src: f && f.getAttribute('src'), status: document.getElementById('guide-status').textContent };`);
+  check('guides: Print loads the PDF into a print frame and tells the student what happens', r.frame && /Section-1/.test(r.src) && /print/.test(r.status), r);
+  r = await js(`const f = document.getElementById('pdf-print-frame'); if (f) f.remove(); return true;`);
+  await b.load(URL + 'index.html#/d06/notes');
+  r = await js(`const a = document.querySelector('.guide-link a'); return a ? a.getAttribute('href') : null;`);
+  check('guides: Lesson 6 Notes link to the matching guide (Section 4, Adding)', r === 'study-guides/pdf/decimals/Decimals-Section-4-Adding-Decimals.pdf', r);
+
+  // ── NumberNova: Practice Center ──
+  const pcDraft = () => js(`return JSON.parse(localStorage.getItem('gml:v1:draft:pc-session') || 'null');`);
+  const pcStart = async (mode, n, op) => {
+    await b.load(URL + 'index.html#/practice'); await b.reload();
+    await js(`document.getElementById('pc-mode-${mode}').click(); document.querySelector('.pc-form button[type=submit]').click();`);
+    await js(`${op ? `document.getElementById('pc-op-${op}').click();` : ''} document.getElementById('pc-n-${n}').click(); document.querySelector('.pc-form button[type=submit]').click();`);
+    await js(`document.querySelector('[data-act=start]').click(); const y = document.querySelector('.pc-confirm [data-act=really]'); if (y && !y.closest('[hidden]')) y.click();`);
+    await b.wait(150);
+  };
+  await js(`localStorage.clear();`);
+  await b.load(URL + 'index.html#/practice');
+  r = await js(`const n = document.querySelectorAll('[name=mode]').length; document.querySelector('.pc-form button[type=submit]').click();
+    return { n, msg: document.querySelector('.pc-msg').textContent, h: location.hash, labels: [...document.querySelectorAll('.pc-card .pc-name')].map((x) => x.innerText) };`);
+  check('practice center: seven skills to choose from, and nothing starts until a choice is made', r.n === 7 && /Choose a skill first/.test(r.msg) && r.h === '#/practice' &&
+    JSON.stringify(r.labels) === JSON.stringify(['Adding Decimals', 'Subtracting Decimals', 'Multiplying Decimals', 'Dividing Decimals', 'Mixed Operations', 'Challenge Mode', 'Practice My Misses']), r);
+  await js(`document.getElementById('pc-mode-add').click(); document.querySelector('.pc-form button[type=submit]').click();`);
+  r = await js(`const lens = [...document.querySelectorAll('[name=n]')].map((x) => x.value); document.querySelector('.pc-form button[type=submit]').click();
+    return { lens, msg: document.querySelector('.pc-msg').textContent, draft: localStorage.getItem('gml:v1:draft:pc-session') };`);
+  check('practice center: step 2 offers 10, 25 and 50 questions and needs a choice; no session yet', r.lens.join() === '10,25,50' && /10, 25 or 50/.test(r.msg) && r.draft === null, r);
+  const combos = [];
+  for (const mode of ['add', 'sub', 'mul', 'div', 'mix', 'misses']) for (const n of [10, 25, 50]) combos.push([mode, n]);
+  for (const op of ['add', 'sub', 'mul', 'div', 'mix']) for (const n of [10, 25, 50]) combos.push(['challenge', n, op]);
+  let allOk = true; const pcBad = [];
+  for (const [mode, n, op] of combos) {
+    await pcStart(mode, n, op);
+    const d = await pcDraft();
+    const ui = await js(`return { h: location.hash, label: (document.querySelector('.mode-label') || {}).innerText || '' };`);
+    const ok = d && d.set.length === n && d.mode === mode && ui.h === '#/practice/session' && new RegExp(`Question 1 of ${n}`).test(ui.label) && (!op || d.op === op);
+    if (!ok) { allOk = false; pcBad.push({ mode, n, op, d: d && { n: d.n, len: d.set.length, mode: d.mode }, ui }); }
+  }
+  check(`practice center: all ${combos.length} mode and length choices start the right session (seven modes, 10/25/50, challenge per operation)`, allOk, pcBad);
+  // With no history, Practice My Misses explains that and gives a general review.
+  await js(`localStorage.clear();`);
+  await b.load(URL + 'index.html#/practice');
+  await js(`document.getElementById('pc-mode-misses').click(); document.querySelector('.pc-form button[type=submit]').click();`);
+  r = await js(`return document.querySelector('.pc-misses').innerText;`);
+  check('practice center: Practice My Misses with no history says so and offers a general review', /No misses recorded yet/.test(r) && /general review/.test(r), r);
+  // A session: hints, a wrong answer, pause and resume.
+  await pcStart('sub', 10);
+  r = await js(`${H} const h = document.querySelector('[data-act=hint]'); h.click(); h.click(); h.click();
+    const d = JSON.parse(localStorage.getItem('gml:v1:draft:pc-session')); const x = d.set[0]; const q = E.make('pc', x.id, x.seed);
+    const host = document.querySelector('.coach-host'); fill(host, q, wrongN(q, 0)); host.querySelector('[data-act=check]').click();
+    const gotWrong = !!host.querySelector('.fb-wrong'); fill(host, q, right(q)); host.querySelector('[data-act=check]').click();
+    return { hints: document.querySelectorAll('.hint').length, wrong: gotWrong, right: !!host.querySelector('.fb-right'), next: !!host.querySelector('.coach-next button') };`);
+  check('practice center: three hints, feedback for a wrong answer, a right answer unlocks Next', r.hints === 3 && r.wrong && r.right && r.next, r);
+  await js(`document.querySelector('.coach-next button').click();`);
+  await b.load(URL + 'index.html#/');
+  r = await js(`return (document.querySelector('.pc-paused') || {}).innerText || '';`);
+  check('practice center: a paused session shows on the home page', /question 2 of 10/.test(r) && /Resume/.test(r), r);
+  await b.reload();
+  await js(`document.querySelector('.pc-paused a').click();`); await b.wait(150);
+  r = await js(`return { label: document.querySelector('.mode-label').innerText, first: JSON.parse(localStorage.getItem('gml:v1:draft:pc-session')).states[0] };`);
+  check('practice center: resume returns to the same place with the earlier answer kept', /Question 2 of 10/.test(r.label) && r.first.solved === true && r.first.attempts === 1, r);
+  // Start New Practice asks first, then clears only this session.
+  r = await js(`document.querySelector('.pc-tools [data-act=new]').click(); const asked = !document.querySelector('.pc-new').hidden;
+    document.querySelector('.pc-new [data-act=cancel]').click(); const kept = !!localStorage.getItem('gml:v1:draft:pc-session');
+    return { asked, kept };`);
+  check('practice center: Start New Practice asks for confirmation (No keeps the session)', r.asked && r.kept, r);
+  await js(`document.querySelector('.pc-tools [data-act=new]').click(); document.querySelector('.pc-new [data-act=really]').click();`); await b.wait(100);
+  check('practice center: confirming Start New Practice clears the session and returns to the wizard', (await pcDraft()) === null && /#\/practice$/.test(await js(`return location.hash;`)));
+  // A full 10-question session through to the results, with one solution shown and one hint.
+  await pcStart('mix', 10);
+  for (let k = 0; k < 10; k++) {
+    await js(`${H} const d = JSON.parse(localStorage.getItem('gml:v1:draft:pc-session')); const x = d.set[d.i]; const q = E.make('pc', x.id, x.seed); const host = document.querySelector('.coach-host');
+      if (d.i === 0) { for (let j = 0; j < 3; j++) { fill(host, q, wrongN(q, j)); host.querySelector('[data-act=check]').click(); } host.querySelector('[data-act=solution]').click(); }
+      else { if (d.i === 1) document.querySelector('[data-act=hint]').click(); fill(host, q, right(q)); host.querySelector('[data-act=check]').click(); }
+      document.querySelector('.coach-next button').click();`);
+    await b.wait(30);
+  }
+  await b.wait(150);
+  r = await js(`return { h: location.hash, t: document.getElementById('app').innerText, hist: JSON.parse(localStorage.getItem('gml:v1:draft:pc-history')),
+    actions: [...document.querySelectorAll('.done-actions .btn')].map((x) => x.innerText.trim()), lesson: (document.querySelector('.done-actions .btn-teach') || {}).getAttribute && document.querySelector('.done-actions .btn-teach').getAttribute('href') };`);
+  check('practice center: results report completed, correct, no-hint, with-help, incorrect, hints and skills to review', r.h === '#/practice/results' && /You finished 10 of 10/.test(r.t) && /9\s*correct/.test(r.t) &&
+    /8\s*correct on the first try with no hints/.test(r.t) && /1\s*correct with hints/.test(r.t) && /1\s*incorrect/.test(r.t) && /1\s*hints used/.test(r.t) && /Skills needing review/.test(r.t) && /By operation/.test(r.t), r.t.slice(0, 600));
+  check('practice center: results offer Practice Again, Practice My Misses, the related lesson and the Practice Center', ['Practice Again', 'Practice My Misses', 'Back to Practice Center'].every((a) => r.actions.includes(a)) && r.actions.some((a) => /Review Related Lesson/.test(a)) && /^#\/d0[6-9]\/teach\/\d+$/.test(r.lesson), r);
+  check('practice center: the finished session is saved to the practice history once', r.hist.sessions.length === 1 && r.hist.sessions[0].n === 10 && r.hist.sessions[0].missed === 1, r.hist);
+  await b.reload();
+  check('practice center: refreshing the results does not record the session twice', (await js(`return JSON.parse(localStorage.getItem('gml:v1:draft:pc-history')).sessions.length;`)) === 1);
+  await js(`document.querySelector('[data-act=misses]').click();`); await b.wait(100);
+  r = await js(`return (document.querySelector('.pc-misses') || {}).innerText || '';`);
+  check('practice center: after a miss, Practice My Misses lists the skill to review', /Skills to review/.test(r) && /Practice Center/.test(r), r);
+  // Small screens: no sideways scrolling and big tap targets on the new pages.
+  await b.viewport(320, 640);
+  for (const [route, label] of [['#/', 'home (320px)'], ['#/learn', 'learn (320px)'], ['#/guides', 'study guides (320px)'], ['#/practice', 'practice wizard (320px)'], ['#/practice/results', 'practice results (320px)']]) {
+    await b.load(URL + 'index.html' + route);
+    await noOverflow(label); await bigTargets(label);
+  }
+  await pcStart('div', 10);
+  await noOverflow('practice question with a division layout (320px)'); await bigTargets('practice question (320px)');
+  await b.viewport(390, 844);
+
+  // ── NumberNova: restart controls and Parent Progress ──
+  await js(`localStorage.clear(); localStorage.setItem('gml:v1:progress', JSON.stringify({ lessons: { d02: { teach: { screen: 5, furthest: 9, done: true }, practice: { sessions: 2, skills: {}, recentSigs: [] },
+    tests: [{ id: 'old1', date: '2026-10-01T12:00:00Z', correct: 10, total: 10, percent: 100, mastered: true, goalMet: true, skills: {}, missedSkills: [] }], testsTaken: 1, masteredOn: '2026-10-01T12:00:00Z', lastTestSigs: [] } } }));
+    localStorage.setItem('gml:v1:draft:teach-d02-check-place', JSON.stringify({ solved: true, fb: { kind: 'correct' }, resp: 'tenths' }));
+    localStorage.setItem('gml:v1:draft:teach-d03-check-place', JSON.stringify({ solved: true, fb: { kind: 'correct' } }));
+    localStorage.setItem('gml:v1:draft:teach-steps', JSON.stringify({ 'd02:place': 3, 'd02:value': 2, 'd03:place': 4 }));`);
+  await b.load(URL + 'index.html#/d02/teach/3');
+  r = await js(`document.querySelector('[data-act=restart]').click(); const asked = !document.querySelector('.restart-confirm').hidden;
+    document.querySelector('[data-act=restart-yes]').click();
+    const p = JSON.parse(localStorage.getItem('gml:v1:progress')).lessons.d02, steps = JSON.parse(localStorage.getItem('gml:v1:draft:teach-steps'));
+    return { asked, h: location.hash, check: localStorage.getItem('gml:v1:draft:teach-d02-check-place'), other: !!localStorage.getItem('gml:v1:draft:teach-d03-check-place'), steps, teach: p.teach, tests: p.tests.length, mastered: p.masteredOn, sessions: p.practice.sessions };`);
+  await b.wait(100);
+  check('restart: Start Lesson Over asks first, then clears only this lesson\'s guided answers and revealed steps', r.asked && r.check === null && r.other && !r.steps['d02:place'] && !r.steps['d02:value'] && r.steps['d03:place'] === 4, r);
+  check('restart: Start Lesson Over keeps tests, mastery, practice and "Teach finished", and goes to screen 1', r.tests === 1 && !!r.mastered && r.sessions === 2 && r.teach.done === true && r.teach.furthest === 0 && /teach\/1$/.test(await js(`return location.hash;`)), r);
+  await b.load(URL + 'index.html#/d02/practice'); await b.reload();
+  r = await js(`${H} const q = qIn('practice', 'd02'); const host = document.querySelector('.coach-host'); fill(host, q, wrongN(q, 0)); host.querySelector('[data-act=check]').click();
+    const before = JSON.parse(localStorage.getItem('gml:v1:draft:practice-d02')).id;
+    document.querySelector('.pc-tools [data-act=restart]').click(); const asked = !document.querySelector('.restart-confirm').hidden;
+    document.querySelector('[data-act=restart-no]').click(); const kept = JSON.parse(localStorage.getItem('gml:v1:draft:practice-d02')).id === before;
+    document.querySelector('.pc-tools [data-act=restart]').click(); document.querySelector('[data-act=restart-yes]').click();
+    const d = JSON.parse(localStorage.getItem('gml:v1:draft:practice-d02'));
+    return { asked, kept, fresh: d.id !== before && d.i === 0 && d.states.every((s) => !s.attempts), sessions: JSON.parse(localStorage.getItem('gml:v1:progress')).lessons.d02.practice.sessions };`);
+  check('restart: lesson Start New Practice asks before discarding answers, then starts a fresh session (finished sessions kept)', r.asked && r.kept && r.fresh && r.sessions === 2, r);
+  await b.load(URL + 'index.html#/d02/test'); await b.reload();
+  await js(`document.querySelector('[data-act=start]').click();`);
+  await js(setAll('d02', 'right(q)')); await b.reload();
+  await js(`document.querySelector('[data-act=submit]').click();`); await b.wait(60);
+  r = await js(`const btn = document.querySelector('[data-act=new]'); const label = btn.innerText; btn.click();
+    const p = JSON.parse(localStorage.getItem('gml:v1:progress')).lessons.d02; return { label, tests: p.tests.length, mastered: p.masteredOn, intro: !!document.querySelector('[data-act=start]') };`);
+  check('restart: Retake Test keeps earlier results and mastery and starts a new test', /Retake Test/.test(r.label) && r.tests === 2 && r.mastered === '2026-10-01T12:00:00Z' && r.intro, r);
+  // Parent Progress: Practice Center activity is shown separately from Tests and mastery.
+  await pcStart('add', 10);
+  for (let k = 0; k < 10; k++) await js(`${H} const d = JSON.parse(localStorage.getItem('gml:v1:draft:pc-session')); const x = d.set[d.i]; const q = E.make('pc', x.id, x.seed); const host = document.querySelector('.coach-host');
+    if (d.i === 3) { fill(host, q, wrongN(q, 0)); host.querySelector('[data-act=check]').click(); } fill(host, q, right(q)); host.querySelector('[data-act=check]').click(); document.querySelector('.coach-next button').click();`);
+  await b.wait(150);
+  await b.load(URL + 'index.html#/parent');
+  r = await js(`const sec = document.querySelector('.parent-practice'); return { t: sec ? sec.innerText : '', rows: sec ? sec.querySelectorAll('tbody tr').length : 0, d02: document.querySelector('#pl-d02').closest('section').innerText, rules: document.querySelector('#rules-h').closest('section').innerText };`);
+  check('parent: Practice Center section shows sessions, questions, accuracy, hints, recent practice and skills to review', /never counts as a Test/.test(r.t) && /Sessions finished\s*1/.test(r.t) && /Questions answered\s*10/.test(r.t) && /Correct\s*10 of 10/.test(r.t) && r.rows === 1 && /Skills to review/.test(r.t), r.t.slice(0, 400));
+  check('parent: Practice Center results do not change lesson tests or mastery', /Tests taken\s*2/.test(r.d02) && /Yes ★/.test(r.d02) && /Practice Center/.test(r.rules), r.d02.slice(0, 300));
+  // Opening the Practice Center during an unfinished lesson Test is noted on that Test.
+  await b.load(URL + 'index.html#/d05/test'); await b.reload();
+  await js(`document.querySelector('[data-act=start]').click();`);
+  await b.load(URL + 'index.html#/practice'); await b.load(URL + 'index.html#/guides'); await b.load(URL + 'index.html#/d05/test');
+  r = await js(`return JSON.parse(localStorage.getItem('gml:v1:draft:test-d05')).assist;`);
+  check('integrity: opening the Practice Center or Study Guides during a lesson Test is noted on it', r.includes('the Practice Center') && r.includes('the Study Guides'), r);
+
+  // ── NumberNova review regressions ──
+  await js(`localStorage.setItem('gml:v1:draft:pc-history', JSON.stringify({ sessions: [{ n: 10, completed: 'abc', clean: 'x' }], skills: { 'add.basic': null, 'sub.basic': { r: 'xx' } } }));`);
+  await b.load(URL + 'index.html#/parent');
+  r = await js(`return document.getElementById('app').innerText;`);
+  check('review: damaged practice history does not break Parent Progress (no NaN or junk)', !/Something went wrong|NaN|abc/.test(r) && /Practice Center/.test(r), r.slice(0, 200));
+  await b.load(URL + 'index.html#/practice'); await b.reload();
+  await js(`document.getElementById('pc-mode-misses').click(); document.querySelector('.pc-form button[type=submit]').click();`);
+  check('review: damaged practice history does not break Practice My Misses', /Step 2 of 3/.test(await js(`return document.getElementById('app').innerText;`)));
+  // A stale tab never writes its old session over a newer one.
+  await pcStart('add', 10);
+  r = await js(`const d = JSON.parse(localStorage.getItem('gml:v1:draft:pc-session')); const other = Object.assign({}, d, { id: 'newer-tab' }); localStorage.setItem('gml:v1:draft:pc-session', JSON.stringify(other));
+    document.querySelector('[data-act=hint]').click(); return JSON.parse(localStorage.getItem('gml:v1:draft:pc-session')).id;`);
+  check('review: a stale Practice Center tab does not overwrite a newer session', r === 'newer-tab', r);
+  // The phone menu closes after choosing the current page, and unknown lesson routes highlight Home.
+  await b.viewport(390, 844);
+  await b.load(URL + 'index.html#/learn');
+  r = await js(`document.querySelector('.nav-toggle').click(); const open = document.querySelector('.nav-toggle').getAttribute('aria-expanded');
+    document.querySelector('.site-nav a[data-nav=learn]').click(); return { open, after: document.querySelector('.nav-toggle').getAttribute('aria-expanded') };`);
+  check('review: the phone menu closes after tapping the current page', r.open === 'true' && r.after === 'false', r);
+  await b.load(URL + 'index.html#/d11/teach/1');
+  check('review: an unknown lesson route shows Home and highlights Home', (await js(`return document.querySelector('.site-nav a[aria-current]').dataset.nav;`)) === 'home');
+
   // ── Unknown routes and reset ──
   await b.load(URL + 'index.html#/d11/teach/1');
-  check('unready lesson route falls back to home', /Gabriella's Math Lab/.test(await js(`return document.querySelector('h1').innerText;`)));
+  check('unready lesson route falls back to home', /Ready to make your next math discovery/.test(await js(`return document.querySelector('h1').innerText;`)));
   await b.load(URL + 'index.html#/parent');
   await js(`document.querySelector('[data-act=reset]').click(); document.querySelector('[data-act=really]').click();`);
   check('parent: erase progress works', /No test taken yet/.test(await js(`return document.getElementById('app').innerText;`)) && (await js(`return Object.keys(localStorage).filter((k) => k.startsWith('gml:')).length;`)) === 0);

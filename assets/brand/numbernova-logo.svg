@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 330 76" role="img" aria-labelledby="nn-logo-title">
+  <title id="nn-logo-title">NumberNova: Learn. Practice. Shine.</title>
+  <defs>
+    <linearGradient id="nn-logo-bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#2450d0"/>
+      <stop offset="1" stop-color="#6a33c8"/>
+    </linearGradient>
+    <linearGradient id="nn-logo-word" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#5a32c4"/>
+      <stop offset="1" stop-color="#8a3fbf"/>
+    </linearGradient>
+  </defs>
+  <g transform="translate(4 6)">
+    <rect width="64" height="64" rx="16" fill="url(#nn-logo-bg)"/>
+    <path d="M7.5 44.5C11 54 33 52 47 38.5 55.5 30.3 58.5 22.5 56.5 18" fill="none" stroke="#7de2cf" stroke-width="2.6" stroke-linecap="round"/>
+    <path d="M19 46.5V19.5l25 27V19.5" fill="none" stroke="#ffffff" stroke-width="7.2" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M50.5 6.5l2.5 6.4 6.4 2.5-6.4 2.5-2.5 6.4-2.5-6.4-6.4-2.5 6.4-2.5z" fill="#ffc83a"/>
+    <circle cx="57.5" cy="27" r="1.9" fill="#ffc83a"/>
+  </g>
+  <text x="82" y="44" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif" font-size="34" font-weight="800" letter-spacing="-0.5">
+    <tspan fill="#1c2f7a">Number</tspan><tspan fill="url(#nn-logo-word)">Nova</tspan>
+  </text>
+  <text x="84" y="67" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif" font-size="17" font-weight="700" fill="#4d5768" letter-spacing="0.2">Learn. Practice. Shine.</text>
+</svg>

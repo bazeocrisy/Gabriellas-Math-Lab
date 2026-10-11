@@ -86,7 +86,7 @@
 
     function intro() {
       app.innerHTML = `
-        <div class="crumbs"><a href="#/">← Lesson menu</a></div>
+        <div class="crumbs"><a href="#/learn">← Lesson menu</a></div>
         <p class="mode-label">Lesson ${G.unit.find(lessonId).n} · Test</p>
         <h1 tabindex="-1">Lesson ${G.unit.find(lessonId).n} Test</h1>
         ${lost ? '<div class="fb fb-info"><p>The app was updated, and your unfinished test could not be continued. Please start a new test. Your earlier results are still saved.</p></div>' : ''}
@@ -97,7 +97,7 @@
             <li>You will not see if an answer is right until you submit the whole test.</li>
             <li>You can go back and change answers before you submit.</li>
             <li>There is no time limit. You can leave and come back later: your answers are saved.</li>
-            <li>To earn ★ Mastered, do the test on your own. If you open Teach, Practice or Lesson Notes before you submit, you still get a score, but that test will not count for ★ Mastered.</li>
+            <li>To earn ★ Mastered, do the test on your own. If you open Teach, Practice, Lesson Notes, the Practice Center or the Study Guides before you submit, you still get a score, but that test will not count for ★ Mastered.</li>
           </ul>
         </div>
         <div class="done-actions">
@@ -113,7 +113,7 @@
         question();
         top();
       });
-      document.title = `Test · Gabriella's Math Lab`;
+      document.title = `Test · NumberNova`;
     }
 
     function answered(k) { return G.engine.isAnswered(qs[k], d.answers[k]); }
@@ -121,7 +121,7 @@
     function question() {
       const q = qs[d.i];
       app.innerHTML = `
-        <div class="crumbs"><a href="#/">← Lesson menu</a> <span class="crumb-note">(your answers are saved)</span></div>
+        <div class="crumbs"><a href="#/learn">← Lesson menu</a> <span class="crumb-note">(your answers are saved)</span></div>
         <p class="mode-label">Lesson ${G.unit.find(lessonId).n} · Test (no hints, work on your own) <span class="screen-count">Question ${d.i + 1} of 10</span></p>
         <nav class="qnav" aria-label="Test questions">${qs.map((_, k) =>
           `<button type="button" class="qnav-btn${k === d.i ? ' is-current' : ''}${answered(k) ? ' is-done' : ''}" data-k="${k}" aria-label="Question ${k + 1}${answered(k) ? ', answered' : ', not answered'}"${k === d.i ? ' aria-current="step"' : ''}>${k + 1}</button>`).join('')}</nav>
@@ -161,13 +161,13 @@
         if (d.review) review(); else question();
         top();
       });
-      document.title = `Test question ${d.i + 1} · Gabriella's Math Lab`;
+      document.title = `Test question ${d.i + 1} · NumberNova`;
     }
 
     function review() {
       const missing = qs.map((_, k) => k).filter((k) => !answered(k));
       app.innerHTML = `
-        <div class="crumbs"><a href="#/">← Lesson menu</a></div>
+        <div class="crumbs"><a href="#/learn">← Lesson menu</a></div>
         <p class="mode-label">Lesson ${G.unit.find(lessonId).n} · Test</p>
         <h1 tabindex="-1">Ready to submit?</h1>
         ${resetNote()}${assistNote()}
@@ -190,7 +190,7 @@
       });
       app.querySelector('[data-act="really"]').addEventListener('click', submit);
       app.querySelector('[data-act="cancel"]').addEventListener('click', () => { app.querySelector('.confirm').hidden = true; });
-      document.title = `Submit test · Gabriella's Math Lab`;
+      document.title = `Submit test · NumberNova`;
     }
 
     function submit() {
@@ -226,7 +226,7 @@
       };
       const teachLink = (sk) => `#/${lessonId}/teach/${L.screens.findIndex((x) => x.id === L.skillScreen[sk]) + 1}`;
       app.innerHTML = `
-        <div class="crumbs"><a href="#/">← Lesson menu</a></div>
+        <div class="crumbs"><a href="#/learn">← Lesson menu</a></div>
         <p class="mode-label">Lesson ${G.unit.find(lessonId).n} · Test results</p>
         <h1 tabindex="-1">Your score: ${r.correct} out of ${r.total} (${r.percent}%)</h1>
         <div class="card ${r.mastered ? 'card-ok' : 'card-warn'}">
@@ -235,6 +235,7 @@
             : '<p class="fb-title">Not mastered yet</p><p>The goal is at least 9 out of 10 correct. Review the skills below, practice, and then try a new test.</p>' +
               (r.assisted ? `<p class="fine">${listText(r.assisted)} ${r.assisted.length === 1 ? 'was' : 'were'} opened during this test.</p>` : '')}
         </div>
+        <p class="fine">This result is saved. Retaking the test gives new questions and keeps this result and any ★ Mastered.</p>
         <h2>Skills</h2>
         <table class="skills-table"><thead><tr><th scope="col">Skill</th><th scope="col">Correct</th><th scope="col">Review</th></tr></thead><tbody>
           ${Object.keys(r.skills).map((sk) => `<tr><td>${bank.skills[sk]}</td><td>${r.skills[sk].correct} of ${r.skills[sk].total}</td>
@@ -245,15 +246,15 @@
         <div class="done-actions">
           ${r.missedSkills.length ? `<a class="btn btn-primary btn-big" href="${teachLink(r.missedSkills[0])}">Review in Teach</a>` : ''}
           <a class="btn btn-big ${r.missedSkills.length ? '' : 'btn-primary'}" href="#/${lessonId}/practice">Practice</a>
-          <button type="button" class="btn btn-big" data-act="new">Take a new test</button>
-          <a class="btn btn-big" href="#/">Lesson menu</a>
+          <button type="button" class="btn btn-big" data-act="new">Retake Test (new questions)</button>
+          <a class="btn btn-big" href="#/learn">Lesson menu</a>
         </div>`;
       app.querySelector('[data-act="new"]').addEventListener('click', () => {
         const s = G.store.getDraft(draftName(lessonId));
         if (s && s.id !== d.id && s.started && !s.submitted) { reload(); return; } // another tab already started a new test
         G.store.clearDraft(draftName(lessonId)); d = null; intro(); top();
       });
-      document.title = `Test results · Gabriella's Math Lab`;
+      document.title = `Test results · NumberNova`;
     }
   }
 
