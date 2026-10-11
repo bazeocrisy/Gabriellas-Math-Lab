@@ -91,7 +91,7 @@
         'Think of the 1 m by 1 m square as a grid of 100 small squares. 0.3 m is 3 of the 10 rows and 0.6 m is 6 of the 10 columns. They overlap in 3 × 6 = 18 small squares: 18 hundredths.' + M.area(3, 6, { label: 'A grid of 100 squares, one square meter. 3 of the 10 rows and 6 of the 10 columns are marked; they overlap in 18 dark squares.' }),
         '<b>Answer:</b> 0.3 × 0.6 = <span class="big-num">0.18</span> square meters. Tenths × tenths make hundredths.'
       ],
-      why: 'Buying several of the same item is adding equal groups, and multiplication is the fast way to add equal groups.'
+      why: 'Buying several of the same item is adding equal groups, and multiplication is the fast way to add equal groups. Area works the same way: length × width counts the squares that fit, and tenths × tenths gives hundredths of a square meter.'
     },
     {
       id: 'check-word', title: 'Try it together', kind: 'check', skill: 'mWord',

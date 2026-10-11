@@ -89,7 +89,7 @@
       why: 'Each part is the value of one digit. Adding all the values gives back the original number, so expanded form shows exactly what every digit is worth.'
     },
     {
-      id: 'check-expanded', title: 'Try it together', kind: 'check', skill: 'forms',
+      id: 'check-expanded-typed', title: 'Try it together', kind: 'check', skill: 'forms',
       check: { t: 'F3', params: { num: '3.406' } },
       reteach: `<p><b>Let's look again.</b> 5.17 = 5 + 0.1 + 0.07: the 1 is in the tenths place (0.1) and the 7 is in the hundredths place (0.07).</p>
         <p>For 3.406, write the value of each digit the same way, with + signs between the parts. The 0 adds nothing, but it keeps the 6 in the thousandths place.</p>`

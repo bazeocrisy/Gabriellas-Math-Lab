@@ -103,7 +103,7 @@
     },
     {
       id: 'check-line', title: 'Try it together', kind: 'check', skill: 'model',
-      check: { t: 'M8', params: { a: 4, b: 6 } },
+      check: { t: 'M8', params: { a: 6, b: 8 } },
       reteach: `<p><b>Let's look again.</b> First find the size of one jump. This line goes from 0.3 to 0.4, one tenth, cut into 10 equal jumps, so each jump is 0.01.</p>
         ${M.line({ from: 300, to: 400, point: 340, labels: ['0.3', '0.4'] })}
         <p>Point A is 4 jumps past 0.30, so A is at 0.34. Count your line the same way: start at the left label and count the jumps.</p>`
@@ -158,7 +158,7 @@
       ]
     },
     {
-      id: 'check-chart', title: 'Try it together', kind: 'check', skill: 'place',
+      id: 'check-chart-typed', title: 'Try it together', kind: 'check', skill: 'place',
       check: { t: 'PL5', params: { num: '0.481' } },
       reteach: `<p><b>Let's look again.</b> Here is 0.635 in a chart. The digit left of the point goes in Ones, and the digits after the point go in Tenths, Hundredths and Thousandths, in order.</p>
         ${M.chart({ ones: '0', tenths: '6', hundredths: '3', thousandths: '5' }, { caption: '0.635' })}

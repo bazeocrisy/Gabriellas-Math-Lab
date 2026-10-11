@@ -101,10 +101,11 @@
         <textarea id="${id}-in" class="num-input exp-input" rows="2" inputmode="text" autocomplete="off" autocapitalize="off" spellcheck="false" aria-describedby="${id}-p ${id}-h" maxlength="60"></textarea>
         <p class="hint-small" id="${id}-h">Use a + sign between the parts, like 2 + 0.5 + 0.08 (or 2 × 1 + 5 × 0.1 + 8 × 0.01).</p>`;
       const inp = area.querySelector('textarea');
-      inp.addEventListener('input', changed);
+      const grow = () => { inp.style.height = 'auto'; inp.style.height = inp.scrollHeight + 4 + 'px'; };
+      inp.addEventListener('input', () => { grow(); changed(); });
       // Enter checks the answer (a new line is never needed).
       inp.addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); if (opts.onEnter) opts.onEnter(); } });
-      ctl = { get: () => inp.value.replace(/\s*\n\s*/g, ' '), set: (v) => { inp.value = v == null ? '' : v; }, disable: (d) => { inp.disabled = d; }, focus: () => inp.focus() };
+      ctl = { get: () => inp.value.replace(/\s*\n\s*/g, ' '), set: (v) => { inp.value = v == null ? '' : v; grow(); }, disable: (d) => { inp.disabled = d; }, focus: () => inp.focus() };
     } else if (q.type === 'order') {
       // Tap numbers in the order asked; tap a placed number to take it back.
       let placed = [], disabled = false;

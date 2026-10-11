@@ -99,6 +99,7 @@
         state: G.store.getDraft(draftKey) || {},
         remind: sc.reteach,
         onChange: (st) => G.store.setDraft(draftKey, st),
+        focusAfter: () => nextBtn,
         onSolved: () => { checkSolved = true; drawNext(); }
       });
     }

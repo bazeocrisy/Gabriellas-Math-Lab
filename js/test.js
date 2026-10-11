@@ -42,8 +42,19 @@
     let d = G.store.getDraft(draftName(lessonId));
     const okDraft = d && G.engine.validSet(lessonId, d.set, 10) && Array.isArray(d.answers) && d.answers.length === 10 &&
       Number.isInteger(d.i) && d.i >= 0 && d.i < 10 && (!d.submitted || (d.result && Number.isInteger(d.result.correct) && d.result.skills && Array.isArray(d.result.missedSkills)));
+    const lost = !okDraft && d && d.started && !d.submitted; // an unfinished test the updated app cannot rebuild
     if (!okDraft) { if (d) G.store.clearDraft(draftName(lessonId)); d = null; }
     if (d && !d.id) { d.id = newId(); G.store.setDraft(draftName(lessonId), d); } // a test saved before attempts had ids
+    // An app update can reword a choice, so an answer saved before it may match no choice now. Ask for that answer
+    // again instead of scoring it as wrong.
+    if (d && d.started && !d.submitted) {
+      const reset = [];
+      d.set.forEach((x, k) => {
+        const q = G.engine.make(lessonId, x.id, x.seed), a = d.answers[k];
+        if (q.type === 'mc' && a != null && a !== '' && !q.choices.some((c) => c.value === a)) { d.answers[k] = null; reset.push(k); }
+      });
+      if (reset.length) { d.reset = [...new Set([...(Array.isArray(d.reset) ? d.reset : []), ...reset])]; G.store.setDraft(draftName(lessonId), d); }
+    }
     let qs = d ? d.set.map((x) => G.engine.make(lessonId, x.id, x.seed)) : null;
     const top = () => { window.scrollTo(0, 0); const h = app.querySelector('h1'); if (h) h.focus(); };
     // Another tab may have submitted, restarted or replaced this test since this page was drawn.
@@ -57,6 +68,10 @@
       }
       G.store.setDraft(draftName(lessonId), d);
       return true;
+    };
+    const resetNote = () => {
+      const ks = (Array.isArray(d && d.reset) ? d.reset : []).filter((k) => Number.isInteger(k) && k >= 0 && k < 10 && !G.engine.isAnswered(qs[k], d.answers[k]));
+      return ks.length ? `<div class="fb fb-info reset-note"><p>The app was updated and the wording of some choices changed. Please answer ${ks.length === 1 ? 'question' : 'questions'} ${listText(ks.map((k) => String(k + 1)))} again.</p></div>` : '';
     };
     const assistNote = () => {
       const a = labels(d && d.assist);
@@ -74,6 +89,7 @@
         <div class="crumbs"><a href="#/">← Lesson menu</a></div>
         <p class="mode-label">Lesson ${G.unit.find(lessonId).n} · Test</p>
         <h1 tabindex="-1">Lesson ${G.unit.find(lessonId).n} Test</h1>
+        ${lost ? '<div class="fb fb-info"><p>The app was updated, and your unfinished test could not be continued. Please start a new test. Your earlier results are still saved.</p></div>' : ''}
         <div class="card">
           <ul class="facts">
             <li>There are <b>10 questions</b>.</li>
@@ -110,7 +126,7 @@
         <nav class="qnav" aria-label="Test questions">${qs.map((_, k) =>
           `<button type="button" class="qnav-btn${k === d.i ? ' is-current' : ''}${answered(k) ? ' is-done' : ''}" data-k="${k}" aria-label="Question ${k + 1}${answered(k) ? ', answered' : ', not answered'}"${k === d.i ? ' aria-current="step"' : ''}>${k + 1}</button>`).join('')}</nav>
         <h1 tabindex="-1" class="q-heading">Question ${d.i + 1}</h1>
-        ${assistNote()}
+        ${resetNote()}${assistNote()}
         <div class="test-q"></div>
         <p class="fb fb-info test-note" role="status" hidden></p>
         <nav class="pager" aria-label="Move between questions">
@@ -154,7 +170,7 @@
         <div class="crumbs"><a href="#/">← Lesson menu</a></div>
         <p class="mode-label">Lesson ${G.unit.find(lessonId).n} · Test</p>
         <h1 tabindex="-1">Ready to submit?</h1>
-        ${assistNote()}
+        ${resetNote()}${assistNote()}
         <p>You answered <b>${10 - missing.length} of 10</b> questions.${missing.length ? '' : ' You can still go back and check your answers, or submit now.'}</p>
         ${missing.length ? `<div class="fb fb-info"><p>Not answered yet: ${missing.map((k) => `<button type="button" class="btn btn-link" data-k="${k}">Question ${k + 1}</button>`).join(' ')}</p><p>A question with no answer counts as incorrect.</p></div>` : ''}
         <div class="done-actions">
@@ -232,7 +248,11 @@
           <button type="button" class="btn btn-big" data-act="new">Take a new test</button>
           <a class="btn btn-big" href="#/">Lesson menu</a>
         </div>`;
-      app.querySelector('[data-act="new"]').addEventListener('click', () => { G.store.clearDraft(draftName(lessonId)); d = null; intro(); top(); });
+      app.querySelector('[data-act="new"]').addEventListener('click', () => {
+        const s = G.store.getDraft(draftName(lessonId));
+        if (s && s.id !== d.id && s.started && !s.submitted) { reload(); return; } // another tab already started a new test
+        G.store.clearDraft(draftName(lessonId)); d = null; intro(); top();
+      });
       document.title = `Test results · Gabriella's Math Lab`;
     }
   }
@@ -241,7 +261,10 @@
   if (typeof window !== 'undefined' && window.addEventListener) {
     window.addEventListener('storage', (e) => {
       const m = (location.hash || '').match(/^#\/(d\d\d)\/test$/);
-      if (m && e.key === 'gml:v1:draft:' + draftName(m[1]) && G.unit.available(m[1])) view(document.getElementById('app'), m[1]);
+      if (!m || e.key !== 'gml:v1:draft:' + draftName(m[1]) || !G.unit.available(m[1])) return;
+      const app = document.getElementById('app');
+      view(app, m[1]);
+      const h = app.querySelector('h1'); if (h) h.focus({ preventScroll: true });
     });
   }
 

@@ -575,7 +575,7 @@ try {
     check(`teach: ${label} screen draws its picture and explains why`, r.n > 0 && r.next && (r.why || sid === 'models' || sid === 'word'), r);
   }
   // The new guided checks work like the others: a wrong answer coaches, a right answer unlocks Next.
-  for (const [id, sid] of [['d01', 'check-line'], ['d01', 'check-compare'], ['d01', 'check-chart'], ['d02', 'check-expanded'], ['d03', 'check-missing'], ['d09', 'check-hundredths']]) {
+  for (const [id, sid] of [['d01', 'check-line'], ['d01', 'check-compare'], ['d01', 'check-chart-typed'], ['d02', 'check-expanded-typed'], ['d03', 'check-missing'], ['d09', 'check-hundredths']]) {
     await b.load(URL + `index.html#/${id}/teach/${await screenOf(id, sid)}`); await b.reload();
     r = await js(`${H} const sc = GML.lessonContent['${id}'].screens.find((s) => s.id === '${sid}'); const q = E.make('${id}', sc.check.t, 1, sc.check.params);
       const host = document.querySelector('.check-host'); const nb = document.querySelector('[data-act=next]');
@@ -604,8 +604,43 @@ try {
   await b.load(URL + 'index.html#/d01/teach/3'); await b.reload();
   r = await js(`${H} const sc = GML.lessonContent.d01.screens[2]; const q = E.make('d01', sc.check.t, 1, sc.check.params); const host = document.querySelector('.check-host');
     const c = host.querySelector('[data-act=check]'); c.focus(); fill(host, q, right(q)); c.click();
+    const a = document.activeElement; return { body: a === document.body, next: a.dataset.act === 'next' };`);
+  check('a11y: after a correct guided check in Teach, keyboard focus moves to Next (not lost)', !r.body && r.next, r);
+  await b.load(URL + 'index.html#/d01/practice');
+  r = await js(`${H} const q = practiceQ(); const host = document.querySelector('.coach-host'); const c = host.querySelector('[data-act=check]'); c.focus(); fill(host, q, right(q)); c.click();
     const a = document.activeElement; return { body: a === document.body, inFeedback: !!a.closest('.feedback') };`);
-  check('a11y: after a correct guided check, keyboard focus moves to the feedback (not lost)', !r.body && r.inFeedback, r);
+  check('a11y: after a correct Practice answer, keyboard focus moves to the feedback (not lost)', !r.body && r.inFeedback, r);
+
+  // ── Review regressions (upgrade from the previous version, second tab, small screens) ──
+  await js(`localStorage.clear();`);
+  // An unfinished test saved by the previous version with a choice whose wording changed: asked again, not scored wrong.
+  await js(`${H} const E2 = GML.engine; let seed = 1, q; for (;; seed++) { q = E2.make('d03', 'Y1', seed); if (q) break; }
+    const set = E2.buildSet('d03', { plan: E2.banks.d03.plan, seed: 5 }).filter((x) => x.id !== 'Y1').slice(0, 9); set.unshift({ id: 'Y1', seed, sig: q.sig });
+    localStorage.setItem('gml:v1:draft:test-d03', JSON.stringify({ set, answers: ['Yes. An old wording of a choice.', ...set.slice(1).map(() => null)], i: 0, started: true, submitted: false, review: false }));`);
+  await b.load(URL + 'index.html#/d03/test');
+  r = await js(`return { note: (document.querySelector('.reset-note') || {}).innerText || '', a0: JSON.parse(localStorage.getItem('gml:v1:draft:test-d03')).answers[0] };`);
+  check('upgrade: an old answer that matches no choice is asked for again (not scored as wrong)', /question 1 again/.test(r.note) && r.a0 === null, r);
+  // An unfinished test the updated app cannot rebuild says so.
+  await js(`localStorage.setItem('gml:v1:draft:test-d03', JSON.stringify({ set: [{ id: 'E1', seed: 1, sig: 'E1:old' }], answers: [null], i: 0, started: true, submitted: false, review: false }));`);
+  await b.load(URL + 'index.html#/'); await b.load(URL + 'index.html#/d03/test');
+  check('upgrade: an unfinished test that cannot be continued explains why', /could not be continued/.test(await js(`return document.getElementById('app').innerText;`)));
+  // Old saved state for a guided check whose question type changed does not show on the new check.
+  await js(`localStorage.setItem('gml:v1:draft:teach-d01-check-chart', JSON.stringify({ solved: true, fb: { kind: 'correct' }, resp: 'hundredths' }));`);
+  await b.load(URL + 'index.html#/d01/teach/' + await screenOf('d01', 'check-chart-typed'));
+  check('upgrade: the new typed-chart check starts fresh (old saved answer not shown)', await js(`return !document.querySelector('.check-host .fb-right') && !document.querySelector('.check-host input:disabled');`));
+  // A practice session finished in two tabs is counted once.
+  await js(`${H} const set = E.buildSet('d02', { plan: E.banks.d02.plan, seed: 3 });
+    localStorage.setItem('gml:v1:draft:practice-d02', JSON.stringify({ id: 'dup1', set, i: 9, states: set.map(() => ({ solved: true, firstTry: true, hints: 0 })), finished: true, recorded: false }));
+    localStorage.setItem('gml:v1:progress', JSON.stringify({ lessons: { d02: { teach: { screen: 0, furthest: 0, done: false }, practice: { sessions: 1, skills: {}, recentSigs: [], lastId: 'dup1' }, tests: [], lastTestSigs: [] } } }));`);
+  await b.load(URL + 'index.html#/d02/practice');
+  r = await progOf('d02');
+  check('practice: a session already counted in another tab is not counted again', r.practice.sessions === 1, r.practice);
+  // The expanded-form box grows so a long answer stays visible on a small screen.
+  await b.viewport(320, 568);
+  await b.load(URL + 'index.html#/d02/teach/' + await screenOf('d02', 'check-expanded-typed')); await b.reload();
+  r = await js(`const i = document.querySelector('.exp-input'); i.value = '8 × 10 + 9 × 1 + 4 × 0.1 + 6 × 0.01 + 2 × 0.001'; i.dispatchEvent(new Event('input', { bubbles: true })); return { sh: i.scrollHeight, ch: i.clientHeight, sw: i.scrollWidth, cw: i.clientWidth };`);
+  check('expanded form: a long answer is fully visible at 320px (the box grows)', r.sh <= r.ch + 2 && r.sw <= r.cw + 1, r);
+  await b.viewport(390, 844);
   await b.load(URL + 'index.html#/d01/practice');
   r = await js(`const h = document.querySelector('[data-act=hint]'); h.focus(); h.click(); h.click(); h.click();
     const a = document.activeElement; return { body: a === document.body, hint: a.classList.contains('hint'), disabled: h.disabled };`);
@@ -620,7 +655,7 @@ try {
   await js(`localStorage.clear();`);
   for (const [w, h] of [[320, 568], [1366, 768]]) {
     await b.viewport(w, h);
-    await b.load(URL + 'index.html#/d02/teach/' + await screenOf('d02', 'check-expanded')); await b.reload();
+    await b.load(URL + 'index.html#/d02/teach/' + await screenOf('d02', 'check-expanded-typed')); await b.reload();
     r = await js(`const i = document.querySelector('.exp-input'); i.value = '80 + 6 + 0.7 + 0.02 + 0.003'; i.dispatchEvent(new Event('input', { bubbles: true })); return { sw: i.scrollWidth, cw: i.clientWidth };`);
     check(`expanded form: a five-part answer fits in the box at ${w}px`, r.sw <= r.cw + 1, r);
   }

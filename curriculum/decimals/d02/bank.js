@@ -531,7 +531,7 @@
       ],
       why: `The 0 is in the ${zeroAt} place. Without it, the ${b} would slide left into the ${zeroAt} place and the number would change (${without} is not ${n}).`,
       diagnose(resp) {
-        if (/same as/.test(resp)) return `Without the zero, the ${b} moves one place to the left and is worth 10 times as much. ${without} and ${n} are different numbers.`;
+        if (/same number as|same as/.test(resp)) return `Without the zero, the ${b} moves one place to the left and is worth 10 times as much. ${without} and ${n} are different numbers.`;
         if (/ten times/.test(resp)) return 'This zero is between the decimal point and a digit. It does not multiply the number; it keeps the digits in their places.';
         return `The zero itself is worth nothing, but the ${b} still has a value. The zero just keeps it in its place.`;
       }

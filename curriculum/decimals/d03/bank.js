@@ -407,7 +407,7 @@
     const right = claimTrue ? `Yes. The tenths are the same, and ${D.parse(x).frac[1]} hundredths is more than ${D.parse(y).frac[1]} hundredths.`
       : `No. Lined up, ${pad3(x)} has more hundredths than ${pad3(y)}, so ${x} is greater.`;
     const wrongs = claimTrue
-      ? [`No. ${y} has more digits after the decimal point, so ${y} is greater.`, `No. ${Number(ys)} is greater than ${Number(xs)} as whole numbers, so ${y} is greater.`, `Yes. ${x} has fewer digits after the decimal point, so ${x} is greater than ${y}.`]
+      ? [`No. ${y} has more digits after the decimal point, so ${y} is greater.`, `No. ${Number(ys)} is greater than ${Number(xs)} as whole numbers, so ${y} is greater.`, `Yes. ${x} is greater, because a decimal with fewer digits is always greater.`]
       : [`Yes. ${Number(ys)} is greater than ${Number(xs)} as whole numbers, so ${y} is greater.`, `Yes. ${y} has more digits after the decimal point, so ${y} is greater.`, `No. ${x} is greater because a decimal with fewer digits is always greater.`];
     return {
       type: 'mc', sig: x + y + (claimTrue ? 't' : 'f'),

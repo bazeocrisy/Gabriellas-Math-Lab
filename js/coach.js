@@ -60,9 +60,13 @@
       ctl.disable(true);
       $('.coach-actions').hidden = true;
       if (opts.onSolved) opts.onSolved(st);
-      // The button that was pressed is now hidden. Put keyboard focus on the feedback (Tab then reaches Next).
-      const fb = moveFocus && $('.feedback .fb');
-      if (fb) { fb.tabIndex = -1; fb.focus({ preventScroll: true }); }
+      // The button that was pressed is now hidden. Put keyboard focus on what comes next: the page's Next button when
+      // the page says so (Teach), otherwise the feedback (Practice; Tab then reaches "Next question").
+      if (!moveFocus) return;
+      const next = opts.focusAfter && opts.focusAfter();
+      const fb = $('.feedback .fb');
+      if (next && !next.disabled) next.focus({ preventScroll: true });
+      else if (fb) { fb.tabIndex = -1; fb.focus({ preventScroll: true }); }
     }
 
     function doCheck() {

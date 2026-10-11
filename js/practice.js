@@ -74,6 +74,8 @@
       if (!d.recorded && stored && d.id && stored.id === d.id && stored.recorded) d.recorded = true;
       if (!d.recorded) {
         G.store.update(lessonId, (p) => {
+          if (d.id && p.practice.lastId === d.id) return; // this session was already counted (another tab)
+          p.practice.lastId = d.id;
           p.practice.sessions++;
           p.practice.lastDate = new Date().toISOString();
           Object.keys(bySkill).forEach((sk) => {

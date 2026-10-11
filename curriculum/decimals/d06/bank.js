@@ -268,6 +268,7 @@
       ],
       why: `${a} + ${b} is about ${roundWhole(a)} + ${roundWhole(b)} = ${est}. The exact sum is ${right}. ${claimRight ? 'So the answer is reasonable.' : `So ${said} is not reasonable; it probably came from not lining up the decimal points.`}`,
       diagnose(resp) {
+        if (/same digits/.test(resp)) return 'Using the same digits does not make a sum right: digits in the wrong places make a very different number. Compare the answer with an estimate.';
         if (/decimal places|digits/.test(resp)) return 'The number of digits does not tell you if a sum is reasonable. Compare the answer with an estimate.';
         return `Round both numbers to whole numbers, add them, and compare that estimate with ${said}.`;
       }

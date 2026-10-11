@@ -345,3 +345,17 @@ test('D-27, D-28: focus ring and diagram marks have at least 3:1 contrast', () =
   for (const color of area.match(/stroke="(#[0-9a-f]{6})"/gi).map((s) => s.slice(8, 15))) assert.ok(contrast(color, '#ffffff') >= 3, `area hatch ${color}`);
   assert.match(G.models.grid(30, { cross: 5 }), /class="m-x-halo"/);
 });
+
+test('review regressions: d02 Z2 feedback, no true-fact-wrong-reason choices, ES2 feedback', () => {
+  for (let seed = 1; seed <= 500; seed++) {
+    const z = engine.make('d02', 'Z2', seed);
+    const same = z.choices.find((c) => /same number as/.test(c.value));
+    assert.match(engine.check(z, same.value).message, /different numbers/, `Z2/${seed}`);
+    for (const [id, t] of [['d01', 'C4'], ['d03', 'Y1'], ['d10', 'RC3']]) {
+      for (const c of engine.make(id, t, seed).choices) assert.doesNotMatch(c.value, /fewer digits, so it is greater|because it has fewer digits after/, `${id}/${t}/${seed}: ${c.value}`);
+    }
+    const e = engine.make('d06', 'ES2', seed);
+    const digitsChoice = e.choices.find((c) => /same digits/.test(c.value));
+    if (digitsChoice) assert.match(engine.check(e, digitsChoice.value).message, /same digits/, `ES2/${seed}`);
+  }
+});

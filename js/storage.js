@@ -69,7 +69,7 @@
     const lastTestSigs = strings(l.lastTestSigs);
     return {
       teach: { screen: num(t.screen, 0), furthest: num(t.furthest, 0), done: t.done === true },
-      practice: { sessions: num(p.sessions, 0), skills, recentSigs: strings(p.recentSigs), lastDate: typeof p.lastDate === 'string' ? p.lastDate : undefined },
+      practice: { sessions: num(p.sessions, 0), skills, recentSigs: strings(p.recentSigs), lastDate: typeof p.lastDate === 'string' ? p.lastDate : undefined, lastId: typeof p.lastId === 'string' ? p.lastId : undefined },
       tests,
       testsTaken: Math.max(Number.isInteger(l.testsTaken) ? l.testsTaken : 0, tests.length),
       masteredOn: typeof l.masteredOn === 'string' ? l.masteredOn : firstMastered ? (firstMastered.date || 'yes') : undefined,
