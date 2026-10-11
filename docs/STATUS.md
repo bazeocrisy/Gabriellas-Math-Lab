@@ -2,7 +2,11 @@
 
 Updated: 2026-10-11 · Live (Lessons 1–10): https://bazeocrisy.github.io/Gabriellas-Math-Lab/ · Full audit: [audits/decimals-full-audit](audits/decimals-full-audit/AUDIT-SUMMARY.md) · Lesson 1 audit: [LESSON-1-AUDIT.md](LESSON-1-AUDIT.md)
 
-## Branch `claude/decimals-audit-corrections`: audit corrections, built and tested, NOT merged or deployed (awaiting approval)
+## Audit corrections: live
+- **Deployed and verified live (2026-10-11).**
+  - PR #11 merged into `main` (merge commit `2686431`); the GitHub Pages build of `2686431` succeeded.
+  - All 36 app files served live match the merge commit.
+  - The full browser suite ran against the live URL with **658/658 pass** (simulated devices, 320–1920 px).
 - **What it fixes:** all 34 findings of the full 10-lesson audit of `79abadc` (6 major, 22 minor, 6 cosmetic). Details are in [CORRECTION-RESULTS.md](audits/decimals-full-audit/CORRECTION-RESULTS.md).
 - **Owner decisions applied:**
   - Number lines are taught in Lesson 1.
@@ -41,7 +45,6 @@ Updated: 2026-10-11 · Live (Lessons 1–10): https://bazeocrisy.github.io/Gabri
   - Mathematics and instruction: 0 critical or major findings; 0 mismatches in about 61,000 recomputed solutions.
   - Functional QA and accessibility: 1 major upgrade issue and 6 minor issues.
   - All findings were fixed and covered by tests in `079c67a`. There was no second review round.
-- [ ] Merge and deploy: **waiting for owner approval**; re-run the live suite after deploying.
 
 ## Lessons 9–10: live
 - **Deployed and verified live (2026-10-10).**
