@@ -712,6 +712,97 @@ try {
   r = await js(`const a = document.querySelector('.guide-link a'); return a ? a.getAttribute('href') : null;`);
   check('guides: Lesson 6 Notes link to the matching guide (Section 4, Adding)', r === 'study-guides/pdf/decimals/Decimals-Section-4-Adding-Decimals.pdf', r);
 
+  // ── NumberNova: Practice Center ──
+  const pcDraft = () => js(`return JSON.parse(localStorage.getItem('gml:v1:draft:pc-session') || 'null');`);
+  const pcStart = async (mode, n, op) => {
+    await b.load(URL + 'index.html#/practice'); await b.reload();
+    await js(`document.getElementById('pc-mode-${mode}').click(); document.querySelector('.pc-form button[type=submit]').click();`);
+    await js(`${op ? `document.getElementById('pc-op-${op}').click();` : ''} document.getElementById('pc-n-${n}').click(); document.querySelector('.pc-form button[type=submit]').click();`);
+    await js(`document.querySelector('[data-act=start]').click(); const y = document.querySelector('.pc-confirm [data-act=really]'); if (y && !y.closest('[hidden]')) y.click();`);
+    await b.wait(150);
+  };
+  await js(`localStorage.clear();`);
+  await b.load(URL + 'index.html#/practice');
+  r = await js(`const n = document.querySelectorAll('[name=mode]').length; document.querySelector('.pc-form button[type=submit]').click();
+    return { n, msg: document.querySelector('.pc-msg').textContent, h: location.hash, labels: [...document.querySelectorAll('.pc-card .pc-name')].map((x) => x.innerText) };`);
+  check('practice center: seven skills to choose from, and nothing starts until a choice is made', r.n === 7 && /Choose a skill first/.test(r.msg) && r.h === '#/practice' &&
+    JSON.stringify(r.labels) === JSON.stringify(['Adding Decimals', 'Subtracting Decimals', 'Multiplying Decimals', 'Dividing Decimals', 'Mixed Operations', 'Challenge Mode', 'Practice My Misses']), r);
+  await js(`document.getElementById('pc-mode-add').click(); document.querySelector('.pc-form button[type=submit]').click();`);
+  r = await js(`const lens = [...document.querySelectorAll('[name=n]')].map((x) => x.value); document.querySelector('.pc-form button[type=submit]').click();
+    return { lens, msg: document.querySelector('.pc-msg').textContent, draft: localStorage.getItem('gml:v1:draft:pc-session') };`);
+  check('practice center: step 2 offers 10, 25 and 50 questions and needs a choice; no session yet', r.lens.join() === '10,25,50' && /10, 25 or 50/.test(r.msg) && r.draft === null, r);
+  const combos = [];
+  for (const mode of ['add', 'sub', 'mul', 'div', 'mix', 'misses']) for (const n of [10, 25, 50]) combos.push([mode, n]);
+  for (const op of ['add', 'sub', 'mul', 'div', 'mix']) for (const n of [10, 25, 50]) combos.push(['challenge', n, op]);
+  let allOk = true; const pcBad = [];
+  for (const [mode, n, op] of combos) {
+    await pcStart(mode, n, op);
+    const d = await pcDraft();
+    const ui = await js(`return { h: location.hash, label: (document.querySelector('.mode-label') || {}).innerText || '' };`);
+    const ok = d && d.set.length === n && d.mode === mode && ui.h === '#/practice/session' && new RegExp(`Question 1 of ${n}`).test(ui.label) && (!op || d.op === op);
+    if (!ok) { allOk = false; pcBad.push({ mode, n, op, d: d && { n: d.n, len: d.set.length, mode: d.mode }, ui }); }
+  }
+  check(`practice center: all ${combos.length} mode and length choices start the right session (seven modes, 10/25/50, challenge per operation)`, allOk, pcBad);
+  // With no history, Practice My Misses explains that and gives a general review.
+  await js(`localStorage.clear();`);
+  await b.load(URL + 'index.html#/practice');
+  await js(`document.getElementById('pc-mode-misses').click(); document.querySelector('.pc-form button[type=submit]').click();`);
+  r = await js(`return document.querySelector('.pc-misses').innerText;`);
+  check('practice center: Practice My Misses with no history says so and offers a general review', /No misses recorded yet/.test(r) && /general review/.test(r), r);
+  // A session: hints, a wrong answer, pause and resume.
+  await pcStart('sub', 10);
+  r = await js(`${H} const h = document.querySelector('[data-act=hint]'); h.click(); h.click(); h.click();
+    const d = JSON.parse(localStorage.getItem('gml:v1:draft:pc-session')); const x = d.set[0]; const q = E.make('pc', x.id, x.seed);
+    const host = document.querySelector('.coach-host'); fill(host, q, wrongN(q, 0)); host.querySelector('[data-act=check]').click();
+    const gotWrong = !!host.querySelector('.fb-wrong'); fill(host, q, right(q)); host.querySelector('[data-act=check]').click();
+    return { hints: document.querySelectorAll('.hint').length, wrong: gotWrong, right: !!host.querySelector('.fb-right'), next: !!host.querySelector('.coach-next button') };`);
+  check('practice center: three hints, feedback for a wrong answer, a right answer unlocks Next', r.hints === 3 && r.wrong && r.right && r.next, r);
+  await js(`document.querySelector('.coach-next button').click();`);
+  await b.load(URL + 'index.html#/');
+  r = await js(`return (document.querySelector('.pc-paused') || {}).innerText || '';`);
+  check('practice center: a paused session shows on the home page', /question 2 of 10/.test(r) && /Resume/.test(r), r);
+  await b.reload();
+  await js(`document.querySelector('.pc-paused a').click();`); await b.wait(150);
+  r = await js(`return { label: document.querySelector('.mode-label').innerText, first: JSON.parse(localStorage.getItem('gml:v1:draft:pc-session')).states[0] };`);
+  check('practice center: resume returns to the same place with the earlier answer kept', /Question 2 of 10/.test(r.label) && r.first.solved === true && r.first.attempts === 1, r);
+  // Start New Practice asks first, then clears only this session.
+  r = await js(`document.querySelector('.pc-tools [data-act=new]').click(); const asked = !document.querySelector('.pc-new').hidden;
+    document.querySelector('.pc-new [data-act=cancel]').click(); const kept = !!localStorage.getItem('gml:v1:draft:pc-session');
+    return { asked, kept };`);
+  check('practice center: Start New Practice asks for confirmation (No keeps the session)', r.asked && r.kept, r);
+  await js(`document.querySelector('.pc-tools [data-act=new]').click(); document.querySelector('.pc-new [data-act=really]').click();`); await b.wait(100);
+  check('practice center: confirming Start New Practice clears the session and returns to the wizard', (await pcDraft()) === null && /#\/practice$/.test(await js(`return location.hash;`)));
+  // A full 10-question session through to the results, with one solution shown and one hint.
+  await pcStart('mix', 10);
+  for (let k = 0; k < 10; k++) {
+    await js(`${H} const d = JSON.parse(localStorage.getItem('gml:v1:draft:pc-session')); const x = d.set[d.i]; const q = E.make('pc', x.id, x.seed); const host = document.querySelector('.coach-host');
+      if (d.i === 0) { for (let j = 0; j < 3; j++) { fill(host, q, wrongN(q, j)); host.querySelector('[data-act=check]').click(); } host.querySelector('[data-act=solution]').click(); }
+      else { if (d.i === 1) document.querySelector('[data-act=hint]').click(); fill(host, q, right(q)); host.querySelector('[data-act=check]').click(); }
+      document.querySelector('.coach-next button').click();`);
+    await b.wait(30);
+  }
+  await b.wait(150);
+  r = await js(`return { h: location.hash, t: document.getElementById('app').innerText, hist: JSON.parse(localStorage.getItem('gml:v1:draft:pc-history')),
+    actions: [...document.querySelectorAll('.done-actions .btn')].map((x) => x.innerText.trim()), lesson: (document.querySelector('.done-actions .btn-teach') || {}).getAttribute && document.querySelector('.done-actions .btn-teach').getAttribute('href') };`);
+  check('practice center: results report completed, correct, no-hint, with-help, incorrect, hints and skills to review', r.h === '#/practice/results' && /You finished 10 of 10/.test(r.t) && /9\s*correct/.test(r.t) &&
+    /8\s*correct on the first try with no hints/.test(r.t) && /1\s*correct with hints/.test(r.t) && /1\s*incorrect/.test(r.t) && /1\s*hints used/.test(r.t) && /Skills needing review/.test(r.t) && /By operation/.test(r.t), r.t.slice(0, 600));
+  check('practice center: results offer Practice Again, Practice My Misses, the related lesson and the Practice Center', ['Practice Again', 'Practice My Misses', 'Back to Practice Center'].every((a) => r.actions.includes(a)) && r.actions.some((a) => /Review Related Lesson/.test(a)) && /^#\/d0[6-9]\/teach\/\d+$/.test(r.lesson), r);
+  check('practice center: the finished session is saved to the practice history once', r.hist.sessions.length === 1 && r.hist.sessions[0].n === 10 && r.hist.sessions[0].missed === 1, r.hist);
+  await b.reload();
+  check('practice center: refreshing the results does not record the session twice', (await js(`return JSON.parse(localStorage.getItem('gml:v1:draft:pc-history')).sessions.length;`)) === 1);
+  await js(`document.querySelector('[data-act=misses]').click();`); await b.wait(100);
+  r = await js(`return (document.querySelector('.pc-misses') || {}).innerText || '';`);
+  check('practice center: after a miss, Practice My Misses lists the skill to review', /Skills to review/.test(r) && /Practice Center/.test(r), r);
+  // Small screens: no sideways scrolling and big tap targets on the new pages.
+  await b.viewport(320, 640);
+  for (const [route, label] of [['#/', 'home (320px)'], ['#/learn', 'learn (320px)'], ['#/guides', 'study guides (320px)'], ['#/practice', 'practice wizard (320px)'], ['#/practice/results', 'practice results (320px)']]) {
+    await b.load(URL + 'index.html' + route);
+    await noOverflow(label); await bigTargets(label);
+  }
+  await pcStart('div', 10);
+  await noOverflow('practice question with a division layout (320px)'); await bigTargets('practice question (320px)');
+  await b.viewport(390, 844);
+
   // ── Unknown routes and reset ──
   await b.load(URL + 'index.html#/d11/teach/1');
   check('unready lesson route falls back to home', /Ready to make your next math discovery/.test(await js(`return document.querySelector('h1').innerText;`)));
