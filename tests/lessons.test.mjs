@@ -163,6 +163,30 @@ VERIFY.d08 = {
   D2: (q) => { const [a, b] = numbersIn(q); const rw = (x) => Math.floor((D.toThousandths(x) + 500) / 1000); assert.equal(q.answer, String(rw(a) * rw(b))); },
   D3: (q) => { const [a, b] = numbersIn(q); assert.equal(Number(q.answer), D.parse(a).places + D.parse(b).places); }
 };
+// Lesson 9: quotients recomputed (dividend ÷ whole number) and checked by multiplying back.
+const quot = (a, n) => { const k = D.toThousandths(a); assert.equal(k % Number(n), 0, `${a} ÷ ${n} exact`); return k / Number(n); };
+const divOk = (q, ai, ni) => { const xs = numbersIn(q); assert.equal(D.toThousandths(q.answer), quot(xs[ai], xs[ni])); };
+VERIFY.d09 = {
+  P1: (q) => divOk(q, 0, 1), P2: (q) => divOk(q, 0, 1), W1: (q) => divOk(q, 0, 1), W2: (q) => divOk(q, 0, 1), K2: (q) => divOk(q, 0, 1), K1: (q) => divOk(q, 1, 0),
+  P3: (q) => { const t = strip(q.prompt); const zeros = (t.match(/by (10+)/)[1].length - 1); const dir = /multiply/.test(t) ? 'left' : 'right'; assert.equal(q.answer, `Every digit moves ${['', 'one', 'two', 'three'][zeros]} place${zeros === 1 ? '' : 's'} to the ${dir}.`); },
+  M1: (q) => { divOk(q, 0, 1); assert.equal((q.visual.match(/class="m-on"/g) || []).length * 100, D.toThousandths(numbersIn(q)[0])); },
+  M2: (q) => { divOk(q, 0, 1); assert.equal((q.visual.match(/class="m-on"/g) || []).length * 10, D.toThousandths(numbersIn(q)[0])); },
+  W3: (q) => { const [dg, n, whole, a] = numbersIn(q); assert.equal(Number(dg) / Number(n), Number(whole)); assert.equal(D.toThousandths(q.answer), quot(a, n)); },
+  C1: (q) => { const [a, n, qq] = numbersIn(q); assert.equal(D.toThousandths(qq), quot(a, n)); assert.equal(q.answer, `${qq} × ${n} = ${a}`); },
+  C2: (q) => { const [a, n, said] = numbersIn(q); assert.equal(q.answer.startsWith('Yes'), D.toThousandths(said) * Number(n) === D.toThousandths(a)); }
+};
+// Lesson 10: reused questions are checked by their own lesson's verifier; multi-step ones are recomputed here.
+VERIFY.d10 = {
+  RP1: (q) => VERIFY.d02.V2(q), RP2: (q) => VERIFY.d02.F3(q), RP3: (q) => VERIFY.d02.F4(q), RP4: (q) => { const k = D.toThousandths(q.answer); assert.equal((q.visual.match(/class="m-on"/g) || []).length, Math.floor(k / 10) + 2 * (k % 10)); },
+  RC1: (q) => VERIFY.d03.L1(q), RC2: (q) => VERIFY.d04.O1(q), RC3: (q) => VERIFY.d03.Y1(q),
+  RR1: (q) => VERIFY.d05.T1(q), RR2: (q) => VERIFY.d05.H1(q), RR3: (q) => VERIFY.d05.K1(q), RR4: (q) => VERIFY.d05.K3(q), RC4: (q) => VERIFY.d04.O3(q),
+  RA1: (q) => VERIFY.d06.MX1(q), RA2: (q) => VERIFY.d07.SZ2(q), RA3: (q) => VERIFY.d07.SW1(q),
+  X1: (q) => { const [a, b] = numbersIn(q); const k = sumOf([a, b]); const rm = k % 100; assert.equal(D.toThousandths(q.answer), rm * 2 >= 100 ? k - rm + 100 : k - rm); assert.equal(D.parse(q.answer).places, 1); },
+  X2: (q) => { const [a, b, c] = numbersIn(q); const v = sumOf([a, b]) - D.toThousandths(c); assert.equal(q.answer, v < 0 ? '<' : v > 0 ? '>' : '='); },
+  X3: (q) => { const [paid, a, b] = numbersIn(q); assert.equal(D.toThousandths(q.answer), Number(paid) * 1000 - sumOf([a, b])); assert.ok(D.toThousandths(q.answer) > 0); },
+  X4: (q) => { const [a, b] = numbersIn(q); const d = f2(D.toThousandths(a) - D.toThousandths(b)); assert.equal(q.answer, /tenths place/.test(strip(q.prompt)) ? d[d.indexOf('.') + 1] : d[d.indexOf('.') + 2]); }
+};
+function f2(k) { return D.fromThousandths(k, 2); }
 function decs(q) { return strip(q.prompt).match(/\d+\.\d+/g); }
 function pad(x) { const v = D.parse(x); return v.whole.padStart(2, '0').slice(-1) + '.' + v.frac.padEnd(3, '0'); }
 function symbolOk(q) { const [x, y] = decs(q); const c = D.cmp(x, y); assert.equal(q.answer, c < 0 ? '<' : c > 0 ? '>' : '='); }
@@ -202,7 +226,7 @@ for (const id of LESSONS.filter((x) => x !== 'd01')) {
     }
     for (const sk of Object.keys(bank.skills)) assert.ok(L.screens.some((s) => s.id === L.skillScreen[sk]), 'skill screen ' + sk);
     for (const s of L.screens.filter((x) => x.steps)) assert.ok(s.why || s.kind, `${s.id} explains why`);
-    assert.ok(L.notes.length > 500 && /<h2>Vocabulary<\/h2>/.test(L.notes));
+    assert.ok(L.notes.length > 500 && /<h2>(Vocabulary|Review sheet)<\/h2>/.test(L.notes));
     assert.equal(L.screens[L.screens.length - 1].kind, 'done');
   });
   test(`${id}: question sets are balanced, fresh and skip Teach examples`, () => {
@@ -305,4 +329,57 @@ test('QA review regressions (Lessons 5–8)', () => {
   }
   // Stacked charts: no decimal point after a whole number when zeros are not written.
   assert.doesNotMatch(G.models.stack(['3.47', '347'], { pad: false }), /<td>7<\/td><td class="pv-point" aria-label="decimal point">\.<\/td><\/tr>/);
+});
+
+test('curriculum review regressions (Lessons 9–10)', () => {
+  // L9: no dividend needs extra zeros written on it; every dividend has a decimal point.
+  for (const id of ['W1', 'W2', 'K1', 'K2']) for (let seed = 1; seed <= 400; seed++) {
+    const q = engine.make('d09', id, seed);
+    const xs = numbersIn(q); const a = id === 'K1' ? xs[1] : xs[0];
+    assert.ok(D.parse(a).places >= 1 && D.parse(a).places >= D.parse(q.answer).places, `${id}/${seed}: ${a} -> ${q.answer}`);
+  }
+  // L9: no division by a decimal among the C1 choices.
+  for (let seed = 1; seed <= 200; seed++) for (const c of engine.make('d09', 'C1', seed).choices) assert.doesNotMatch(c.value, /÷/);
+  // L10: X1 always needs a rounding step; the halfway case can appear.
+  let halfway = 0;
+  for (let seed = 1; seed <= 600; seed++) {
+    const q = engine.make('d10', 'X1', seed); const [a, b] = numbersIn(q); const k = sumOf([a, b]);
+    assert.notEqual(k % 100, 0, `X1/${seed}`); if (k % 100 === 50) halfway++;
+  }
+  assert.ok(halfway > 0, 'X1 includes the halfway case');
+  // L10 reviews greatest-to-least ordering and halfway rounding.
+  assert.ok(engine.banks.d10.byId.RC4 && engine.banks.d10.byId.RR4);
+});
+
+test('mathematics review regressions (Lessons 9–10, second pass)', () => {
+  for (let seed = 1; seed <= 300; seed++) {
+    // L9 C1: every choice is a multiplication; the last hint names no numbers from the right choice.
+    const c1 = engine.make('d09', 'C1', seed);
+    for (const c of c1.choices) assert.match(c.value, /×/);
+    assert.doesNotMatch(c1.hints[2], /\d/);
+    // L9 M1/M2: the "wrong unit" feedback does not name the answer's count.
+    const m1 = engine.make('d09', 'M1', seed), m2 = engine.make('d09', 'M2', seed);
+    assert.doesNotMatch(m1.diagnose(String(D.toThousandths(m1.answer) / 10000), { th: D.toThousandths(m1.answer) / 10 }), /each group gets/);
+    assert.doesNotMatch(m2.diagnose('x', { th: D.toThousandths(m2.answer) * 10 }), /answer is/);
+    // L9 K1: fallback feedback keeps dollars.
+    const k1 = engine.make('d09', 'K1', seed);
+    assert.match(k1.diagnose('1', { th: 1000 }), /should equal \$\d+\.\d\d\./);
+    // L10 X4: the ones digit of the difference never equals the asked digit.
+    const x4 = engine.make('d10', 'X4', seed); const [a, b] = numbersIn(x4); const k = D.toThousandths(a) - D.toThousandths(b);
+    assert.notEqual(String(Math.floor(k / 1000) % 10), x4.answer, `X4/${seed}`);
+  }
+  // L9 C2: no wrong "Yes" choice has a true reason.
+  for (let seed = 1; seed <= 300; seed++) for (const c of engine.make('d09', 'C2', seed).choices) assert.doesNotMatch(c.value, /^Yes, because .* has one decimal place/);
+});
+
+test('QA review regressions (Lessons 9–10)', () => {
+  // L10 X4: always four choices, and the answer is not given away by its neighbouring digits.
+  let middle = 0;
+  for (let seed = 1; seed <= 2000; seed++) {
+    const q = engine.make('d10', 'X4', seed); const vs = q.choices.map((c) => c.value);
+    assert.equal(new Set(vs).size, 4, `X4/${seed}`);
+    const n = Number(q.answer);
+    if (vs.includes(String((n + 1) % 10)) && vs.includes(String((n + 9) % 10))) middle++;
+  }
+  assert.ok(middle < 2000 * 0.2, `X4 answer sits between its neighbours in ${middle} of 2000`);
 });

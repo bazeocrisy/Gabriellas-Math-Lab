@@ -14,13 +14,13 @@ Teach the concept clearly, provide meaningful practice, and assess independent m
 - **Parent Progress:** lesson status, most recent test, skills correct / needing practice, suggested next step. Stored only in this browser.
 
 ## Status
-**Decimals Lessons 1–8 are live** at https://bazeocrisy.github.io/Gabriellas-Math-Lab/ (Lesson 8, Multiplying, is supplemental). Lessons 9–10 are shown as "Coming later". See [docs/STATUS.md](docs/STATUS.md).
+**Decimals Lessons 1–8 are live** at https://bazeocrisy.github.io/Gabriellas-Math-Lab/ (Lesson 8, Multiplying, is supplemental). Lessons 9–10 (Dividing Decimals, supplemental, and Mixed Decimal Review) are built and tested on branch `claude/decimals-d09-d10`, awaiting approval to merge and deploy. See [docs/STATUS.md](docs/STATUS.md).
 
 ## Run it
 It is a static site with no build step and no dependencies.
 
 - Serve the folder with any static web server (for example `npx serve .` or VS Code Live Server), or publish the repository with GitHub Pages. All paths are relative, so it works under `/Gabriellas-Math-Lab/`.
-- Routes: `#/` home, `#/d01/teach/1`, `#/d01/practice`, `#/d01/test`, `#/d01/notes` (printable Lesson Notes), `#/parent`; the same for `d02` through `d08`.
+- Routes: `#/` home, `#/d01/teach/1`, `#/d01/practice`, `#/d01/test`, `#/d01/notes` (printable Lesson Notes), `#/parent`; the same for `d02` through `d10`.
 
 ## Tests (Node 22+, no npm install needed)
 - `npm test` — verifies every question template in every lesson over hundreds of seeds, recomputing each answer independently (answer keys, pictures match numbers, valid choices, hints never contain the answer, feedback for wrong answers), scoring, and question-set rules.

@@ -349,7 +349,7 @@ try {
 
     await b.load(URL + 'index.html#/' + id + '/notes');
     rr = await js(`return { h: document.querySelector('h1').innerText, t: document.getElementById('app').innerText };`);
-    check(`${id} notes: printable notes with vocabulary and worked examples`, rr.h === await js(`return GML.lessonContent['${id}'].title;`) && /Vocabulary/.test(rr.t) && /Worked example/.test(rr.t));
+    check(`${id} notes: printable notes with vocabulary and worked examples`, rr.h === await js(`return GML.lessonContent['${id}'].title;`) && /Vocabulary|Review sheet/.test(rr.t) && /Worked example/.test(rr.t));
     await b.load(URL + 'index.html#/parent');
     rr = await js(`return document.getElementById('app').innerText;`);
     const ln = await js(`return GML.unit.find('${id}').n;`);
@@ -454,7 +454,7 @@ try {
   await b.viewport(390, 844);
 
   // ── Unknown routes and reset ──
-  await b.load(URL + 'index.html#/d10/teach/1');
+  await b.load(URL + 'index.html#/d11/teach/1');
   check('unready lesson route falls back to home', /Gabriella's Math Lab/.test(await js(`return document.querySelector('h1').innerText;`)));
   await b.load(URL + 'index.html#/parent');
   await js(`document.querySelector('[data-act=reset]').click(); document.querySelector('[data-act=really]').click();`);

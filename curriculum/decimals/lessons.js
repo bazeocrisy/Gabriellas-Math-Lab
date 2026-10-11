@@ -4,7 +4,7 @@
   'use strict';
   G.unit = {
     title: 'Decimals',
-    standards: 'Georgia K-12 Mathematics Standards, Grade 5 Numerical Reasoning: 5.NR.4 (with 5.NR.1.1)',
+    standards: 'Georgia K-12 Mathematics Standards, Grade 5 Numerical Reasoning: 5.NR.4 (with 5.NR.1.1); supplemental Lessons 8–9 extend 5.NR.1.2 (Lesson 9 also 5.NR.2.2)',
     lessons: [
       { id: 'd01', n: 1, title: 'Understanding Decimals', blurb: 'Tenths, hundredths and thousandths, decimal models, the place-value chart, and equivalent decimals like 0.5 = 0.50.', ready: true },
       { id: 'd02', n: 2, title: 'Decimal Place Value', blurb: 'The place and the value of a digit, how places relate (×10), and standard, expanded and word form.', ready: true },
@@ -14,8 +14,8 @@
       { id: 'd06', n: 6, title: 'Adding Decimals', blurb: 'Add decimals to hundredths with models, lined-up decimal points, regrouping, estimates and word problems.', ready: true },
       { id: 'd07', n: 7, title: 'Subtracting Decimals', blurb: 'Subtract decimals to hundredths with models, regrouping, zeros, checking by adding, and word problems.', ready: true },
       { id: 'd08', n: 8, title: 'Multiplying Decimals', blurb: 'Supplemental (beyond the Grade 5 Georgia standards): multiply decimals by 10, 100 and 1000, by whole numbers, and tenths by tenths.', ready: true, supplemental: true },
-      { id: 'd09', n: 9, title: 'Dividing Decimals', blurb: 'Includes supplemental skills beyond the Grade 5 Georgia decimal standards.', ready: false },
-      { id: 'd10', n: 10, title: 'Mixed Decimal Review', blurb: 'Cumulative application and reasoning.', ready: false }
+      { id: 'd09', n: 9, title: 'Dividing Decimals', blurb: 'Supplemental (beyond the Grade 5 Georgia standards): divide decimals by 10, 100 and 1000 and by whole numbers, and check by multiplying.', ready: true, supplemental: true },
+      { id: 'd10', n: 10, title: 'Mixed Decimal Review', blurb: 'Review all the Grade 5 decimal skills (Lessons 1–7) and solve multi-step problems.', ready: true }
     ],
     /** The lesson entry for an id. */
     find(id) { return this.lessons.find((l) => l.id === id); },
