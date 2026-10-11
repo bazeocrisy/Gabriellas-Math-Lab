@@ -540,14 +540,16 @@ try {
   await b.load(URL + 'index.html#/d06/test'); await b.reload();
   await js(`document.querySelector('[data-act=start]').click();
     const f = document.createElement('iframe'); f.id = 'tab2'; f.style.width = '380px'; f.style.height = '600px'; f.src = location.href.split('#')[0] + '#/d06/test'; document.body.appendChild(f);`);
-  await b.wait(700);
-  r = await js(`return document.getElementById('tab2').contentDocument.querySelector('h1').innerText;`);
+  // Wait until the second tab has loaded (slower on the live site than on the local test server).
+  const tab2H1 = async () => { for (let k = 0; k < 50; k++) { const t = await js(`const f = document.getElementById('tab2'); const h = f && f.contentDocument && f.contentDocument.querySelector('h1'); return h ? h.innerText : null;`); if (t) return t; await b.wait(200); } return null; };
+  r = await tab2H1();
   const tab2Before = r;
   await js(setAll('d06', 'right(q)'));
-  await js(`document.getElementById('tab2').remove(); location.reload();`); await b.wait(400);
+  await js(`document.getElementById('tab2').remove();`); await b.reload();
   await js(`const f = document.createElement('iframe'); f.id = 'tab2'; f.style.width = '380px'; f.style.height = '600px'; f.src = location.href.split('#')[0] + '#/d06/test'; document.body.appendChild(f);`);
-  await b.wait(700);
-  await js(`document.querySelector('[data-act=submit]').click();`); await b.wait(500);
+  await tab2H1();
+  await js(`document.querySelector('[data-act=submit]').click();`);
+  for (let k = 0; k < 25 && !/Your score/.test(await tab2H1() || ''); k++) await b.wait(200);
   r = await js(`return { tab2: document.getElementById('tab2').contentDocument.querySelector('h1').innerText, n: JSON.parse(localStorage.getItem('gml:v1:progress')).lessons.d06.tests.length };`);
   check('integrity: a second open tab switches to the results when the test is submitted elsewhere', /Question 1/.test(tab2Before) && /Your score: 10 out of 10/.test(r.tab2) && r.n === 1, { tab2Before, ...r });
   await js(`const f = document.getElementById('tab2'); if (f) f.remove();`);
