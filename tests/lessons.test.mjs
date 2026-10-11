@@ -163,6 +163,30 @@ VERIFY.d08 = {
   D2: (q) => { const [a, b] = numbersIn(q); const rw = (x) => Math.floor((D.toThousandths(x) + 500) / 1000); assert.equal(q.answer, String(rw(a) * rw(b))); },
   D3: (q) => { const [a, b] = numbersIn(q); assert.equal(Number(q.answer), D.parse(a).places + D.parse(b).places); }
 };
+// Lesson 9: quotients recomputed (dividend ÷ whole number) and checked by multiplying back.
+const quot = (a, n) => { const k = D.toThousandths(a); assert.equal(k % Number(n), 0, `${a} ÷ ${n} exact`); return k / Number(n); };
+const divOk = (q, ai, ni) => { const xs = numbersIn(q); assert.equal(D.toThousandths(q.answer), quot(xs[ai], xs[ni])); };
+VERIFY.d09 = {
+  P1: (q) => divOk(q, 0, 1), P2: (q) => divOk(q, 0, 1), W1: (q) => divOk(q, 0, 1), W2: (q) => divOk(q, 0, 1), K2: (q) => divOk(q, 0, 1), K1: (q) => divOk(q, 1, 0),
+  P3: (q) => { const t = strip(q.prompt); const zeros = (t.match(/by (10+)/)[1].length - 1); const dir = /multiply/.test(t) ? 'left' : 'right'; assert.equal(q.answer, `Every digit moves ${['', 'one', 'two', 'three'][zeros]} place${zeros === 1 ? '' : 's'} to the ${dir}.`); },
+  M1: (q) => { divOk(q, 0, 1); assert.equal((q.visual.match(/class="m-on"/g) || []).length * 100, D.toThousandths(numbersIn(q)[0])); },
+  M2: (q) => { divOk(q, 0, 1); assert.equal((q.visual.match(/class="m-on"/g) || []).length * 10, D.toThousandths(numbersIn(q)[0])); },
+  W3: (q) => { const [dg, n, whole, a] = numbersIn(q); assert.equal(Number(dg) / Number(n), Number(whole)); assert.equal(D.toThousandths(q.answer), quot(a, n)); },
+  C1: (q) => { const [a, n, qq] = numbersIn(q); assert.equal(D.toThousandths(qq), quot(a, n)); assert.equal(q.answer, `${qq} × ${n} = ${a}`); },
+  C2: (q) => { const [a, n, said] = numbersIn(q); assert.equal(q.answer.startsWith('Yes'), D.toThousandths(said) * Number(n) === D.toThousandths(a)); }
+};
+// Lesson 10: reused questions are checked by their own lesson's verifier; multi-step ones are recomputed here.
+VERIFY.d10 = {
+  RP1: (q) => VERIFY.d02.V2(q), RP2: (q) => VERIFY.d02.F3(q), RP3: (q) => VERIFY.d02.F4(q), RP4: (q) => { const k = D.toThousandths(q.answer); assert.equal((q.visual.match(/class="m-on"/g) || []).length, Math.floor(k / 10) + 2 * (k % 10)); },
+  RC1: (q) => VERIFY.d03.L1(q), RC2: (q) => VERIFY.d04.O1(q), RC3: (q) => VERIFY.d03.Y1(q),
+  RR1: (q) => VERIFY.d05.T1(q), RR2: (q) => VERIFY.d05.H1(q), RR3: (q) => VERIFY.d05.K1(q),
+  RA1: (q) => VERIFY.d06.MX1(q), RA2: (q) => VERIFY.d07.SZ2(q), RA3: (q) => VERIFY.d07.SW1(q),
+  X1: (q) => { const [a, b] = numbersIn(q); const k = sumOf([a, b]); const rm = k % 100; assert.equal(D.toThousandths(q.answer), rm * 2 >= 100 ? k - rm + 100 : k - rm); assert.equal(D.parse(q.answer).places, 1); },
+  X2: (q) => { const [a, b, c] = numbersIn(q); const v = sumOf([a, b]) - D.toThousandths(c); assert.equal(q.answer, v < 0 ? '<' : v > 0 ? '>' : '='); },
+  X3: (q) => { const [paid, a, b] = numbersIn(q); assert.equal(D.toThousandths(q.answer), Number(paid) * 1000 - sumOf([a, b])); assert.ok(D.toThousandths(q.answer) > 0); },
+  X4: (q) => { const [a, b] = numbersIn(q); const d = f2(D.toThousandths(a) - D.toThousandths(b)); assert.equal(q.answer, /tenths place/.test(strip(q.prompt)) ? d[d.indexOf('.') + 1] : d[d.indexOf('.') + 2]); }
+};
+function f2(k) { return D.fromThousandths(k, 2); }
 function decs(q) { return strip(q.prompt).match(/\d+\.\d+/g); }
 function pad(x) { const v = D.parse(x); return v.whole.padStart(2, '0').slice(-1) + '.' + v.frac.padEnd(3, '0'); }
 function symbolOk(q) { const [x, y] = decs(q); const c = D.cmp(x, y); assert.equal(q.answer, c < 0 ? '<' : c > 0 ? '>' : '='); }

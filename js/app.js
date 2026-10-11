@@ -54,8 +54,7 @@
         <h2 id="unit-h" class="unit-title">${unit.title} <span class="unit-count">${unit.lessons.length} lessons</span></h2>
         <p class="legend"><span class="legend-item legend-teach">Teach: learn it</span><span class="legend-item legend-practice">Practice: try it with hints</span><span class="legend-item legend-test">Test: show what you know</span></p>
         <div class="lesson-grid">${cards}</div>
-        <h3 class="later-h">Coming later</h3>
-        <ul class="later-list">${later}</ul>
+        ${later ? `<h3 class="later-h">Coming later</h3>\n        <ul class="later-list">${later}</ul>` : ''}
       </section>`;
     app.classList.add('page-home');
     document.title = "Gabriella's Math Lab";
@@ -133,7 +132,7 @@
       <section class="card parent-summary" aria-labelledby="ps-h">
         <h2 id="ps-h">Completed lessons</h2>
         ${done.length ? `<ul>${done.map((l) => `<li>Lesson ${l.n}: ${l.title} ★</li>`).join('')}</ul>` : '<p>No lesson mastered yet.</p>'}
-        <p class="fine">Lessons available now: ${shown.map((l) => l.n).join(', ')}. Lessons ${unit.lessons.filter((l) => !ready(l.id)).map((l) => l.n).join(', ')} are coming later.</p>
+        <p class="fine">Lessons available now: ${shown.map((l) => l.n).join(', ')}.${unit.lessons.some((l) => !ready(l.id)) ? ` Lessons ${unit.lessons.filter((l) => !ready(l.id)).map((l) => l.n).join(', ')} are coming later.` : ' All lessons in this unit are available.'}${shown.some((l) => l.supplemental) ? ` Lessons ${shown.filter((l) => l.supplemental).map((l) => l.n).join(' and ')} are supplemental (beyond the Grade 5 Georgia standards).` : ''}</p>
       </section>
       ${blocks}
       <p class="fine">Mastery means at least 9 of 10 correct on a Lesson Test. This is the app's learning benchmark, not an official Georgia Milestones score.</p>
