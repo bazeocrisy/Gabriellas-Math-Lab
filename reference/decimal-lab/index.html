@@ -1,0 +1,444 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Gabriella's Decimal Lab</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Atkinson+Hyperlegible:wght@400;700&family=Spline+Sans+Mono:wght@500;600&display=swap">
+<style>
+/* Layout: one bright worksheet card on a sky background; each operation owns a color (add teal, subtract pink, multiply violet) that tints the card, buttons and lesson. Deliberately single-theme. */
+:root {
+  color-scheme: light;
+  --sky: #e9f3ff;
+  --card: #ffffff;
+  --ink: #241f4d;
+  --muted: #5d588a;
+  --line: #ddd7f6;
+  --add: #0c9c74;
+  --add-soft: #dcf6ec;
+  --sub: #e43f66;
+  --sub-soft: #fde4ea;
+  --mul: #7451f0;
+  --mul-soft: #ebe5ff;
+  --sun: #ffbf2e;
+  --sun-soft: #fff4d6;
+  --op: var(--mul);
+  --op-soft: var(--mul-soft);
+  --font-display: "Fredoka", "Trebuchet MS", system-ui, sans-serif;
+  --font-body: "Atkinson Hyperlegible", "Segoe UI", system-ui, sans-serif;
+  --font-num: "Spline Sans Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+* { box-sizing: border-box; }
+html, body { min-height: 100%; }
+body {
+  margin: 0; color: var(--ink); font-family: var(--font-body); font-size: 17px; line-height: 1.5;
+  background-color: var(--sky);
+  background-image:
+    radial-gradient(circle at 8% 12%, var(--add-soft) 0 90px, transparent 91px),
+    radial-gradient(circle at 92% 20%, var(--sub-soft) 0 120px, transparent 121px),
+    radial-gradient(circle at 85% 88%, var(--mul-soft) 0 140px, transparent 141px),
+    radial-gradient(circle at 12% 80%, var(--sun-soft) 0 100px, transparent 101px);
+  background-attachment: fixed;
+}
+body.op-add { --op: var(--add); --op-soft: var(--add-soft); }
+body.op-sub { --op: var(--sub); --op-soft: var(--sub-soft); }
+body.op-mul { --op: var(--mul); --op-soft: var(--mul-soft); }
+.wrap { max-width: 600px; margin: 0 auto; padding-inline: 16px; padding-block: 20px 40px; display: flex; flex-direction: column; gap: 14px; }
+header { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+h1 { font-family: var(--font-display); font-weight: 700; font-size: 1.5rem; margin: 0; }
+h1 .a { color: var(--add); } h1 .s { color: var(--sub); } h1 .m { color: var(--mul); }
+.stats { display: flex; gap: 8px; font-family: var(--font-display); font-weight: 600; }
+.pill { background: var(--card); border: 2px solid var(--line); border-radius: 999px; padding: 2px 12px; font-variant-numeric: tabular-nums; }
+.pill.star { border-color: var(--sun); }
+.pill.star b { color: #c98a00; }
+.dots { display: grid; grid-template-columns: repeat(25, 1fr); gap: 4px; }
+.dot { height: 10px; border-radius: 5px; background: var(--line); }
+.dot.cur { background: var(--sun); }
+.dot.ok { background: var(--add); }
+.dot.no { background: var(--sub); }
+.card { background: var(--card); border: 3px solid var(--op); border-radius: 20px; padding: 22px 20px; display: flex; flex-direction: column; gap: 16px; position: relative; overflow: hidden; box-shadow: 0 6px 0 var(--op-soft); }
+.card.home { border-color: var(--line); box-shadow: 0 6px 0 var(--line); }
+.meta { display: flex; justify-content: space-between; align-items: center; gap: 8px; flex-wrap: wrap; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); font-weight: 700; }
+.tag { background: var(--op); color: #fff; border-radius: 999px; padding: 2px 12px; letter-spacing: 0.06em; }
+.problem { align-self: center; font-family: var(--font-num); font-weight: 600; font-size: clamp(2.1rem, 10vw, 3rem); line-height: 1.25; display: grid; grid-template-columns: auto auto; column-gap: 0.35em; font-variant-numeric: tabular-nums; background: var(--op-soft); border-radius: 16px; padding: 12px 28px 16px; }
+.problem .n { text-align: right; white-space: pre; }
+.problem .op { color: var(--op); }
+.problem .bar { grid-column: 1 / -1; border-top: 4px solid var(--ink); margin-top: 4px; border-radius: 2px; }
+form { display: flex; gap: 10px; }
+input[type="text"] { flex: 1; min-width: 0; font-family: var(--font-num); font-size: 1.5rem; padding: 10px 14px; border: 3px solid var(--line); border-radius: 14px; background: #fff; color: var(--ink); font-variant-numeric: tabular-nums; }
+input[type="text"]:focus { outline: none; border-color: var(--op); }
+button { font-family: var(--font-display); font-weight: 600; font-size: 1.05rem; border-radius: 14px; padding: 10px 18px; cursor: pointer; border: 3px solid transparent; transition: transform 0.08s; }
+button:active { transform: translateY(2px); }
+button:focus-visible { outline: 3px solid var(--sun); outline-offset: 2px; }
+.primary { background: var(--op); color: #fff; box-shadow: 0 4px 0 color-mix(in srgb, var(--op) 70%, #000); }
+.ghost { background: #fff; color: var(--op); border-color: var(--op-soft); }
+.hintbtn { background: var(--sun-soft); color: #8a5b00; border-color: var(--sun); }
+.row { display: flex; gap: 10px; flex-wrap: wrap; }
+.msg { font-size: 0.9rem; color: var(--sub); min-height: 1.2em; margin: -8px 0 0; }
+.hint { background: var(--sun-soft); border: 2px dashed var(--sun); border-radius: 14px; padding: 10px 14px; display: flex; gap: 10px; align-items: flex-start; }
+.hint .num-badge { font-family: var(--font-display); font-weight: 700; background: var(--sun); color: var(--ink); border-radius: 999px; min-width: 1.6em; height: 1.6em; display: grid; place-items: center; font-size: 0.9rem; flex-shrink: 0; }
+.result { border-radius: 14px; padding: 14px 16px; display: flex; flex-direction: column; gap: 10px; }
+.result.ok { background: var(--add-soft); }
+.result.no { background: var(--sub-soft); }
+.verdict { font-family: var(--font-display); font-weight: 700; font-size: 1.35rem; margin: 0; }
+.result.ok .verdict { color: var(--add); }
+.result.no .verdict { color: var(--sub); }
+.steps { margin: 0; padding-left: 1.3em; display: flex; flex-direction: column; gap: 6px; }
+code, .num { font-family: var(--font-num); font-variant-numeric: tabular-nums; }
+pre.work { font-family: var(--font-num); background: #fff; border-radius: 10px; padding: 8px 14px; margin: 6px 0 0; display: inline-block; line-height: 1.35; font-size: 1.1rem; overflow-x: auto; max-width: 100%; }
+details summary { cursor: pointer; font-weight: 700; color: var(--add); }
+/* home */
+.hello { font-family: var(--font-display); font-weight: 700; font-size: clamp(2rem, 8vw, 2.8rem); margin: 0; line-height: 1.1; }
+.hello span { color: var(--mul); }
+.modes { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.mode { text-align: left; padding: 16px; border-radius: 16px; color: #fff; display: flex; flex-direction: column; gap: 2px; }
+.mode .big { font-family: var(--font-num); font-size: 2rem; line-height: 1; font-weight: 600; }
+.mode .lbl { font-size: 1.15rem; }
+.mode .sub { font-family: var(--font-body); font-weight: 400; font-size: 0.85rem; opacity: 0.92; }
+.mode.m-mix { background: linear-gradient(120deg, var(--add), var(--mul) 55%, var(--sub)); box-shadow: 0 4px 0 #4a3a9a; }
+.mode.m-add { background: var(--add); box-shadow: 0 4px 0 #06684d; }
+.mode.m-sub { background: var(--sub); box-shadow: 0 4px 0 #a2213f; }
+.mode.m-mul { background: var(--mul); box-shadow: 0 4px 0 #4d2fb8; }
+.section-label { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); font-weight: 700; margin: 0; }
+.howrow { display: flex; gap: 8px; flex-wrap: wrap; }
+.howrow button { background: #fff; border-color: var(--line); font-size: 0.95rem; padding: 8px 14px; }
+.howrow .h-add { color: var(--add); } .howrow .h-sub { color: var(--sub); } .howrow .h-mul { color: var(--mul); }
+/* lesson overlay */
+.overlay { position: fixed; inset: 0; background: rgba(36, 31, 77, 0.45); display: flex; align-items: flex-start; justify-content: center; padding: calc(24px + env(safe-area-inset-top, 0px)) 16px 24px; overflow-y: auto; z-index: 10; }
+.lesson { background: #fff; border-radius: 20px; border: 3px solid var(--lc); max-width: 560px; width: 100%; padding: 20px; display: flex; flex-direction: column; gap: 12px; }
+.lesson h2 { font-family: var(--font-display); font-weight: 700; color: var(--lc); margin: 0; font-size: 1.6rem; }
+.lesson .rule { background: var(--ls); border-radius: 12px; padding: 10px 14px; font-weight: 700; }
+.lesson ol { margin: 0; padding-left: 1.3em; display: flex; flex-direction: column; gap: 4px; }
+.lesson .tip { font-size: 0.95rem; color: var(--muted); margin: 0; }
+.lesson .close { align-self: flex-start; background: var(--lc); color: #fff; }
+/* end */
+.end h2 { font-family: var(--font-display); font-weight: 700; font-size: 3rem; margin: 0; color: var(--op); line-height: 1; }
+.missed { display: flex; flex-direction: column; gap: 6px; margin: 0; padding: 0; list-style: none; }
+.missed li { font-family: var(--font-num); display: flex; justify-content: space-between; gap: 12px; border-bottom: 2px dotted var(--line); padding-bottom: 6px; flex-wrap: wrap; }
+.missed .yours { color: var(--sub); }
+.linkish { background: none; border: none; color: var(--muted); font-family: var(--font-body); font-size: 0.9rem; text-decoration: underline; padding: 4px; }
+/* confetti */
+.bit { position: absolute; width: 10px; height: 10px; border-radius: 3px; pointer-events: none; animation: pop 0.9s ease-out forwards; }
+@keyframes pop { to { transform: translate(var(--dx), var(--dy)) rotate(260deg); opacity: 0; } }
+@media (max-width: 420px) { .dots { gap: 2px; } form { flex-direction: column; } .modes { grid-template-columns: minmax(0, 1fr); } }
+@media (prefers-reduced-motion: reduce) { .bit { display: none; } button { transition: none; } }
+</style>
+
+<div class="wrap">
+  <header>
+    <h1><span class="a">Deci</span><span class="s">mal</span> <span class="m">Lab</span></h1>
+    <div class="stats" id="stats" hidden>
+      <span class="pill star"><b>★</b> <span id="stars">0</span></span>
+      <span class="pill">Streak <span id="streak">0</span></span>
+    </div>
+  </header>
+  <div class="dots" id="dots" aria-hidden="true" hidden></div>
+  <main class="card home" id="card"></main>
+</div>
+<div class="overlay" id="overlay" hidden></div>
+
+<script>
+(function () {
+  const rnd = (a, b) => a + Math.floor(Math.random() * (b - a + 1));
+  const pick = arr => arr[Math.floor(Math.random() * arr.length)];
+  const shuffle = arr => { for (let i = arr.length - 1; i > 0; i--) { const j = rnd(0, i); [arr[i], arr[j]] = [arr[j], arr[i]]; } return arr; };
+
+  function normalize(s) {
+    s = String(s).trim().replace(/,/g, "");
+    if (!/^\d*\.?\d*$/.test(s) || s === "" || s === ".") return null;
+    let [int, frac = ""] = s.split(".");
+    int = int.replace(/^0+/, "") || "0";
+    frac = frac.replace(/0+$/, "");
+    return frac ? int + "." + frac : int;
+  }
+  function placed(digits, p) {
+    let s = String(digits).padStart(p + 1, "0");
+    return p > 0 ? s.slice(0, s.length - p) + "." + s.slice(s.length - p) : s;
+  }
+  const show = n => normalize(placed(n.i, n.p));
+  const dec = (lo, hi, p) => { let i; do { i = rnd(lo, hi); } while (p > 0 && i % 10 === 0); return { i, p }; };
+  const whole = (lo, hi) => ({ i: rnd(lo, hi), p: 0 });
+  const plural = (n, w) => `${n} ${w}${n === 1 ? "" : "s"}`;
+
+  const OPS = {
+    add: { sym: "+", name: "Adding", verb: "Add" },
+    sub: { sym: "−", name: "Subtracting", verb: "Subtract" },
+    mul: { sym: "×", name: "Multiplying", verb: "Multiply" }
+  };
+
+  // Generators run easiest to hardest
+  const GENS = {
+    add: [
+      () => [dec(11, 69, 1), dec(11, 39, 1)],
+      () => [dec(11, 99, 1), dec(101, 599, 2)],
+      () => [dec(101, 899, 2), dec(101, 599, 2)],
+      () => [whole(2, 15), dec(11, 99, 2)],
+      () => [dec(101, 999, 2), dec(15, 95, 1)]
+    ],
+    sub: [
+      () => [dec(51, 99, 1), dec(11, 49, 1)],
+      () => [dec(401, 999, 2), dec(101, 399, 2)],
+      () => [dec(301, 999, 2), dec(11, 29, 1)],
+      () => [whole(3, 10), dec(101, 299, 2)],
+      () => [whole(10, 20), dec(11, 99, 1)]
+    ],
+    mul: [
+      () => [dec(11, 99, 1), whole(2, 9)],
+      () => { const p = rnd(1, 2), k = rnd(1, 3); return [p === 1 ? dec(11, 99, 1) : dec(101, 999, 2), { i: 10 ** k, p: 0 }]; },
+      () => pick([() => [dec(2, 9, 1), dec(2, 9, 1)], () => [dec(11, 39, 1), dec(2, 9, 1)]])(),
+      () => pick([() => [dec(2, 4, 1), dec(2, 4, 1)], () => [dec(2, 9, 1), dec(2, 9, 2)], () => [dec(2, 9, 2), whole(2, 4)]])(),
+      () => pick([() => [dec(101, 499, 2), whole(2, 9)], () => [{ i: rnd(2, 12) * 2, p: 0 }, { i: 5, p: 1 }], () => [dec(11, 49, 1), dec(11, 29, 1)]])()
+    ]
+  };
+
+  function build(op, a, b) {
+    let r;
+    const P = Math.max(a.p, b.p);
+    const A = a.i * 10 ** (P - a.p), B = b.i * 10 ** (P - b.p);
+    if (op === "mul") r = { i: a.i * b.i, p: a.p + b.p };
+    else if (op === "add") r = { i: A + B, p: P };
+    else r = { i: A - B, p: P };
+    return { op, a, b, P, A, B, r, raw: placed(r.i, r.p), answer: normalize(placed(r.i, r.p)) };
+  }
+  function makeSet(mode) {
+    const ops = mode === "mix" ? shuffle([...Array(8).fill("add"), ...Array(8).fill("sub"), ...Array(9).fill("mul")]) : Array(25).fill(mode);
+    const counters = { add: 0, sub: 0, mul: 0 }, totals = { add: 0, sub: 0, mul: 0 };
+    ops.forEach(o => totals[o]++);
+    const seen = new Set();
+    return ops.map(op => {
+      const gens = GENS[op], k = counters[op]++;
+      const g = gens[Math.min(gens.length - 1, Math.floor(k * gens.length / totals[op]))];
+      let q, key, tries = 0;
+      do { const [a, b] = g(); q = build(op, a, b); key = op + show(a) + show(b); tries++; } while (seen.has(key) && tries < 30);
+      seen.add(key);
+      return q;
+    });
+  }
+
+  // Vertical layout: add/subtract line up on the point; multiply lines up on the right
+  function rows(q) {
+    const sa = show(q.a), sb = show(q.b);
+    if (q.op === "mul") return [sa, sb];
+    const parts = [sa, sb].map(s => s.split("."));
+    const wi = Math.max(...parts.map(p => p[0].length)), wf = Math.max(...parts.map(p => (p[1] || "").length));
+    return parts.map(([i, f = ""]) => i.padStart(wi) + (f ? "." + f.padEnd(wf) : (wf ? " ".repeat(wf + 1) : "")));
+  }
+  function filled(q) {
+    const x = placed(q.A, q.P), y = placed(q.B, q.P), w = Math.max(x.length, y.length);
+    const bar = "─".repeat(w + 2);
+    return `  ${x.padStart(w)}\n${OPS[q.op].sym} ${y.padStart(w)}\n${bar}\n  ${q.raw.padStart(w)}`;
+  }
+
+  function estimate(q) {
+    const va = q.a.i / 10 ** q.a.p, vb = q.b.i / 10 ** q.b.p, sa = show(q.a), sb = show(q.b);
+    if (q.op === "mul") {
+      if (va < 1 && vb < 1) return "Both numbers are less than 1, so the answer will be smaller than both of them.";
+      if (va < 1) return `You're multiplying ${sb} by a number less than 1, so the answer will be smaller than ${sb}.`;
+      if (vb < 1) return `You're multiplying ${sa} by a number less than 1, so the answer will be smaller than ${sa}.`;
+    }
+    const ra = Math.round(va), rb = Math.round(vb);
+    const est = q.op === "add" ? ra + rb : q.op === "sub" ? ra - rb : ra * rb;
+    return `Estimate: round to whole numbers. About ${ra.toLocaleString()} ${OPS[q.op].sym} ${rb.toLocaleString()} = ${est.toLocaleString()}, so your answer should be close to ${est.toLocaleString()}.`;
+  }
+  function methodHint(q) {
+    const sa = show(q.a), sb = show(q.b);
+    if (q.op === "mul") return `Don't line up the points for multiplying. First multiply <code>${q.a.i} × ${q.b.i.toLocaleString()}</code> like whole numbers. Then count the decimal places: ${q.a.p} + ${q.b.p} = <b>${q.a.p + q.b.p}</b>. Count that many places from the right of your answer.`;
+    const notes = [];
+    [[sa, q.A], [sb, q.B]].forEach(([s, v]) => { const f = placed(v, q.P); if (f !== s) notes.push(s.includes(".") ? `<code>${s}</code> becomes <code>${f}</code>` : `<code>${s}</code> is a whole number, so it becomes <code>${f}</code>`); });
+    return `Line up the decimal points first.${notes.length ? " Fill in zeros so both have " + plural(q.P, "decimal place") + ": " + notes.join(", and ") + "." : ""} Then ${OPS[q.op].verb.toLowerCase()} like whole numbers and bring the point straight down.`;
+  }
+  function steps(q) {
+    if (q.op === "mul") {
+      const places = q.r.p, needZeros = String(q.r.i).length <= places;
+      const list = [
+        `Ignore the points and multiply: <code>${q.a.i} × ${q.b.i.toLocaleString()} = ${q.r.i.toLocaleString()}</code>`,
+        `Count decimal places: <code>${show(q.a)}</code> has ${q.a.p}, <code>${show(q.b)}</code> has ${q.b.p}. Total: <b>${places}</b>.`,
+        `Start at the right of <code>${q.r.i}</code> and move left ${plural(places, "place")}${needZeros ? " (not enough digits, so fill in zeros)" : ""}: <code>${q.raw}</code>${q.raw !== q.answer ? ` = <code>${q.answer}</code>` : ""}`
+      ];
+      return list.map(s => `<li>${s}</li>`).join("");
+    }
+    const word = q.op === "add" ? "Add" : "Subtract";
+    return [
+      `Line up the decimal points and fill in zeros:<br><pre class="work">${filled(q)}</pre>`,
+      `${word} like whole numbers: <code>${q.A} ${OPS[q.op].sym} ${q.B} = ${q.r.i}</code>`,
+      `Bring the decimal point straight down: <code>${q.raw}</code>${q.raw !== q.answer ? ` = <code>${q.answer}</code>` : ""}`
+    ].map(s => `<li>${s}</li>`).join("");
+  }
+
+  // Lessons
+  const LESSONS = {
+    add: { c: "var(--add)", s: "var(--add-soft)", title: "How to add decimals",
+      rule: "Line up the decimal points.",
+      steps: ["Write the numbers so the decimal points are on top of each other.", "Fill empty places with zeros so both numbers are the same length.", "Add like whole numbers. Carry just like always.", "Bring the decimal point straight down into the answer."],
+      ex: "  4.60\n+ 2.35\n──────\n  6.95",
+      tip: "Why zeros are OK: 4.6 and 4.60 are the same amount, like 6 dimes and 60 pennies. Always estimate first: 4.6 + 2.35 is about 5 + 2 = 7." },
+    sub: { c: "var(--sub)", s: "var(--sub-soft)", title: "How to subtract decimals",
+      rule: "Line up the decimal points, just like adding.",
+      steps: ["Write the numbers so the decimal points are on top of each other.", "Fill empty places with zeros. A whole number has a hidden point: 5 = 5.00.", "Subtract like whole numbers. Borrow just like always.", "Bring the decimal point straight down into the answer."],
+      ex: "  5.00\n− 1.42\n──────\n  3.58",
+      tip: "Think money: if you pay $1.42 with a $5 bill, your change is $3.58. Estimate first: 5 − 1.42 is about 5 − 1 = 4." },
+    mul: { c: "var(--mul)", s: "var(--mul-soft)", title: "How to multiply decimals",
+      rule: "Don't line up the points. Count decimal places instead.",
+      steps: ["Ignore the decimal points and multiply like whole numbers.", "Count the decimal places in both numbers and add them up.", "Start at the right end of your answer and move left that many places. Put the point there.", "If you run out of digits, fill in zeros on the left."],
+      ex: "0.2 × 0.3\n2 × 3 = 6\n1 + 1 = 2 places\nanswer: 0.06",
+      tip: "Times 10, 100, or 1,000? Count the zeros and move the digits that many places left: 1.25 × 100 = 125. And multiplying by a number less than 1 makes the answer smaller." }
+  };
+  const overlay = document.getElementById("overlay");
+  function openLesson(op) {
+    const L = LESSONS[op];
+    overlay.innerHTML = `<div class="lesson" role="dialog" aria-modal="true" aria-label="${L.title}" style="--lc:${L.c};--ls:${L.s}">
+      <h2>${L.title}</h2>
+      <div class="rule">${L.rule}</div>
+      <ol>${L.steps.map(s => `<li>${s}</li>`).join("")}</ol>
+      <pre class="work" style="background:${L.s}">${L.ex}</pre>
+      <p class="tip">${L.tip}</p>
+      <button class="close" type="button" id="closeLesson">Got it</button>
+    </div>`;
+    overlay.hidden = false;
+    const btn = document.getElementById("closeLesson");
+    btn.focus();
+    btn.onclick = closeLesson;
+  }
+  function closeLesson() { overlay.hidden = true; overlay.innerHTML = ""; const i = document.getElementById("ans"); if (i) i.focus(); }
+  overlay.addEventListener("click", e => { if (e.target === overlay) closeLesson(); });
+  document.addEventListener("keydown", e => { if (e.key === "Escape" && !overlay.hidden) closeLesson(); });
+
+  // State
+  let mode, problems, idx, results, stars = 0, streak = 0;
+  const card = document.getElementById("card"), dots = document.getElementById("dots");
+  const setOpClass = op => { document.body.className = op ? "op-" + op : ""; };
+
+  function home() {
+    setOpClass(null);
+    dots.hidden = true; document.getElementById("stats").hidden = true;
+    card.className = "card home";
+    card.innerHTML = `
+      <p class="hello">Hi, <span>Gabriella!</span></p>
+      <p style="margin:0">Pick what you want to practice. Every round has 25 problems, and you can tap <b>Hint</b> any time you get stuck.</p>
+      <div class="modes">
+        <button class="mode m-mix" data-mode="mix"><span class="big">+ − ×</span><span class="lbl">Mix it up</span><span class="sub">All three, shuffled</span></button>
+        <button class="mode m-add" data-mode="add"><span class="big">+</span><span class="lbl">Adding</span><span class="sub">4.6 + 2.35</span></button>
+        <button class="mode m-sub" data-mode="sub"><span class="big">−</span><span class="lbl">Subtracting</span><span class="sub">10 − 4.65</span></button>
+        <button class="mode m-mul" data-mode="mul"><span class="big">×</span><span class="lbl">Multiplying</span><span class="sub">0.4 × 0.6</span></button>
+      </div>
+      <p class="section-label">How to do it</p>
+      <div class="howrow">
+        <button class="h-add" data-lesson="add">+ Adding</button>
+        <button class="h-sub" data-lesson="sub">− Subtracting</button>
+        <button class="h-mul" data-lesson="mul">× Multiplying</button>
+      </div>`;
+    card.querySelectorAll("[data-mode]").forEach(b => b.onclick = () => begin(b.dataset.mode));
+    card.querySelectorAll("[data-lesson]").forEach(b => b.onclick = () => openLesson(b.dataset.lesson));
+  }
+  function begin(m, set) {
+    mode = m; problems = set || makeSet(m); idx = 0; results = []; streak = 0;
+    dots.hidden = false; document.getElementById("stats").hidden = false;
+    renderDots(); renderProblem();
+  }
+  function renderDots() {
+    dots.style.gridTemplateColumns = `repeat(${problems.length}, 1fr)`;
+    dots.innerHTML = problems.map((_, i) => { const r = results[i]; return `<div class="dot ${r ? (r.ok ? "ok" : "no") : (i === idx ? "cur" : "")}"></div>`; }).join("");
+    document.getElementById("stars").textContent = stars;
+    document.getElementById("streak").textContent = streak;
+  }
+  function renderProblem() {
+    const q = problems[idx], O = OPS[q.op], [ra, rb] = rows(q);
+    setOpClass(q.op);
+    card.className = "card";
+    card.innerHTML = `
+      <div class="meta"><span>Problem ${idx + 1} of ${problems.length}</span><span class="tag">${O.name}</span></div>
+      <div class="problem" aria-label="${show(q.a)} ${O.name.toLowerCase()} ${show(q.b)}">
+        <span></span><span class="n">${ra}</span>
+        <span class="op">${O.sym}</span><span class="n">${rb}</span>
+        <span class="bar"></span>
+      </div>
+      <form id="f" autocomplete="off">
+        <input type="text" id="ans" inputmode="decimal" placeholder="Your answer" aria-label="Your answer">
+        <button class="primary" type="submit">Check</button>
+      </form>
+      <p class="msg" id="msg" role="status"></p>
+      <div class="row" id="tools">
+        <button class="hintbtn" type="button" id="hintBtn">Hint</button>
+        <button class="ghost" type="button" id="howBtn">How to do it</button>
+      </div>
+      <div id="hints" style="display:flex;flex-direction:column;gap:8px"></div>
+      <button class="linkish" type="button" id="quit">Back to menu</button>`;
+    const input = document.getElementById("ans");
+    input.focus();
+    let used = 0;
+    const hintBtn = document.getElementById("hintBtn");
+    hintBtn.onclick = () => {
+      used++;
+      const text = used === 1 ? methodHint(q) : estimate(q);
+      document.getElementById("hints").insertAdjacentHTML("beforeend", `<div class="hint"><span class="num-badge">${used}</span><span>${text}</span></div>`);
+      if (used === 1) hintBtn.textContent = "Another hint"; else hintBtn.hidden = true;
+      input.focus();
+    };
+    document.getElementById("howBtn").onclick = () => openLesson(q.op);
+    document.getElementById("quit").onclick = home;
+    document.getElementById("f").onsubmit = e => {
+      e.preventDefault();
+      const given = normalize(input.value);
+      if (given === null) { document.getElementById("msg").textContent = "Type a number, like 4.2 or .35"; return; }
+      check(q, input.value.trim(), given === q.answer);
+    };
+  }
+  const CHEERS = ["Nice work, Gabriella!", "You got it!", "Correct!", "That's right!", "Awesome!", "Nailed it!", "Great thinking!"];
+  function confetti(anchor) {
+    if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const colors = ["var(--add)", "var(--sub)", "var(--mul)", "var(--sun)"];
+    const box = anchor.getBoundingClientRect(), base = card.getBoundingClientRect();
+    for (let i = 0; i < 18; i++) {
+      const b = document.createElement("span"); b.className = "bit";
+      b.style.left = (box.left - base.left + 30) + "px"; b.style.top = (box.top - base.top + 10) + "px";
+      b.style.background = colors[i % 4];
+      b.style.setProperty("--dx", rnd(-140, 220) + "px"); b.style.setProperty("--dy", rnd(-120, 40) + "px");
+      card.appendChild(b); setTimeout(() => b.remove(), 950);
+    }
+  }
+  function check(q, typed, ok) {
+    results[idx] = { ok, typed };
+    if (ok) { stars++; streak++; } else streak = 0;
+    renderDots();
+    const last = idx === problems.length - 1;
+    card.querySelector("form").outerHTML = `<p class="num" style="margin:0;font-size:1.3rem;text-align:center">Your answer: <b>${typed}</b></p>`;
+    ["tools", "msg", "hints"].forEach(id => document.getElementById(id).remove());
+    const box = document.createElement("div");
+    box.className = "result " + (ok ? "ok" : "no");
+    const streakNote = ok && streak >= 3 ? ` <span style="color:#c98a00">${streak} in a row!</span>` : "";
+    box.innerHTML = `
+      <p class="verdict">${ok ? pick(CHEERS) + streakNote : `Almost! The answer is <span class="num">${q.answer}</span>`}</p>
+      ${ok ? `<details><summary>Show the steps</summary><ol class="steps">${steps(q)}</ol></details>`
+           : `<ol class="steps">${steps(q)}</ol><p style="margin:0;font-size:0.95rem">${estimate(q)}</p>`}
+      <div class="row"><button class="primary" type="button" id="next">${last ? "See my results" : "Next problem"}</button></div>`;
+    card.insertBefore(box, document.getElementById("quit"));
+    if (ok) confetti(box.querySelector(".verdict"));
+    const next = document.getElementById("next");
+    next.focus();
+    next.onclick = () => { if (last) renderEnd(); else { idx++; renderDots(); renderProblem(); } };
+  }
+  function renderEnd() {
+    const missed = problems.map((q, i) => ({ q, r: results[i] })).filter(x => !x.r.ok);
+    const right = problems.length - missed.length;
+    const note = missed.length === 0 ? "A perfect round, Gabriella!" : right / problems.length >= 0.8 ? "Great job, Gabriella! Look over the ones you missed below." : "Good effort! Check the steps on the ones you missed, then try them again.";
+    setOpClass(mode === "mix" ? "mul" : mode);
+    card.className = "card end";
+    card.innerHTML = `
+      <div class="meta"><span>Round complete</span><span class="tag">${mode === "mix" ? "Mix it up" : OPS[mode].name}</span></div>
+      <h2 class="num">${right} / ${problems.length}</h2>
+      <p style="margin:0;font-family:var(--font-display);font-weight:600;font-size:1.2rem">${note}</p>
+      ${missed.length ? `<ul class="missed">${missed.map(({ q, r }) =>
+        `<li><span>${show(q.a)} ${OPS[q.op].sym} ${show(q.b)} = <b>${q.answer}</b></span><span class="yours">you wrote ${r.typed}</span></li>`).join("")}</ul>` : ""}
+      <div class="row">
+        ${missed.length ? `<button class="primary" type="button" id="retry">Try the ${missed.length} missed again</button>` : ""}
+        <button class="${missed.length ? "ghost" : "primary"}" type="button" id="fresh">New round</button>
+        <button class="ghost" type="button" id="menu">Menu</button>
+      </div>`;
+    if (missed.length) document.getElementById("retry").onclick = () => begin(mode, missed.map(x => x.q));
+    document.getElementById("fresh").onclick = () => begin(mode);
+    document.getElementById("menu").onclick = home;
+  }
+
+  home();
+})();
+</script>
+
+</body></html>
