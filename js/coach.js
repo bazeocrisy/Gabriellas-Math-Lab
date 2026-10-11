@@ -56,10 +56,13 @@
       if (sol) sol.addEventListener('click', showSolution);
     }
 
-    function finish() {
+    function finish(moveFocus) {
       ctl.disable(true);
       $('.coach-actions').hidden = true;
       if (opts.onSolved) opts.onSolved(st);
+      // The button that was pressed is now hidden. Put keyboard focus on the feedback (Tab then reaches Next).
+      const fb = moveFocus && $('.feedback .fb');
+      if (fb) { fb.tabIndex = -1; fb.focus({ preventScroll: true }); }
     }
 
     function doCheck() {
@@ -85,7 +88,7 @@
       }
       save();
       drawFeedback();
-      if (st.solved) finish();
+      if (st.solved) finish(true);
       else $('.feedback .fb') && $('.feedback .fb').scrollIntoView && $('.feedback .fb').scrollIntoView({ block: 'nearest', behavior: 'smooth' });
     }
 
@@ -96,7 +99,7 @@
       st.fb = { kind: 'solution' };
       save();
       drawFeedback();
-      finish();
+      finish(true);
     }
 
     $('[data-act="check"]').addEventListener('click', doCheck);
@@ -107,6 +110,8 @@
       if (st.fb && st.fb.kind === 'wrong') drawFeedback();
       const all = host.querySelectorAll('.hint');
       if (all.length) all[all.length - 1].scrollIntoView && all[all.length - 1].scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+      // After the last hint the hint button is disabled; move focus to that hint so keyboard users keep their place.
+      if (st.hints >= 3 && all.length) { const h = all[all.length - 1]; h.tabIndex = -1; h.focus({ preventScroll: true }); }
     });
     drawHints();
     drawFeedback();

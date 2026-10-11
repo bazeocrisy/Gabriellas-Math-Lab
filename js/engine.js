@@ -47,6 +47,11 @@
     q.skill = t.skill;
     q.lesson = lessonId;
     q.sig = templateId + ':' + q.sig;
+    // A typed answer that must show a set number of decimal places says so (unless the prompt already does).
+    if (q.type === 'number' && q.places != null && !/decimal place|after the decimal point/.test(q.prompt)) {
+      const n = ['no', 'one', 'two', 'three'][q.places];
+      q.prompt += ` <span class="fmt-note">(Write your answer with ${n} digit${q.places === 1 ? '' : 's'} after the decimal point, even if ${q.places === 1 ? 'it is' : 'the last one is'} a zero.)</span>`;
+    }
     return q;
   }
 

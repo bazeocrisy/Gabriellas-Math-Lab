@@ -205,6 +205,7 @@
             ${q.visual ? `<div class="res-visual">${q.visual}</div>` : ''}
             <p>Your answer: <b>${esc(G.engine.describe(q, d.answers[k]))}</b></p>
             ${ok ? '' : `<p>Correct answer: <b>${esc(q.answerText)}</b></p>`}
+            ${!ok && /right amount/.test(G.engine.check(q, d.answers[k]).message || '') ? `<p class="fine">${esc(G.engine.check(q, d.answers[k]).message)}</p>` : ''}
             <p class="res-why">${q.why}</p></li>`;
       };
       const teachLink = (sk) => `#/${lessonId}/teach/${L.screens.findIndex((x) => x.id === L.skillScreen[sk]) + 1}`;

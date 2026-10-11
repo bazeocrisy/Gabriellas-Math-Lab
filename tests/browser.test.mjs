@@ -599,6 +599,23 @@ try {
   await b.load(URL + 'index.html#/');
   check('saved progress: Lesson 1 Teach finished before the new screens still shows as finished', /Teach Finished/.test(await js(`return document.querySelector('.lesson-card').innerText.replace(/\\s+/g, ' ');`)));
 
+  // ── Keyboard focus and announcements (audit D-25, D-26) ──
+  await js(`localStorage.clear();`);
+  await b.load(URL + 'index.html#/d01/teach/3'); await b.reload();
+  r = await js(`${H} const sc = GML.lessonContent.d01.screens[2]; const q = E.make('d01', sc.check.t, 1, sc.check.params); const host = document.querySelector('.check-host');
+    const c = host.querySelector('[data-act=check]'); c.focus(); fill(host, q, right(q)); c.click();
+    const a = document.activeElement; return { body: a === document.body, inFeedback: !!a.closest('.feedback') };`);
+  check('a11y: after a correct guided check, keyboard focus moves to the feedback (not lost)', !r.body && r.inFeedback, r);
+  await b.load(URL + 'index.html#/d01/practice');
+  r = await js(`const h = document.querySelector('[data-act=hint]'); h.focus(); h.click(); h.click(); h.click();
+    const a = document.activeElement; return { body: a === document.body, hint: a.classList.contains('hint'), disabled: h.disabled };`);
+  check('a11y: after the last hint, keyboard focus moves to that hint (not lost)', !r.body && r.hint && r.disabled, r);
+  await b.load(URL + 'index.html#/d02/teach/1');
+  r = await js(`const live = document.querySelector('.steps').getAttribute('aria-live'); const s = document.querySelector('[data-act=step]'); s.focus();
+    for (let k = 0; k < 8; k++) if (!s.hidden) s.click();
+    const a = document.activeElement; return { live, why: a.classList.contains('why-box'), body: a === document.body };`);
+  check('a11y: new worked-example steps are announced, and focus goes to "Why it works" after the last step', r.live === 'polite' && r.why && !r.body, r);
+
   // ── Unknown routes and reset ──
   await b.load(URL + 'index.html#/d11/teach/1');
   check('unready lesson route falls back to home', /Gabriella's Math Lab/.test(await js(`return document.querySelector('h1').innerText;`)));

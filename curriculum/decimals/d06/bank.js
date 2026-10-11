@@ -86,10 +86,11 @@
         `${a} is ${s(ta, 'tenth')} and ${b} is ${s(tb, 'tenth')}. Add the numbers of tenths.`,
         'If you have ten tenths or more, ten of them make one whole. Write the wholes before the decimal point and the leftover tenths after it.'
       ],
-      why: `${ta} tenths + ${tb} tenths = ${ta + tb} tenths${ta + tb >= 10 ? ` = 1 whole and ${ta + tb - 10} tenths` : ''} = <b>${ans}</b>.`,
+      why: `${ta} tenths + ${tb} tenths = ${ta + tb} tenths${ta + tb >= 10 ? ` = 1 whole and ${s(ta + tb - 10, 'tenth')}` : ''} = <b>${ans}</b>.`,
       diagnose(resp, info) {
         if (info.th === (ta + tb - 10) * 100 && ta + tb > 10) return 'You found the leftover tenths, but 10 tenths make 1 whole. Don\'t forget the whole.';
-        if (info.th === (ta + tb) * 10) return `That would be ${ta + tb} hundredths. These are tenths, so ${ta + tb} tenths is written with the tenths place right after the point${ta + tb >= 10 ? ' (and 10 tenths make 1 whole)' : ''}.`;
+        if (info.th === (ta + tb) * 10) return ta + tb >= 10 ? 'That would be hundredths, but these bars show tenths. Ten tenths make one whole, so write the wholes before the decimal point and the leftover tenths after it.'
+          : `That would be ${ta + tb} hundredths. These bars show tenths, so the answer has one digit after the decimal point.`;
         return `Count the tenths in both bars: ${ta} + ${tb}. Then write that many tenths as a decimal.`;
       }
     };
@@ -141,7 +142,7 @@
     ];
     const order = r.shuffle([0, 1, 2]);
     const letters = ['A', 'B', 'C'];
-    const choices = order.map((i, pos) => ({ value: letters[pos], text: 'Way ' + letters[pos], html: opts[i].html, key: opts[i].key }));
+    const choices = order.map((i, pos) => ({ value: letters[pos], text: 'Way ' + letters[pos], html: M.columnsLabel(opts[i].html, `Way ${letters[pos]}.`), key: opts[i].key }));
     const ans = choices.find((c) => c.key === 'ok').value;
     return {
       type: 'mc', layout: 'models', sig: a + '+' + b,

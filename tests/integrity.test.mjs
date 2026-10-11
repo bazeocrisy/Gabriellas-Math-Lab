@@ -218,3 +218,130 @@ test('every skill has a guided check in Teach', () => {
     for (const sk of Object.keys(engine.banks[id].skills)) assert.ok(L.screens.some((s) => s.kind === 'check' && s.skill === sk), `${id}: ${sk}`);
   }
 });
+
+// ── Exact descriptions, clear feedback, contrast (audit D-06 to D-11, D-27, D-28, D-29) ──
+import fs from 'node:fs';
+
+/** Every point described in a number line's label is exactly where the dot is drawn. */
+function checkLine(svg, ctx) {
+  const label = (svg.match(/aria-label="([^"]*)"/) || [])[1] || '';
+  const ends = [...svg.matchAll(/m-bold" text-anchor="middle">([^<]+)</g)].map((m) => m[1]);
+  const from = G.D.toThousandths(ends[0]), to = G.D.toThousandths(ends[1]);
+  const dots = [...svg.matchAll(/<circle cx="([\d.]+)"/g)].map((m) => Number(m[1]));
+  const said = [...label.matchAll(/Point (\S+) is (\d+ and a half jumps|half a jump|\d+ jumps?) to the right/g)].map((m) => {
+    const t = m[2]; const half = /half/.test(t); const w = half && t === 'half a jump' ? 0 : Number(t.match(/\d+/)[0]);
+    return 2 * w + (half ? 1 : 0); // in half jumps
+  });
+  if (!said.length && dots.length && !/cut into 10 equal jumps/.test(label)) {
+    // A written description names each point's value instead; it must be the drawn value.
+    const step = (to - from) / 10;
+    for (const x of dots) { const v = from + (Math.round(((x - 24) / 292) * 20) / 2) * step; assert.ok(label.includes(G.D.fromThousandths(v)), `${ctx}: ${G.D.fromThousandths(v)} not in: ${label}`); }
+    return;
+  }
+  assert.equal(said.length, dots.length, `${ctx}: every point is described: ${label}`);
+  dots.forEach((x, i) => {
+    const halfJumps = Math.round(((x - 24) / 292) * 20); // 10 jumps across 292 px, counted in halves
+    assert.equal(said[i], halfJumps, `${ctx}: point ${i + 1} is described at ${said[i] / 2} jumps but drawn at ${halfJumps / 2}: ${label}`);
+  });
+  void from; void to;
+}
+
+test('D-06: number-line descriptions give the exact position of every point (questions, Teach, Notes)', () => {
+  let lines = 0;
+  for (const id of LESSONS) {
+    for (const t of engine.banks[id].templates) for (let seed = 1; seed <= 150; seed++) {
+      const q = engine.make(id, t.id, seed);
+      for (const svg of String(q.visual || '').match(/<svg class="model model-line[\s\S]*?<\/svg>/g) || []) { checkLine(svg, `${id}/${t.id}/${seed}`); lines++; }
+    }
+    const L = G.lessonContent[id];
+    const html = L.notes + L.screens.map((s) => [s.body, s.visual, s.exampleVisual, ...(s.steps || []), s.reteach].join(' ')).join(' ');
+    for (const svg of html.match(/<svg class="model model-line[\s\S]*?<\/svg>/g) || []) { checkLine(svg, `${id} Teach/Notes`); lines++; }
+  }
+  assert.ok(lines > 1000, `${lines} number lines checked`);
+  // The audited example: 0.95 is 9 and a half jumps, not 10.
+  assert.match(G.models.line({ from: 0, to: 1000, points: [{ v: 950, label: 'C' }] }), /Point C is 9 and a half jumps/);
+});
+
+test('D-07: answers that must show a set number of decimal places say so in the question', () => {
+  for (const id of LESSONS) for (const t of engine.banks[id].templates) for (let seed = 1; seed <= 40; seed++) {
+    const q = engine.make(id, t.id, seed);
+    if (q.type === 'number' && q.places != null) assert.match(strip(q.prompt), /decimal place|after the decimal point/, `${id}/${t.id}`);
+  }
+  // The right amount with the wrong number of places is named as such (not as a wrong amount).
+  const q = engine.make('d05', 'T1', 27);
+  const r = engine.check(q, String(Number(q.answer)));
+  if (q.answer !== String(Number(q.answer))) assert.match(r.message, /right amount/);
+});
+
+test('D-08: exactly-halfway rounding feedback never says "whichever it is closer to"', () => {
+  let halfway = 0;
+  for (const [id, t] of [['d05', 'K3'], ['d05', 'A2'], ['d10', 'RR4'], ['d05', 'T1'], ['d05', 'H1']]) for (let seed = 1; seed <= 400; seed++) {
+    const q = engine.make(id, t, seed);
+    // Only numbers exactly halfway between the two candidates, for the place this question rounds to.
+    const x = strip(q.prompt).match(/\d+\.\d+/)[0], place = (strip(q.prompt).match(/nearest (tenth|hundredth|whole)/) || [])[1];
+    const unit = place === 'hundredth' ? 10 : place === 'tenth' ? 100 : 1000;
+    if (G.D.toThousandths(x) % unit !== unit / 2) continue;
+    halfway++;
+    const k = G.D.toThousandths(q.answer);
+    for (const w of [k + 1, k - 1, k + 10, k - 10, k + 100, k - 100, k * 10].filter((x) => x > 0)) {
+      const m = engine.check(q, G.D.fromThousandths(w, 3)).message || '';
+      assert.doesNotMatch(m, /closer to/, `${id}/${t}/${seed}: ${m}`);
+    }
+  }
+  assert.ok(halfway > 50, `${halfway} halfway questions checked`);
+});
+
+test('D-09: Lesson 7 SL3 hints describe the regrouping the problem really needs', () => {
+  for (let seed = 1; seed <= 2000; seed++) {
+    const q = engine.make('d07', 'SL3', seed);
+    const [a, b] = strip(q.prompt).match(/\d+\.\d+/g);
+    const { da, db } = G.kit.aligned(a, b), n = da.length;
+    const hReg = da[n - 1] < db[n - 1];
+    assert.equal(/so regroup|Regroup across/.test(q.hints[1]), hReg, `SL3/${seed} hint 2: ${q.hints[1]}`);
+    if (hReg) assert.equal(/tenths digit is 0/.test(q.hints[1]), da[n - 2] === 0, `SL3/${seed}`);
+    const top = hReg ? (da[n - 2] ? da[n - 2] - 1 : 9) : da[n - 2];
+    assert.match(q.hints[2], new RegExp(`top digit is ${top}\\b`), `SL3/${seed} hint 3: ${q.hints[2]}`);
+    assert.equal(/It is less than/.test(q.hints[2]), top < db[n - 2], `SL3/${seed}`);
+  }
+});
+
+test('D-10, D-29: Lesson 6 AM2 feedback and explanation', () => {
+  for (let seed = 1; seed <= 1500; seed++) {
+    const q = engine.make('d06', 'AM2', seed);
+    const t = Math.round(G.D.toThousandths(q.answer) / 100);
+    const m = engine.check(q, G.D.fromThousandths(t * 10, 3)).message;
+    assert.doesNotMatch(m, new RegExp(`(^|[^0-9.])${q.answer.replace('.', '\\.')}(?![0-9])`), `AM2/${seed}: ${m}`);
+    assert.doesNotMatch(m, /make 1 whole\)|written with the tenths place right after/, `AM2/${seed}: ${m}`);
+    assert.doesNotMatch(q.why, /\b1 tenths\b/, `AM2/${seed}: ${q.why}`);
+  }
+});
+
+test('D-11: "lined up correctly?" choices are described neutrally, column by column', () => {
+  for (const [id, t] of [['d06', 'AL2'], ['d07', 'SL2']]) for (let seed = 1; seed <= 200; seed++) {
+    for (const c of engine.make(id, t, seed).choices) {
+      const label = (c.html.match(/aria-label="([^"]*)"/) || [])[1];
+      assert.ok(label && /column by column/.test(label), `${id}/${t}/${seed}`);
+      assert.doesNotMatch(label, /lined up|line up/, `${id}/${t}/${seed}: ${label}`);
+    }
+  }
+});
+
+/** WCAG contrast ratio of two #rrggbb colors. */
+function contrast(a, b) {
+  const lum = (h) => { const c = [1, 3, 5].map((i) => parseInt(h.slice(i, i + 2), 16) / 255).map((v) => (v <= 0.03928 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4)); return 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2]; };
+  const [x, y] = [lum(a), lum(b)].sort((p, q) => q - p);
+  return (x + 0.05) / (y + 0.05);
+}
+
+test('D-27, D-28: focus ring and diagram marks have at least 3:1 contrast', () => {
+  const css = fs.readFileSync(new URL('../css/styles.css', import.meta.url), 'utf8');
+  const ring = css.match(/--focus:\s*3px solid (#[0-9a-f]{6})/i)[1];
+  for (const bg of ['#ffffff', '#f5f7fc', '#eaf1fd', '#e8f6ee', '#f1ecfb']) assert.ok(contrast(ring, bg) >= 3, `focus ring ${ring} on ${bg}: ${contrast(ring, bg).toFixed(2)}`);
+  for (const cls of ['m-focus', 'm-mid', 'm-zoomline']) {
+    const color = css.match(new RegExp(`\\.${cls} \\{[^}]*stroke: (#[0-9a-f]{6})`, 'i'))[1];
+    assert.ok(contrast(color, '#ffffff') >= 3, `${cls} ${color}: ${contrast(color, '#ffffff').toFixed(2)}`);
+  }
+  const area = G.models.area(3, 4);
+  for (const color of area.match(/stroke="(#[0-9a-f]{6})"/gi).map((s) => s.slice(8, 15))) assert.ok(contrast(color, '#ffffff') >= 3, `area hatch ${color}`);
+  assert.match(G.models.grid(30, { cross: 5 }), /class="m-x-halo"/);
+});

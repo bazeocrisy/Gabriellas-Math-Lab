@@ -32,6 +32,7 @@
     if (got === b.lo && ans === b.hi) return `The ${NEXT[place]} digit is ${dg}, which is five or more, so round UP to the bigger ${place}.`;
     if (got === b.hi && ans === b.lo) return `The ${NEXT[place]} digit is ${dg}, which is four or less, so keep the smaller ${place} (round down).`;
     if (/10$/.test(info.raw) && ans % (unit * 10) === 0) return `When a 9 rounds up, it becomes 10 of that place, which is 1 of the next place to the left. Regroup instead of writing 10.`;
+    if (k === b.mid) return `${x} is exactly halfway between ${b.loS} and ${b.hiS}, so it is just as close to both. When a number is exactly halfway, the rule is to round up to the greater ${place}.`;
     return `${x} is between ${b.loS} and ${b.hiS}. Round to whichever ${place} it is closer to.`;
   }
 
