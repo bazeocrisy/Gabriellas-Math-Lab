@@ -9,8 +9,9 @@
    */
   function coach(host, q, opts) {
     const st = Object.assign({ hints: 0, attempts: 0, solved: false, firstTry: null, shown: false, resp: null, fb: null }, opts.state || {});
-    // "See it": a picture of the problem (q.picture) or the lesson's reminder card, before answering.
-    const model = q.picture || opts.remind || '';
+    // "See it": a picture of the problem (q.picture) or the lesson's reminder card, before answering. The reminder is
+    // offered only when the page asks (opts.seeIt): Teach reteach notes can contain the answer, so they stay feedback-only.
+    const model = q.picture || (opts.seeIt && opts.remind) || '';
     const modelLabel = q.picture ? 'Show me a picture' : 'Show me a reminder';
     // Two parts: the question and its controls, then the help (hints, feedback, Next). On wide screens they sit side
     // by side; on smaller screens the help follows the question, in the same order as the page is read.
@@ -50,8 +51,8 @@
         return;
       }
       if (fb.kind === 'solution') {
-        el.innerHTML = `<div class="fb fb-solution"><p class="fb-title">Here is how to solve it</p>${q.solution || ''}<p>${q.why}</p>
-          <p>The answer is <b>${G.models.esc(q.answerText)}</b>. Read the steps again, then try the next one on your own.</p></div>`;
+        el.innerHTML = `<div class="fb fb-solution"><p class="fb-title">Here is how to solve it</p>${q.solution || ''}<div class="sol-end"><p>${q.why}</p>
+          <p>The answer is <b>${G.models.esc(q.answerText)}</b>. Read the steps again, then try the next one on your own.</p></div></div>`;
         stepThrough(el);
         return;
       }
@@ -60,7 +61,7 @@
       el.innerHTML = `<div class="fb fb-wrong">
         <p class="fb-title"><span aria-hidden="true">✗</span> Not quite. That answer is not correct yet.</p>
         <p>${G.models.esc(fb.msg)}</p>
-        ${(q.remind || opts.remind) ? `<details class="remind"><summary>Show me a reminder</summary>${q.remind || opts.remind}</details>` : ''}
+        ${(q.remind || opts.remind) && !(model && !q.picture && !q.remind) ? `<details class="remind"><summary>${model && !q.picture ? 'Reminder for this question' : 'Show me a reminder'}</summary>${q.remind || opts.remind}</details>` : ''}
         <p><b>Try again:</b> change your answer, then press Check answer. ${tip}</p>
         ${st.attempts >= SOLUTION_AFTER ? '<button type="button" class="btn btn-link" data-act="solution">Show me how to solve it</button>' : ''}
       </div>`;
@@ -75,22 +76,26 @@
       const total = items.length;
       const btn = document.createElement('button');
       btn.type = 'button'; btn.className = 'btn btn-primary sol-next'; btn.dataset.act = 'sol-next';
+      const end = el.querySelector('.sol-end');
+      const parts = [...el.querySelectorAll('[data-k]')].filter((x) => !x.matches('li'));
       const draw = () => {
         const shown = Math.min(Math.max(Number.isInteger(st.solStep) ? st.solStep : 1, 1), total);
         items.forEach((li, k) => { li.hidden = k >= shown; li.classList.toggle('is-current', k === shown - 1); });
         btn.hidden = shown >= total;
         btn.textContent = `Show next step (${shown + 1} of ${total})`;
+        if (end) end.hidden = shown < total;
+        // A worked layout (long division) fills in with the steps: digits and rows appear when their step does.
+        const upTo = Math.max(-1, ...items.slice(0, shown).map((li) => (li.dataset.k !== undefined ? Number(li.dataset.k) : 99)));
+        parts.forEach((x) => x.classList.toggle('sol-later', Number(x.dataset.k) > upTo));
       };
       btn.addEventListener('click', () => {
         st.solStep = Math.min((st.solStep || 1) + 1, total);
         save(); draw();
         const cur = items[st.solStep - 1];
         if (cur) { cur.tabIndex = -1; cur.focus({ preventScroll: true }); }
-        if (st.solStep >= total) { const n = host.querySelector('.coach-next button'); if (n) n.focus({ preventScroll: true }); }
       });
       const lists = el.querySelectorAll('.sol-steps');
       lists[lists.length - 1].after(btn);
-      lists.forEach((l) => l.setAttribute('aria-live', 'polite'));
       draw();
     }
 

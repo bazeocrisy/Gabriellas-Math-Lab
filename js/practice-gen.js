@@ -278,17 +278,17 @@
     digits.forEach((dg, i) => {
       const place = i < W ? (W - 1 - i === 0 ? 'ones' : ['ones', 'tens', 'hundreds'][W - 1 - i]) : PLACE[i - W + 1];
       const cur = rem * 10 + Number(dg), qd = Math.floor(cur / n), was = rem; rem = cur - qd * n;
-      if (i === W && i > 0) steps.push('Write the decimal point in the answer straight above the decimal point.');
+      if (i === W && i > 0) steps.push({ k: W - 0.5, t: 'Write the decimal point in the answer straight above the decimal point.' });
       const Place = place[0].toUpperCase() + place.slice(1);
       // A leading zero before the ones place is not written; the ones place gets its 0 so the answer starts "0.".
       const skip = !started && qd === 0 && i < W - 1;
       if (qd || i >= W - 1) started = true;
-      steps.push(`${Place}: ${was ? `the ${was} left over makes ${was * 10} ${place}, and with the ${dg} that is ${cur}` : cur} ÷ ${n} is ${qd}${rem ? ` with ${rem} left over` : ''}. ${skip ? `Leave this place empty and carry the ${rem} to the next place.` : `Write ${qd} above the ${dg}.`}`);
+      steps.push({ k: i, t: `${Place}: ${was ? `the ${was} left over makes ${was * 10} ${place}, and with the ${dg} that is ${cur}` : cur} ÷ ${n} is ${qd}${rem ? ` with ${rem} left over` : ''}. ${skip ? `Leave this place empty and carry the ${rem} to the next place.` : `Write ${qd} above the ${dg}.`}` });
     });
     if (W === digits.length) steps.push('There are no decimal places, so the answer has none either.');
     const q = num(kq);
     steps.push(`Check by multiplying: ${q} × ${n} = ${a}.`);
-    return `<div class="solution-work">${M.longDiv(a, n, q, { work: true })}<ol class="sol-steps">${steps.map((t) => `<li>${t}</li>`).join('')}</ol></div>`;
+    return `<div class="solution-work">${M.longDiv(a, n, q, { work: true })}<ol class="sol-steps">${steps.map((s) => (typeof s === 'string' ? `<li>${s}</li>` : `<li data-k="${s.k}">${s.t}</li>`)).join('')}</ol></div>`;
   }
   function div(ka, n, o = {}) {
     if (ka % n) return null;

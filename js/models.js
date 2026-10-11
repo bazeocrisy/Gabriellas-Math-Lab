@@ -225,10 +225,16 @@
     const label = o.label || `${a} divided by ${n}, written as a division: ${n} is outside the bracket and ${a} is under it` +
       (Q ? `. The answer ${q} is written above ${a}, with its decimal point straight above the decimal point in ${a}.` : '.');
     return `<table class="ldiv-model" role="img" aria-label="${esc(label)}"><tbody>` +
-      `<tr class="ld-q"><td></td>${above.map((c) => `<td>${esc(c)}</td>`).join('')}</tr>` +
+      `<tr class="ld-q"><td></td>${above.map((c, i) => `<td${o.work ? ` data-k="${kOf(below, i, W)}"` : ''}>${esc(c)}</td>`).join('')}</tr>` +
       `<tr><td class="ld-div">${esc(n)}</td>${below.map((c, i) => `<td class="ld-top${i === 0 ? ' ld-first' : ''}">${esc(c)}</td>`).join('')}</tr>` +
       (Q && o.work ? divWork(below, Number(n), A.whole.length) : '') +
       '</tbody></table>';
+  }
+
+  /** Which digit of the dividend a column belongs to (the decimal point counts as just before the first decimal place). */
+  function kOf(below, i, W) {
+    if (below[i] === '.') return W - 0.5;
+    return below.slice(0, i).filter((c) => c !== '.').length;
   }
 
   /** Rows of long-division working: "− product" (underlined), then what is left with the next digit brought down. */
@@ -243,7 +249,7 @@
       for (let j = 0; j < s.length; j++) { const at = pos[k - j]; if (at === undefined) break; cells[at] = s[s.length - 1 - j]; first = at; }
       const lead = sign ? (first > 0 ? first - 1 : -1) : null;
       if (sign && lead >= 0) cells[lead] = sign;
-      return `<tr class="${cls}"><td>${sign && lead < 0 ? sign : ''}</td>${cells.map((c, i) => {
+      return `<tr class="${cls}" data-k="${k}"><td>${sign && lead < 0 ? sign : ''}</td>${cells.map((c, i) => {
         const line = cls === 'ld-sub' && i >= first && i <= pos[k] ? ' ld-line' : '';
         return `<td class="${line.trim()}">${esc(c)}</td>`;
       }).join('')}</tr>`;
@@ -251,7 +257,7 @@
     let rem = 0, started = false;
     digits.forEach((d, k) => {
       const cur = rem * 10 + d, qd = Math.floor(cur / n);
-      if (!started && qd === 0 && pos[k] < W - 1) { rem = cur; return; } // nothing to write yet
+      if (!started && qd === 0 && (pos[k] < W - 1 || cur === 0)) { rem = cur; return; } // nothing to write yet
       if (started) rows.push(row(cur, k, 'ld-bring'));
       started = true;
       rows.push(row(qd * n, k, 'ld-sub', '−'));

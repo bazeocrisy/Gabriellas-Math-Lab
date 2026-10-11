@@ -18,8 +18,8 @@ NumberNova (formerly Gabriella's Math Lab) is a friendly Grade 5 mathematics pla
 **Explain → Show how → Guide → Practice → Test**
 
 - **Teach:** one idea per screen, models and charts, worked examples revealed step by step, and guided "Try it together" questions with coaching. "Start Lesson Over" clears this lesson's guided answers and revealed steps only.
-- **Practice:** 10 varied questions per session.
-  - Each question has three progressive hints, feedback that names the likely mistake, retries, and a worked solution after three different tries.
+- **Practice:** 10 varied questions per session, with the problem in its own panel and, on wide screens, hints and solutions beside it.
+  - Each question has three progressive hints, feedback that names the likely mistake, retries, and a worked solution after three different tries, shown one step at a time.
   - "Start New Practice" asks before it discards unfinished work.
 - **Test:** 10 fresh questions, with no hints and no feedback until you submit.
   - **Results:** score, per-skill results and explanations.
@@ -41,7 +41,7 @@ NumberNova (formerly Gabriella's Math Lab) is a friendly Grade 5 mathematics pla
 
 ## Status
 
-NumberNova is live at https://bazeocrisy.github.io/Gabriellas-Math-Lab/: all ten decimal lessons with the audit corrections, the Practice Center, Study Guides and Parent Progress. See [docs/STATUS.md](docs/STATUS.md) and [docs/NUMBERNOVA-IMPLEMENTATION.md](docs/NUMBERNOVA-IMPLEMENTATION.md).
+NumberNova is live at https://bazeocrisy.github.io/Gabriellas-Math-Lab/: all ten decimal lessons with the audit corrections, the Practice Center, Study Guides and Parent Progress. See [docs/STATUS.md](docs/STATUS.md), [docs/NUMBERNOVA-IMPLEMENTATION.md](docs/NUMBERNOVA-IMPLEMENTATION.md) and [docs/UX-IMPROVEMENTS.md](docs/UX-IMPROVEMENTS.md) (the layout and usability improvements on the `claude/numbernova-ux` branch).
 
 ## Run it
 

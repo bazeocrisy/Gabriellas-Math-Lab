@@ -49,9 +49,13 @@
     if (!started) return { label: 'Start', href: base + '/teach/1', detail: 'Not started', kind: 'teach', started };
     if (!p.practice.sessions && !last) return { label: 'Practice', href: base + '/practice', detail: 'Teach finished', kind: 'practice', started };
     if (!last) return { label: 'Take the Test', href: base + '/test', detail: `${p.practice.sessions} practice session${p.practice.sessions === 1 ? '' : 's'} done`, kind: 'test', started };
-    // A test without ★: an assisted 9 or 10 only needs a retake on its own; otherwise practice first.
+    // A test without ★: an assisted 9 or 10 only needs a retake on its own; after practicing since the Test, take it
+    // again; with Teach never opened, start there; otherwise practice first.
+    const score = `${last.correct} of ${last.total}${last.assisted ? ' (pages opened)' : ''}`;
     if (last.assisted && last.correct >= 9) return { label: 'Take the Test again', href: base + '/test', detail: `Last Test ${last.correct} of ${last.total}, with lesson pages opened`, kind: 'test', started };
-    return { label: 'Practice again', href: base + '/practice', detail: `Last Test ${last.correct} of ${last.total}: practice, then take the Test again`, kind: 'practice', started };
+    if (Date.parse(p.practice.lastDate || '') > Date.parse(last.date || '')) return { label: 'Take the Test again', href: base + '/test', detail: `Practiced since your last Test (${score})`, kind: 'test', started };
+    if (!p.teach.done && !p.teach.furthest) return { label: 'Review Teach', href: base + '/teach/1', detail: `Last Test ${score}: go through Teach, then practice`, kind: 'teach', started };
+    return { label: 'Practice again', href: base + '/practice', detail: `Last Test ${score}: practice, then take the Test again`, kind: 'practice', started };
   }
 
   /** Where the student left off: the furthest lesson that is started but not mastered (an open Test first). */
@@ -117,9 +121,11 @@
 
   /** Learn: the ten decimal lessons, each with Teach, Practice, Test and Lesson Notes. */
   function learn() {
+    const firstNew = unit.lessons.find((l) => ready(l.id) && !nextStep(l).started);
     const cards = unit.lessons.filter((l) => ready(l.id)).map((l) => {
       const mastered = !!G.store.lesson(l.id).masteredOn;
       const s = nextStep(l);
+      if (!s.started && l !== firstNew) s.kind = 'quiet';
       return `<article class="lesson-card${mastered ? ' is-mastered' : ''}" aria-labelledby="lc-${l.id}">
         <div class="lc-head">
           <span class="lc-num" aria-hidden="true">${l.n}</span>
@@ -230,7 +236,7 @@
       ${tile('Lessons mastered', `${done.length} of ${shown.length}`, done.length ? '★ 9 of 10 on a Test done on its own' : 'None yet', 'pt-mastered')}
       ${tile('Current lesson', current, currentSub, 'pt-current')}
       ${tile('Latest Test', latest ? `${latest.t.correct} of ${latest.t.total}${latest.t.mastered ? ' ★' : ''}` : 'None yet', latest ? `Lesson ${latest.l.n}, ${fmtDate(latest.t.date)}` : '', 'pt-test')}
-      ${tile('Practice this week', pcWeek + lessonsWeek ? `${pcWeek} Practice Center session${pcWeek === 1 ? '' : 's'}` : 'None yet', pcWeek + lessonsWeek ? `${lessonsWeek} lesson${lessonsWeek === 1 ? '' : 's'} practiced` : 'In the last 7 days', 'pt-practice')}
+      ${tile('Practice this week', pcWeek + lessonsWeek ? `${lessonsWeek} lesson${lessonsWeek === 1 ? '' : 's'}, ${pcWeek} Center` : 'None yet', pcWeek + lessonsWeek ? `Lessons practiced and Practice Center sessions, last 7 days` : 'In the last 7 days', 'pt-practice')}
       <li class="pp-tile pt-review"><span class="pp-k">Skills to review</span>${review.length ? `<ol class="pp-review">${review.slice(0, 3).map((x) => `<li>${x}</li>`).join('')}</ol>` : '<span class="pp-v">None right now</span>'}</li>
     </ul></section>`;
   }
@@ -315,7 +321,8 @@
       ${parentTable(shown)}
       ${blocks}
       ${practiceCenterBlock()}
-      <details class="card pp-rules"><summary><h2 id="rules-h">How Tests and mastery work</h2></summary>
+      <section class="card pp-rules-card" aria-labelledby="rules-h"><h2 id="rules-h">How Tests and mastery work</h2>
+      <details class="pp-rules"><summary>Show the rules</summary>
         <ul>
           <li><b>★ Mastered</b> means at least 9 of 10 correct on a Lesson Test done on its own. This is the app's learning benchmark, not an official Georgia Milestones score.</li>
           <li>A student may leave a Test and come back later; answers are saved.</li>
@@ -324,7 +331,7 @@
           <li>Practice shows two numbers: right on the first try (hints allowed), and right on the first try with no hints. The second number is counted only for practice sessions finished since it was added.</li>
           <li><b>Practice Center</b> sessions are practice: they are shown in their own section and never count as a Test or for ★ Mastered. Opening the Practice Center or the Study Guides while a lesson Test is unfinished is noted on that Test, like opening Teach.</li>
         </ul>
-      </details>
+      </details></section>
       <section class="reset">
         <button type="button" class="btn" data-act="reset">Erase all progress on this device</button>
         <div class="confirm" hidden><p>Erase all saved progress? This cannot be undone.</p>

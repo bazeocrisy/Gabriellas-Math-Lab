@@ -831,6 +831,19 @@ try {
   check('home: "Pick up where you left off" card, a smaller logo, and the grade tags in the footer', /Pick up where you left off/.test(r.t) && /Lesson 5/.test(r.t) && r.logo <= 210 && !r.tags && /Georgia Milestones Preparation/.test(r.foot), r);
   check('UX: looking at Home and Learn changes no saved progress', (await js(`return localStorage.getItem('gml:v1:progress');`)) === progressBefore);
 
+  await js(`const k = 'gml:v1:progress', p = JSON.parse(localStorage.getItem(k)); p.lessons.d03.practice.lastDate = '2026-10-12T09:00:00Z'; p.lessons.d03.practice.sessions = 3; localStorage.setItem(k, JSON.stringify(p));`);
+  await b.load(URL + 'index.html#/learn'); await b.reload();
+  r = await js(`const c = [...document.querySelectorAll('.lc-next')]; return { d03: c[2].childNodes[0].textContent + '>' + c[2].getAttribute('href') + ' ' + c[2].closest('.lesson-card').innerText.includes('Practiced since your last Test'),
+    filled: c.filter((a) => !a.classList.contains('lc-next-quiet') && a.childNodes[0].textContent === 'Start').length, quiet: c.filter((a) => a.classList.contains('lc-next-quiet')).length };`);
+  check('learn: after practicing since a Test without ★, the next step is to take the Test again', r.d03 === 'Take the Test again>#/d03/test false' || r.d03 === 'Take the Test again>#/d03/test true', r);
+  check('learn: only the first untouched lesson has a filled Start button', r.filled === 1 && r.quiet === 4, r);
+  await js(UX_SEED);
+
+  // Teach "Try it together": no reminder button before answering (its reteach note can contain the answer).
+  await b.load(URL + 'index.html#/d03/teach/2'); await b.reload();
+  r = await js(`return { coach: !!document.querySelector('.coach'), model: !!document.querySelector('[data-act=model]') };`);
+  check('teach: guided checks offer no reminder button before answering', r.coach && !r.model, r);
+
   // An unfinished Test is the next step for its lesson.
   await b.load(URL + 'index.html#/d06/test'); await b.reload();
   await js(`const s = document.querySelector('[data-act=start]'); if (s) s.click();`); await b.wait(150);
@@ -867,7 +880,7 @@ try {
 
   // "Show me a picture" and step-by-step solutions on a Practice Center division question.
   await pcStart('div', 10);
-  await js(`const k = 'gml:v1:draft:pc-session', d = JSON.parse(localStorage.getItem(k)); d.i = d.set.findIndex((x) => { const q = GML.engine.make('pc', x.id, x.seed); return q.picture && /sol-steps/.test(q.solution) && (q.solution.match(/<li>/g) || []).length >= 3; }); localStorage.setItem(k, JSON.stringify(d));`);
+  await js(`const k = 'gml:v1:draft:pc-session', d = JSON.parse(localStorage.getItem(k)); d.i = d.set.findIndex((x) => { const q = GML.engine.make('pc', x.id, x.seed); return q.picture && /sol-steps/.test(q.solution) && (q.solution.match(/<li[ >]/g) || []).length >= 3; }); localStorage.setItem(k, JSON.stringify(d));`);
   await b.reload();
   r = await js(`const mb = document.querySelector('[data-act=model]'); const before = { exp: mb.getAttribute('aria-expanded'), hidden: document.querySelector('.coach-model').hidden };
     mb.click(); return { before, exp: mb.getAttribute('aria-expanded'), hidden: document.querySelector('.coach-model').hidden, layout: !!document.querySelector('.coach-model .ldiv-model'), txt: mb.innerText };`);
@@ -877,11 +890,17 @@ try {
     host.querySelector('[data-act=solution]').click();
     const items = () => [...host.querySelectorAll('.fb-solution .sol-steps > li')];
     const total = items().length, first = items().filter((li) => !li.hidden).length, btn = host.querySelector('[data-act=sol-next]');
+    const endHidden = host.querySelector('.fb-solution .sol-end').hidden, laterAtStart = host.querySelectorAll('.fb-solution .ldiv-model .sol-later').length;
+    const quotientShown = [...host.querySelectorAll('.fb-solution .ld-q td')].filter((td) => td.textContent && !td.classList.contains('sol-later')).map((td) => td.textContent).join('');
     btn.click(); const second = items().filter((li) => !li.hidden).length, cur = items().findIndex((li) => li.classList.contains('is-current')), focusLi = document.activeElement === items()[1];
     for (let k = 0; k < total; k++) if (!btn.hidden) btn.click();
-    return { total, first, second, cur, focusLi, all: items().every((li) => !li.hidden), btnHidden: btn.hidden, work: host.querySelectorAll('.fb-solution .ldiv-model .ld-sub').length, next: !!host.querySelector('.coach-next button') };`);
+    const lastFocused = document.activeElement === items()[total - 1];
+    return { total, first, second, cur, focusLi, endHidden, laterAtStart, quotientShown, answer: q.answer, lastFocused, endShown: !host.querySelector('.fb-solution .sol-end').hidden, laterAtEnd: host.querySelectorAll('.fb-solution .sol-later').length,
+      all: items().every((li) => !li.hidden), btnHidden: btn.hidden, work: host.querySelectorAll('.fb-solution .ldiv-model .ld-sub').length, next: !!host.querySelector('.coach-next button') };`);
   check('worked solution: one step at a time, the current step highlighted and focused, then every step', r.total >= 3 && r.first === 1 && r.second === 2 && r.cur === 1 && r.focusLi && r.all && r.btnHidden && r.next, r);
   check('worked solution: long division shows the subtraction and bring-down rows', r.work >= 2, r);
+  check('worked solution: the answer and the division working wait for their steps, then all show; focus stays on the last step',
+    r.endHidden && r.laterAtStart > 0 && r.quotientShown !== r.answer.replace(/^0(?=.)/, '0') && r.endShown && r.laterAtEnd === 0 && r.lastFocused, r);
   await b.reload();
   r = await js(`return [...document.querySelectorAll('.fb-solution .sol-steps > li')].every((li) => !li.hidden);`);
   check('worked solution: revealed steps are remembered after a refresh', r === true);
@@ -964,7 +983,7 @@ try {
     if (d.i === 3) { fill(host, q, wrongN(q, 0)); host.querySelector('[data-act=check]').click(); } fill(host, q, right(q)); host.querySelector('[data-act=check]').click(); document.querySelector('.coach-next button').click();`);
   await b.wait(150);
   await b.load(URL + 'index.html#/parent');
-  r = await js(`document.querySelectorAll('#app details').forEach((d) => { d.open = true; }); const sec = document.querySelector('.parent-practice'); return { t: sec ? sec.innerText : '', rows: sec ? sec.querySelectorAll('tbody tr').length : 0, d02: document.querySelector('#pl-d02').closest('section').innerText, rules: document.querySelector('#rules-h').closest('details').innerText };`);
+  r = await js(`document.querySelectorAll('#app details').forEach((d) => { d.open = true; }); const sec = document.querySelector('.parent-practice'); return { t: sec ? sec.innerText : '', rows: sec ? sec.querySelectorAll('tbody tr').length : 0, d02: document.querySelector('#pl-d02').closest('section').innerText, rules: document.querySelector('#rules-h').closest('section').innerText };`);
   check('parent: Practice Center section shows sessions, questions, accuracy, hints, recent practice and skills to review', /never counts as a Test/.test(r.t) && /Sessions finished\s*1/.test(r.t) && /Questions answered\s*10/.test(r.t) && /Correct\s*10 of 10/.test(r.t) && r.rows === 1 && /Skills to review/.test(r.t), r.t.slice(0, 400));
   check('parent: Practice Center results do not change lesson tests or mastery', /Tests taken\s*2/.test(r.d02) && /Yes ★/.test(r.d02) && /Practice Center/.test(r.rules), r.d02.slice(0, 300));
   // Opening the Practice Center during an unfinished lesson Test is noted on that Test.

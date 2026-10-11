@@ -154,10 +154,10 @@
   function pausedSummary() {
     const d = loadSession();
     if (!d || d.finished) return '';
-    return `<section class="pc-paused" aria-labelledby="pc-paused-h">
-      <h2 id="pc-paused-h">Continue your practice</h2>
-      <p>${esc(d.label)} · question ${d.i + 1} of ${d.n}. Your place is saved.</p>
-      <a class="btn btn-practice btn-big" href="#/practice/session">Resume practice</a></section>`;
+    return `<section class="pc-paused continue-card" aria-labelledby="pc-paused-h">
+      <div class="cont-text"><h2 id="pc-paused-h">Continue your practice</h2>
+      <p>${esc(d.label)} · question ${d.i + 1} of ${d.n}. Your place is saved.</p></div>
+      <a class="btn btn-practice btn-big cont-go" href="#/practice/session">Resume practice</a></section>`;
   }
 
   function radios(name, items, current, render) {
@@ -296,7 +296,7 @@
         <button type="button" class="btn btn-danger" data-act="really">Yes, start over</button> <button type="button" class="btn" data-act="cancel">No, keep going</button></div>`;
     G.coach(app.querySelector('.coach-host'), q, {
       state: d.states[d.i],
-      remind: REMIND[q.pcOp],
+      remind: REMIND[q.pcOp], seeIt: true,
       onChange: (st) => {
         // Another tab may have started a different session: show that one instead of writing over it.
         const cur = G.store.getDraft(SESSION);

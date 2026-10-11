@@ -583,7 +583,7 @@ body { background: var(--nn-bg); display: flex; flex-direction: column; min-heig
 .sol-next { margin: 4px 0 10px; }
 /* Long-division working rows */
 .ldiv-model .ld-sub td, .ldiv-model .ld-bring td, .ldiv-model .ld-rem td { color: #3d475c; }
-.ldiv-model .ld-line { border-bottom: 2px solid currentColor; }
+.ldiv-model .ld-line { box-shadow: inset 0 -2px 0 currentColor; }
 /* Options (Pause, Start New Practice), kept away from Check answer */
 .q-options { margin: 22px 0 8px; border-top: 1px solid var(--line); padding-top: 6px; }
 .q-options > summary { display: inline-flex; color: var(--muted); font-weight: 700; padding: 0 10px 0 4px; border-radius: 8px; }
@@ -691,3 +691,16 @@ h1, h2, h3, .pillar-title, .brand { font-family: ui-rounded, "SF Pro Rounded", "
 .pp-more > summary, .pp-rules > summary { font-size: 1.05rem; }
 .pp-rules > summary h2 { margin: 0; font-size: 1.2rem; display: inline; }
 @media (max-width: 480px) { .plt-table th, .plt-table td { padding: 6px 5px; font-size: .9rem; } }
+.sol-later { visibility: hidden; }
+/* Review fixes */
+.lc-next-quiet { background: #fff; color: var(--learn); }
+.lc-next-quiet:hover { background: var(--learn-soft); color: var(--teach-dark); }
+.lesson-card.is-mastered { align-self: start; }
+.pc-paused.continue-card { background: var(--practice-c-soft); border-color: #b5dcc2; }
+.pc-paused.continue-card .btn { align-self: center; }
+.pp-rules-card h2 { margin-bottom: 0; }
+.pp-rules { margin: 4px 0 0; }
+@media (min-width: 560px) and (max-width: 999px) { .pt-review { grid-column: 1 / -1; } }
+@media (max-width: 699px) { html { scroll-padding-bottom: 96px; } }
+.pc-paused.continue-card { flex-direction: row; justify-content: space-between; }
+.pc-paused.continue-card p { margin: 0; }

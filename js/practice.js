@@ -44,7 +44,7 @@
           <button type="button" class="btn btn-danger" data-act="restart-yes">Yes, start a new session</button> <button type="button" class="btn" data-act="restart-no">No, keep going</button></div>`;
       G.coach(app.querySelector('.coach-host'), q, {
         state: d.states[d.i],
-        remind: bank.remind[q.skill],
+        remind: bank.remind[q.skill], seeIt: true,
         onChange: (st) => { d.states[d.i] = st; G.store.setDraft(draftName(lessonId), d); },
         onSolved: () => {
           const next = app.querySelector('.coach-next');
