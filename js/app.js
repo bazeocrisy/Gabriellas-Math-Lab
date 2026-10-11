@@ -24,6 +24,59 @@
       <li class="chip chip-test"><span class="chip-k">Test</span> ${test}</li></ul>`;
   }
 
+  /** Unfinished lesson Practice (started, not finished), or null. */
+  function practiceInProgress(id) {
+    const d = G.store.getDraft('practice-' + id);
+    if (!d || typeof d !== 'object' || d.finished || !Array.isArray(d.states)) return null;
+    const touched = d.i > 0 || d.states.some((s) => s && (s.solved || s.attempts || s.hints || s.resp != null));
+    return touched ? d : null;
+  }
+
+  /**
+   * The one recommended next step for a lesson, from its saved progress (nothing is changed):
+   * { label, href, detail, kind, started }. kind is used for styling; started is false for an untouched lesson.
+   */
+  function nextStep(l) {
+    const p = G.store.lesson(l.id), L = G.lessonContent[l.id], n = L.screens.length;
+    const last = p.tests[p.tests.length - 1];
+    const pd = practiceInProgress(l.id);
+    const started = p.teach.furthest > 0 || p.teach.done || p.practice.sessions > 0 || p.tests.length > 0 || !!pd || !!G.store.openTest(l.id);
+    const base = '#/' + l.id;
+    if (G.store.openTest(l.id)) return { label: 'Continue the Test', href: base + '/test', detail: 'Test started, not handed in yet', kind: 'test', started };
+    if (p.masteredOn) return { label: 'Review', href: base + '/teach/1', detail: 'Mastered ★', kind: 'review', started };
+    if (pd) return { label: 'Continue Practice', href: base + '/practice', detail: `Practice, question ${pd.i + 1} of ${pd.set.length}`, kind: 'practice', started };
+    if (p.teach.furthest > 0 && !p.teach.done) return { label: 'Continue Teach', href: `${base}/teach/${Math.min(p.teach.furthest + 1, n)}`, detail: `Teach, screen ${Math.min(p.teach.furthest + 1, n)} of ${n}`, kind: 'teach', started };
+    if (!started) return { label: 'Start', href: base + '/teach/1', detail: 'Not started', kind: 'teach', started };
+    if (!p.practice.sessions && !last) return { label: 'Practice', href: base + '/practice', detail: 'Teach finished', kind: 'practice', started };
+    if (!last) return { label: 'Take the Test', href: base + '/test', detail: `${p.practice.sessions} practice session${p.practice.sessions === 1 ? '' : 's'} done`, kind: 'test', started };
+    // A test without ★: an assisted 9 or 10 only needs a retake on its own; otherwise practice first.
+    if (last.assisted && last.correct >= 9) return { label: 'Take the Test again', href: base + '/test', detail: `Last Test ${last.correct} of ${last.total}, with lesson pages opened`, kind: 'test', started };
+    return { label: 'Practice again', href: base + '/practice', detail: `Last Test ${last.correct} of ${last.total}: practice, then take the Test again`, kind: 'practice', started };
+  }
+
+  /** Where the student left off: the furthest lesson that is started but not mastered (an open Test first). */
+  function resumeLesson() {
+    const avail = unit.lessons.filter((l) => ready(l.id));
+    const openT = avail.filter((l) => G.store.openTest(l.id));
+    const active = avail.filter((l) => !G.store.lesson(l.id).masteredOn && nextStep(l).started);
+    const l = openT.pop() || active.pop();
+    if (l) return { l, s: nextStep(l), fresh: false };
+    const first = avail.find((x) => !G.store.lesson(x.id).masteredOn);
+    return first ? { l: first, s: nextStep(first), fresh: true } : null;
+  }
+
+  /** "Pick up where you left off" (Home) and the Learn banner. */
+  function continueCard(cls) {
+    const r = resumeLesson();
+    if (!r) return '';
+    const head = r.fresh ? (r.l.n === 1 ? 'Start here' : 'Up next') : 'Pick up where you left off';
+    return `<section class="continue-card ${cls}" aria-labelledby="cont-h-${cls}">
+      <div class="cont-text"><h2 id="cont-h-${cls}">${head}</h2>
+        <p><b>Lesson ${r.l.n}: ${r.l.title}</b><br><span class="cont-detail">${r.s.detail}</span></p></div>
+      <a class="btn btn-primary btn-big cont-go" href="${r.s.href}">${r.s.label}<span class="sr-only">: Lesson ${r.l.n}</span> <span aria-hidden="true">→</span></a>
+    </section>`;
+  }
+
   // Icons for the four main sections (drawn here, so no extra files or network requests).
   const PILLAR_ICONS = {
     learn: '<svg viewBox="0 0 48 48" aria-hidden="true" focusable="false"><path d="M6 11c7-3 13-2 18 2 5-4 11-5 18-2v26c-7-3-13-2-18 2-5-4-11-5-18-2z" fill="#fff" stroke="currentColor" stroke-width="3" stroke-linejoin="round"/><path d="M24 13v26" stroke="currentColor" stroke-width="3"/><path d="M11 18h7M11 24h7M30 18h7M30 24h7" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></svg>',
@@ -43,12 +96,13 @@
     const pausedHtml = G.practiceCenter && G.practiceCenter.pausedSummary ? G.practiceCenter.pausedSummary() : '';
     app.innerHTML = `
       <section class="nn-hero">
-        <img class="nn-hero-logo" src="assets/brand/numbernova-logo.svg" alt="NumberNova. Learn. Practice. Shine." width="330" height="76">
-        <h1 tabindex="-1">Ready to make your next math discovery?</h1>
-        <p class="nn-hero-text">Learn step by step, sharpen your skills, and see how far you can go.</p>
-        <p class="nn-hero-tags"><span>Grade 5 Mathematics</span><span>Decimals</span><span>Georgia Milestones Preparation</span></p>
+        <img class="nn-hero-logo" src="assets/brand/numbernova-logo.svg" alt="NumberNova. Learn. Practice. Shine." width="200" height="46">
+        <div class="nn-hero-words">
+          <h1 tabindex="-1">Ready to make your next math discovery?</h1>
+          <p class="nn-hero-text">Learn step by step, sharpen your skills, and see how far you can go.</p>
+        </div>
       </section>
-      ${pausedHtml}
+      <div class="home-continue">${continueCard('cont-home')}${pausedHtml}</div>
       <nav class="nn-pillars" aria-label="Main sections">
         ${PILLARS.map((p) => `<a class="pillar pillar-${p.key}" href="${p.href}">
           <span class="pillar-icon">${PILLAR_ICONS[p.key]}</span>
@@ -65,7 +119,8 @@
   function learn() {
     const cards = unit.lessons.filter((l) => ready(l.id)).map((l) => {
       const mastered = !!G.store.lesson(l.id).masteredOn;
-      return `<article class="lesson-card" aria-labelledby="lc-${l.id}">
+      const s = nextStep(l);
+      return `<article class="lesson-card${mastered ? ' is-mastered' : ''}" aria-labelledby="lc-${l.id}">
         <div class="lc-head">
           <span class="lc-num" aria-hidden="true">${l.n}</span>
           <div class="lc-titles"><p class="lesson-num">Lesson ${l.n}</p><h3 id="lc-${l.id}">${l.title}</h3></div>
@@ -73,12 +128,13 @@
         </div>
         <p class="lc-blurb">${l.blurb}</p>
         ${progressChips(l)}
-        <div class="mode-buttons">
-          <a class="btn btn-mode btn-teach" href="#/${l.id}/teach/1">TEACH</a>
-          <a class="btn btn-mode btn-practice" href="#/${l.id}/practice">PRACTICE</a>
-          <a class="btn btn-mode btn-test" href="#/${l.id}/test">TEST</a>
-        </div>
-        <a class="btn btn-notes" href="#/${l.id}/notes">${DOC_ICON}<span>Lesson Notes</span><span class="sr-only"> for Lesson ${l.n} (printable)</span></a>
+        <a class="btn btn-big lc-next lc-next-${s.kind}" href="${s.href}">${s.label}<span class="sr-only">: Lesson ${l.n}</span> <span aria-hidden="true">→</span></a>
+        <nav class="lc-links" aria-label="Lesson ${l.n} parts">
+          <a class="lc-link lc-teach" href="#/${l.id}/teach/1">Teach</a>
+          <a class="lc-link lc-practice" href="#/${l.id}/practice">Practice</a>
+          <a class="lc-link lc-test" href="#/${l.id}/test">Test</a>
+          <a class="lc-link btn-notes" href="#/${l.id}/notes">${DOC_ICON}<span>Notes</span><span class="sr-only"> for Lesson ${l.n} (printable)</span></a>
+        </nav>
       </article>`;
     }).join('');
     const later = unit.lessons.filter((l) => !ready(l.id)).map((l) => `<li><span class="later-num">Lesson ${l.n}</span><span class="later-title">${l.title}${/supplemental/.test(l.blurb) ? '<span class="later-note">Includes supplemental skills</span>' : ''}</span><span class="later-tag">Coming later</span></li>`).join('');
@@ -90,6 +146,7 @@
         <p class="hero-sub">Grade 5 Mathematics · Georgia Milestones Preparation</p>
         <p class="hero-sub2">Each lesson explains an idea, shows how, guides you through it, lets you practice with hints, and ends with a test you do on your own.</p>
       </section>
+      ${continueCard('cont-learn')}
       <section aria-labelledby="unit-h">
         <h2 id="unit-h" class="unit-title">${unit.title} <span class="unit-count">${unit.lessons.length} lessons</span></h2>
         <p class="legend"><span class="legend-item legend-teach">Teach: learn it</span><span class="legend-item legend-practice">Practice: try it with hints</span><span class="legend-item legend-test">Test: show what you know</span></p>

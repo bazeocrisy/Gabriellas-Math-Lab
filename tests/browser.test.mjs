@@ -98,11 +98,13 @@ try {
   await b.load(URL + 'index.html#/learn');
 
   // ── Learn (the ten lessons) ──
-  r = await js(`${H} return { t: text(), modes: [...document.querySelectorAll('.btn-mode')].map((a) => a.textContent + '>' + a.getAttribute('href')),
+  r = await js(`${H} return { t: text(), modes: [...document.querySelectorAll('.lc-links')].flatMap((n) => [...n.querySelectorAll('.lc-teach, .lc-practice, .lc-test')].map((a) => a.textContent.toUpperCase() + '>' + a.getAttribute('href'))),
+    next: [...document.querySelectorAll('.lc-next')].map((a) => a.childNodes[0].textContent + '>' + a.getAttribute('href')),
     later: document.querySelectorAll('.later-list li').length, laterButtons: document.querySelectorAll('.later-list a, .later-list button').length,
     avail: GML.unit.lessons.filter((l) => GML.unit.available(l.id)).map((l) => l.id), total: GML.unit.lessons.length };`);
   check('learn: Decimal lessons page with grade and Milestones subtitles', /Decimal lessons/.test(r.t) && /Grade 5 Mathematics/.test(r.t) && /Georgia Milestones Preparation/.test(r.t), r.t.slice(0, 200));
   check('learn: every available lesson has TEACH | PRACTICE | TEST', JSON.stringify(r.modes) === JSON.stringify(r.avail.flatMap((id) => [`TEACH>#/${id}/teach/1`, `PRACTICE>#/${id}/practice`, `TEST>#/${id}/test`])), r.modes);
+  check('learn: a fresh start recommends one step per lesson: Start (Teach screen 1)', r.next.length === r.avail.length && r.next.every((x, k) => x === `Start>#/${r.avail[k]}/teach/1`), r.next);
   check('learn: all 10 lessons listed; the rest say Coming later with no buttons', r.total === 10 && r.later === r.total - r.avail.length && r.laterButtons === 0, r);
   check('learn: Lesson Notes button for each available lesson', (await js(`return document.querySelectorAll('.btn-notes').length;`)) === r.avail.length);
 
@@ -699,7 +701,7 @@ try {
   // ── NumberNova: Study Guides ──
   await b.load(URL + 'index.html#/guides');
   r = await js(`const cards = [...document.querySelectorAll('.guide-card')];
-    return { h1: document.querySelector('h1').innerText, n: cards.length, titles: cards.map((c) => c.querySelector('h2').innerText),
+    return { h1: document.querySelector('h1').innerText, n: cards.length, titles: cards.map((c) => c.querySelector('h3').innerText),
       open: cards.map((c) => c.querySelector('.btn-guide').getAttribute('href')), dl: cards.map((c) => c.querySelector('[download]').getAttribute('download')),
       nav: document.querySelector('.site-nav a[aria-current]').dataset.nav, title: document.title };`);
   check('guides: eight numbered guide cards with titles', r.n === 8 && r.titles[0] === 'Decimal Place Value' && r.titles[7] === 'Mixed Decimal Practice' && r.nav === 'guides' && /Study Guides/.test(r.title), r);

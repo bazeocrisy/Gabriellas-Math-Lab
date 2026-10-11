@@ -185,7 +185,7 @@
         <form class="pc-form" novalidate>
           <fieldset class="pc-fieldset"><legend><span class="pc-legend">Step 1 of 3: Choose a skill</span></legend>
             <div class="pc-grid pc-grid-modes">${radios('mode', MODES, wiz.mode, { cls: (m) => 'op-' + m.key,
-              html: (m) => `<span class="pc-sym" aria-hidden="true">${m.sym}</span><span class="pc-name">${m.name}</span><span class="pc-ex">${m.text}</span>` })}</div>
+              html: (m) => `<span class="pc-top"><span class="pc-sym" aria-hidden="true">${m.sym}</span><span class="pc-sample">${m.example}</span></span><span class="pc-name">${m.name}</span><span class="pc-ex">${m.text}</span>` })}</div>
           </fieldset>
           <p class="pc-msg" role="status"></p>
           <div class="pc-actions"><button type="submit" class="btn btn-practice btn-big">Next: how many questions →</button></div>
@@ -241,14 +241,11 @@
         <section class="card pc-confirm" aria-labelledby="pc-confirm-h">
           <h2 id="pc-confirm-h">Step 3 of 3: Ready?</h2>
           <dl class="facts-dl"><dt>Skill</dt><dd>${esc(label)}</dd><dt>Questions</dt><dd>${wiz.n}${wiz.n === 50 ? ' (five blocks of ten)' : ''}</dd></dl>
-          <ul class="facts">
-            <li>${esc(expect)}</li>
-            <li>One question at a time. Each has up to three hints, feedback that explains mistakes, and a worked solution after three different tries.</li>
-            <li>Your place is saved as you go, so you can pause and come back later.</li>
-          </ul>
+          <p class="pc-expect">${esc(expect)}</p>
+          <p class="pc-expect fine">Up to three hints per question, feedback on mistakes, and the steps after three different tries. Your place is saved, so you can pause any time.</p>
           <div class="confirm" hidden><p><b>You already have a practice in progress.</b> Starting a new one will replace it (your past results are kept). Start anyway?</p>
             <button type="button" class="btn btn-practice" data-act="really">Yes, start the new practice</button> <button type="button" class="btn" data-act="cancel">No, keep it</button></div>
-          <div class="pc-actions"><button type="button" class="btn btn-big" data-act="choices">← Back to Choices</button><button type="button" class="btn btn-practice btn-big" data-act="start">Start Practice</button></div>
+          <div class="pc-actions"><button type="button" class="btn btn-big" data-act="choices">← Back</button><button type="button" class="btn btn-practice btn-big" data-act="start">Start Practice</button></div>
         </section>`;
       const start = () => {
         const weak = weakSkills();
@@ -259,7 +256,7 @@
         location.hash = '#/practice/session';
       };
       const conf = app.querySelector('.confirm');
-      app.querySelector('[data-act=choices]').addEventListener('click', () => { wiz.step = 1; wizard(app); focusH(app); });
+      app.querySelector('[data-act=choices]').addEventListener('click', () => { wiz.step = 2; wizard(app); focusH(app); });
       app.querySelector('[data-act=start]').addEventListener('click', () => {
         const cur = loadSession();
         if (cur && !cur.finished && cur.states.some((s) => s && (s.solved || s.attempts || s.hints))) { conf.hidden = false; conf.querySelector('[data-act=really]').focus(); } else start();
