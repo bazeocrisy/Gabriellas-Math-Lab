@@ -10,6 +10,9 @@
     const i = Math.min(Math.max((n || 1) - 1, 0), total - 1);
     if (i + 1 !== n) { location.replace(`#/${lessonId}/teach/${i + 1}`); return; }
     const sc = L.screens[i];
+    // A guided check is named after the teaching screen just before it, so every page title is different.
+    const topic = sc.kind === 'check' ? (L.screens.slice(0, i).reverse().find((x) => !x.kind) || {}).title : '';
+    const title = topic && sc.title === 'Try it together' ? `Try it together: ${topic}` : sc.title;
     G.store.update(lessonId, (p) => {
       p.teach.screen = i;
       // Progress only counts when screens are reached in order (not by jumping in from a link).
@@ -31,7 +34,7 @@
       <div class="crumbs"><a href="#/">← Lesson menu</a></div>
       <p class="mode-label">Lesson ${G.unit.find(lessonId).n} · Teach <span class="screen-count">Screen ${i + 1} of ${total}</span></p>
       <div class="progress" role="progressbar" aria-label="Lesson progress" aria-valuemin="1" aria-valuemax="${total}" aria-valuenow="${i + 1}"><span style="width:${((i + 1) / total) * 100}%"></span></div>
-      <h1 tabindex="-1">${sc.title}</h1>
+      <h1 tabindex="-1">${title}</h1>
       ${sc.goal ? `<p class="goal"><b>You will learn:</b> ${sc.goal}</p>` : ''}
       <div class="teach-body">${sc.body || ''}</div>
       ${sc.visual ? `<div class="teach-visual">${sc.visual}</div>` : ''}
@@ -54,6 +57,8 @@
     function drawSteps() {
       if (!stepsEl) return;
       stepsEl.innerHTML = steps.slice(0, shown).map((s) => `<li>${s}</li>`).join('');
+      // Steps that say "Step 1." themselves are not numbered again by the list.
+      stepsEl.classList.toggle('steps-labelled', steps.some((s) => /^<b>Step \d/.test(s)));
       // "Why it works" appears once the whole example has been shown.
       const why = app.querySelector('.why-box');
       if (why) why.hidden = shown < steps.length;
@@ -99,7 +104,7 @@
     }
     drawSteps();
     drawNext();
-    document.title = `${sc.title} · Teach · Gabriella's Math Lab`;
+    document.title = `${title} · Teach · Gabriella's Math Lab`;
   }
 
   G.views = G.views || {};

@@ -616,6 +616,35 @@ try {
     const a = document.activeElement; return { live, why: a.classList.contains('why-box'), body: a === document.body };`);
   check('a11y: new worked-example steps are announced, and focus goes to "Why it works" after the last step', r.live === 'polite' && r.why && !r.body, r);
 
+  // ── Usability and cosmetic corrections (audit D-17, D-31, D-32, D-33) ──
+  await js(`localStorage.clear();`);
+  for (const [w, h] of [[320, 568], [1366, 768]]) {
+    await b.viewport(w, h);
+    await b.load(URL + 'index.html#/d02/teach/' + await screenOf('d02', 'check-expanded')); await b.reload();
+    r = await js(`const i = document.querySelector('.exp-input'); i.value = '80 + 6 + 0.7 + 0.02 + 0.003'; i.dispatchEvent(new Event('input', { bubbles: true })); return { sw: i.scrollWidth, cw: i.clientWidth };`);
+    check(`expanded form: a five-part answer fits in the box at ${w}px`, r.sw <= r.cw + 1, r);
+  }
+  await b.viewport(320, 568);
+  const smallest = `let m = 99; document.querySelectorAll('#app svg text').forEach((t) => { if (t.getBoundingClientRect().height) m = Math.min(m, parseFloat(getComputedStyle(t).fontSize) * t.getScreenCTM().a); }); return +m.toFixed(1);`;
+  for (const [id, sid] of [['d01', 'zoom'], ['d06', 'models'], ['d07', 'models'], ['d05', 'tenths']]) {
+    await b.load(URL + `index.html#/${id}/teach/${await screenOf(id, sid)}`);
+    await js(`for (let k = 0; k < 8; k++) { const s = document.querySelector('[data-act=step]'); if (s && !s.hidden) s.click(); }`);
+    r = await js(smallest);
+    check(`number-line labels are at least 10px on a 320px screen: ${id}/${sid}`, r >= 10, r);
+  }
+  await b.viewport(390, 844);
+  r = await js(`return GML.unit.lessons.map((l) => l.id);`);
+  const titles = [];
+  for (const id of r) {
+    const L = await js(`return GML.lessonContent['${id}'].screens.map((s, k) => s.kind === 'check' ? k + 1 : 0).filter(Boolean);`);
+    for (const n of L.slice(0, 2)) { await b.load(URL + `index.html#/${id}/teach/${n}`); titles.push(await js(`return document.querySelector('h1').innerText + ' | ' + document.title;`)); }
+  }
+  check('guided checks are titled with their topic, and page titles differ', titles.every((t) => /^Try it together: \S/.test(t)) && new Set(titles.map((t) => t.split(' | ')[0])).size >= titles.length - 2, titles.slice(0, 6));
+  await b.load(URL + 'index.html#/d01/teach/2');
+  r = await js(`for (let k = 0; k < 5; k++) { const s = document.querySelector('[data-act=step]'); if (s && !s.hidden) s.click(); }
+    const ol = document.querySelector('.steps'); return { style: getComputedStyle(ol).listStyleType, first: ol.querySelector('li').innerText.slice(0, 7) };`);
+  check('worked-example steps labelled "Step 1." are not numbered twice', r.style === 'none' && /^Step 1/.test(r.first), r);
+
   // ── Unknown routes and reset ──
   await b.load(URL + 'index.html#/d11/teach/1');
   check('unready lesson route falls back to home', /Gabriella's Math Lab/.test(await js(`return document.querySelector('h1').innerText;`)));

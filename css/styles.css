@@ -166,6 +166,7 @@ h3 { font-size: 1.1rem; margin: 1em 0 .4em; }
 .res-right > summary { font-size: 1.1rem; }
 .remind summary { color: var(--brand-dark); }
 .steps { padding-left: 1.3em; margin: 8px 0 0; }
+.steps.steps-labelled { list-style: none; padding-left: 0; }
 .steps li { margin: 8px 0; padding: 8px 10px; background: var(--brand-soft); border-radius: 8px; }
 .steps li .model { margin-top: 8px; }
 .step-btn { margin-top: 8px; }
@@ -267,6 +268,7 @@ h3 { font-size: 1.1rem; margin: 1em 0 .4em; }
 .num-label { display: block; font-weight: 700; margin: 8px 0 4px; }
 .num-input { font: inherit; font-size: 1.4rem; font-weight: 700; padding: 8px 12px; width: 100%; max-width: 220px; min-height: 52px; border: 2px solid var(--brand); border-radius: 10px; }
 .num-input:disabled { background: #f1f3f7; }
+.exp-input { max-width: 100%; resize: none; line-height: 1.35; overflow-wrap: anywhere; font-family: inherit; }
 
 /* Model builder */
 .builder { display: grid; gap: 10px; }
@@ -378,3 +380,8 @@ details[open] > summary::before { content: "▾"; }
 .solution-work .vcalc-model { margin: .5rem 0; }
 .sol-steps { margin: .4rem 0 .6rem 1.2rem; padding: 0; }
 .sol-steps li { margin: .2rem 0; }
+/* Small screens: number lines show every other tick label, larger, so labels stay readable (at least 10px). */
+@media (max-width: 480px) {
+  .model-line .m-odd { display: none; }
+  .model-line .m-tick-label, .model-line .m-mid-label { font-size: 17px; }
+}

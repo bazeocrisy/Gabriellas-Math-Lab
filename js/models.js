@@ -71,10 +71,10 @@
     for (let i = 0; i <= 10; i++) {
       const v = from + i * step, x = X(v), big = i === 0 || i === 10;
       parts.push(`<line x1="${x}" y1="${y - (big ? 12 : 8)}" x2="${x}" y2="${y + (big ? 12 : 8)}" class="m-tick"/>`);
-      if (o.tickLabels && !big) parts.push(`<text x="${x}" y="${y + 26}" class="m-text m-small" text-anchor="middle">${esc(G.D.fromThousandths(v))}</text>`);
+      if (o.tickLabels && !big) parts.push(`<text x="${x}" y="${y + 26}" class="m-text m-small m-tick-label${i % 2 ? ' m-odd' : ''}" text-anchor="middle">${esc(G.D.fromThousandths(v))}</text>`);
       if (o.mid && i === 5) {
         parts.push(`<line x1="${x}" y1="${y - 16}" x2="${x}" y2="${y + 16}" class="m-mid"/>`);
-        if (!o.tickLabels) parts.push(`<text x="${x}" y="${y + 32}" class="m-text m-small" text-anchor="middle">halfway ${esc(G.D.fromThousandths(v))}</text>`);
+        if (!o.tickLabels) parts.push(`<text x="${x}" y="${y + 32}" class="m-text m-small m-mid-label" text-anchor="middle">halfway ${esc(G.D.fromThousandths(v))}</text>`);
       }
     }
     const [l, r] = o.labels || [G.D.fromThousandths(from), G.D.fromThousandths(to)];
