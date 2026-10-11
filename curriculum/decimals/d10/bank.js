@@ -9,11 +9,12 @@
   const T = (id, skill, make) => templates.push({ id, skill, make });
 
   /** A review question that reuses a template from an earlier lesson (same answer key, hints and feedback). */
-  const reuse = (id, skill, lesson, src) => T(id, skill, (r, p) => {
+  const reused = {};
+  const reuse = (id, skill, lesson, src) => (reused[id] = [lesson, src], T(id, skill, (r, p) => {
     const q = G.engine.make(lesson, src, r.int(1, 2147483646), p);
     q.from = `${lesson}/${src}`;
     return q;
-  });
+  }));
 
   // Place value and reading decimals (Lessons 1–2).
   reuse('RP1', 'rvPlace', 'd02', 'V2'); // value of a digit
@@ -163,6 +164,7 @@
 
   G.engine.register({
     lessonId: 'd10',
+    reused, // { reviewTemplate: [lesson, sourceTemplate] }
     skills: {
       rvPlace: 'Place value, forms and models (Lessons 1–2)',
       rvCompare: 'Comparing and ordering (Lessons 3–4)',

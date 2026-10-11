@@ -163,5 +163,8 @@
     screens, skillScreen, notes,
     teachSigs: screens.filter((s) => s.check).map((s) => G.engine.make('d10', s.check.t, 1, s.check.params).sig)
       .concat(['X3:10:2.4+3.75', 'X3:5:1.25+2.3', 'X1:2.47+4.38'])
+      // Review questions never repeat a Teach example from the lesson they come from.
+      .concat(Object.entries(G.engine.banks.d10.reused).flatMap(([id, [lesson, src]]) =>
+        G.lessonContent[lesson].teachSigs.filter((x) => x.startsWith(src + ':')).map((x) => id + ':' + x)))
   };
 })(typeof window !== 'undefined' ? (window.GML = window.GML || {}) : (globalThis.GML = globalThis.GML || {}));

@@ -33,6 +33,16 @@ const H = `
     if (q.accept) { for (let k = 0; ; k += 7) { const v = D.fromThousandths(k, 3); if (!q.accept(D.parse(v), {})) return v; } }
     return D.fromThousandths(D.toThousandths(q.answer) + 1, 3);
   };
+  // A k-th different wrong answer (null when the question has only one wrong choice).
+  const wrongN = (q, k) => {
+    if (q.type === 'mc') { const ws = q.choices.filter((c) => c.value !== q.answer).map((c) => c.value); return ws.length > 1 ? ws[k % ws.length] : k ? null : ws[0]; }
+    if (q.type === 'build') { const m = q.model === 'grid' ? 100 : 10; return [q.answer - 1, q.answer + 1].filter((x) => x >= 1 && x <= m)[k % 2] ?? (q.answer === 1 ? 2 + k : q.answer - 1 - k); }
+    if (q.type === 'chart') { const d = D.digits(q.answer); return { ...d, tenths: String((Number(d.tenths) + 1 + k) % 10) }; }
+    if (q.type === 'order') { const a = q.answer.slice(); return k % 2 ? [a[1], a[0], ...a.slice(2)] : a.reverse(); }
+    if (q.type === 'expanded') return GML.kit.expanded(D.fromThousandths(D.toThousandths(q.answer) + 1 + k, 3));
+    if (q.accept) { let n = 0; for (let v = 0; ; v += 7) { const s = D.fromThousandths(v, 3); if (!q.accept(D.parse(s), {}) && n++ === k) return s; } }
+    return D.fromThousandths(D.toThousandths(q.answer) + 1 + k, 3);
+  };
   const fire = (el, t) => el.dispatchEvent(new Event(t, { bubbles: true }));
   function fill(host, q, resp) {
     if (q.type === 'mc') { const i = [...host.querySelectorAll('input[type=radio]')].find((x) => x.value === resp); i.click(); }
@@ -133,15 +143,20 @@ try {
   r = await js(`${H} const q = practiceQ(); const host = document.querySelector('.coach-host');
     host.querySelector('[data-act=check]').click();
     const blank = host.querySelector('.feedback').innerText; const att0 = draft('practice-d01').states[0].attempts || 0;
-    fill(host, q, wrong(q)); host.querySelector('[data-act=check]').click();
+    fill(host, q, wrongN(q, 0)); host.querySelector('[data-act=check]').click();
     const w = { wrong: !!host.querySelector('.fb-wrong'), msg: host.querySelector('.fb-wrong p:nth-of-type(2)').textContent, next: host.querySelector('.coach-next').innerHTML.trim(), idx: draft('practice-d01').i };
-    fill(host, q, wrong(q)); host.querySelector('[data-act=check]').click();
-    fill(host, q, wrong(q)); host.querySelector('[data-act=check]').click();
+    // The same wrong answer checked again is not a new try.
+    host.querySelector('[data-act=check]').click(); host.querySelector('[data-act=check]').click();
+    w.sameAgain = draft('practice-d01').states[0].attempts;
+    w.solEarly = !!host.querySelector('[data-act=solution]');
+    w.skip = wrongN(q, 1) === null;
+    if (!w.skip) { fill(host, q, wrongN(q, 1)); host.querySelector('[data-act=check]').click(); fill(host, q, wrongN(q, 0)); host.querySelector('[data-act=check]').click(); }
     w.sol = !!host.querySelector('[data-act=solution]');
     return { blank, att0, ...w };`);
   check('practice: blank answer asks for an answer and is not counted', /first|Choose|shade|Type/.test(r.blank) && r.att0 === 0, r);
   check('practice: wrong answer says not correct, explains, stays on the question', r.wrong && r.msg.length > 15 && r.next === '' && r.idx === 0, r);
-  check('practice: "Show me how" appears only after 3 wrong tries', r.sol);
+  check('practice: checking the same wrong answer again is not counted and cannot unlock the solution', r.sameAgain === 1 && !r.solEarly, r);
+  check('practice: "Show me how" appears only after 3 different wrong tries', r.skip || r.sol, r);
   // Refresh in the middle: same question, same hints and attempts.
   await b.reload();
   r = await js(`${H} return { idx: draft('practice-d01').i, hints: document.querySelectorAll('.hint').length, wrongShown: !!document.querySelector('.fb-wrong') };`);
@@ -452,6 +467,101 @@ try {
   r = await js(`return [...document.querySelectorAll('.skills-table a')].map((a) => Math.round(a.getBoundingClientRect().height));`);
   check('tablet: "Review in Teach" links in test results are at least 44px tall', r.length > 0 && r.every((h) => h >= 44), r);
   await b.viewport(390, 844);
+
+  // ── Assessment integrity (audit D-01, D-02, D-14, D-15, Decision 2) ──
+  const setAll = (id, how) => `${H} const d = draft('test-${id}'); d.set.forEach((x, k) => { const q = E.make('${id}', x.id, x.seed); d.answers[k] = ${how}; }); d.review = true; localStorage.setItem('gml:v1:draft:test-${id}', JSON.stringify(d));`;
+  const progOf = (id) => js(`const p = JSON.parse(localStorage.getItem('gml:v1:progress') || '{}'); return (p.lessons || {})['${id}'] || null;`);
+  await js(`localStorage.clear();`);
+  // D-01: Practice opened during an unfinished Test never shows one of its questions.
+  await b.load(URL + 'index.html#/d09/test'); await b.reload();
+  await js(`document.querySelector('[data-act=start]').click();`);
+  await b.load(URL + 'index.html#/d09/practice');
+  r = await js(`${H} const open = draft('test-d09').set.map((x) => x.sig); let bad = draft('practice-d09').set.filter((x) => open.includes(x.sig)).length;
+    for (let k = 0; k < 50; k++) { localStorage.removeItem('gml:v1:draft:practice-d09'); bad += GML.views.practice.newSession('d09').set.filter((x) => open.includes(x.sig)).length; }
+    return bad;`);
+  check('integrity: Practice opened during an unfinished Test never repeats its questions (51 sessions)', r === 0, r);
+  // Decision 2: the Practice visit above is noted on the open test; it is scored but not mastered.
+  await b.load(URL + 'index.html#/d09/test');
+  r = await js(`return { note: (document.querySelector('.assist-note') || {}).innerText || '', assist: JSON.parse(localStorage.getItem('gml:v1:draft:test-d09')).assist };`);
+  check('integrity: opening Practice during a Test is noted on the Test, with a friendly message', /Lesson 9 Practice/.test(r.note) && !/cheat/i.test(r.note) && r.assist.includes('Lesson 9 Practice'), r);
+  await js(setAll('d09', 'right(q)')); await b.reload();
+  await js(`document.querySelector('[data-act=submit]').click();`); await b.wait(60);
+  r = { t: await js(`return document.getElementById('app').innerText;`), p: await progOf('d09') };
+  check('integrity: 10 of 10 with a lesson page opened keeps the score but is not ★ Mastered', /Your score: 10 out of 10/.test(r.t) && /counts as practice/.test(r.t) &&
+    r.p.tests[0].goalMet === true && r.p.tests[0].mastered === false && !r.p.masteredOn, r.p);
+  await b.load(URL + 'index.html#/');
+  check('integrity: the home card shows no ★ Mastered for a test with lesson pages opened', !/Mastered/.test(await js(`return [...document.querySelectorAll('.lesson-card')][8].innerText;`)));
+  await b.load(URL + 'index.html#/parent');
+  r = await js(`return document.getElementById('app').innerText;`);
+  check('integrity: Parent Progress explains the rule and labels the test', /How Tests and mastery work/.test(r) && /lesson pages opened during the test/.test(r) && /goal met, but/.test(r), r.slice(0, 300));
+  // A refresh during a test is not counted as opening a lesson page; a test done on its own is mastered.
+  await b.load(URL + 'index.html#/d09/test');
+  await js(`document.querySelector('[data-act=new]').click(); document.querySelector('[data-act=start]').click();`);
+  await b.reload(); await b.load(URL + 'index.html#/'); await b.load(URL + 'index.html#/d09/test');
+  r = await js(`return JSON.parse(localStorage.getItem('gml:v1:draft:test-d09')).assist;`);
+  check('integrity: refreshing, or visiting Home, during a test is not counted', Array.isArray(r) && r.length === 0, r);
+  await js(setAll('d09', 'right(q)')); await b.reload();
+  await js(`document.querySelector('[data-act=submit]').click();`); await b.wait(60);
+  r = await progOf('d09');
+  check('integrity: a test done on its own with 10 of 10 is ★ Mastered', r.tests[1].mastered === true && !!r.masteredOn && r.testsTaken === 2, r);
+
+  // D-02: a stale page (another tab submitted the same test) cannot change or re-submit it.
+  await b.load(URL + 'index.html#/d05/test'); await b.reload();
+  await js(`document.querySelector('[data-act=start]').click();`);
+  await js(`${H} const d = draft('test-d05'); d.submitted = true; d.result = { id: d.id, date: new Date().toISOString(), correct: 3, total: 10, percent: 30, goalMet: false, mastered: false, skills: {}, missedSkills: [] };
+    localStorage.setItem('gml:v1:draft:test-d05', JSON.stringify(d));
+    const p = JSON.parse(localStorage.getItem('gml:v1:progress')); p.lessons.d05 = Object.assign(p.lessons.d05 || {}, { tests: [d.result], testsTaken: 1 }); localStorage.setItem('gml:v1:progress', JSON.stringify(p));`);
+  r = await js(`${H} const q = qIn('test', 'd05'); fill(document.querySelector('.test-q'), q, right(q)); const nb = document.querySelector('[data-act=next]'); if (nb) nb.click();
+    return { h: document.querySelector('h1').innerText, n: JSON.parse(localStorage.getItem('gml:v1:progress')).lessons.d05.tests.length, sub: JSON.parse(localStorage.getItem('gml:v1:draft:test-d05')).result.correct };`);
+  check('integrity: a stale tab shows the submitted result instead of changing it', /Your score: 3 out of 10/.test(r.h) && r.n === 1 && r.sub === 3, r);
+  // The same on the review screen: Submit in a stale tab records nothing new.
+  await js(`document.querySelector('[data-act=new]').click(); document.querySelector('[data-act=start]').click();`);
+  await js(setAll('d05', 'right(q)')); await b.reload();
+  await js(`${H} const d = draft('test-d05'); d.submitted = true; d.result = { id: d.id, date: new Date().toISOString(), correct: 2, total: 10, percent: 20, goalMet: false, mastered: false, skills: {}, missedSkills: [] };
+    localStorage.setItem('gml:v1:draft:test-d05', JSON.stringify(d));
+    const p = JSON.parse(localStorage.getItem('gml:v1:progress')); p.lessons.d05.tests.push(d.result); p.lessons.d05.testsTaken = 2; localStorage.setItem('gml:v1:progress', JSON.stringify(p));`);
+  r = await js(`document.querySelector('[data-act=submit]').click(); return { h: document.querySelector('h1').innerText, p: JSON.parse(localStorage.getItem('gml:v1:progress')).lessons.d05 };`);
+  check('integrity: Submit in a stale tab records no second result and keeps the first', r.p.tests.length === 2 && r.p.tests[1].correct === 2 && /Your score: 2 out of 10/.test(r.h) && !r.p.masteredOn, r);
+  // A real second tab (a same-site frame shares storage and storage events): it switches to the results when this tab submits.
+  await b.load(URL + 'index.html#/d06/test'); await b.reload();
+  await js(`document.querySelector('[data-act=start]').click();
+    const f = document.createElement('iframe'); f.id = 'tab2'; f.style.width = '380px'; f.style.height = '600px'; f.src = location.href.split('#')[0] + '#/d06/test'; document.body.appendChild(f);`);
+  await b.wait(700);
+  r = await js(`return document.getElementById('tab2').contentDocument.querySelector('h1').innerText;`);
+  const tab2Before = r;
+  await js(setAll('d06', 'right(q)'));
+  await js(`document.getElementById('tab2').remove(); location.reload();`); await b.wait(400);
+  await js(`const f = document.createElement('iframe'); f.id = 'tab2'; f.style.width = '380px'; f.style.height = '600px'; f.src = location.href.split('#')[0] + '#/d06/test'; document.body.appendChild(f);`);
+  await b.wait(700);
+  await js(`document.querySelector('[data-act=submit]').click();`); await b.wait(500);
+  r = await js(`return { tab2: document.getElementById('tab2').contentDocument.querySelector('h1').innerText, n: JSON.parse(localStorage.getItem('gml:v1:progress')).lessons.d06.tests.length };`);
+  check('integrity: a second open tab switches to the results when the test is submitted elsewhere', /Question 1/.test(tab2Before) && /Your score: 10 out of 10/.test(r.tab2) && r.n === 1, { tab2Before, ...r });
+  await js(`const f = document.getElementById('tab2'); if (f) f.remove();`);
+
+  // D-14 / D-15 and saved progress from the previous build (no attempt ids, counts or mastery dates).
+  await js(`localStorage.clear();
+    const t = (c, day) => ({ date: '2026-09-' + String(day).padStart(2, '0') + 'T12:00:00Z', correct: c, total: 10, percent: c * 10, mastered: c >= 9, skills: {}, missedSkills: [] });
+    const d03 = []; for (let k = 0; k < 20; k++) d03.push(t(k === 0 ? 10 : 4, k + 1));
+    localStorage.setItem('gml:v1:progress', JSON.stringify({ lessons: { d03: { teach: { screen: 0, furthest: 15, done: true }, practice: { sessions: 1, skills: {}, recentSigs: [] }, tests: d03, lastTestSigs: [] },
+      d10: { teach: { screen: 0, furthest: 12, done: true }, practice: { sessions: 0, skills: {}, recentSigs: [] }, tests: [t(10, 25)], lastTestSigs: [] } } }));`);
+  await b.load(URL + 'index.html#/parent');
+  r = await js(`return { l10: document.querySelector('#pl-d10').closest('section').innerText, l3: document.querySelector('#pl-d03').closest('section').innerText };`);
+  check('integrity: with only Lessons 3 and 10 mastered, Lesson 10 does not say "All lessons complete"', !/All lessons complete/.test(r.l10) && /Lesson 1: Understanding Decimals is not mastered yet/.test(r.l10), r.l10);
+  check('integrity: older saved progress keeps its mastery and test count', /Yes ★/.test(r.l3) && /Tests taken\s*20/.test(r.l3), r.l3);
+  await b.load(URL + 'index.html#/d03/test'); await b.reload();
+  await js(`document.querySelector('[data-act=start]').click();`);
+  await js(setAll('d03', 'wrong(q)')); await b.reload();
+  await js(`document.querySelector('[data-act=submit]').click();`); await b.wait(60);
+  await b.load(URL + 'index.html#/parent');
+  r = await js(`return document.querySelector('#pl-d03').closest('section').innerText;`);
+  check('integrity: mastery and the count survive when the mastered test leaves the 20-test history', /Yes ★/.test(r) && /Tests taken\s*21/.test(r), r);
+  // A test that was in progress when the app was updated (saved without an attempt id) can still be finished once.
+  await js(`${H} const set = E.buildSet('d04', { plan: E.banks.d04.plan, seed: 99 });
+    localStorage.setItem('gml:v1:draft:test-d04', JSON.stringify({ set, answers: set.map(() => null), i: 0, started: true, submitted: false, review: false }));`);
+  await b.load(URL + 'index.html#/d04/test');
+  await js(setAll('d04', 'right(q)')); await b.reload();
+  r = await js(`const b1 = document.querySelector('[data-act=submit]'); b1.click(); return { h: document.querySelector('h1').innerText, p: JSON.parse(localStorage.getItem('gml:v1:progress')).lessons.d04 };`);
+  check('integrity: a test saved by the previous version can be finished and is recorded once', /10 out of 10/.test(r.h) && r.p.tests.length === 1 && !!r.p.tests[0].id && r.p.testsTaken === 1, r.p);
 
   // ── Unknown routes and reset ──
   await b.load(URL + 'index.html#/d11/teach/1');

@@ -186,7 +186,7 @@
     const h = p.h || r.int(5, 9);
     const x = `${w}.9${h}`;
     const ans = `${w + 1}.0`;
-    const wrongs = [`${w}.10`, `${w}.9`, `${w}.0`];
+    const wrongs = [`${w}.10`, `${w}.9`, `${w + 1}.1`];
     return {
       type: 'mc', sig: x,
       prompt: `What is <b>${x}</b> rounded to the nearest <b>tenth</b>?`,
@@ -200,7 +200,8 @@
       diagnose(resp) {
         if (resp === `${w}.10`) return `${w}.10 is less than ${x}. 9 tenths + 1 tenth is 10 tenths, which is 1 whole: regroup into the ones place.`;
         if (resp === `${w}.9`) return `The hundredths digit is ${h}, which is five or more, so round up, not down.`;
-        return `${w}.0 is too small. ${x} is very close to ${w + 1}.`;
+        if (resp === `${w + 1}.1`) return 'You regrouped the 10 tenths into 1 whole, which is right. Now count how many tenths are left over.';
+        return `That is too small. ${x} is very close to ${w + 1}.`;
       }
     };
   });

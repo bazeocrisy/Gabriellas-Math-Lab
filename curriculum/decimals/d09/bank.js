@@ -260,8 +260,8 @@
     const name = p.name || r.pick(['Ava', 'Leo', 'Mia', 'Sam', 'Eli']);
     const ans = claimRight ? `Yes. ${said} × ${n} = ${a}.` : `No. ${said} × ${n} = ${back}, not ${a}.`;
     const wrongs = claimRight
-      ? [`No. ${said} × ${a} should be ${n}.`, `No. The answer must be bigger than ${a}.`, `No, because ${said} has only one decimal place.`]
-      : [`Yes, because ${said} has the same digits as ${q}.`, `Yes, because division answers are always bigger.`, `No. The answer must be bigger than ${a}.`];
+      ? [`No. ${said} × ${n} = ${num(D.toThousandths(said) * n * 10)}, not ${a}.`, `No. ${n} × ${a} = ${said}.`, `No. The answer must be bigger than ${a}.`]
+      : [`Yes. ${said} × ${n} = ${a}.`, `Yes. ${n} × ${a} = ${said}.`, `No. The answer must be bigger than ${a}.`];
     return {
       type: 'mc', sig: a + '/' + n + (claimRight ? 'r' : 'w'),
       prompt: `${name} worked out <span class="expr">${a} ÷ ${n}</span> and got <b>${said}</b>. Check by multiplying. Is ${name} right?`,
@@ -274,6 +274,7 @@
       why: `${said} × ${n} = ${back}. ${claimRight ? 'That matches, so the answer is right.' : `That is not ${a}, so the answer is wrong. The correct answer is ${q}.`}`,
       diagnose(resp) {
         if (/bigger/.test(resp)) return 'Dividing by a whole number bigger than 1 makes a number smaller, not bigger.';
+        if (resp.includes(`${n} × ${a}`)) return `Check that multiplication: is it really true? To check a division, multiply the answer by the number you divided by: ${said} × ${n}.`;
         return `Multiply ${said} by ${n} and compare with ${a}.`;
       }
     };

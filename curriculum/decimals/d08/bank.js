@@ -146,7 +146,7 @@
   T('W3', 'mWhole', (r, p) => {
     const a = p.a || f(r.int(2, 9) * 100, 1), n = p.n || r.int(3, 5);
     const ans = Array(n).fill(a).join(' + ');
-    const wrongs = [`${a} + ${n}`, Array(n).fill(digitsOnly(a)).join(' + '), Array(n - 1).fill(a).join(' + ')];
+    const wrongs = [`${a} + ${n}`, Array(n + 1).fill(a).join(' + '), Array(n - 1).fill(a).join(' + ')];
     return {
       type: 'mc', sig: a + '*' + n,
       prompt: `Which is the same as <b>${a} × ${n}</b>?`,
@@ -154,7 +154,7 @@
       hints: [
         'Multiplying by a whole number means adding equal groups.',
         `${a} × ${n} means ${n} groups of ${a}.`,
-        `Look for the choice that adds ${a} exactly ${n} times.`
+        'Count the groups in each choice. Which one has the right number of equal groups?'
       ],
       why: `${a} × ${n} is ${n} groups of ${a}: ${ans} = ${times(a, n)}.`,
       diagnose(resp) {

@@ -253,8 +253,8 @@
     const est = roundWhole(a) + roundWhole(b);
     const ans = claimRight ? `Yes. ${a} + ${b} is about ${est}, and ${said} is close to ${est}.` : `No. ${a} + ${b} is about ${est}, but ${said} is far from ${est}.`;
     const wrongs = claimRight
-      ? [`No. ${said} has too many digits to be right.`, `No. The sum must be more than ${est + 5}.`, `Yes, because ${said} has two decimal places.`]
-      : [`Yes. ${said} has two decimal places, so it must be right.`, `Yes, because it uses all the same digits.`, `No. The sum must be less than ${Math.max(1, est - 4)}.`];
+      ? [`No. ${said} has too many digits after the decimal point to be the right sum.`, `No. The sum must be more than ${est + 5}.`, `Yes, because ${said} has two decimal places.`]
+      : [`Yes. ${said} has two decimal places, so it must be right.`, `Yes, because it uses all the same digits as the numbers that were added.`, `No. The sum must be less than ${Math.max(1, est - 4)}.`];
     return {
       type: 'mc', sig: [a, b].sort().join('+') + (claimRight ? 'r' : 'w'),
       prompt: `${name} added <span class="expr">${a} + ${b}</span> and got <b>${said}</b>. Is that answer reasonable?`,

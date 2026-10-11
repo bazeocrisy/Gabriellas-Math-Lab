@@ -73,8 +73,15 @@
         st.firstTry = st.attempts === 0;
         st.fb = { kind: 'correct' };
       } else {
-        st.attempts++;
-        st.fb = { kind: 'wrong', msg: r.message };
+        // Checking the same wrong answer again is not a new try, so tapping Check cannot unlock the solution.
+        const key = JSON.stringify(st.resp);
+        if (st.lastWrong === key) {
+          st.fb = { kind: 'wrong', msg: 'That is the same answer you already checked. Change your answer before you check again. ' + r.message };
+        } else {
+          st.attempts++;
+          st.lastWrong = key;
+          st.fb = { kind: 'wrong', msg: r.message };
+        }
       }
       save();
       drawFeedback();

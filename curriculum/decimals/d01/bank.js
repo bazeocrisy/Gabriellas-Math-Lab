@@ -922,11 +922,11 @@
     if (claimTrue) {
       prompt = `${name} says <b>${x}</b> is greater than <b>${y}</b> because ${s(a, 'tenth')} is more than ${s(b, 'tenth')}. Is ${name} right?`;
       right = `Yes. ${x} has ${s(a, 'tenth')} and ${y} has only ${s(b, 'tenth')}, so ${x} is greater.`;
-      wrongs = [`No. ${b}${c} is greater than ${a}, so ${y} is greater.`, `No. ${y} has more digits, so it is greater.`, `Yes. ${x} has fewer digits, so it is greater.`];
+      wrongs = [`No. ${b}${c} is greater than ${a} as whole numbers, so ${y} is greater.`, `No. ${y} has more digits after the decimal point, so it is greater than ${x}.`, `Yes. ${x} has fewer digits, so it is greater.`];
     } else {
       prompt = `${name} says <b>${y}</b> is greater than <b>${x}</b> because ${b}${c} is greater than ${a}. Is ${name} right?`;
       right = `No. ${x} is ${a * 10} hundredths, which is more than ${bc} hundredths.`;
-      wrongs = [`Yes. ${b}${c} is greater than ${a}, so ${y} is greater.`, `Yes. ${y} has more digits, so it is greater.`, `No. ${x} is greater because it has fewer digits.`];
+      wrongs = [`Yes. ${b}${c} is greater than ${a} as whole numbers, so ${y} is greater.`, `Yes. ${y} has more digits, so it is greater.`, `No. ${x} is greater because it has fewer digits after the decimal point.`];
     }
     return {
       type: 'mc', sig: x + y + (claimTrue ? 't' : 'f'),
