@@ -554,7 +554,7 @@ body { background: var(--nn-bg); display: flex; flex-direction: column; min-heig
 .restart-confirm { margin: 8px 0 12px; padding: 12px 14px; border: 2px solid #e5b84b; background: var(--warn-soft); border-radius: 12px; }
 .parent-practice { border-top: 6px solid var(--practice-c); }
 .parent-practice h2 { color: var(--practice-c); }
-.table-wrap { overflow-x: auto; }
+.table-wrap { overflow-x: auto; position: relative; }
 .pp-table td, .pp-table th { white-space: nowrap; }
 
 /* ───────────────────────── Questions: problem panel, answer, help ───────────────────────── */
@@ -669,3 +669,25 @@ h1, h2, h3, .pillar-title, .brand { font-family: ui-rounded, "SF Pro Rounded", "
 .guide-lessons a.guide-chip:hover { background: var(--guides-soft); }
 .guide-actions .btn-guide { flex: 1 1 100%; }
 .guide-actions .btn-guide-sub { flex: 1 1 0; min-height: 44px; font-size: .95rem; padding: 6px 10px; background: #fff; }
+
+/* ───────────────────────── Parent Progress ───────────────────────── */
+.pp-tiles { list-style: none; padding: 0; margin: 14px 0; display: grid; gap: 12px; grid-template-columns: minmax(0, 1fr); }
+@media (min-width: 560px) { .pp-tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 1000px) { .pp-tiles { grid-template-columns: repeat(5, minmax(0, 1fr)); } }
+.pp-tile { display: flex; flex-direction: column; gap: 2px; background: #fff; border: 1px solid var(--line); border-top: 5px solid var(--parent); border-radius: 14px; padding: 12px 14px; }
+.pp-k { font-size: .85rem; font-weight: 800; color: var(--muted); }
+.pp-v { font-size: 1.3rem; font-weight: 800; color: var(--nn-ink); line-height: 1.25; }
+.pp-sub { font-size: .9rem; color: var(--muted); }
+.pt-mastered { border-top-color: #e5b84b; }
+.pt-current { border-top-color: var(--learn); }
+.pt-test { border-top-color: var(--test); }
+.pt-practice { border-top-color: var(--practice-c); }
+.pt-review { border-top-color: var(--bad); }
+.pp-review { margin: 4px 0 0; padding-left: 1.2em; font-weight: 600; }
+.pp-review li { margin: 2px 0; }
+.plt-table th[scope=row] { text-align: left; font-weight: 700; }
+.plt-table td { text-align: center; }
+.pp-details-h { margin: 1.4em 0 .4em; }
+.pp-more > summary, .pp-rules > summary { font-size: 1.05rem; }
+.pp-rules > summary h2 { margin: 0; font-size: 1.2rem; display: inline; }
+@media (max-width: 480px) { .plt-table th, .plt-table td { padding: 6px 5px; font-size: .9rem; } }

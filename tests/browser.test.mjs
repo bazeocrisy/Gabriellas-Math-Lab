@@ -268,7 +268,7 @@ try {
 
   // ── Parent Progress ──
   await b.load(URL + 'index.html#/parent');
-  r = await js(`return document.getElementById('app').innerText;`);
+  r = await js(`document.querySelectorAll('#app details').forEach((d) => { d.open = true; }); return document.getElementById('app').innerText;`);
   check('parent: shows lesson completed, recent score, skills, next step and device notice',
     /Lesson completed \(mastered\)\s*Yes/.test(r) && /Most recent test\s*10 of 10 \(100%\)/.test(r) && /Skills correct on the most recent test/.test(r) && /Skills needing more practice/.test(r) &&
     /Suggested next step/.test(r) && /Lesson 2: Decimal Place Value/.test(r) && /only in this browser on this device/.test(r), r.slice(0, 600));
@@ -289,7 +289,7 @@ try {
   r = await js(`return document.querySelector('.lesson-card').innerText;`);
   check('saved Lesson 1 progress from the earlier version still shows on the Learn page', /Mastered/.test(r) && /Finished/.test(r) && /3 sessions/.test(r) && /9 of 10/.test(r), r);
   await b.load(URL + 'index.html#/parent');
-  r = await js(`return document.getElementById('app').innerText;`);
+  r = await js(`document.querySelectorAll('#app details').forEach((d) => { d.open = true; }); return document.getElementById('app').innerText;`);
   check('saved Lesson 1 progress shows on Parent Progress, other lessons start empty', /Lesson 1: Understanding Decimals ★/.test(r) && /9 of 10 \(90%\)/.test(r) && /Lesson 2: Decimal Place Value[\s\S]*No test taken yet/.test(r), r.slice(0, 400));
 
   // ── Lessons 2+: full Teach, Practice, Test, Notes and Parent run for each lesson ──
@@ -382,7 +382,7 @@ try {
     rr = await js(`return { h: document.querySelector('h1').innerText, t: document.getElementById('app').innerText };`);
     check(`${id} notes: printable notes with vocabulary and worked examples`, rr.h === await js(`return GML.lessonContent['${id}'].title;`) && /Vocabulary|Review sheet/.test(rr.t) && /Worked example/.test(rr.t));
     await b.load(URL + 'index.html#/parent');
-    rr = await js(`return document.getElementById('app').innerText;`);
+    rr = await js(`document.querySelectorAll('#app details').forEach((d) => { d.open = true; }); return document.getElementById('app').innerText;`);
     const ln = await js(`return GML.unit.find('${id}').n;`);
     check(`${id} parent: shows the lesson as completed with the latest score`, new RegExp(`Lesson ${ln}: [^\\n]+★`).test(rr) && rr.includes('10 of 10 (100%)'), rr.slice(0, 300));
   }
@@ -508,7 +508,7 @@ try {
   await b.load(URL + 'index.html#/learn');
   check('integrity: the home card shows no ★ Mastered for a test with lesson pages opened', !/Mastered/.test(await js(`return [...document.querySelectorAll('.lesson-card')][8].innerText;`)));
   await b.load(URL + 'index.html#/parent');
-  r = await js(`return document.getElementById('app').innerText;`);
+  r = await js(`document.querySelectorAll('#app details').forEach((d) => { d.open = true; }); return document.getElementById('app').innerText;`);
   check('integrity: Parent Progress explains the rule and labels the test', /How Tests and mastery work/.test(r) && /lesson pages opened during the test/.test(r) && /goal met, but/.test(r), r.slice(0, 300));
   // A refresh during a test is not counted as opening a lesson page; a test done on its own is mastered.
   await b.load(URL + 'index.html#/d09/test');
@@ -563,7 +563,7 @@ try {
     localStorage.setItem('gml:v1:progress', JSON.stringify({ lessons: { d03: { teach: { screen: 0, furthest: 15, done: true }, practice: { sessions: 1, skills: {}, recentSigs: [] }, tests: d03, lastTestSigs: [] },
       d10: { teach: { screen: 0, furthest: 12, done: true }, practice: { sessions: 0, skills: {}, recentSigs: [] }, tests: [t(10, 25)], lastTestSigs: [] } } }));`);
   await b.load(URL + 'index.html#/parent');
-  r = await js(`return { l10: document.querySelector('#pl-d10').closest('section').innerText, l3: document.querySelector('#pl-d03').closest('section').innerText };`);
+  r = await js(`document.querySelectorAll('#app details').forEach((d) => { d.open = true; }); return { l10: document.querySelector('#pl-d10').closest('section').innerText, l3: document.querySelector('#pl-d03').closest('section').innerText };`);
   check('integrity: with only Lessons 3 and 10 mastered, Lesson 10 does not say "All lessons complete"', !/All lessons complete/.test(r.l10) && /Lesson 1: Understanding Decimals is not mastered yet/.test(r.l10), r.l10);
   check('integrity: older saved progress keeps its mastery and test count', /Yes ★/.test(r.l3) && /Tests taken\s*20/.test(r.l3), r.l3);
   await b.load(URL + 'index.html#/d03/test'); await b.reload();
@@ -571,7 +571,7 @@ try {
   await js(setAll('d03', 'wrong(q)')); await b.reload();
   await js(`document.querySelector('[data-act=submit]').click();`); await b.wait(60);
   await b.load(URL + 'index.html#/parent');
-  r = await js(`return document.querySelector('#pl-d03').closest('section').innerText;`);
+  r = await js(`document.querySelectorAll('#app details').forEach((d) => { d.open = true; }); return document.querySelector('#pl-d03').closest('section').innerText;`);
   check('integrity: mastery and the count survive when the mastered test leaves the 20-test history', /Yes ★/.test(r) && /Tests taken\s*21/.test(r), r);
   // A test that was in progress when the app was updated (saved without an attempt id) can still be finished once.
   await js(`${H} const set = E.buildSet('d04', { plan: E.banks.d04.plan, seed: 99 });
@@ -843,7 +843,7 @@ try {
     if (d.i === 3) { fill(host, q, wrongN(q, 0)); host.querySelector('[data-act=check]').click(); } fill(host, q, right(q)); host.querySelector('[data-act=check]').click(); document.querySelector('.coach-next button').click();`);
   await b.wait(150);
   await b.load(URL + 'index.html#/parent');
-  r = await js(`const sec = document.querySelector('.parent-practice'); return { t: sec ? sec.innerText : '', rows: sec ? sec.querySelectorAll('tbody tr').length : 0, d02: document.querySelector('#pl-d02').closest('section').innerText, rules: document.querySelector('#rules-h').closest('section').innerText };`);
+  r = await js(`document.querySelectorAll('#app details').forEach((d) => { d.open = true; }); const sec = document.querySelector('.parent-practice'); return { t: sec ? sec.innerText : '', rows: sec ? sec.querySelectorAll('tbody tr').length : 0, d02: document.querySelector('#pl-d02').closest('section').innerText, rules: document.querySelector('#rules-h').closest('details').innerText };`);
   check('parent: Practice Center section shows sessions, questions, accuracy, hints, recent practice and skills to review', /never counts as a Test/.test(r.t) && /Sessions finished\s*1/.test(r.t) && /Questions answered\s*10/.test(r.t) && /Correct\s*10 of 10/.test(r.t) && r.rows === 1 && /Skills to review/.test(r.t), r.t.slice(0, 400));
   check('parent: Practice Center results do not change lesson tests or mastery', /Tests taken\s*2/.test(r.d02) && /Yes ★/.test(r.d02) && /Practice Center/.test(r.rules), r.d02.slice(0, 300));
   // Opening the Practice Center during an unfinished lesson Test is noted on that Test.
@@ -856,7 +856,7 @@ try {
   // ── NumberNova review regressions ──
   await js(`localStorage.setItem('gml:v1:draft:pc-history', JSON.stringify({ sessions: [{ n: 10, completed: 'abc', clean: 'x' }], skills: { 'add.basic': null, 'sub.basic': { r: 'xx' } } }));`);
   await b.load(URL + 'index.html#/parent');
-  r = await js(`return document.getElementById('app').innerText;`);
+  r = await js(`document.querySelectorAll('#app details').forEach((d) => { d.open = true; }); return document.getElementById('app').innerText;`);
   check('review: damaged practice history does not break Parent Progress (no NaN or junk)', !/Something went wrong|NaN|abc/.test(r) && /Practice Center/.test(r), r.slice(0, 200));
   await b.load(URL + 'index.html#/practice'); await b.reload();
   await js(`document.getElementById('pc-mode-misses').click(); document.querySelector('.pc-form button[type=submit]').click();`);
@@ -880,7 +880,7 @@ try {
   check('unready lesson route falls back to home', /Ready to make your next math discovery/.test(await js(`return document.querySelector('h1').innerText;`)));
   await b.load(URL + 'index.html#/parent');
   await js(`document.querySelector('[data-act=reset]').click(); document.querySelector('[data-act=really]').click();`);
-  check('parent: erase progress works', /No test taken yet/.test(await js(`return document.getElementById('app').innerText;`)) && (await js(`return Object.keys(localStorage).filter((k) => k.startsWith('gml:')).length;`)) === 0);
+  check('parent: erase progress works', /No test taken yet/.test(await js(`document.querySelectorAll('#app details').forEach((d) => { d.open = true; }); return document.getElementById('app').innerText;`)) && (await js(`return Object.keys(localStorage).filter((k) => k.startsWith('gml:')).length;`)) === 0);
 
   check('no console errors', b.errors.length === 0, b.errors);
   if (LIVE) {

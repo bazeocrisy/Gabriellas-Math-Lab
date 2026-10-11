@@ -206,11 +206,54 @@
     </section>`;
   }
 
+  /** Parent Progress overview: five tiles, from the same saved data as the details below. */
+  function parentOverview(shown, done) {
+    const esc = G.models.esc, week = Date.now() - 7 * 864e5;
+    const inWeek = (iso) => { const t = Date.parse(iso || ''); return Number.isFinite(t) && t >= week; };
+    const r = resumeLesson();
+    const current = done.length === shown.length ? 'All lessons mastered ★' : r ? `Lesson ${r.l.n}: ${esc(r.l.title)}` : '-';
+    const currentSub = r && done.length !== shown.length ? esc(r.s.detail) : '';
+    let latest = null;
+    shown.forEach((l) => { const p = G.store.lesson(l.id), t = p.tests[p.tests.length - 1]; if (t && (!latest || Date.parse(t.date) > Date.parse(latest.t.date))) latest = { l, t }; });
+    const pcWeek = G.practiceCenter ? G.practiceCenter.history().sessions.filter((s) => inWeek(s.date)).length : 0;
+    const lessonsWeek = shown.filter((l) => inWeek(G.store.lesson(l.id).practice.lastDate)).length;
+    // Skills to review: missed on the latest test of lessons not mastered yet, then Practice Center misses.
+    const review = [];
+    shown.forEach((l) => {
+      const p = G.store.lesson(l.id), t = p.tests[p.tests.length - 1], bank = G.engine.banks[l.id];
+      if (!t || p.masteredOn) return;
+      Object.keys(bank.skills).forEach((sk) => { if (t.skills[sk] && t.skills[sk].correct < t.skills[sk].total) review.push(`${bank.skills[sk]} <span class="fine">(Lesson ${l.n})</span>`); });
+    });
+    if (G.practiceCenter && G.practiceGen) G.practiceCenter.weakSkills().forEach((w) => review.push(`${esc(G.practiceGen.SKILLS[w.skill].name)} <span class="fine">(practice)</span>`));
+    const tile = (k, v, sub, cls) => `<li class="pp-tile ${cls}"><span class="pp-k">${k}</span><span class="pp-v">${v}</span>${sub ? `<span class="pp-sub">${sub}</span>` : ''}</li>`;
+    return `<section class="pp-overview" aria-labelledby="po-h"><h2 id="po-h" class="sr-only">Overview</h2><ul class="pp-tiles">
+      ${tile('Lessons mastered', `${done.length} of ${shown.length}`, done.length ? '★ 9 of 10 on a Test done on its own' : 'None yet', 'pt-mastered')}
+      ${tile('Current lesson', current, currentSub, 'pt-current')}
+      ${tile('Latest Test', latest ? `${latest.t.correct} of ${latest.t.total}${latest.t.mastered ? ' ★' : ''}` : 'None yet', latest ? `Lesson ${latest.l.n}, ${fmtDate(latest.t.date)}` : '', 'pt-test')}
+      ${tile('Practice this week', pcWeek + lessonsWeek ? `${pcWeek} Practice Center session${pcWeek === 1 ? '' : 's'}` : 'None yet', pcWeek + lessonsWeek ? `${lessonsWeek} lesson${lessonsWeek === 1 ? '' : 's'} practiced` : 'In the last 7 days', 'pt-practice')}
+      <li class="pp-tile pt-review"><span class="pp-k">Skills to review</span>${review.length ? `<ol class="pp-review">${review.slice(0, 3).map((x) => `<li>${x}</li>`).join('')}</ol>` : '<span class="pp-v">None right now</span>'}</li>
+    </ul></section>`;
+  }
+
+  /** One row per lesson: Teach, Practice, Test and ★, in words. */
+  function parentTable(shown) {
+    return `<section class="card pp-lessons" aria-labelledby="plt-h"><h2 id="plt-h">Lessons at a glance</h2>
+      <div class="table-wrap"><table class="skills-table plt-table"><thead><tr><th scope="col">Lesson</th><th scope="col">Teach</th><th scope="col">Practice</th><th scope="col">Test</th><th scope="col"><span aria-hidden="true">★</span><span class="sr-only">Mastered</span></th></tr></thead><tbody>
+      ${shown.map((l) => {
+        const p = G.store.lesson(l.id), L = G.lessonContent[l.id], t = p.tests[p.tests.length - 1];
+        const teach = p.teach.done ? 'Finished' : p.teach.furthest > 0 ? `Screen ${p.teach.furthest + 1} of ${L.screens.length}` : '-';
+        return `<tr><th scope="row">${l.n}. ${l.title}</th><td>${teach}</td><td>${p.practice.sessions ? `${p.practice.sessions} session${p.practice.sessions === 1 ? '' : 's'}` : '-'}</td><td>${t ? `${t.correct} of ${t.total}${t.assisted && !t.mastered ? ' (pages opened)' : ''}` : '-'}</td><td>${p.masteredOn ? '<span aria-hidden="true">★</span><span class="sr-only">Yes</span>' : '<span class="sr-only">Not yet</span>'}</td></tr>`;
+      }).join('')}
+      </tbody></table></div>
+      <p class="fine">"-" means not started. Lessons ${shown.filter((l) => l.supplemental).map((l) => l.n).join(' and ')} are supplemental (beyond the Grade 5 Georgia standards).</p></section>`;
+  }
+
   function parent() {
     const persistent = G.store.persistent();
     const shown = unit.lessons.filter((l) => ready(l.id));
     const done = shown.filter((l) => G.store.lesson(l.id).masteredOn);
-    const blocks = shown.map((l) => {
+    const isStarted = (l) => nextStep(l).started || !!G.store.lesson(l.id).masteredOn;
+    const block = (l) => {
       const bank = G.engine.banks[l.id];
       const L = G.lessonContent[l.id];
       const p = G.store.lesson(l.id);
@@ -239,7 +282,7 @@
       }
       const testLine = (t) => `${t.correct} of ${t.total} (${t.percent}%)${t.mastered ? ' · mastered' : t.assisted ? ` · ${t.goalMet ? 'goal met, but ' : ''}lesson pages opened during the test (${t.assisted.join(', ')})` : ' · not mastered yet'}`;
       return `<section class="card parent-lesson" aria-labelledby="pl-${l.id}">
-        <h2 id="pl-${l.id}">Lesson ${l.n}: ${l.title}${l.supplemental ? ' <span class="lc-extra">Extra: beyond Grade 5</span>' : ''}</h2>
+        <h2 id="pl-${l.id}">Lesson ${l.n}: ${l.title}${everMastered ? ' ★' : ''}${l.supplemental ? ' <span class="lc-extra">Extra: beyond Grade 5</span>' : ''}</h2>
         <dl class="facts-dl">
           <dt>Lesson completed (mastered)</dt><dd>${everMastered ? '<b>Yes ★</b>' : 'Not yet'}</dd>
           <dt>Teach</dt><dd>${teachState}</dd>
@@ -256,7 +299,11 @@
         <h3>Suggested next step</h3>
         <p class="next-step">${next}</p>
       </section>`;
-    }).join('');
+    };
+    const startedL = shown.filter(isStarted), restL = shown.filter((l) => !isStarted(l));
+    const blocks = `<h2 class="pp-details-h">Lesson details</h2>
+      ${startedL.length ? startedL.map(block).join('') : '<p>No lesson started yet. Lesson details appear here once a lesson is started.</p>'}
+      ${restL.length ? `<details class="pp-more"><summary>Show all lessons (${restL.length} not started yet)</summary>${restL.map(block).join('')}</details>` : ''}`;
     app.innerHTML = `
       <div class="crumbs"><a href="#/">← Home</a></div>
       <h1 tabindex="-1">Parent Progress</h1>
@@ -264,15 +311,11 @@
         <p><b>Progress is saved only in this browser on this device.</b> It does not transfer to other devices or browsers, and clearing browser data erases it. No account, name or personal information is collected or sent anywhere.</p>
         ${persistent ? '' : '<p><b>This browser cannot save progress right now (storage is blocked or full, for example in a private window), so progress will be lost when the page is closed.</b></p>'}
       </div>
-      <section class="card parent-summary" aria-labelledby="ps-h">
-        <h2 id="ps-h">Completed lessons</h2>
-        ${done.length ? `<ul>${done.map((l) => `<li>Lesson ${l.n}: ${l.title} ★</li>`).join('')}</ul>` : '<p>No lesson mastered yet.</p>'}
-        <p class="fine">Lessons available now: ${shown.map((l) => l.n).join(', ')}.${unit.lessons.some((l) => !ready(l.id)) ? ` Lessons ${unit.lessons.filter((l) => !ready(l.id)).map((l) => l.n).join(', ')} are coming later.` : ' All lessons in this unit are available.'}${shown.some((l) => l.supplemental) ? ` Lessons ${shown.filter((l) => l.supplemental).map((l) => l.n).join(' and ')} are supplemental (beyond the Grade 5 Georgia standards).` : ''}</p>
-      </section>
-      ${practiceCenterBlock()}
+      ${parentOverview(shown, done)}
+      ${parentTable(shown)}
       ${blocks}
-      <section class="card" aria-labelledby="rules-h">
-        <h2 id="rules-h">How Tests and mastery work</h2>
+      ${practiceCenterBlock()}
+      <details class="card pp-rules"><summary><h2 id="rules-h">How Tests and mastery work</h2></summary>
         <ul>
           <li><b>★ Mastered</b> means at least 9 of 10 correct on a Lesson Test done on its own. This is the app's learning benchmark, not an official Georgia Milestones score.</li>
           <li>A student may leave a Test and come back later; answers are saved.</li>
@@ -281,7 +324,7 @@
           <li>Practice shows two numbers: right on the first try (hints allowed), and right on the first try with no hints. The second number is counted only for practice sessions finished since it was added.</li>
           <li><b>Practice Center</b> sessions are practice: they are shown in their own section and never count as a Test or for ★ Mastered. Opening the Practice Center or the Study Guides while a lesson Test is unfinished is noted on that Test, like opening Teach.</li>
         </ul>
-      </section>
+      </details>
       <section class="reset">
         <button type="button" class="btn" data-act="reset">Erase all progress on this device</button>
         <div class="confirm" hidden><p>Erase all saved progress? This cannot be undone.</p>
@@ -292,6 +335,7 @@
     app.querySelector('[data-act="reset"]').addEventListener('click', () => { conf.hidden = false; });
     app.querySelector('[data-act="cancel"]').addEventListener('click', () => { conf.hidden = true; });
     app.querySelector('[data-act="really"]').addEventListener('click', () => { G.store.resetAll(); parent(); });
+    app.classList.add('page-home');
     document.title = 'Parent Progress · NumberNova';
   }
 
