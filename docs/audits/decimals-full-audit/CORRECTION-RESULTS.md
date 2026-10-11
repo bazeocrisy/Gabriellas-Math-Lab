@@ -4,7 +4,7 @@
 |---|---|
 | Audited baseline | `79abadc` (main and the live site) |
 | Correction branch | `claude/decimals-audit-corrections` |
-| Status | Built, tested and reviewed. **Not merged or deployed.** It is waiting for owner approval. |
+| Status | Built, tested and reviewed. **Merged and live (2026-10-11):** PR #11, merge commit `2686431`; the browser suite passed 658/658 against the live site. |
 
 ## Commits
 

@@ -14,7 +14,7 @@ Teach the concept clearly, provide meaningful practice, and assess independent m
 - **Parent Progress:** lesson status, most recent test, skills correct / needing practice, suggested next step, and how the test and mastery rules work. Stored only in this browser.
 
 ## Status
-**All ten Decimals lessons are live** at https://bazeocrisy.github.io/Gabriellas-Math-Lab/ (Lessons 8 and 9, Multiplying and Dividing, are supplemental). Corrections from the full 10-lesson audit are on branch `claude/decimals-audit-corrections`, awaiting approval. See [docs/STATUS.md](docs/STATUS.md).
+**All ten Decimals lessons are live** at https://bazeocrisy.github.io/Gabriellas-Math-Lab/ (Lessons 8 and 9, Multiplying and Dividing, are supplemental). The corrections from the full 10-lesson audit are live too. See [docs/STATUS.md](docs/STATUS.md).
 
 ## Run it
 It is a static site with no build step and no dependencies.
