@@ -86,7 +86,10 @@
       steps: [
         '<b>Step 1.</b> 6 pencils at $0.35 each: 6 × $0.35.',
         '<b>Step 2.</b> 35 × 6 = 210. $0.35 has two decimal places, so the answer is $2.10.',
-        '<b>Answer:</b> <span class="big-num">$2.10</span> Check: about 6 × $0.40 = $2.40, close. ✓'
+        '<b>Answer:</b> <span class="big-num">$2.10</span> Check: about 6 × $0.40 = $2.40, close. ✓',
+        '<b>Another example: area.</b> A tile is 0.3 m long and 0.6 m wide. What is its area? The area of a rectangle is length × width, measured in <b>square meters</b> (a square 1 m on each side has an area of 1 square meter).',
+        'Think of the 1 m by 1 m square as a grid of 100 small squares. 0.3 m is 3 of the 10 rows and 0.6 m is 6 of the 10 columns. They overlap in 3 × 6 = 18 small squares: 18 hundredths.' + M.area(3, 6, { label: 'A grid of 100 squares, one square meter. 3 of the 10 rows and 6 of the 10 columns are marked; they overlap in 18 dark squares.' }),
+        '<b>Answer:</b> 0.3 × 0.6 = <span class="big-num">0.18</span> square meters. Tenths × tenths make hundredths.'
       ],
       why: 'Buying several of the same item is adding equal groups, and multiplication is the fast way to add equal groups.'
     },
@@ -148,6 +151,6 @@
     teachSigs: screens.filter((s) => s.check).map((s) => G.engine.make('d08', s.check.t, 1, s.check.params).sig)
       .concat(['P1:3.47*10', 'P1:3.47*100', 'P1:3.47*1000', 'P2:3.47*10', 'P2:3.47*100', 'P2:3.47*1000', 'P1:0.29*100', 'P2:0.29*100', 'W1:0.4*3', 'W1:2.35*4', 'W1:1.5*4',
         'W2:4*3', 'W3:0.4*3', 'A1:3*4', 'A1:5*3', 'A2:0.3*0.4', 'A2:0.5*0.3', 'A2:2.3*1.4', 'A2:1.2*0.3', 'D1:2.3*1.4', 'D1:1.2*0.3', 'D2:2.3*1.4', 'D3:0.3*0.4',
-        'K1:buy0.35*6', 'K1:buy0.25*3'])
+        'K1:buy0.35*6', 'K1:buy0.25*3', 'K2:area3*6', 'A2:0.3*0.6', 'A1:3*6'])
   };
 })(typeof window !== 'undefined' ? (window.GML = window.GML || {}) : (globalThis.GML = globalThis.GML || {}));

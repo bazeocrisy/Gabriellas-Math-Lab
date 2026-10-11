@@ -167,3 +167,54 @@ test('Lesson 10 review questions never repeat a Teach example from the lesson th
     for (const x of set) assert.ok(!L10.teachSigs.includes(x.sig));
   }
 });
+
+// ── Teach what is assessed (audit D-04, D-05, D-18 to D-23) ──
+const visualKind = (html) => { const m = /class="(model model-\w+|vcalc-model|pv-chart pv-stack|pv-chart|ldiv-model)/.exec(html || ''); return m ? m[1].replace('model ', '') : 'none'; };
+// Special formats: [name, test on a question, test on the Teach HTML that shows it].
+const MARKERS = [
+  ['missing digit', (q) => /missing digit/.test(q.prompt), (h) => /▢/.test(h)],
+  ['area in square meters', (q) => /square meters/.test(q.prompt), (h) => /square meter/.test(h)],
+  ['related whole-number fact', (q) => /Use this to find/.test(q.prompt), (h) => /\b\d{2,} [×÷] \d+ = \d+\b/.test(h)],
+  ['jumps on a number line', (q) => /jump/i.test(q.prompt) && /model-line/.test(q.visual || ''), (h) => /m-hop/.test(h)],
+  ['point on a number line', (q) => /at point/.test(q.prompt) && /model-line/.test(q.visual || ''), (h) => /model-line/.test(h) && /m-dot/.test(h)]
+];
+function teachHTML(id) {
+  const L = G.lessonContent[id];
+  return L.screens.map((s) => [s.body, s.visual, s.exampleVisual, s.example, ...(s.steps || [])].join(' ')).join(' ');
+}
+function checkTypes(id) {
+  const L = G.lessonContent[id];
+  return new Set(L.screens.filter((s) => s.check).map((s) => { const q = engine.make(id, s.check.t, 1, s.check.params); return q.type + (q.layout ? '/' + q.layout : ''); }));
+}
+
+test('every Practice and Test format is taught first (Teach screen or guided check)', () => {
+  const missing = [];
+  for (const id of LESSONS) {
+    // Lesson 10 reviews Lessons 1-7, so their teaching counts for it too.
+    const scope = id === 'd10' ? ['d01', 'd02', 'd03', 'd04', 'd05', 'd06', 'd07', 'd10'] : [id];
+    const html = scope.map(teachHTML).join(' ');
+    const types = new Set(scope.flatMap((x) => [...checkTypes(x)]));
+    const kinds = new Set([...html.matchAll(/class="(model model-\w+|vcalc-model|pv-chart pv-stack|pv-chart|ldiv-model)/g)].map((m) => m[1].replace('model ', '')));
+    for (const t of engine.banks[id].templates) {
+      if ((engine.banks[id].practiceOnly || []).includes(t.id)) continue;
+      for (let seed = 1; seed <= 60; seed++) {
+        const q = engine.make(id, t.id, seed);
+        const type = q.type + (q.layout ? '/' + q.layout : '');
+        // Answer types beyond typing a number or picking a choice need a guided try in Teach.
+        if (!['number', 'mc'].includes(q.type) && !types.has(type) && !(q.type === 'build' && scope.some((x) => G.lessonContent[x].screens.some((s) => s.widget)))) missing.push(`${id}/${t.id}: answer type ${type} has no guided check`);
+        if (q.layout === 'symbols' && !types.has('mc/symbols') && !/&gt;/.test(html)) missing.push(`${id}/${t.id}: symbols not taught`);
+        const kind = visualKind(q.visual);
+        if (kind !== 'none' && !kinds.has(kind)) missing.push(`${id}/${t.id}: picture ${kind} not shown in Teach`);
+        for (const [name, onQ, onTeach] of MARKERS) if (onQ(q) && !onTeach(html)) missing.push(`${id}/${t.id}: ${name} not taught`);
+      }
+    }
+  }
+  assert.deepEqual([...new Set(missing)], []);
+});
+
+test('every skill has a guided check in Teach', () => {
+  for (const id of LESSONS) {
+    const L = G.lessonContent[id];
+    for (const sk of Object.keys(engine.banks[id].skills)) assert.ok(L.screens.some((s) => s.kind === 'check' && s.skill === sk), `${id}: ${sk}`);
+  }
+});

@@ -39,7 +39,7 @@
         return;
       }
       if (fb.kind === 'solution') {
-        el.innerHTML = `<div class="fb fb-solution"><p class="fb-title">Here is how to solve it</p><p>${q.why}</p>
+        el.innerHTML = `<div class="fb fb-solution"><p class="fb-title">Here is how to solve it</p>${q.solution || ''}<p>${q.why}</p>
           <p>The answer is <b>${G.models.esc(q.answerText)}</b>. Read the steps again, then try the next one on your own.</p></div>`;
         return;
       }

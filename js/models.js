@@ -88,10 +88,20 @@
       parts.push(`<circle cx="${x}" cy="${y}" r="6" class="m-dot"/>`);
       parts.push(`<text x="${x}" y="${y - 18}" class="m-text m-bold" text-anchor="middle">${esc(pt.label)}</text>`);
     });
+    // o.hops = { start, n }: n jumps of one step each from start, drawn as arrows (n < 0 jumps to the left).
+    if (o.hops) {
+      const dir = Math.sign(o.hops.n);
+      for (let k = 0; k < Math.abs(o.hops.n); k++) {
+        const xa = X(o.hops.start + k * dir * step), xb = X(o.hops.start + (k + 1) * dir * step);
+        parts.push(`<path d="M${xa} ${y - 7} Q${(xa + xb) / 2} ${y - 30} ${xb} ${y - 8}" class="m-hop"/>`);
+        parts.push(`<path d="M${xb - dir * 7} ${y - 11} L${xb} ${y - 8} L${xb - dir * 2} ${y - 16}" class="m-hop"/>`);
+      }
+    }
     const label = o.label || `A number line from ${l} to ${r} cut into 10 equal jumps` +
       (o.point !== undefined ? `. Point ${o.pointLabel || 'A'} is ${Math.round((o.point - from) / step)} jumps to the right of ${l}.` : '') +
       (o.points ? ' ' + o.points.map((pt) => `Point ${pt.label} is ${Math.round((pt.v - from) / step)} jumps to the right of ${l}.`).join(' ') : '') + (o.point === undefined && !o.points ? '.' : '') +
-      (o.mid ? ` The halfway mark is at ${G.D.fromThousandths(from + 5 * step)}.` : '');
+      (o.mid ? ` The halfway mark is at ${G.D.fromThousandths(from + 5 * step)}.` : '') +
+      (o.hops ? ` Arrows show ${Math.abs(o.hops.n)} jumps of ${G.D.fromThousandths(step)} to the ${o.hops.n > 0 ? 'right' : 'left'}.` : '');
     return `<svg class="model model-line" viewBox="0 0 340 84" role="img" aria-label="${esc(label)}">${parts.join('')}</svg>`;
   }
 
@@ -187,5 +197,24 @@
     return `<svg class="model model-grid" viewBox="-2 -2 204 204" role="img" aria-label="${esc(label)}">${parts.join('')}<rect x="0" y="0" width="200" height="200" class="m-frame"/></svg>`;
   }
 
-  G.models = { strip, grid, line, chart, stack, vertical, area, esc, PLACES, PLACE_TITLES };
+  /**
+   * Division layout: the divisor, a bracket, the dividend under the bracket, and the quotient written above it
+   * with its decimal point straight above the dividend's decimal point. q may be '' to leave the answer blank.
+   */
+  function longDiv(a, n, q, o = {}) {
+    const A = G.D.parse(a), Q = q ? G.D.parse(q) : null;
+    const W = A.whole.length, P = A.places;
+    const below = A.whole.split('').concat(P ? ['.'] : [], A.frac.split(''));
+    const above = Q ? Q.whole.padStart(W, ' ').split('').map((c) => (c === ' ' ? '' : c)).concat(P ? [Q.places ? '.' : ''] : [], Q.frac.padEnd(P, ' ').split('').map((c) => (c === ' ' ? '' : c)))
+      : below.map(() => '');
+    if (Q && (Q.whole.length > W || Q.places > P)) throw new Error('longDiv: quotient does not fit above the dividend');
+    const label = o.label || `${a} divided by ${n}, written as a division: ${n} is outside the bracket and ${a} is under it` +
+      (Q ? `. The answer ${q} is written above ${a}, with its decimal point straight above the decimal point in ${a}.` : '.');
+    return `<table class="ldiv-model" role="img" aria-label="${esc(label)}"><tbody>` +
+      `<tr class="ld-q"><td></td>${above.map((c) => `<td>${esc(c)}</td>`).join('')}</tr>` +
+      `<tr><td class="ld-div">${esc(n)}</td>${below.map((c, i) => `<td class="ld-top${i === 0 ? ' ld-first' : ''}">${esc(c)}</td>`).join('')}</tr>` +
+      '</tbody></table>';
+  }
+
+  G.models = { strip, grid, line, chart, stack, vertical, area, longDiv, esc, PLACES, PLACE_TITLES };
 })(typeof window !== 'undefined' ? (window.GML = window.GML || {}) : (globalThis.GML = globalThis.GML || {}));

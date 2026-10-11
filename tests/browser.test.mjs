@@ -411,8 +411,8 @@ try {
     check(`damaged saved data does not break ${route}`, !/Something went wrong|undefined|NaN/.test(t), t.slice(0, 120));
   }
   await b.load(URL + 'index.html#/d01/teach/99');
-  r = await js(`return { h: location.hash, done: JSON.parse(localStorage.getItem('gml:v1:progress')).lessons.d01.teach.done };`);
-  check('teach: out-of-range screen redirects and does not mark Teach done', r.h === '#/d01/teach/19' && r.done === false, r);
+  r = await js(`return { h: location.hash, last: GML.lessonContent.d01.screens.length, done: JSON.parse(localStorage.getItem('gml:v1:progress')).lessons.d01.teach.done };`);
+  check('teach: out-of-range screen redirects and does not mark Teach done', r.h === '#/d01/teach/' + r.last && r.done === false, r);
   await b.load(URL + 'index.html#/d01/teach/2');
   await js(`let g = 0; while (document.querySelector('[data-act=step]:not([hidden])') && g++ < 9) document.querySelector('[data-act=step]').click();`);
   await b.reload();
@@ -562,6 +562,42 @@ try {
   await js(setAll('d04', 'right(q)')); await b.reload();
   r = await js(`const b1 = document.querySelector('[data-act=submit]'); b1.click(); return { h: document.querySelector('h1').innerText, p: JSON.parse(localStorage.getItem('gml:v1:progress')).lessons.d04 };`);
   check('integrity: a test saved by the previous version can be finished and is recorded once', /10 out of 10/.test(r.h) && r.p.tests.length === 1 && !!r.p.tests[0].id && r.p.testsTaken === 1, r.p);
+
+  // ── Teaching corrections (audit D-04, D-05, D-18 to D-24) ──
+  const screenOf = (id, sid) => js(`return GML.lessonContent['${id}'].screens.findIndex((s) => s.id === '${sid}') + 1;`);
+  await js(`localStorage.clear();`);
+  for (const [id, sid, sel, label] of [['d01', 'line', '.model-line', 'Lesson 1 number line (tenths)'], ['d01', 'zoom', '.model-line', 'Lesson 1 zoomed number line (hundredths)'],
+    ['d03', 'missing', '.pv-chart', 'Lesson 3 missing digit'], ['d06', 'models', '.m-hop', 'Lesson 6 number-line jumps'], ['d07', 'models', '.m-hop', 'Lesson 7 number-line jumps'],
+    ['d08', 'word', '.model-grid', 'Lesson 8 area example'], ['d09', 'whole', '.ldiv-model', 'Lesson 9 division layout'], ['d09', 'hundredths', '.ldiv-model', 'Lesson 9 hundredths and related fact']]) {
+    await b.load(URL + `index.html#/${id}/teach/${await screenOf(id, sid)}`);
+    r = await js(`for (let k = 0; k < 8; k++) { const s = document.querySelector('[data-act=step]'); if (s && !s.hidden) s.click(); }
+      return { n: document.querySelectorAll('${sel}').length, h: document.querySelector('h1').innerText, why: !!document.querySelector('.why-box:not([hidden])'), next: !document.querySelector('[data-act=next]').disabled };`);
+    check(`teach: ${label} screen draws its picture and explains why`, r.n > 0 && r.next && (r.why || sid === 'models' || sid === 'word'), r);
+  }
+  // The new guided checks work like the others: a wrong answer coaches, a right answer unlocks Next.
+  for (const [id, sid] of [['d01', 'check-line'], ['d01', 'check-compare'], ['d01', 'check-chart'], ['d02', 'check-expanded'], ['d03', 'check-missing'], ['d09', 'check-hundredths']]) {
+    await b.load(URL + `index.html#/${id}/teach/${await screenOf(id, sid)}`); await b.reload();
+    r = await js(`${H} const sc = GML.lessonContent['${id}'].screens.find((s) => s.id === '${sid}'); const q = E.make('${id}', sc.check.t, 1, sc.check.params);
+      const host = document.querySelector('.check-host'); const nb = document.querySelector('[data-act=next]');
+      fill(host, q, wrong(q)); host.querySelector('[data-act=check]').click(); const coached = !!host.querySelector('.fb-wrong') && nb.disabled;
+      fill(host, q, right(q)); host.querySelector('[data-act=check]').click(); return { coached, right: !!host.querySelector('.fb-right'), open: !nb.disabled };`);
+    check(`teach: new guided check ${id}/${sid} coaches a wrong answer and unlocks Next when right`, r.coached && r.right && r.open, r);
+  }
+  // D-24: "Show me how" for column work shows the lined-up columns, carry or regroup marks and steps.
+  for (const [id, t, seed] of [['d06', 'AL1', 5], ['d07', 'SZ1', 3]]) {
+    await js(`${H} const q = E.make('${id}', '${t}', ${seed}); const set = E.buildSet('${id}', { plan: E.banks['${id}'].plan, seed: 7 }).filter((x) => x.id !== '${t}').slice(0, 9);
+      set.unshift({ id: '${t}', seed: ${seed}, sig: q.sig }); localStorage.setItem('gml:v1:draft:practice-${id}', JSON.stringify({ id: 'x', set, i: 0, states: set.map(() => ({})), finished: false, recorded: false }));`);
+    await b.load(URL + `index.html#/${id}/practice`); await b.reload();
+    r = await js(`${H} const q = qIn('practice', '${id}'); const host = document.querySelector('.coach-host');
+      for (let k = 0; k < 3; k++) { fill(host, q, wrongN(q, k)); host.querySelector('[data-act=check]').click(); }
+      host.querySelector('[data-act=solution]').click();
+      const w = host.querySelector('.solution-work'); return { work: !!w, cols: !!(w && w.querySelector('.vcalc-model')), steps: w ? w.querySelectorAll('.sol-steps li').length : 0, marks: w ? w.querySelector('.v-carry') !== null : false };`);
+    check(`practice: "Show me how" for ${id}/${t} shows the columns, ${id === 'd06' ? 'carries' : 'regrouping'} and each step`, r.work && r.cols && r.steps >= 3 && r.marks, r);
+  }
+  // Lesson 1 progress saved before the new screens were added still shows as finished.
+  await js(`localStorage.setItem('gml:v1:progress', JSON.stringify({ lessons: { d01: { teach: { screen: 18, furthest: 18, done: true }, practice: { sessions: 0, skills: {}, recentSigs: [] }, tests: [], lastTestSigs: [] } } }));`);
+  await b.load(URL + 'index.html#/');
+  check('saved progress: Lesson 1 Teach finished before the new screens still shows as finished', /Teach Finished/.test(await js(`return document.querySelector('.lesson-card').innerText.replace(/\\s+/g, ' ');`)));
 
   // ── Unknown routes and reset ──
   await b.load(URL + 'index.html#/d11/teach/1');

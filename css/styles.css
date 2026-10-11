@@ -364,3 +364,15 @@ details[open] > summary::before { content: "▾"; }
   .m-on { fill: #9aa7bb; }
   h2 { break-after: avoid; }
 }
+
+/* Number-line jump arrows, division layout, and worked column solutions (audit corrections). */
+.m-hop { fill: none; stroke: #b4441c; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+.ldiv-model { border-collapse: collapse; margin: .5rem 0; font-size: 1.35rem; font-variant-numeric: tabular-nums; }
+.ldiv-model td { min-width: 1.15em; padding: .05em .12em; text-align: center; }
+.ldiv-model .ld-q td { color: var(--ink, #1d2433); font-weight: 700; }
+.ldiv-model .ld-div { padding-right: .35em; }
+.ldiv-model .ld-top { border-top: 2px solid currentColor; }
+.ldiv-model .ld-first { border-left: 2px solid currentColor; }
+.solution-work .vcalc-model { margin: .5rem 0; }
+.sol-steps { margin: .4rem 0 .6rem 1.2rem; padding: 0; }
+.sol-steps li { margin: .2rem 0; }

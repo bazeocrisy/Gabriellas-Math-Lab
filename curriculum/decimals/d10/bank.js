@@ -48,7 +48,7 @@
     const sum = num(D.toThousandths(a) + D.toThousandths(b));
     const ans = f(roundK(D.toThousandths(sum), 100), 1);
     return {
-      type: 'number', places: 1, sig: [a, b].sort().join('+'),
+      type: 'number', places: 1, sig: [a, b].sort().join('+'), solution: K.columnSolution([a, b], '+'),
       prompt: `Add <span class="expr">${a} + ${b}</span>. Then round the sum to the nearest <b>tenth</b>.`,
       answer: ans, answerText: ans,
       hints: [
@@ -134,7 +134,7 @@
     const likely = [...new Set([other, flip, ones])].filter((d) => d !== ans); // digits from real mistakes first, then random fill
     const wrongDigits = [...likely, ...r.shuffle('0123456789'.split('').filter((d) => d !== ans && !likely.includes(d)))].slice(0, 3);
     return {
-      type: 'mc', sig: a + '-' + b + place,
+      type: 'mc', sig: a + '-' + b + place, solution: K.columnSolution([a, b], '−'),
       prompt: `Subtract <span class="expr">${a} − ${b}</span>. Which digit is in the <b>${place}</b> place of the answer?`,
       choices: textChoices(r, ans, wrongDigits),
       answer: ans, answerText: ans,

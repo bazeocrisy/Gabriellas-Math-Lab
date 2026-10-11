@@ -35,9 +35,10 @@
 
   function diffQuestion(a, b, extra = {}) {
     const ans = sub(a, b);
+    const solution = K.columnSolution([a, b], '−');
     const P = Math.max(D.parse(a).places, D.parse(b).places);
     return Object.assign({
-      type: 'number', sig: a + '-' + b,
+      type: 'number', sig: a + '-' + b, solution,
       prompt: `Subtract: <span class="expr">${a} − ${b}</span>`,
       visual: M.vertical([a, b], '−', { answer: '' }),
       answer: ans, answerText: ans,

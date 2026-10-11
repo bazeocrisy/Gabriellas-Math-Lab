@@ -14,7 +14,8 @@
         '<b>Step 1.</b> 0.75 is 75 shaded squares. 0.3 is 3 columns = 30 hundredths. Cross out 30 squares.',
         '<b>Step 2.</b> 75 hundredths − 30 hundredths = 45 hundredths.',
         '<b>Answer:</b> <span class="big-num">0.75 − 0.3 = 0.45</span>',
-        '<b>On a number line:</b> to subtract 0.3 from 4.8, start at 4.8 and make 3 jumps of 0.1 to the left: <b>4.5</b>.'
+        '<b>On a number line:</b> to subtract 0.3 from 4.8, start at 4.8 (point A) and make 3 jumps of 0.1 to the left to land on <b>4.5</b> (point B). Subtracting moves left, toward smaller numbers.' +
+          M.line({ from: 4000, to: 5000, labels: ['4', '5'], tickLabels: true, points: [{ v: 4800, label: 'A' }, { v: 4500, label: 'B' }], hops: { start: 4800, n: -3 }, label: 'A number line from 4 to 5 with tick marks every 0.1. Three arrows jump to the left from 4.8 to 4.5.' })
       ],
       why: 'Like adding, subtracting works on parts of the same size. Writing 0.3 as 30 hundredths lets you take hundredths away from hundredths.'
     },

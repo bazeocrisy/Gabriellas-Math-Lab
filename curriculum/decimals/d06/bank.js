@@ -31,9 +31,10 @@
 
   function sumQuestion(a, b, extra = {}) {
     const ans = add(a, b);
+    const solution = K.columnSolution([a, b], '+');
     const P = Math.max(D.parse(a).places, D.parse(b).places);
     return Object.assign({
-      type: 'number', sig: [a, b].sort().join('+'),
+      type: 'number', sig: [a, b].sort().join('+'), solution,
       prompt: `Add: <span class="expr">${a} + ${b}</span>`,
       visual: M.vertical([a, b], '+', { answer: '' }),
       answer: ans, answerText: ans,
@@ -198,7 +199,7 @@
     const xs = p.xs || [dec(r, 2, 9), dec(r, 1, 9), dec(r, 2, 9)];
     const ans = num(xs.reduce((t, x) => t + D.toThousandths(x), 0));
     return {
-      type: 'number', sig: '3:' + xs.slice().sort().join('+'),
+      type: 'number', sig: '3:' + xs.slice().sort().join('+'), solution: K.columnSolution(xs, '+'),
       prompt: `Add: <span class="expr">${xs.join(' + ')}</span>`,
       answer: ans, answerText: ans,
       hints: [

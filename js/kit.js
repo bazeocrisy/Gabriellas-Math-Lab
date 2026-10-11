@@ -101,5 +101,66 @@
     return D.canonical(P ? str.slice(0, str.length - P) + '.' + str.slice(str.length - P) : str);
   }
 
-  G.kit = { aligned, noCarryAdd, noBorrowSub, misaligned, f, num, ORD, PL, PLACES, s, list, cap, textChoices, placeCheck, droppedZero, ZERO_TIP, digits5, expanded, distinctDigits, words: W.decimalWords };
+  /**
+   * A worked column calculation for "Show me how to solve it": the numbers lined up by the decimal point (zeros
+   * written), carry or regroup marks, and one sentence per column from the right. nums: two or more numbers to
+   * add (op '+'), or [top, bottom] with top > bottom to subtract (op '−').
+   */
+  function columnSolution(nums, op) {
+    const minus = op !== '+';
+    const ps = nums.map((x) => D.parse(x));
+    const P = Math.max(...ps.map((x) => x.places)), W = Math.max(...ps.map((x) => x.whole.length));
+    const rows = ps.map((v) => (v.whole.padStart(W, '0') + v.frac.padEnd(P, '0')).split('').map(Number));
+    const n = W + P;
+    const WHOLE = ['ones', 'tens', 'hundreds', 'thousands', 'ten thousands'], FRAC = ['tenths', 'hundredths', 'thousandths'];
+    const name = (i) => (i >= W ? FRAC[i - W] : WHOLE[W - 1 - i]);
+    const Cap = (t) => t[0].toUpperCase() + t.slice(1);
+    const written = (r, i) => i >= W || ps[r].whole.length >= W - i; // false for an empty place left of a shorter number
+    const total = minus ? D.toThousandths(nums[0]) - D.toThousandths(nums[1]) : ps.reduce((t, v) => t + D.toThousandths(v), 0);
+    const answer = f(total, P), shift = Math.max(W, D.parse(answer).whole.length) - W;
+    const cell = (i) => shift + (i < W ? i : i + 1); // column of digit i in the drawn calculation
+    const marks = {}, steps = [];
+    if (!minus) {
+      let carry = 0;
+      for (let i = n - 1; i >= 0; i--) {
+        const shown = rows.map((r, k) => (written(k, i) ? r[i] : null)).filter((x) => x !== null);
+        const sum = shown.reduce((a, b) => a + b, 0) + carry;
+        const parts = shown.map(String).concat(carry ? [`${carry} carried`] : []);
+        const next = Math.floor(sum / 10);
+        let t = parts.length === 1 ? `${Cap(name(i))}: bring down the ${sum}.` : `${Cap(name(i))}: ${parts.join(' + ')} = ${sum}.`;
+        if (next && parts.length > 1) t += ` Write ${sum % 10} and carry ${next} to the ${i ? name(i - 1) : WHOLE[W]}.`;
+        steps.push(t);
+        carry = next;
+        if (carry && i) marks[cell(i - 1)] = String(carry);
+      }
+      if (carry) steps.push(`Write the carried ${carry} in the ${WHOLE[W]} place.`);
+    } else {
+      const t = rows[0].slice(), b = rows[1];
+      for (let i = n - 1; i >= 0; i--) {
+        if (!written(1, i)) {
+          if (i === 0 && t[i] === 0) steps.push(`${Cap(name(i))}: nothing is left there.`);
+          else if (written(0, i)) steps.push(`${Cap(name(i))}: bring down the ${t[i]}.`);
+          continue;
+        }
+        if (t[i] < b[i]) {
+          let k = i - 1;
+          while (t[k] === 0) k--;
+          const zeros = []; for (let m = k + 1; m < i; m++) zeros.push(name(m));
+          const was = t[i];
+          t[k] -= 1; for (let m = k + 1; m < i; m++) t[m] = 9; t[i] += 10;
+          for (let m = k; m <= i; m++) marks[cell(m)] = String(t[m]);
+          steps.push(`${Cap(name(i))}: ${was} is less than ${b[i]}, so regroup. ` + (zeros.length
+            ? `The ${list(zeros)} digit${zeros.length > 1 ? 's are' : ' is'} 0, so regroup across ${zeros.length > 1 ? 'them' : 'it'}: take 1 from the ${name(k)} (it becomes ${t[k]}), each 0 becomes 9, and the ${name(i)} become ${t[i]}.`
+            : `Take 1 from the ${name(k)} (it becomes ${t[k]}), which makes 10 more ${name(i)}: ${t[i]}.`) + ` ${t[i]} − ${b[i]} = ${t[i] - b[i]}.`);
+        } else steps.push(`${Cap(name(i))}: ${t[i]} − ${b[i]} = ${t[i] - b[i]}.`);
+      }
+    }
+    if (P) steps.push(`Bring the decimal point straight down into the answer: ${answer}.`);
+    const padded = ps.some((v) => v.places < P);
+    return `<div class="solution-work"><p>Line up the decimal points${padded ? ` and write zeros so every number has ${P} decimal place${P === 1 ? '' : 's'}` : ''}. Then work one column at a time, starting on the right:</p>` +
+      G.models.vertical(nums, minus ? '−' : '+', { answer, pad: true, carry: marks, label: `${nums.join(minus ? ' minus ' : ' plus ')}, written in columns with the decimal points lined up, equals ${answer}.` }) +
+      `<ol class="sol-steps">${steps.map((s) => `<li>${s}</li>`).join('')}</ol></div>`;
+  }
+
+  G.kit = { columnSolution, aligned, noCarryAdd, noBorrowSub, misaligned, f, num, ORD, PL, PLACES, s, list, cap, textChoices, placeCheck, droppedZero, ZERO_TIP, digits5, expanded, distinctDigits, words: W.decimalWords };
 })(typeof window !== 'undefined' ? (window.GML = window.GML || {}) : (globalThis.GML = globalThis.GML || {}));
