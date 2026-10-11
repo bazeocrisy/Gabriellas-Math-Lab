@@ -31,7 +31,9 @@
     const STEPBTN = '<button type="button" class="btn btn-primary step-btn" data-act="step">Show next step</button>';
 
     app.innerHTML = `
-      <div class="crumbs"><a href="#/learn">← Lesson menu</a></div>
+      <div class="crumbs crumbs-split"><a href="#/learn">← Lesson menu</a><button type="button" class="btn btn-link" data-act="restart">Start Lesson Over</button></div>
+      <div class="confirm restart-confirm" hidden><p><b>Start Lesson ${G.unit.find(lessonId).n} over from the beginning?</b> This clears your answers to the "Try it together" questions and the steps you revealed in this lesson. Your tests, mastery and practice are kept.</p>
+        <button type="button" class="btn btn-primary" data-act="restart-yes">Yes, start over</button> <button type="button" class="btn" data-act="restart-no">No, stay here</button></div>
       <p class="mode-label">Lesson ${G.unit.find(lessonId).n} · Teach <span class="screen-count">Screen ${i + 1} of ${total}</span></p>
       <div class="progress" role="progressbar" aria-label="Lesson progress" aria-valuemin="1" aria-valuemax="${total}" aria-valuenow="${i + 1}"><span style="width:${((i + 1) / total) * 100}%"></span></div>
       <h1 tabindex="-1">${title}</h1>
@@ -90,6 +92,14 @@
       }
     });
     nextBtn.addEventListener('click', () => { location.hash = `#/${lessonId}/teach/${i + 2}`; });
+    const restartBox = app.querySelector('.restart-confirm');
+    app.querySelector('[data-act="restart"]').addEventListener('click', () => { restartBox.hidden = false; restartBox.querySelector('[data-act="restart-yes"]').focus(); });
+    app.querySelector('[data-act="restart-no"]').addEventListener('click', () => { restartBox.hidden = true; app.querySelector('[data-act="restart"]').focus(); });
+    app.querySelector('[data-act="restart-yes"]').addEventListener('click', () => {
+      G.store.restartTeach(lessonId);
+      if (i === 0) view(app, lessonId, 1); else location.hash = `#/${lessonId}/teach/1`;
+      const h = app.querySelector('h1'); if (h) h.focus();
+    });
 
     if (sc.widget) G.qui.builder(app.querySelector('.widget'), sc.widget === 'grid' ? 'grid' : 'strip', { showDecimal: true });
 

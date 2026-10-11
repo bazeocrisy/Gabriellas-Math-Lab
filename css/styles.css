@@ -546,3 +546,11 @@ body { background: var(--nn-bg); display: flex; flex-direction: column; min-heig
 .stat-ok .pc-stat-n, .stat-clean .pc-stat-n { color: var(--practice-c); }
 .stat-help .pc-stat-n { color: #8a5a00; }
 .stat-miss .pc-stat-n { color: var(--bad); }
+
+/* Restart controls */
+.crumbs-split { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 4px 12px; }
+.restart-confirm { margin: 8px 0 12px; padding: 12px 14px; border: 2px solid #e5b84b; background: var(--warn-soft); border-radius: 12px; }
+.parent-practice { border-top: 6px solid var(--practice-c); }
+.parent-practice h2 { color: var(--practice-c); }
+.table-wrap { overflow-x: auto; }
+.pp-table td, .pp-table th { white-space: nowrap; }

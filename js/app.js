@@ -120,6 +120,35 @@
     document.title = `${L.title} · Lesson Notes`;
   }
 
+  /** Parent Progress: Practice Center activity (practice only, never mastery). */
+  function practiceCenterBlock() {
+    const PC = G.practiceCenter, PG = G.practiceGen;
+    if (!PC || !PG) return '';
+    const h = PC.history(), list = h.sessions.slice().reverse();
+    const done = list.reduce((a, s) => a + (s.completed || 0), 0), right = list.reduce((a, s) => a + (s.correct || 0), 0);
+    const clean = list.reduce((a, s) => a + (s.clean || 0), 0), hints = list.reduce((a, s) => a + (s.hints || 0), 0);
+    const weak = PC.weakSkills();
+    const paused = PC.loadSession();
+    const pct = (a, b) => (b ? Math.round((a / b) * 100) + '%' : '-');
+    return `<section class="card parent-practice" aria-labelledby="pp-h">
+      <h2 id="pp-h">Practice Center <span class="fine">(practice only: never counts as a Test or for ★ Mastered)</span></h2>
+      ${list.length ? `<dl class="facts-dl">
+          <dt>Sessions finished</dt><dd>${list.length}</dd>
+          <dt>Questions answered</dt><dd>${done}</dd>
+          <dt>Correct</dt><dd>${right} of ${done} (${pct(right, done)})</dd>
+          <dt>Correct on the first try with no hints</dt><dd>${clean} of ${done} (${pct(clean, done)})</dd>
+          <dt>Hints used</dt><dd>${hints}</dd>
+        </dl>
+        <h3>Recent practice</h3>
+        <div class="table-wrap"><table class="skills-table pp-table"><thead><tr><th scope="col">Date</th><th scope="col">Practice</th><th scope="col">Questions</th><th scope="col">Correct</th><th scope="col">No hints</th><th scope="col">Hints</th></tr></thead><tbody>
+          ${list.slice(0, 10).map((s) => `<tr><td>${fmtDate(s.date)}</td><td>${G.models.esc(s.label || s.mode)}</td><td>${s.completed} of ${s.n}</td><td>${s.correct}</td><td>${s.clean}</td><td>${s.hints}</td></tr>`).join('')}
+        </tbody></table></div>` : '<p>No Practice Center sessions finished yet.</p>'}
+      ${paused && !paused.finished ? `<p>In progress: ${G.models.esc(paused.label)}, question ${paused.i + 1} of ${paused.n}.</p>` : ''}
+      <h3>Skills to review <span class="fine">(from practice mistakes)</span></h3>
+      ${weak.length ? `<ul>${weak.map((w) => `<li>${G.models.esc(PG.SKILLS[w.skill].name)} <span class="fine">(${G.models.esc(w.from)})</span></li>`).join('')}</ul><p><a href="#/practice">Practice these in the Practice Center</a> (choose Practice My Misses).</p>` : '<p>None recorded yet.</p>'}
+    </section>`;
+  }
+
   function parent() {
     const persistent = G.store.persistent();
     const shown = unit.lessons.filter((l) => ready(l.id));
@@ -183,6 +212,7 @@
         ${done.length ? `<ul>${done.map((l) => `<li>Lesson ${l.n}: ${l.title} ★</li>`).join('')}</ul>` : '<p>No lesson mastered yet.</p>'}
         <p class="fine">Lessons available now: ${shown.map((l) => l.n).join(', ')}.${unit.lessons.some((l) => !ready(l.id)) ? ` Lessons ${unit.lessons.filter((l) => !ready(l.id)).map((l) => l.n).join(', ')} are coming later.` : ' All lessons in this unit are available.'}${shown.some((l) => l.supplemental) ? ` Lessons ${shown.filter((l) => l.supplemental).map((l) => l.n).join(' and ')} are supplemental (beyond the Grade 5 Georgia standards).` : ''}</p>
       </section>
+      ${practiceCenterBlock()}
       ${blocks}
       <section class="card" aria-labelledby="rules-h">
         <h2 id="rules-h">How Tests and mastery work</h2>
@@ -192,6 +222,7 @@
           <li>If Teach, Practice or Lesson Notes is opened in this app while a Test is unfinished, the Test is still scored and shown here, marked "lesson pages opened during the test", but it does not count for ★ Mastered. This is not treated as cheating: looking back at a lesson is a good way to learn. It just means the score is not an independent result.</li>
           <li>The app only knows about pages opened in this app. Refreshing the page or closing the browser is not counted, and help from outside the app cannot be seen. Tests taken before this rule was added have no such record and are shown as they were.</li>
           <li>Practice shows two numbers: right on the first try (hints allowed), and right on the first try with no hints. The second number is counted only for practice sessions finished since it was added.</li>
+          <li><b>Practice Center</b> sessions are practice: they are shown in their own section and never count as a Test or for ★ Mastered. Opening the Practice Center or the Study Guides while a lesson Test is unfinished is noted on that Test, like opening Teach.</li>
         </ul>
       </section>
       <section class="reset">
@@ -207,10 +238,10 @@
     document.title = 'Parent Progress · NumberNova';
   }
 
-  const ASSIST = { teach: 'Teach', practice: 'Practice', notes: 'Lesson Notes' };
+  const ASSIST = { teach: 'Teach', practice: 'Practice', notes: 'Lesson Notes', center: 'the Practice Center', guides: 'the Study Guides' };
   /** Opening Teach, Practice or Lesson Notes while a Test is unfinished is noted on that Test (only pages in this app). */
   function noteAssist(lessonId, mode) {
-    const label = `${lessonName(lessonId)} ${ASSIST[mode]}`;
+    const label = lessonId ? `${lessonName(lessonId)} ${ASSIST[mode]}` : ASSIST[mode];
     unit.lessons.filter((l) => ready(l.id)).forEach((l) => {
       const d = G.store.openTest(l.id);
       if (!d) return;
@@ -227,6 +258,8 @@
     app.classList.remove('page-home');
     const am = h.match(/^#\/(d\d\d)\/(teach|practice|notes)(?:\/\d+)?$/);
     if (am && ready(am[1])) noteAssist(am[1], am[2]);
+    else if (/^#\/practice(\/(session|results))?$/.test(h)) noteAssist(null, 'center');
+    else if (h === '#/guides') noteAssist(null, 'guides');
     try {
       if ((m = h.match(/^#\/(d\d\d)\/teach(?:\/(\d+))?$/)) && ready(m[1])) G.views.teach(app, m[1], Number(m[2] || 1));
       else if ((m = h.match(/^#\/(d\d\d)\/practice$/)) && ready(m[1])) G.views.practice(app, m[1]);

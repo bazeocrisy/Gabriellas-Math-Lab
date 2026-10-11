@@ -97,7 +97,7 @@
             <li>You will not see if an answer is right until you submit the whole test.</li>
             <li>You can go back and change answers before you submit.</li>
             <li>There is no time limit. You can leave and come back later: your answers are saved.</li>
-            <li>To earn ★ Mastered, do the test on your own. If you open Teach, Practice or Lesson Notes before you submit, you still get a score, but that test will not count for ★ Mastered.</li>
+            <li>To earn ★ Mastered, do the test on your own. If you open Teach, Practice, Lesson Notes, the Practice Center or the Study Guides before you submit, you still get a score, but that test will not count for ★ Mastered.</li>
           </ul>
         </div>
         <div class="done-actions">
@@ -235,6 +235,7 @@
             : '<p class="fb-title">Not mastered yet</p><p>The goal is at least 9 out of 10 correct. Review the skills below, practice, and then try a new test.</p>' +
               (r.assisted ? `<p class="fine">${listText(r.assisted)} ${r.assisted.length === 1 ? 'was' : 'were'} opened during this test.</p>` : '')}
         </div>
+        <p class="fine">This result is saved. Retaking the test gives new questions and keeps this result and any ★ Mastered.</p>
         <h2>Skills</h2>
         <table class="skills-table"><thead><tr><th scope="col">Skill</th><th scope="col">Correct</th><th scope="col">Review</th></tr></thead><tbody>
           ${Object.keys(r.skills).map((sk) => `<tr><td>${bank.skills[sk]}</td><td>${r.skills[sk].correct} of ${r.skills[sk].total}</td>
@@ -245,7 +246,7 @@
         <div class="done-actions">
           ${r.missedSkills.length ? `<a class="btn btn-primary btn-big" href="${teachLink(r.missedSkills[0])}">Review in Teach</a>` : ''}
           <a class="btn btn-big ${r.missedSkills.length ? '' : 'btn-primary'}" href="#/${lessonId}/practice">Practice</a>
-          <button type="button" class="btn btn-big" data-act="new">Take a new test</button>
+          <button type="button" class="btn btn-big" data-act="new">Retake Test (new questions)</button>
           <a class="btn btn-big" href="#/learn">Lesson menu</a>
         </div>`;
       app.querySelector('[data-act="new"]').addEventListener('click', () => {

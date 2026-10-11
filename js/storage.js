@@ -103,6 +103,19 @@
     getDraft: (name) => read(DRAFT + name, null),
     setDraft: (name, v) => rawSet(DRAFT + name, JSON.stringify(v)),
     clearDraft: (name) => rawDel(DRAFT + name),
+    /** Start a lesson's Teach over: clear its guided-check answers and revealed steps, and its place in Teach.
+     *  Tests, mastery, Practice and "Teach finished" are kept. */
+    restartTeach(id) {
+      const prefix = DRAFT + 'teach-' + id + '-';
+      try { Object.keys(window.localStorage).filter((k) => k.startsWith(prefix)).forEach((k) => window.localStorage.removeItem(k)); } catch (e) { /* blocked */ }
+      Object.keys(memory).filter((k) => k.startsWith(prefix)).forEach((k) => delete memory[k]);
+      const steps = read(DRAFT + 'teach-steps', null);
+      if (steps && typeof steps === 'object') {
+        Object.keys(steps).filter((k) => k.startsWith(id + ':')).forEach((k) => delete steps[k]);
+        rawSet(DRAFT + 'teach-steps', JSON.stringify(steps));
+      }
+      update(id, (p) => { p.teach.screen = 0; p.teach.furthest = 0; });
+    },
     resetAll() {
       try {
         Object.keys(window.localStorage).filter((k) => k.startsWith('gml:')).forEach((k) => window.localStorage.removeItem(k));

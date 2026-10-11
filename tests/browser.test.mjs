@@ -803,6 +803,52 @@ try {
   await noOverflow('practice question with a division layout (320px)'); await bigTargets('practice question (320px)');
   await b.viewport(390, 844);
 
+  // ── NumberNova: restart controls and Parent Progress ──
+  await js(`localStorage.clear(); localStorage.setItem('gml:v1:progress', JSON.stringify({ lessons: { d02: { teach: { screen: 5, furthest: 9, done: true }, practice: { sessions: 2, skills: {}, recentSigs: [] },
+    tests: [{ id: 'old1', date: '2026-10-01T12:00:00Z', correct: 10, total: 10, percent: 100, mastered: true, goalMet: true, skills: {}, missedSkills: [] }], testsTaken: 1, masteredOn: '2026-10-01T12:00:00Z', lastTestSigs: [] } } }));
+    localStorage.setItem('gml:v1:draft:teach-d02-check-place', JSON.stringify({ solved: true, fb: { kind: 'correct' }, resp: 'tenths' }));
+    localStorage.setItem('gml:v1:draft:teach-d03-check-place', JSON.stringify({ solved: true, fb: { kind: 'correct' } }));
+    localStorage.setItem('gml:v1:draft:teach-steps', JSON.stringify({ 'd02:place': 3, 'd02:value': 2, 'd03:place': 4 }));`);
+  await b.load(URL + 'index.html#/d02/teach/3');
+  r = await js(`document.querySelector('[data-act=restart]').click(); const asked = !document.querySelector('.restart-confirm').hidden;
+    document.querySelector('[data-act=restart-yes]').click();
+    const p = JSON.parse(localStorage.getItem('gml:v1:progress')).lessons.d02, steps = JSON.parse(localStorage.getItem('gml:v1:draft:teach-steps'));
+    return { asked, h: location.hash, check: localStorage.getItem('gml:v1:draft:teach-d02-check-place'), other: !!localStorage.getItem('gml:v1:draft:teach-d03-check-place'), steps, teach: p.teach, tests: p.tests.length, mastered: p.masteredOn, sessions: p.practice.sessions };`);
+  await b.wait(100);
+  check('restart: Start Lesson Over asks first, then clears only this lesson\'s guided answers and revealed steps', r.asked && r.check === null && r.other && !r.steps['d02:place'] && !r.steps['d02:value'] && r.steps['d03:place'] === 4, r);
+  check('restart: Start Lesson Over keeps tests, mastery, practice and "Teach finished", and goes to screen 1', r.tests === 1 && !!r.mastered && r.sessions === 2 && r.teach.done === true && r.teach.furthest === 0 && /teach\/1$/.test(await js(`return location.hash;`)), r);
+  await b.load(URL + 'index.html#/d02/practice'); await b.reload();
+  r = await js(`${H} const q = qIn('practice', 'd02'); const host = document.querySelector('.coach-host'); fill(host, q, wrongN(q, 0)); host.querySelector('[data-act=check]').click();
+    const before = JSON.parse(localStorage.getItem('gml:v1:draft:practice-d02')).id;
+    document.querySelector('.pc-tools [data-act=restart]').click(); const asked = !document.querySelector('.restart-confirm').hidden;
+    document.querySelector('[data-act=restart-no]').click(); const kept = JSON.parse(localStorage.getItem('gml:v1:draft:practice-d02')).id === before;
+    document.querySelector('.pc-tools [data-act=restart]').click(); document.querySelector('[data-act=restart-yes]').click();
+    const d = JSON.parse(localStorage.getItem('gml:v1:draft:practice-d02'));
+    return { asked, kept, fresh: d.id !== before && d.i === 0 && d.states.every((s) => !s.attempts), sessions: JSON.parse(localStorage.getItem('gml:v1:progress')).lessons.d02.practice.sessions };`);
+  check('restart: lesson Start New Practice asks before discarding answers, then starts a fresh session (finished sessions kept)', r.asked && r.kept && r.fresh && r.sessions === 2, r);
+  await b.load(URL + 'index.html#/d02/test'); await b.reload();
+  await js(`document.querySelector('[data-act=start]').click();`);
+  await js(setAll('d02', 'right(q)')); await b.reload();
+  await js(`document.querySelector('[data-act=submit]').click();`); await b.wait(60);
+  r = await js(`const btn = document.querySelector('[data-act=new]'); const label = btn.innerText; btn.click();
+    const p = JSON.parse(localStorage.getItem('gml:v1:progress')).lessons.d02; return { label, tests: p.tests.length, mastered: p.masteredOn, intro: !!document.querySelector('[data-act=start]') };`);
+  check('restart: Retake Test keeps earlier results and mastery and starts a new test', /Retake Test/.test(r.label) && r.tests === 2 && r.mastered === '2026-10-01T12:00:00Z' && r.intro, r);
+  // Parent Progress: Practice Center activity is shown separately from Tests and mastery.
+  await pcStart('add', 10);
+  for (let k = 0; k < 10; k++) await js(`${H} const d = JSON.parse(localStorage.getItem('gml:v1:draft:pc-session')); const x = d.set[d.i]; const q = E.make('pc', x.id, x.seed); const host = document.querySelector('.coach-host');
+    if (d.i === 3) { fill(host, q, wrongN(q, 0)); host.querySelector('[data-act=check]').click(); } fill(host, q, right(q)); host.querySelector('[data-act=check]').click(); document.querySelector('.coach-next button').click();`);
+  await b.wait(150);
+  await b.load(URL + 'index.html#/parent');
+  r = await js(`const sec = document.querySelector('.parent-practice'); return { t: sec ? sec.innerText : '', rows: sec ? sec.querySelectorAll('tbody tr').length : 0, d02: document.querySelector('#pl-d02').closest('section').innerText, rules: document.querySelector('#rules-h').closest('section').innerText };`);
+  check('parent: Practice Center section shows sessions, questions, accuracy, hints, recent practice and skills to review', /never counts as a Test/.test(r.t) && /Sessions finished\s*1/.test(r.t) && /Questions answered\s*10/.test(r.t) && /Correct\s*10 of 10/.test(r.t) && r.rows === 1 && /Skills to review/.test(r.t), r.t.slice(0, 400));
+  check('parent: Practice Center results do not change lesson tests or mastery', /Tests taken\s*2/.test(r.d02) && /Yes ★/.test(r.d02) && /Practice Center/.test(r.rules), r.d02.slice(0, 300));
+  // Opening the Practice Center during an unfinished lesson Test is noted on that Test.
+  await b.load(URL + 'index.html#/d05/test'); await b.reload();
+  await js(`document.querySelector('[data-act=start]').click();`);
+  await b.load(URL + 'index.html#/practice'); await b.load(URL + 'index.html#/guides'); await b.load(URL + 'index.html#/d05/test');
+  r = await js(`return JSON.parse(localStorage.getItem('gml:v1:draft:test-d05')).assist;`);
+  check('integrity: opening the Practice Center or Study Guides during a lesson Test is noted on it', r.includes('the Practice Center') && r.includes('the Study Guides'), r);
+
   // ── Unknown routes and reset ──
   await b.load(URL + 'index.html#/d11/teach/1');
   check('unready lesson route falls back to home', /Ready to make your next math discovery/.test(await js(`return document.querySelector('h1').innerText;`)));

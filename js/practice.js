@@ -35,7 +35,10 @@
         <div class="progress" role="progressbar" aria-label="Practice progress" aria-valuemin="1" aria-valuemax="${d.set.length}" aria-valuenow="${d.i + 1}"><span style="width:${((d.i + 1) / d.set.length) * 100}%"></span></div>
         <h1 tabindex="-1" class="q-heading">Question ${d.i + 1}</h1>
         <p class="skill-tag">Skill: ${bank.skills[q.skill]}</p>
-        <div class="coach-host"></div>`;
+        <div class="coach-host"></div>
+        <div class="pc-tools"><button type="button" class="btn" data-act="restart">Start New Practice</button></div>
+        <div class="confirm restart-confirm" hidden><p><b>Start a new practice session?</b> Your answers, hints and feedback in this session will be cleared. Finished sessions and test results are kept.</p>
+          <button type="button" class="btn btn-danger" data-act="restart-yes">Yes, start a new session</button> <button type="button" class="btn" data-act="restart-no">No, keep going</button></div>`;
       G.coach(app.querySelector('.coach-host'), q, {
         state: d.states[d.i],
         remind: bank.remind[q.skill],
@@ -55,6 +58,15 @@
           });
         }
       });
+      const box = app.querySelector('.restart-confirm');
+      const fresh = () => { d = newSession(lessonId); draw(); window.scrollTo(0, 0); const h = app.querySelector('h1'); if (h) h.focus(); };
+      app.querySelector('[data-act="restart"]').addEventListener('click', () => {
+        const touched = d.i > 0 || d.states.some((s) => s && (s.solved || s.attempts || s.hints || s.resp != null));
+        if (!touched) { fresh(); return; }
+        box.hidden = false; box.querySelector('[data-act="restart-yes"]').focus();
+      });
+      app.querySelector('[data-act="restart-no"]').addEventListener('click', () => { box.hidden = true; app.querySelector('[data-act="restart"]').focus(); });
+      app.querySelector('[data-act="restart-yes"]').addEventListener('click', fresh);
       document.title = `Practice ${d.i + 1} of 10 · NumberNova`;
     }
 
