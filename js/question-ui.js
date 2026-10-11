@@ -64,9 +64,12 @@
   function render(q, host, opts = {}) {
     uid++;
     const id = 'q' + uid;
+    // The problem (words, equation and picture) sits in its own panel, above a clearly framed answer area.
     host.innerHTML = `<div class="q">
-      <div class="q-prompt" id="${id}-p">${q.prompt}</div>
-      ${q.visual ? `<div class="q-visual">${q.visual}</div>` : ''}
+      <div class="problem-panel">
+        <div class="q-prompt" id="${id}-p">${q.prompt}</div>
+        ${q.visual ? `<div class="q-visual">${q.visual}</div>` : ''}
+      </div>
       <div class="q-answer"></div></div>`;
     const area = host.querySelector('.q-answer');
     const changed = () => opts.onChange && opts.onChange(ctl.get());

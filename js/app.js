@@ -24,6 +24,63 @@
       <li class="chip chip-test"><span class="chip-k">Test</span> ${test}</li></ul>`;
   }
 
+  /** Unfinished lesson Practice (started, not finished), or null. */
+  function practiceInProgress(id) {
+    const d = G.store.getDraft('practice-' + id);
+    if (!d || typeof d !== 'object' || d.finished || !Array.isArray(d.states)) return null;
+    const touched = d.i > 0 || d.states.some((s) => s && (s.solved || s.attempts || s.hints || s.resp != null));
+    return touched ? d : null;
+  }
+
+  /**
+   * The one recommended next step for a lesson, from its saved progress (nothing is changed):
+   * { label, href, detail, kind, started }. kind is used for styling; started is false for an untouched lesson.
+   */
+  function nextStep(l) {
+    const p = G.store.lesson(l.id), L = G.lessonContent[l.id], n = L.screens.length;
+    const last = p.tests[p.tests.length - 1];
+    const pd = practiceInProgress(l.id);
+    const started = p.teach.furthest > 0 || p.teach.done || p.practice.sessions > 0 || p.tests.length > 0 || !!pd || !!G.store.openTest(l.id);
+    const base = '#/' + l.id;
+    if (G.store.openTest(l.id)) return { label: 'Continue the Test', href: base + '/test', detail: 'Test started, not handed in yet', kind: 'test', started };
+    if (p.masteredOn) return { label: 'Review', href: base + '/teach/1', detail: 'Mastered ★', kind: 'review', started };
+    if (pd) return { label: 'Continue Practice', href: base + '/practice', detail: `Practice, question ${pd.i + 1} of ${pd.set.length}`, kind: 'practice', started };
+    if (p.teach.furthest > 0 && !p.teach.done) return { label: 'Continue Teach', href: `${base}/teach/${Math.min(p.teach.furthest + 1, n)}`, detail: `Teach, screen ${Math.min(p.teach.furthest + 1, n)} of ${n}`, kind: 'teach', started };
+    if (!started) return { label: 'Start', href: base + '/teach/1', detail: 'Not started', kind: 'teach', started };
+    if (!p.practice.sessions && !last) return { label: 'Practice', href: base + '/practice', detail: 'Teach finished', kind: 'practice', started };
+    if (!last) return { label: 'Take the Test', href: base + '/test', detail: `${p.practice.sessions} practice session${p.practice.sessions === 1 ? '' : 's'} done`, kind: 'test', started };
+    // A test without ★: an assisted 9 or 10 only needs a retake on its own; after practicing since the Test, take it
+    // again; with Teach never opened, start there; otherwise practice first.
+    const score = `${last.correct} of ${last.total}${last.assisted ? ' (pages opened)' : ''}`;
+    if (last.assisted && last.correct >= 9) return { label: 'Take the Test again', href: base + '/test', detail: `Last Test ${last.correct} of ${last.total}, with lesson pages opened`, kind: 'test', started };
+    if (Date.parse(p.practice.lastDate || '') > Date.parse(last.date || '')) return { label: 'Take the Test again', href: base + '/test', detail: `Practiced since your last Test (${score})`, kind: 'test', started };
+    if (!p.teach.done && !p.teach.furthest) return { label: 'Review Teach', href: base + '/teach/1', detail: `Last Test ${score}: go through Teach, then practice`, kind: 'teach', started };
+    return { label: 'Practice again', href: base + '/practice', detail: `Last Test ${score}: practice, then take the Test again`, kind: 'practice', started };
+  }
+
+  /** Where the student left off: the furthest lesson that is started but not mastered (an open Test first). */
+  function resumeLesson() {
+    const avail = unit.lessons.filter((l) => ready(l.id));
+    const openT = avail.filter((l) => G.store.openTest(l.id));
+    const active = avail.filter((l) => !G.store.lesson(l.id).masteredOn && nextStep(l).started);
+    const l = openT.pop() || active.pop();
+    if (l) return { l, s: nextStep(l), fresh: false };
+    const first = avail.find((x) => !G.store.lesson(x.id).masteredOn);
+    return first ? { l: first, s: nextStep(first), fresh: true } : null;
+  }
+
+  /** "Pick up where you left off" (Home) and the Learn banner. */
+  function continueCard(cls) {
+    const r = resumeLesson();
+    if (!r) return '';
+    const head = r.fresh ? (r.l.n === 1 ? 'Start here' : 'Up next') : 'Pick up where you left off';
+    return `<section class="continue-card ${cls}" aria-labelledby="cont-h-${cls}">
+      <div class="cont-text"><h2 id="cont-h-${cls}">${head}</h2>
+        <p><b>Lesson ${r.l.n}: ${r.l.title}</b><br><span class="cont-detail">${r.s.detail}</span></p></div>
+      <a class="btn btn-primary btn-big cont-go" href="${r.s.href}">${r.s.label}<span class="sr-only">: Lesson ${r.l.n}</span> <span aria-hidden="true">→</span></a>
+    </section>`;
+  }
+
   // Icons for the four main sections (drawn here, so no extra files or network requests).
   const PILLAR_ICONS = {
     learn: '<svg viewBox="0 0 48 48" aria-hidden="true" focusable="false"><path d="M6 11c7-3 13-2 18 2 5-4 11-5 18-2v26c-7-3-13-2-18 2-5-4-11-5-18-2z" fill="#fff" stroke="currentColor" stroke-width="3" stroke-linejoin="round"/><path d="M24 13v26" stroke="currentColor" stroke-width="3"/><path d="M11 18h7M11 24h7M30 18h7M30 24h7" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></svg>',
@@ -43,12 +100,13 @@
     const pausedHtml = G.practiceCenter && G.practiceCenter.pausedSummary ? G.practiceCenter.pausedSummary() : '';
     app.innerHTML = `
       <section class="nn-hero">
-        <img class="nn-hero-logo" src="assets/brand/numbernova-logo.svg" alt="NumberNova. Learn. Practice. Shine." width="330" height="76">
-        <h1 tabindex="-1">Ready to make your next math discovery?</h1>
-        <p class="nn-hero-text">Learn step by step, sharpen your skills, and see how far you can go.</p>
-        <p class="nn-hero-tags"><span>Grade 5 Mathematics</span><span>Decimals</span><span>Georgia Milestones Preparation</span></p>
+        <img class="nn-hero-logo" src="assets/brand/numbernova-logo.svg" alt="NumberNova. Learn. Practice. Shine." width="200" height="46">
+        <div class="nn-hero-words">
+          <h1 tabindex="-1">Ready to make your next math discovery?</h1>
+          <p class="nn-hero-text">Learn step by step, sharpen your skills, and see how far you can go.</p>
+        </div>
       </section>
-      ${pausedHtml}
+      <div class="home-continue">${continueCard('cont-home')}${pausedHtml}</div>
       <nav class="nn-pillars" aria-label="Main sections">
         ${PILLARS.map((p) => `<a class="pillar pillar-${p.key}" href="${p.href}">
           <span class="pillar-icon">${PILLAR_ICONS[p.key]}</span>
@@ -63,9 +121,12 @@
 
   /** Learn: the ten decimal lessons, each with Teach, Practice, Test and Lesson Notes. */
   function learn() {
+    const firstNew = unit.lessons.find((l) => ready(l.id) && !nextStep(l).started);
     const cards = unit.lessons.filter((l) => ready(l.id)).map((l) => {
       const mastered = !!G.store.lesson(l.id).masteredOn;
-      return `<article class="lesson-card" aria-labelledby="lc-${l.id}">
+      const s = nextStep(l);
+      if (!s.started && l !== firstNew) s.kind = 'quiet';
+      return `<article class="lesson-card${mastered ? ' is-mastered' : ''}" aria-labelledby="lc-${l.id}">
         <div class="lc-head">
           <span class="lc-num" aria-hidden="true">${l.n}</span>
           <div class="lc-titles"><p class="lesson-num">Lesson ${l.n}</p><h3 id="lc-${l.id}">${l.title}</h3></div>
@@ -73,12 +134,13 @@
         </div>
         <p class="lc-blurb">${l.blurb}</p>
         ${progressChips(l)}
-        <div class="mode-buttons">
-          <a class="btn btn-mode btn-teach" href="#/${l.id}/teach/1">TEACH</a>
-          <a class="btn btn-mode btn-practice" href="#/${l.id}/practice">PRACTICE</a>
-          <a class="btn btn-mode btn-test" href="#/${l.id}/test">TEST</a>
-        </div>
-        <a class="btn btn-notes" href="#/${l.id}/notes">${DOC_ICON}<span>Lesson Notes</span><span class="sr-only"> for Lesson ${l.n} (printable)</span></a>
+        <a class="btn btn-big lc-next lc-next-${s.kind}" href="${s.href}">${s.label}<span class="sr-only">: Lesson ${l.n}</span> <span aria-hidden="true">→</span></a>
+        <nav class="lc-links" aria-label="Lesson ${l.n} parts">
+          <a class="lc-link lc-teach" href="#/${l.id}/teach/1">Teach</a>
+          <a class="lc-link lc-practice" href="#/${l.id}/practice">Practice</a>
+          <a class="lc-link lc-test" href="#/${l.id}/test">Test</a>
+          <a class="lc-link btn-notes" href="#/${l.id}/notes">${DOC_ICON}<span>Notes</span><span class="sr-only"> for Lesson ${l.n} (printable)</span></a>
+        </nav>
       </article>`;
     }).join('');
     const later = unit.lessons.filter((l) => !ready(l.id)).map((l) => `<li><span class="later-num">Lesson ${l.n}</span><span class="later-title">${l.title}${/supplemental/.test(l.blurb) ? '<span class="later-note">Includes supplemental skills</span>' : ''}</span><span class="later-tag">Coming later</span></li>`).join('');
@@ -90,6 +152,7 @@
         <p class="hero-sub">Grade 5 Mathematics · Georgia Milestones Preparation</p>
         <p class="hero-sub2">Each lesson explains an idea, shows how, guides you through it, lets you practice with hints, and ends with a test you do on your own.</p>
       </section>
+      ${continueCard('cont-learn')}
       <section aria-labelledby="unit-h">
         <h2 id="unit-h" class="unit-title">${unit.title} <span class="unit-count">${unit.lessons.length} lessons</span></h2>
         <p class="legend"><span class="legend-item legend-teach">Teach: learn it</span><span class="legend-item legend-practice">Practice: try it with hints</span><span class="legend-item legend-test">Test: show what you know</span></p>
@@ -149,11 +212,54 @@
     </section>`;
   }
 
+  /** Parent Progress overview: five tiles, from the same saved data as the details below. */
+  function parentOverview(shown, done) {
+    const esc = G.models.esc, week = Date.now() - 7 * 864e5;
+    const inWeek = (iso) => { const t = Date.parse(iso || ''); return Number.isFinite(t) && t >= week; };
+    const r = resumeLesson();
+    const current = done.length === shown.length ? 'All lessons mastered ★' : r ? `Lesson ${r.l.n}: ${esc(r.l.title)}` : '-';
+    const currentSub = r && done.length !== shown.length ? esc(r.s.detail) : '';
+    let latest = null;
+    shown.forEach((l) => { const p = G.store.lesson(l.id), t = p.tests[p.tests.length - 1]; if (t && (!latest || Date.parse(t.date) > Date.parse(latest.t.date))) latest = { l, t }; });
+    const pcWeek = G.practiceCenter ? G.practiceCenter.history().sessions.filter((s) => inWeek(s.date)).length : 0;
+    const lessonsWeek = shown.filter((l) => inWeek(G.store.lesson(l.id).practice.lastDate)).length;
+    // Skills to review: missed on the latest test of lessons not mastered yet, then Practice Center misses.
+    const review = [];
+    shown.forEach((l) => {
+      const p = G.store.lesson(l.id), t = p.tests[p.tests.length - 1], bank = G.engine.banks[l.id];
+      if (!t || p.masteredOn) return;
+      Object.keys(bank.skills).forEach((sk) => { if (t.skills[sk] && t.skills[sk].correct < t.skills[sk].total) review.push(`${bank.skills[sk]} <span class="fine">(Lesson ${l.n})</span>`); });
+    });
+    if (G.practiceCenter && G.practiceGen) G.practiceCenter.weakSkills().forEach((w) => review.push(`${esc(G.practiceGen.SKILLS[w.skill].name)} <span class="fine">(practice)</span>`));
+    const tile = (k, v, sub, cls) => `<li class="pp-tile ${cls}"><span class="pp-k">${k}</span><span class="pp-v">${v}</span>${sub ? `<span class="pp-sub">${sub}</span>` : ''}</li>`;
+    return `<section class="pp-overview" aria-labelledby="po-h"><h2 id="po-h" class="sr-only">Overview</h2><ul class="pp-tiles">
+      ${tile('Lessons mastered', `${done.length} of ${shown.length}`, done.length ? '★ 9 of 10 on a Test done on its own' : 'None yet', 'pt-mastered')}
+      ${tile('Current lesson', current, currentSub, 'pt-current')}
+      ${tile('Latest Test', latest ? `${latest.t.correct} of ${latest.t.total}${latest.t.mastered ? ' ★' : ''}` : 'None yet', latest ? `Lesson ${latest.l.n}, ${fmtDate(latest.t.date)}` : '', 'pt-test')}
+      ${tile('Practice this week', pcWeek + lessonsWeek ? `${lessonsWeek} lesson${lessonsWeek === 1 ? '' : 's'}, ${pcWeek} Center` : 'None yet', pcWeek + lessonsWeek ? `Lessons practiced and Practice Center sessions, last 7 days` : 'In the last 7 days', 'pt-practice')}
+      <li class="pp-tile pt-review"><span class="pp-k">Skills to review</span>${review.length ? `<ol class="pp-review">${review.slice(0, 3).map((x) => `<li>${x}</li>`).join('')}</ol>` : '<span class="pp-v">None right now</span>'}</li>
+    </ul></section>`;
+  }
+
+  /** One row per lesson: Teach, Practice, Test and ★, in words. */
+  function parentTable(shown) {
+    return `<section class="card pp-lessons" aria-labelledby="plt-h"><h2 id="plt-h">Lessons at a glance</h2>
+      <div class="table-wrap"><table class="skills-table plt-table"><thead><tr><th scope="col">Lesson</th><th scope="col">Teach</th><th scope="col">Practice</th><th scope="col">Test</th><th scope="col"><span aria-hidden="true">★</span><span class="sr-only">Mastered</span></th></tr></thead><tbody>
+      ${shown.map((l) => {
+        const p = G.store.lesson(l.id), L = G.lessonContent[l.id], t = p.tests[p.tests.length - 1];
+        const teach = p.teach.done ? 'Finished' : p.teach.furthest > 0 ? `Screen ${p.teach.furthest + 1} of ${L.screens.length}` : '-';
+        return `<tr><th scope="row">${l.n}. ${l.title}</th><td>${teach}</td><td>${p.practice.sessions ? `${p.practice.sessions} session${p.practice.sessions === 1 ? '' : 's'}` : '-'}</td><td>${t ? `${t.correct} of ${t.total}${t.assisted && !t.mastered ? ' (pages opened)' : ''}` : '-'}</td><td>${p.masteredOn ? '<span aria-hidden="true">★</span><span class="sr-only">Yes</span>' : '<span class="sr-only">Not yet</span>'}</td></tr>`;
+      }).join('')}
+      </tbody></table></div>
+      <p class="fine">"-" means not started. Lessons ${shown.filter((l) => l.supplemental).map((l) => l.n).join(' and ')} are supplemental (beyond the Grade 5 Georgia standards).</p></section>`;
+  }
+
   function parent() {
     const persistent = G.store.persistent();
     const shown = unit.lessons.filter((l) => ready(l.id));
     const done = shown.filter((l) => G.store.lesson(l.id).masteredOn);
-    const blocks = shown.map((l) => {
+    const isStarted = (l) => nextStep(l).started || !!G.store.lesson(l.id).masteredOn;
+    const block = (l) => {
       const bank = G.engine.banks[l.id];
       const L = G.lessonContent[l.id];
       const p = G.store.lesson(l.id);
@@ -182,7 +288,7 @@
       }
       const testLine = (t) => `${t.correct} of ${t.total} (${t.percent}%)${t.mastered ? ' · mastered' : t.assisted ? ` · ${t.goalMet ? 'goal met, but ' : ''}lesson pages opened during the test (${t.assisted.join(', ')})` : ' · not mastered yet'}`;
       return `<section class="card parent-lesson" aria-labelledby="pl-${l.id}">
-        <h2 id="pl-${l.id}">Lesson ${l.n}: ${l.title}${l.supplemental ? ' <span class="lc-extra">Extra: beyond Grade 5</span>' : ''}</h2>
+        <h2 id="pl-${l.id}">Lesson ${l.n}: ${l.title}${everMastered ? ' ★' : ''}${l.supplemental ? ' <span class="lc-extra">Extra: beyond Grade 5</span>' : ''}</h2>
         <dl class="facts-dl">
           <dt>Lesson completed (mastered)</dt><dd>${everMastered ? '<b>Yes ★</b>' : 'Not yet'}</dd>
           <dt>Teach</dt><dd>${teachState}</dd>
@@ -199,7 +305,11 @@
         <h3>Suggested next step</h3>
         <p class="next-step">${next}</p>
       </section>`;
-    }).join('');
+    };
+    const startedL = shown.filter(isStarted), restL = shown.filter((l) => !isStarted(l));
+    const blocks = `<h2 class="pp-details-h">Lesson details</h2>
+      ${startedL.length ? startedL.map(block).join('') : '<p>No lesson started yet. Lesson details appear here once a lesson is started.</p>'}
+      ${restL.length ? `<details class="pp-more"><summary>Show all lessons (${restL.length} not started yet)</summary>${restL.map(block).join('')}</details>` : ''}`;
     app.innerHTML = `
       <div class="crumbs"><a href="#/">← Home</a></div>
       <h1 tabindex="-1">Parent Progress</h1>
@@ -207,15 +317,12 @@
         <p><b>Progress is saved only in this browser on this device.</b> It does not transfer to other devices or browsers, and clearing browser data erases it. No account, name or personal information is collected or sent anywhere.</p>
         ${persistent ? '' : '<p><b>This browser cannot save progress right now (storage is blocked or full, for example in a private window), so progress will be lost when the page is closed.</b></p>'}
       </div>
-      <section class="card parent-summary" aria-labelledby="ps-h">
-        <h2 id="ps-h">Completed lessons</h2>
-        ${done.length ? `<ul>${done.map((l) => `<li>Lesson ${l.n}: ${l.title} ★</li>`).join('')}</ul>` : '<p>No lesson mastered yet.</p>'}
-        <p class="fine">Lessons available now: ${shown.map((l) => l.n).join(', ')}.${unit.lessons.some((l) => !ready(l.id)) ? ` Lessons ${unit.lessons.filter((l) => !ready(l.id)).map((l) => l.n).join(', ')} are coming later.` : ' All lessons in this unit are available.'}${shown.some((l) => l.supplemental) ? ` Lessons ${shown.filter((l) => l.supplemental).map((l) => l.n).join(' and ')} are supplemental (beyond the Grade 5 Georgia standards).` : ''}</p>
-      </section>
-      ${practiceCenterBlock()}
+      ${parentOverview(shown, done)}
+      ${parentTable(shown)}
       ${blocks}
-      <section class="card" aria-labelledby="rules-h">
-        <h2 id="rules-h">How Tests and mastery work</h2>
+      ${practiceCenterBlock()}
+      <section class="card pp-rules-card" aria-labelledby="rules-h"><h2 id="rules-h">How Tests and mastery work</h2>
+      <details class="pp-rules"><summary>Show the rules</summary>
         <ul>
           <li><b>★ Mastered</b> means at least 9 of 10 correct on a Lesson Test done on its own. This is the app's learning benchmark, not an official Georgia Milestones score.</li>
           <li>A student may leave a Test and come back later; answers are saved.</li>
@@ -224,7 +331,7 @@
           <li>Practice shows two numbers: right on the first try (hints allowed), and right on the first try with no hints. The second number is counted only for practice sessions finished since it was added.</li>
           <li><b>Practice Center</b> sessions are practice: they are shown in their own section and never count as a Test or for ★ Mastered. Opening the Practice Center or the Study Guides while a lesson Test is unfinished is noted on that Test, like opening Teach.</li>
         </ul>
-      </section>
+      </details></section>
       <section class="reset">
         <button type="button" class="btn" data-act="reset">Erase all progress on this device</button>
         <div class="confirm" hidden><p>Erase all saved progress? This cannot be undone.</p>
@@ -235,6 +342,7 @@
     app.querySelector('[data-act="reset"]').addEventListener('click', () => { conf.hidden = false; });
     app.querySelector('[data-act="cancel"]').addEventListener('click', () => { conf.hidden = true; });
     app.querySelector('[data-act="really"]').addEventListener('click', () => { G.store.resetAll(); parent(); });
+    app.classList.add('page-home');
     document.title = 'Parent Progress · NumberNova';
   }
 
@@ -255,7 +363,7 @@
   function route() {
     const h = location.hash || '#/';
     let m;
-    app.classList.remove('page-home');
+    app.classList.remove('page-home', 'page-question');
     const am = h.match(/^#\/(d\d\d)\/(teach|practice|notes)(?:\/\d+)?$/);
     if (am && ready(am[1])) noteAssist(am[1], am[2]);
     else if (/^#\/practice(\/(session|results))?$/.test(h)) noteAssist(null, 'center');

@@ -97,7 +97,7 @@
             <li>You will not see if an answer is right until you submit the whole test.</li>
             <li>You can go back and change answers before you submit.</li>
             <li>There is no time limit. You can leave and come back later: your answers are saved.</li>
-            <li>To earn ★ Mastered, do the test on your own. If you open Teach, Practice, Lesson Notes, the Practice Center or the Study Guides before you submit, you still get a score, but that test will not count for ★ Mastered.</li>
+            <li>Do it on your own to earn ★. If you open lessons or practice during the test, you still get a score, but no ★ this time.</li>
           </ul>
         </div>
         <div class="done-actions">

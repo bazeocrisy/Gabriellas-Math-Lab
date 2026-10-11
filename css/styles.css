@@ -522,7 +522,9 @@ body { background: var(--nn-bg); display: flex; flex-direction: column; min-heig
 .pc-card.op-mix { --c: var(--op-mix); --cs: var(--op-mix-soft); }
 .pc-card.op-challenge { --c: var(--op-chal); --cs: var(--op-chal-soft); }
 .pc-card.op-misses { --c: var(--op-miss); --cs: var(--op-miss-soft); }
-.pc-sym { font-size: 1.7rem; font-weight: 800; line-height: 1.1; color: var(--c); font-variant-numeric: tabular-nums; }
+.pc-top { display: flex; align-items: baseline; flex-wrap: wrap; gap: 4px 12px; }
+.pc-sample { font-weight: 700; font-size: 1rem; color: #3d475c; font-variant-numeric: tabular-nums; }
+.pc-sym { font-size: 2.3rem; font-weight: 800; line-height: 1.1; color: var(--c); font-variant-numeric: tabular-nums; }
 .pc-card.op-mix .pc-sym { background: linear-gradient(90deg, var(--op-add), var(--op-sub), var(--op-mul), var(--op-div)); -webkit-background-clip: text; background-clip: text; color: transparent; }
 .pc-card.op-challenge .pc-sym { color: #a86b00; }
 .pc-name { font-weight: 800; font-size: 1.08rem; color: var(--c); }
@@ -552,5 +554,153 @@ body { background: var(--nn-bg); display: flex; flex-direction: column; min-heig
 .restart-confirm { margin: 8px 0 12px; padding: 12px 14px; border: 2px solid #e5b84b; background: var(--warn-soft); border-radius: 12px; }
 .parent-practice { border-top: 6px solid var(--practice-c); }
 .parent-practice h2 { color: var(--practice-c); }
-.table-wrap { overflow-x: auto; }
+.table-wrap { overflow-x: auto; position: relative; }
 .pp-table td, .pp-table th { white-space: nowrap; }
+
+/* ───────────────────────── Questions: problem panel, answer, help ───────────────────────── */
+.problem-panel { background: #fff; border: 2px solid var(--line); border-radius: 14px; padding: 12px 16px; margin: 6px 0 4px; box-shadow: 0 2px 6px rgba(20, 30, 60, .06); }
+.problem-panel .q-prompt { margin-top: 0; font-size: 1.2rem; line-height: 1.45; }
+.problem-panel .q-prompt .expr { display: inline-block; font-size: clamp(1.5rem, 6vw, 2rem); font-weight: 800; font-variant-numeric: tabular-nums; letter-spacing: .01em; color: var(--nn-ink); line-height: 1.25; margin-top: 2px; }
+.problem-panel .q-visual { margin-bottom: 0; }
+.problem-panel .ldiv-model, .problem-panel .vcalc-model { font-size: 1.6rem; }
+.problem-panel .ldiv-model .ld-top { border-top-width: 3px; }
+.problem-panel .ldiv-model .ld-first { border-left-width: 3px; }
+.q-answer { margin-top: 12px; }
+.q-answer .num-label { font-size: 1.05rem; }
+.q-answer .num-input { font-size: 1.6rem; min-height: 56px; max-width: 260px; background: #fffef6; border-width: 3px; }
+.q-answer .exp-input { max-width: 100%; font-size: 1.3rem; }
+.q-answer .num-input:focus-visible { outline: var(--focus); outline-offset: 2px; box-shadow: var(--focus-halo); }
+.coach-actions { align-items: center; }
+.coach-actions .btn-check { min-height: 56px; min-width: 190px; font-size: 1.12rem; }
+.btn-model { border-color: #8a5a00; color: #6b4400; }
+.btn-model:hover { background: var(--warn-soft); color: #4d3100; }
+.coach-model { background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 2px 14px; margin: 0 0 12px; }
+.coach-model .model-grid { max-width: 200px; }
+.coach-model .ldiv-model, .coach-model .vcalc-model { font-size: 1.5rem; }
+/* Worked solutions, one step at a time */
+.sol-steps li.is-current { background: var(--warn-soft); box-shadow: -6px 0 0 var(--warn-soft), 6px 0 0 var(--warn-soft); border-radius: 4px; font-weight: 600; }
+.sol-steps li:focus { outline: var(--focus); outline-offset: 2px; }
+.sol-next { margin: 4px 0 10px; }
+/* Long-division working rows */
+.ldiv-model .ld-sub td, .ldiv-model .ld-bring td, .ldiv-model .ld-rem td { color: #3d475c; }
+.ldiv-model .ld-line { box-shadow: inset 0 -2px 0 currentColor; }
+/* Options (Pause, Start New Practice), kept away from Check answer */
+.q-options { margin: 22px 0 8px; border-top: 1px solid var(--line); padding-top: 6px; }
+.q-options > summary { display: inline-flex; color: var(--muted); font-weight: 700; padding: 0 10px 0 4px; border-radius: 8px; }
+.q-options > summary:hover { background: var(--brand-soft); }
+.q-options .pc-tools { margin: 6px 0; }
+/* Wide screens: the question on the left, hints, feedback and the worked solution on the right. */
+@media (min-width: 1200px) {
+  .page.page-question { max-width: 1180px; }
+  .page-question .coach { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 28px; align-items: start; }
+  .page-question .coach-help { position: sticky; top: 12px; }
+  .page-question .coach-help .hint:first-child, .page-question .coach-help .fb { margin-top: 0; }
+  .page-question .coach-help:not(:has(.hint, .fb, .coach-next button))::before {
+    content: "Hints, feedback and the steps to solve it will show here."; display: block; padding: 18px 16px;
+    border: 2px dashed var(--line); border-radius: 12px; color: var(--muted); font-weight: 600;
+  }
+}
+
+/* ───────────────────────── Home and Learn ───────────────────────── */
+h1, h2, h3, .pillar-title, .brand { font-family: ui-rounded, "SF Pro Rounded", "Segoe UI Variable Display", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; letter-spacing: .005em; }
+.page.page-home { max-width: 1200px; }
+.nn-hero { padding: 16px 18px; margin: 10px 0 16px; display: flex; flex-direction: column; align-items: center; gap: 4px 22px; }
+.nn-hero-logo { width: 200px; max-width: 70%; }
+.nn-hero h1 { margin: 6px 0 4px; font-size: clamp(1.45rem, 4.4vw, 2rem); }
+.nn-hero-text { font-size: 1.05rem; }
+@media (min-width: 760px) {
+  .nn-hero { flex-direction: row; text-align: left; padding: 18px 26px; }
+  .nn-hero-logo { flex: none; }
+  .nn-hero-text { margin: 0; }
+}
+.home-continue { display: grid; gap: 14px; margin: 0 0 16px; }
+@media (min-width: 900px) { .home-continue:has(> :nth-child(2)) { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); } }
+.home-continue > * { margin: 0; }
+.continue-card { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 18px; padding: 14px 18px; border-radius: 16px; background: var(--learn-soft); border: 2px solid #b9cdf3; }
+.continue-card h2 { margin: 0 0 2px; font-size: 1.15rem; color: var(--learn); }
+.continue-card p { margin: 0; }
+.cont-detail { color: var(--muted); font-weight: 600; }
+.cont-text { flex: 1 1 220px; min-width: 0; }
+.cont-go { flex: none; }
+.cont-learn { margin: 0 0 6px; }
+.pc-paused { display: flex; flex-direction: column; justify-content: center; }
+.pc-paused .btn { align-self: flex-start; }
+/* Lesson cards: one recommended step, then small links to every part */
+@media (min-width: 1100px) { .page-home .lesson-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.lesson-card .lc-blurb { margin: 8px 0 6px; }
+.lesson-card .lc-progress { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0; margin: 4px 0 0; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
+.lesson-card .lc-progress .chip { border: none; border-radius: 0; background: #f8f9fc; padding: 5px 8px; color: var(--muted); font-size: .85rem; line-height: 1.3; }
+.lesson-card .lc-progress .chip + .chip { border-left: 1px solid var(--line); }
+.lesson-card .chip-k { display: block; color: var(--ink); font-size: .82rem; }
+.lc-next { margin: 12px 0 4px; width: 100%; background: var(--learn); border-color: var(--learn); color: #fff; }
+.lc-next:hover { background: var(--teach-dark); border-color: var(--teach-dark); color: #fff; }
+.lc-next-practice { background: var(--practice); border-color: var(--practice); }
+.lc-next-practice:hover { background: var(--practice-dark); border-color: var(--practice-dark); }
+.lc-next-test { background: var(--test); border-color: var(--test); }
+.lc-next-test:hover { background: var(--test-dark); border-color: var(--test-dark); }
+.lc-next-review { background: #fff; color: var(--learn); }
+.lc-next-review:hover { background: var(--learn-soft); color: var(--teach-dark); }
+.lc-links { display: flex; flex-wrap: wrap; gap: 2px 4px; margin-top: auto; padding-top: 4px; }
+.lc-link { display: inline-flex; align-items: center; gap: 4px; min-height: 44px; padding: 0 8px; border-radius: 8px; font-weight: 700; font-size: .95rem; }
+.lc-link:hover { background: var(--brand-soft); }
+.lc-teach { color: var(--teach); } .lc-practice { color: var(--practice); } .lc-test { color: var(--test); }
+.lc-link.btn-notes { align-self: auto; margin-top: 0; border: none; background: none; color: var(--notes); gap: 4px; }
+.lc-link.btn-notes .icon { width: 18px; height: 18px; }
+.lesson-card.is-mastered { border-top-color: #e5b84b; padding: 12px 16px; }
+.lesson-card.is-mastered .lc-blurb { display: none; }
+.lesson-card.is-mastered .lc-next { min-height: 48px; margin-top: 8px; }
+/* Narrow cards: a badge moves under the title instead of covering it. */
+.lesson-card .lc-titles { flex: 1 1 150px; }
+.lesson-card h3 { overflow-wrap: break-word; }
+@media (max-width: 380px) { .lc-links { gap: 0; } .lc-link { padding: 0 6px; } }
+/* Practice wizard: on phones the Next button stays in view while choosing. */
+.pc-expect { margin: 6px 0; }
+@media (max-width: 699px) {
+  .pc-form .pc-actions { position: sticky; bottom: 0; z-index: 2; margin: 12px -16px 0; padding: 10px 16px; background: rgba(246, 247, 253, .96); border-top: 1px solid var(--line); }
+  .pc-form .pc-actions .btn { flex: 1 1 auto; }
+}
+/* Study guides: two groups, Open PDF first, lesson chips */
+.guide-group-h { font-size: 1.3rem; margin: 1.2em 0 .2em; display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 10px; color: var(--guides); }
+@media (min-width: 1100px) { .page-home .guide-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.guide-card h3 { margin: 0; font-size: 1.2rem; color: var(--guides); }
+.guide-ls { margin-left: 6px; padding: 1px 8px; border-radius: 99px; background: var(--guides-soft); color: var(--guides); letter-spacing: .02em; }
+.guide-lessons { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 8px; }
+.guide-lessons a.guide-chip { min-height: 44px; padding: 0 14px; border-radius: 99px; border: 2px solid #d9c9ef; background: #fff; color: var(--guides); font-weight: 700; text-decoration: none; }
+.guide-lessons a.guide-chip:hover { background: var(--guides-soft); }
+.guide-actions .btn-guide { flex: 1 1 100%; }
+.guide-actions .btn-guide-sub { flex: 1 1 0; min-height: 44px; font-size: .95rem; padding: 6px 10px; background: #fff; }
+
+/* ───────────────────────── Parent Progress ───────────────────────── */
+.pp-tiles { list-style: none; padding: 0; margin: 14px 0; display: grid; gap: 12px; grid-template-columns: minmax(0, 1fr); }
+@media (min-width: 560px) { .pp-tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 1000px) { .pp-tiles { grid-template-columns: repeat(5, minmax(0, 1fr)); } }
+.pp-tile { display: flex; flex-direction: column; gap: 2px; background: #fff; border: 1px solid var(--line); border-top: 5px solid var(--parent); border-radius: 14px; padding: 12px 14px; }
+.pp-k { font-size: .85rem; font-weight: 800; color: var(--muted); }
+.pp-v { font-size: 1.3rem; font-weight: 800; color: var(--nn-ink); line-height: 1.25; }
+.pp-sub { font-size: .9rem; color: var(--muted); }
+.pt-mastered { border-top-color: #e5b84b; }
+.pt-current { border-top-color: var(--learn); }
+.pt-test { border-top-color: var(--test); }
+.pt-practice { border-top-color: var(--practice-c); }
+.pt-review { border-top-color: var(--bad); }
+.pp-review { margin: 4px 0 0; padding-left: 1.2em; font-weight: 600; }
+.pp-review li { margin: 2px 0; }
+.plt-table th[scope=row] { text-align: left; font-weight: 700; }
+.plt-table td { text-align: center; }
+.pp-details-h { margin: 1.4em 0 .4em; }
+.pp-more > summary, .pp-rules > summary { font-size: 1.05rem; }
+.pp-rules > summary h2 { margin: 0; font-size: 1.2rem; display: inline; }
+@media (max-width: 480px) { .plt-table th, .plt-table td { padding: 6px 5px; font-size: .9rem; } }
+.sol-later { visibility: hidden; }
+/* Review fixes */
+.lc-next-quiet { background: #fff; color: var(--learn); }
+.lc-next-quiet:hover { background: var(--learn-soft); color: var(--teach-dark); }
+.lesson-card.is-mastered { align-self: start; }
+.pc-paused.continue-card { background: var(--practice-c-soft); border-color: #b5dcc2; }
+.pc-paused.continue-card .btn { align-self: center; }
+.pp-rules-card h2 { margin-bottom: 0; }
+.pp-rules { margin: 4px 0 0; }
+@media (min-width: 560px) and (max-width: 999px) { .pt-review { grid-column: 1 / -1; } }
+@media (max-width: 699px) { html { scroll-padding-bottom: 96px; } }
+.pc-paused.continue-card { flex-direction: row; justify-content: space-between; }
+.pc-paused.continue-card p { margin: 0; }

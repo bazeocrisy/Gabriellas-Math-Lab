@@ -154,10 +154,10 @@
   function pausedSummary() {
     const d = loadSession();
     if (!d || d.finished) return '';
-    return `<section class="pc-paused" aria-labelledby="pc-paused-h">
-      <h2 id="pc-paused-h">Continue your practice</h2>
-      <p>${esc(d.label)} · question ${d.i + 1} of ${d.n}. Your place is saved.</p>
-      <a class="btn btn-practice btn-big" href="#/practice/session">Resume practice</a></section>`;
+    return `<section class="pc-paused continue-card" aria-labelledby="pc-paused-h">
+      <div class="cont-text"><h2 id="pc-paused-h">Continue your practice</h2>
+      <p>${esc(d.label)} · question ${d.i + 1} of ${d.n}. Your place is saved.</p></div>
+      <a class="btn btn-practice btn-big cont-go" href="#/practice/session">Resume practice</a></section>`;
   }
 
   function radios(name, items, current, render) {
@@ -185,7 +185,7 @@
         <form class="pc-form" novalidate>
           <fieldset class="pc-fieldset"><legend><span class="pc-legend">Step 1 of 3: Choose a skill</span></legend>
             <div class="pc-grid pc-grid-modes">${radios('mode', MODES, wiz.mode, { cls: (m) => 'op-' + m.key,
-              html: (m) => `<span class="pc-sym" aria-hidden="true">${m.sym}</span><span class="pc-name">${m.name}</span><span class="pc-ex">${m.text}</span>` })}</div>
+              html: (m) => `<span class="pc-top"><span class="pc-sym" aria-hidden="true">${m.sym}</span><span class="pc-sample">${m.example}</span></span><span class="pc-name">${m.name}</span><span class="pc-ex">${m.text}</span>` })}</div>
           </fieldset>
           <p class="pc-msg" role="status"></p>
           <div class="pc-actions"><button type="submit" class="btn btn-practice btn-big">Next: how many questions →</button></div>
@@ -241,14 +241,11 @@
         <section class="card pc-confirm" aria-labelledby="pc-confirm-h">
           <h2 id="pc-confirm-h">Step 3 of 3: Ready?</h2>
           <dl class="facts-dl"><dt>Skill</dt><dd>${esc(label)}</dd><dt>Questions</dt><dd>${wiz.n}${wiz.n === 50 ? ' (five blocks of ten)' : ''}</dd></dl>
-          <ul class="facts">
-            <li>${esc(expect)}</li>
-            <li>One question at a time. Each has up to three hints, feedback that explains mistakes, and a worked solution after three different tries.</li>
-            <li>Your place is saved as you go, so you can pause and come back later.</li>
-          </ul>
+          <p class="pc-expect">${esc(expect)}</p>
+          <p class="pc-expect fine">Up to three hints per question, feedback on mistakes, and the steps after three different tries. Your place is saved, so you can pause any time.</p>
           <div class="confirm" hidden><p><b>You already have a practice in progress.</b> Starting a new one will replace it (your past results are kept). Start anyway?</p>
             <button type="button" class="btn btn-practice" data-act="really">Yes, start the new practice</button> <button type="button" class="btn" data-act="cancel">No, keep it</button></div>
-          <div class="pc-actions"><button type="button" class="btn btn-big" data-act="choices">← Back to Choices</button><button type="button" class="btn btn-practice btn-big" data-act="start">Start Practice</button></div>
+          <div class="pc-actions"><button type="button" class="btn btn-big" data-act="choices">← Back</button><button type="button" class="btn btn-practice btn-big" data-act="start">Start Practice</button></div>
         </section>`;
       const start = () => {
         const weak = weakSkills();
@@ -259,7 +256,7 @@
         location.hash = '#/practice/session';
       };
       const conf = app.querySelector('.confirm');
-      app.querySelector('[data-act=choices]').addEventListener('click', () => { wiz.step = 1; wizard(app); focusH(app); });
+      app.querySelector('[data-act=choices]').addEventListener('click', () => { wiz.step = 2; wizard(app); focusH(app); });
       app.querySelector('[data-act=start]').addEventListener('click', () => {
         const cur = loadSession();
         if (cur && !cur.finished && cur.states.some((s) => s && (s.solved || s.attempts || s.hints))) { conf.hidden = false; conf.querySelector('[data-act=really]').focus(); } else start();
@@ -279,6 +276,7 @@
     const item = d.set[d.i], q = G.engine.make('pc', item.id, item.seed), SK = gen().SKILLS[q.skill];
     const level = q.pcLevel > 5 ? `Challenge ${q.pcLevel - 5} of 3` : `Level ${q.pcLevel} of 5`;
     const block = d.n === 50 ? `Block ${Math.floor(d.i / 10) + 1} of 5` : '';
+    app.classList.add('page-question');
     const cheer = d.i > 0 && d.i % 10 === 0 ? `<p class="pc-cheer" role="status">${d.i} questions done${d.n === 50 ? `: block ${d.i / 10} of 5 finished` : ''}. Nice steady work!</p>` : '';
     app.innerHTML = `
       <div class="crumbs"><a href="#/practice">← Practice Center</a> <span class="crumb-note">(your place is saved)</span></div>
@@ -288,15 +286,17 @@
       <h1 tabindex="-1" class="q-heading">Question ${d.i + 1}</h1>
       <p class="skill-tag">Skill: ${esc(SK.name)} · ${level}</p>
       <div class="coach-host"></div>
-      <div class="pc-tools">
-        <a class="btn" href="#/practice">Pause and go to Practice Center</a>
-        <button type="button" class="btn" data-act="new">Start New Practice</button>
-      </div>
+      <details class="q-options"><summary>Options</summary>
+        <div class="pc-tools">
+          <a class="btn" href="#/practice">Pause and go to Practice Center</a>
+          <button type="button" class="btn" data-act="new">Start New Practice</button>
+        </div>
+      </details>
       <div class="confirm pc-new" hidden><p><b>Start a new practice?</b> This one (question ${d.i + 1} of ${d.n}) will be cleared. Your saved results from finished practices are kept.</p>
         <button type="button" class="btn btn-danger" data-act="really">Yes, start over</button> <button type="button" class="btn" data-act="cancel">No, keep going</button></div>`;
     G.coach(app.querySelector('.coach-host'), q, {
       state: d.states[d.i],
-      remind: REMIND[q.pcOp],
+      remind: REMIND[q.pcOp], seeIt: true,
       onChange: (st) => {
         // Another tab may have started a different session: show that one instead of writing over it.
         const cur = G.store.getDraft(SESSION);
@@ -311,7 +311,7 @@
           const cur = G.store.getDraft(SESSION);
           if (!cur || cur.id !== d.id) { session(app); return; } // replaced in another tab
           if (last) { d.finished = true; saveSession(d); location.hash = '#/practice/results'; return; }
-          d.i++; saveSession(d); session(app); window.scrollTo(0, 0); const h = app.querySelector('h1'); if (h) h.focus();
+          d.i++; saveSession(d); session(app); window.scrollTo(0, 0); G.coach.focusAnswer(app);
         });
       }
     });

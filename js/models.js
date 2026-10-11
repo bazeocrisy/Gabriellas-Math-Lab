@@ -212,6 +212,8 @@
   /**
    * Division layout: the divisor, a bracket, the dividend under the bracket, and the quotient written above it
    * with its decimal point straight above the dividend's decimal point. q may be '' to leave the answer blank.
+   * o.work (with an answer): also write the long-division working under the dividend, one subtraction and one
+   * bring-down at a time, the way it is done on paper.
    */
   function longDiv(a, n, q, o = {}) {
     const A = G.D.parse(a), Q = q ? G.D.parse(q) : null;
@@ -223,9 +225,46 @@
     const label = o.label || `${a} divided by ${n}, written as a division: ${n} is outside the bracket and ${a} is under it` +
       (Q ? `. The answer ${q} is written above ${a}, with its decimal point straight above the decimal point in ${a}.` : '.');
     return `<table class="ldiv-model" role="img" aria-label="${esc(label)}"><tbody>` +
-      `<tr class="ld-q"><td></td>${above.map((c) => `<td>${esc(c)}</td>`).join('')}</tr>` +
+      `<tr class="ld-q"><td></td>${above.map((c, i) => `<td${o.work ? ` data-k="${kOf(below, i, W)}"` : ''}>${esc(c)}</td>`).join('')}</tr>` +
       `<tr><td class="ld-div">${esc(n)}</td>${below.map((c, i) => `<td class="ld-top${i === 0 ? ' ld-first' : ''}">${esc(c)}</td>`).join('')}</tr>` +
+      (Q && o.work ? divWork(below, Number(n), A.whole.length) : '') +
       '</tbody></table>';
+  }
+
+  /** Which digit of the dividend a column belongs to (the decimal point counts as just before the first decimal place). */
+  function kOf(below, i, W) {
+    if (below[i] === '.') return W - 0.5;
+    return below.slice(0, i).filter((c) => c !== '.').length;
+  }
+
+  /** Rows of long-division working: "− product" (underlined), then what is left with the next digit brought down. */
+  function divWork(below, n, W) {
+    const pos = below.map((c, i) => (c === '.' ? -1 : i)).filter((i) => i >= 0);
+    const digits = pos.map((i) => Number(below[i]));
+    const rows = [];
+    // Write a number so that its last digit sits in column pos[k] (skipping the decimal-point column).
+    const row = (value, k, cls, sign) => {
+      const s = String(value), cells = below.map(() => '');
+      let first = -1;
+      for (let j = 0; j < s.length; j++) { const at = pos[k - j]; if (at === undefined) break; cells[at] = s[s.length - 1 - j]; first = at; }
+      const lead = sign ? (first > 0 ? first - 1 : -1) : null;
+      if (sign && lead >= 0) cells[lead] = sign;
+      return `<tr class="${cls}" data-k="${k}"><td>${sign && lead < 0 ? sign : ''}</td>${cells.map((c, i) => {
+        const line = cls === 'ld-sub' && i >= first && i <= pos[k] ? ' ld-line' : '';
+        return `<td class="${line.trim()}">${esc(c)}</td>`;
+      }).join('')}</tr>`;
+    };
+    let rem = 0, started = false;
+    digits.forEach((d, k) => {
+      const cur = rem * 10 + d, qd = Math.floor(cur / n);
+      if (!started && qd === 0 && (pos[k] < W - 1 || cur === 0)) { rem = cur; return; } // nothing to write yet
+      if (started) rows.push(row(cur, k, 'ld-bring'));
+      started = true;
+      rows.push(row(qd * n, k, 'ld-sub', '−'));
+      rem = cur - qd * n;
+      if (k === digits.length - 1) rows.push(row(rem, k, 'ld-rem'));
+    });
+    return rows.join('');
   }
 
   /**

@@ -2,6 +2,24 @@
 
 Updated: 2026-10-11 · Live (Lessons 1–10): https://bazeocrisy.github.io/Gabriellas-Math-Lab/ · Full audit: [audits/decimals-full-audit](audits/decimals-full-audit/AUDIT-SUMMARY.md) · Lesson 1 audit: [LESSON-1-AUDIT.md](LESSON-1-AUDIT.md)
 
+## NumberNova UX improvements: pull request, not merged (2026-10-11)
+- **Branch:** `claude/numbernova-ux`. Not merged or deployed; waiting for the owner's approval. Details are in [UX-IMPROVEMENTS.md](UX-IMPROVEMENTS.md).
+- [x] **Stage A:** UX audit and design plan, approved by the owner.
+- [x] **Stage B, built:**
+  - Home "Pick up where you left off".
+  - Learn cards with one recommended step.
+  - Question problem panel, Options menu, and focus to the answer.
+  - Two-column help at 1200 px and wider.
+  - Step-by-step worked solutions with long-division working.
+  - "Show me a picture".
+  - Wizard examples, sticky Next, and Back to step 2.
+  - Grouped Study Guides.
+  - Parent Progress overview tiles and table.
+  - Shorter test-intro wording.
+- [x] **Unchanged:** lessons, question text, hints, scoring, storage keys, progress, Practice Center modes and lengths, PDFs.
+- [x] **Tests:** `npm test` **236/236**; `npm run test:browser` **810/810**, including 105 new checks at 320, 390, 768, 1280 and 1920 px.
+- [x] **Independent UX review** of the finished work: 1 critical, 2 major, 5 minor and 3 cosmetic findings, all fixed.
+
 ## NumberNova: live (2026-10-11)
 - **Deployed and verified live.**
   - PR #13 merged into `main` (merge commit `4b23347`); the GitHub Pages build of `4b23347` succeeded.

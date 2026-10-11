@@ -98,11 +98,13 @@ try {
   await b.load(URL + 'index.html#/learn');
 
   // ── Learn (the ten lessons) ──
-  r = await js(`${H} return { t: text(), modes: [...document.querySelectorAll('.btn-mode')].map((a) => a.textContent + '>' + a.getAttribute('href')),
+  r = await js(`${H} return { t: text(), modes: [...document.querySelectorAll('.lc-links')].flatMap((n) => [...n.querySelectorAll('.lc-teach, .lc-practice, .lc-test')].map((a) => a.textContent.toUpperCase() + '>' + a.getAttribute('href'))),
+    next: [...document.querySelectorAll('.lc-next')].map((a) => a.childNodes[0].textContent + '>' + a.getAttribute('href')),
     later: document.querySelectorAll('.later-list li').length, laterButtons: document.querySelectorAll('.later-list a, .later-list button').length,
     avail: GML.unit.lessons.filter((l) => GML.unit.available(l.id)).map((l) => l.id), total: GML.unit.lessons.length };`);
   check('learn: Decimal lessons page with grade and Milestones subtitles', /Decimal lessons/.test(r.t) && /Grade 5 Mathematics/.test(r.t) && /Georgia Milestones Preparation/.test(r.t), r.t.slice(0, 200));
   check('learn: every available lesson has TEACH | PRACTICE | TEST', JSON.stringify(r.modes) === JSON.stringify(r.avail.flatMap((id) => [`TEACH>#/${id}/teach/1`, `PRACTICE>#/${id}/practice`, `TEST>#/${id}/test`])), r.modes);
+  check('learn: a fresh start recommends one step per lesson: Start (Teach screen 1)', r.next.length === r.avail.length && r.next.every((x, k) => x === `Start>#/${r.avail[k]}/teach/1`), r.next);
   check('learn: all 10 lessons listed; the rest say Coming later with no buttons', r.total === 10 && r.later === r.total - r.avail.length && r.laterButtons === 0, r);
   check('learn: Lesson Notes button for each available lesson', (await js(`return document.querySelectorAll('.btn-notes').length;`)) === r.avail.length);
 
@@ -266,7 +268,7 @@ try {
 
   // ── Parent Progress ──
   await b.load(URL + 'index.html#/parent');
-  r = await js(`return document.getElementById('app').innerText;`);
+  r = await js(`document.querySelectorAll('#app details').forEach((d) => { d.open = true; }); return document.getElementById('app').innerText;`);
   check('parent: shows lesson completed, recent score, skills, next step and device notice',
     /Lesson completed \(mastered\)\s*Yes/.test(r) && /Most recent test\s*10 of 10 \(100%\)/.test(r) && /Skills correct on the most recent test/.test(r) && /Skills needing more practice/.test(r) &&
     /Suggested next step/.test(r) && /Lesson 2: Decimal Place Value/.test(r) && /only in this browser on this device/.test(r), r.slice(0, 600));
@@ -287,7 +289,7 @@ try {
   r = await js(`return document.querySelector('.lesson-card').innerText;`);
   check('saved Lesson 1 progress from the earlier version still shows on the Learn page', /Mastered/.test(r) && /Finished/.test(r) && /3 sessions/.test(r) && /9 of 10/.test(r), r);
   await b.load(URL + 'index.html#/parent');
-  r = await js(`return document.getElementById('app').innerText;`);
+  r = await js(`document.querySelectorAll('#app details').forEach((d) => { d.open = true; }); return document.getElementById('app').innerText;`);
   check('saved Lesson 1 progress shows on Parent Progress, other lessons start empty', /Lesson 1: Understanding Decimals ★/.test(r) && /9 of 10 \(90%\)/.test(r) && /Lesson 2: Decimal Place Value[\s\S]*No test taken yet/.test(r), r.slice(0, 400));
 
   // ── Lessons 2+: full Teach, Practice, Test, Notes and Parent run for each lesson ──
@@ -380,7 +382,7 @@ try {
     rr = await js(`return { h: document.querySelector('h1').innerText, t: document.getElementById('app').innerText };`);
     check(`${id} notes: printable notes with vocabulary and worked examples`, rr.h === await js(`return GML.lessonContent['${id}'].title;`) && /Vocabulary|Review sheet/.test(rr.t) && /Worked example/.test(rr.t));
     await b.load(URL + 'index.html#/parent');
-    rr = await js(`return document.getElementById('app').innerText;`);
+    rr = await js(`document.querySelectorAll('#app details').forEach((d) => { d.open = true; }); return document.getElementById('app').innerText;`);
     const ln = await js(`return GML.unit.find('${id}').n;`);
     check(`${id} parent: shows the lesson as completed with the latest score`, new RegExp(`Lesson ${ln}: [^\\n]+★`).test(rr) && rr.includes('10 of 10 (100%)'), rr.slice(0, 300));
   }
@@ -506,7 +508,7 @@ try {
   await b.load(URL + 'index.html#/learn');
   check('integrity: the home card shows no ★ Mastered for a test with lesson pages opened', !/Mastered/.test(await js(`return [...document.querySelectorAll('.lesson-card')][8].innerText;`)));
   await b.load(URL + 'index.html#/parent');
-  r = await js(`return document.getElementById('app').innerText;`);
+  r = await js(`document.querySelectorAll('#app details').forEach((d) => { d.open = true; }); return document.getElementById('app').innerText;`);
   check('integrity: Parent Progress explains the rule and labels the test', /How Tests and mastery work/.test(r) && /lesson pages opened during the test/.test(r) && /goal met, but/.test(r), r.slice(0, 300));
   // A refresh during a test is not counted as opening a lesson page; a test done on its own is mastered.
   await b.load(URL + 'index.html#/d09/test');
@@ -561,7 +563,7 @@ try {
     localStorage.setItem('gml:v1:progress', JSON.stringify({ lessons: { d03: { teach: { screen: 0, furthest: 15, done: true }, practice: { sessions: 1, skills: {}, recentSigs: [] }, tests: d03, lastTestSigs: [] },
       d10: { teach: { screen: 0, furthest: 12, done: true }, practice: { sessions: 0, skills: {}, recentSigs: [] }, tests: [t(10, 25)], lastTestSigs: [] } } }));`);
   await b.load(URL + 'index.html#/parent');
-  r = await js(`return { l10: document.querySelector('#pl-d10').closest('section').innerText, l3: document.querySelector('#pl-d03').closest('section').innerText };`);
+  r = await js(`document.querySelectorAll('#app details').forEach((d) => { d.open = true; }); return { l10: document.querySelector('#pl-d10').closest('section').innerText, l3: document.querySelector('#pl-d03').closest('section').innerText };`);
   check('integrity: with only Lessons 3 and 10 mastered, Lesson 10 does not say "All lessons complete"', !/All lessons complete/.test(r.l10) && /Lesson 1: Understanding Decimals is not mastered yet/.test(r.l10), r.l10);
   check('integrity: older saved progress keeps its mastery and test count', /Yes ★/.test(r.l3) && /Tests taken\s*20/.test(r.l3), r.l3);
   await b.load(URL + 'index.html#/d03/test'); await b.reload();
@@ -569,7 +571,7 @@ try {
   await js(setAll('d03', 'wrong(q)')); await b.reload();
   await js(`document.querySelector('[data-act=submit]').click();`); await b.wait(60);
   await b.load(URL + 'index.html#/parent');
-  r = await js(`return document.querySelector('#pl-d03').closest('section').innerText;`);
+  r = await js(`document.querySelectorAll('#app details').forEach((d) => { d.open = true; }); return document.querySelector('#pl-d03').closest('section').innerText;`);
   check('integrity: mastery and the count survive when the mastered test leaves the 20-test history', /Yes ★/.test(r) && /Tests taken\s*21/.test(r), r);
   // A test that was in progress when the app was updated (saved without an attempt id) can still be finished once.
   await js(`${H} const set = E.buildSet('d04', { plan: E.banks.d04.plan, seed: 99 });
@@ -699,7 +701,7 @@ try {
   // ── NumberNova: Study Guides ──
   await b.load(URL + 'index.html#/guides');
   r = await js(`const cards = [...document.querySelectorAll('.guide-card')];
-    return { h1: document.querySelector('h1').innerText, n: cards.length, titles: cards.map((c) => c.querySelector('h2').innerText),
+    return { h1: document.querySelector('h1').innerText, n: cards.length, titles: cards.map((c) => c.querySelector('h3').innerText),
       open: cards.map((c) => c.querySelector('.btn-guide').getAttribute('href')), dl: cards.map((c) => c.querySelector('[download]').getAttribute('download')),
       nav: document.querySelector('.site-nav a[aria-current]').dataset.nav, title: document.title };`);
   check('guides: eight numbered guide cards with titles', r.n === 8 && r.titles[0] === 'Decimal Place Value' && r.titles[7] === 'Mixed Decimal Practice' && r.nav === 'guides' && /Study Guides/.test(r.title), r);
@@ -805,6 +807,146 @@ try {
   await noOverflow('practice question with a division layout (320px)'); await bigTargets('practice question (320px)');
   await b.viewport(390, 844);
 
+  // ── NumberNova UX: next steps, question layout, step-by-step solutions, pictures, Parent overview, widths ──
+  const UX_SEED = `localStorage.clear(); localStorage.setItem('gml:v1:progress', JSON.stringify({ lessons: {
+    d01: { teach: { screen: 18, furthest: 18, done: true }, practice: { sessions: 3, skills: {}, recentSigs: [] }, tests: [{ id: 'u1', date: '2026-10-10T12:30:00Z', correct: 9, total: 10, percent: 90, mastered: true, goalMet: true, skills: {}, missedSkills: [] }], testsTaken: 1, masteredOn: '2026-10-10T12:30:00Z', lastTestSigs: [] },
+    d02: { teach: { screen: 6, furthest: 6, done: false }, practice: { sessions: 0, skills: {}, recentSigs: [] }, tests: [], testsTaken: 0, lastTestSigs: [] },
+    d03: { teach: { screen: 3, furthest: 17, done: true }, practice: { sessions: 2, skills: {}, recentSigs: [] }, tests: [{ id: 'u2', date: '2026-10-11T12:30:00Z', correct: 7, total: 10, percent: 70, mastered: false, goalMet: false, skills: {}, missedSkills: [] }], testsTaken: 1, lastTestSigs: [] },
+    d04: { teach: { screen: 0, furthest: 0, done: true }, practice: { sessions: 0, skills: {}, recentSigs: [] }, tests: [], testsTaken: 0, lastTestSigs: [] },
+    d05: { teach: { screen: 0, furthest: 0, done: true }, practice: { sessions: 1, skills: {}, recentSigs: [] }, tests: [], testsTaken: 0, lastTestSigs: [] } } }));`;
+  await b.viewport(1280, 900);
+  await b.load(URL + 'index.html#/'); await js(UX_SEED);
+  const progressBefore = await js(`return localStorage.getItem('gml:v1:progress');`);
+  await b.load(URL + 'index.html#/learn'); await b.reload();
+  r = await js(`return { next: [...document.querySelectorAll('.lc-next')].slice(0, 6).map((a) => a.childNodes[0].textContent + '>' + a.getAttribute('href')),
+    banner: (document.querySelector('.cont-learn') || {}).innerText || '', bannerHref: (document.querySelector('.cont-learn a') || {}).getAttribute && document.querySelector('.cont-learn a').getAttribute('href'),
+    perRow: new Set([...document.querySelectorAll('.lesson-card')].slice(0, 3).map((c) => Math.round(c.getBoundingClientRect().top))).size,
+    links: [...document.querySelectorAll('.lesson-card')][1].querySelectorAll('.lc-links a').length };`);
+  check('learn: one recommended step per lesson from saved progress (Review, Continue Teach, Practice again, Practice, Take the Test, Start)',
+    JSON.stringify(r.next) === JSON.stringify(['Review>#/d01/teach/1', 'Continue Teach>#/d02/teach/7', 'Practice again>#/d03/practice', 'Practice>#/d04/practice', 'Take the Test>#/d05/test', 'Start>#/d06/teach/1']), r.next);
+  check('learn: the Continue banner names the furthest unfinished lesson and links to its next step', /Pick up where you left off/.test(r.banner) && /Lesson 5/.test(r.banner) && r.bannerHref === '#/d05/test', r);
+  check('learn: three lesson cards per row at 1280px, each with Teach, Practice, Test and Notes links', r.perRow === 1 && r.links === 4, r);
+  await b.load(URL + 'index.html#/'); await b.reload();
+  r = await js(`return { t: (document.querySelector('.cont-home') || {}).innerText || '', logo: document.querySelector('.nn-hero-logo').getBoundingClientRect().width, tags: !!document.querySelector('.nn-hero-tags'), foot: document.querySelector('.site-footer').innerText };`);
+  check('home: "Pick up where you left off" card, a smaller logo, and the grade tags in the footer', /Pick up where you left off/.test(r.t) && /Lesson 5/.test(r.t) && r.logo <= 210 && !r.tags && /Georgia Milestones Preparation/.test(r.foot), r);
+  check('UX: looking at Home and Learn changes no saved progress', (await js(`return localStorage.getItem('gml:v1:progress');`)) === progressBefore);
+
+  await js(`const k = 'gml:v1:progress', p = JSON.parse(localStorage.getItem(k)); p.lessons.d03.practice.lastDate = '2026-10-12T09:00:00Z'; p.lessons.d03.practice.sessions = 3; localStorage.setItem(k, JSON.stringify(p));`);
+  await b.load(URL + 'index.html#/learn'); await b.reload();
+  r = await js(`const c = [...document.querySelectorAll('.lc-next')]; return { d03: c[2].childNodes[0].textContent + '>' + c[2].getAttribute('href') + ' ' + c[2].closest('.lesson-card').innerText.includes('Practiced since your last Test'),
+    filled: c.filter((a) => !a.classList.contains('lc-next-quiet') && a.childNodes[0].textContent === 'Start').length, quiet: c.filter((a) => a.classList.contains('lc-next-quiet')).length };`);
+  check('learn: after practicing since a Test without ★, the next step is to take the Test again', r.d03 === 'Take the Test again>#/d03/test false' || r.d03 === 'Take the Test again>#/d03/test true', r);
+  check('learn: only the first untouched lesson has a filled Start button', r.filled === 1 && r.quiet === 4, r);
+  await js(UX_SEED);
+
+  // Teach "Try it together": no reminder button before answering (its reteach note can contain the answer).
+  await b.load(URL + 'index.html#/d03/teach/2'); await b.reload();
+  r = await js(`return { coach: !!document.querySelector('.coach'), model: !!document.querySelector('[data-act=model]') };`);
+  check('teach: guided checks offer no reminder button before answering', r.coach && !r.model, r);
+
+  // An unfinished Test is the next step for its lesson.
+  await b.load(URL + 'index.html#/d06/test'); await b.reload();
+  await js(`const s = document.querySelector('[data-act=start]'); if (s) s.click();`); await b.wait(150);
+  await b.load(URL + 'index.html#/learn'); await b.reload();
+  r = await js(`return [...document.querySelectorAll('.lc-next')][5].childNodes[0].textContent + '>' + [...document.querySelectorAll('.lc-next')][5].getAttribute('href');`);
+  check('learn: a started, unfinished Test is the recommended next step', r === 'Continue the Test>#/d06/test', r);
+  await js(`localStorage.removeItem('gml:v1:draft:test-d06');`);
+
+  // Parent Progress overview and table.
+  await b.load(URL + 'index.html#/parent'); await b.reload();
+  r = await js(`return { tiles: [...document.querySelectorAll('.pp-tile .pp-k')].map((x) => x.innerText), t: document.querySelector('.pp-tiles').innerText, rows: document.querySelectorAll('.plt-table tbody tr').length,
+    row1: document.querySelector('.plt-table tbody tr').innerText.replace(/\\s+/g, ' '), shown: [...document.querySelectorAll('#app > section.parent-lesson h2')].map((h) => h.id),
+    hidden: document.querySelectorAll('.pp-more .parent-lesson').length, moreOpen: document.querySelector('.pp-more').open, rulesOpen: document.querySelector('.pp-rules').open,
+    resetLast: document.querySelector('#app > :last-child').classList.contains('reset') };`);
+  check('parent: five overview tiles (mastered, current lesson, latest Test, practice this week, skills to review)',
+    JSON.stringify(r.tiles) === JSON.stringify(['Lessons mastered', 'Current lesson', 'Latest Test', 'Practice this week', 'Skills to review']) && /1 of 10/.test(r.t) && /Lesson 5/.test(r.t) && /7 of 10/.test(r.t), r);
+  check('parent: a 10-row lessons table (Lesson, Teach, Practice, Test, ★)', r.rows === 10 && /Understanding Decimals Finished 3 sessions 9 of 10/.test(r.row1), r.row1);
+  check('parent: started lessons shown; the rest and the rules folded away; Erase stays last', r.shown.join() === 'pl-d01,pl-d02,pl-d03,pl-d04,pl-d05' && r.hidden === 5 && !r.moreOpen && !r.rulesOpen && r.resetLast, r);
+
+  // Practice question: problem panel, Options menu, keyboard order, focus after Next, two columns on wide screens.
+  await pcStart('add', 10);
+  r = await js(`const c = document.querySelector('.coach'); return { panel: !!document.querySelector('.problem-panel .q-prompt'), exprPx: parseFloat(getComputedStyle(document.querySelector('.problem-panel .expr') || document.body).fontSize),
+    cols: getComputedStyle(c).gridTemplateColumns.split(' ').length, helpRight: document.querySelector('.coach-help').getBoundingClientRect().left > document.querySelector('.coach-main').getBoundingClientRect().right,
+    opts: !!document.querySelector('details.q-options .pc-tools [data-act=new]') && !!document.querySelector('details.q-options .pc-tools a[href="#/practice"]'), optsOpen: document.querySelector('details.q-options').open };`);
+  check('practice center question: problem panel with a large equation, Options folded away, help beside the question at 1280px', r.panel && r.exprPx >= 30 && r.cols === 2 && r.helpRight && r.opts && !r.optsOpen, r);
+  r = await js(`document.querySelector('.num-input').focus(); return document.activeElement.className;`);
+  await b.key('Tab'); const tab1 = await js(`return document.activeElement.dataset.act || document.activeElement.tagName;`);
+  await b.key('Tab'); const tab2 = await js(`return document.activeElement.dataset.act || document.activeElement.tagName;`);
+  check('a11y: from the answer box, Tab reaches Check answer and then Get a hint', /num-input/.test(r) && tab1 === 'check' && tab2 === 'hint', { r, tab1, tab2 });
+  r = await js(`${H} const d = JSON.parse(localStorage.getItem('gml:v1:draft:pc-session')); const x = d.set[0]; const q = E.make('pc', x.id, x.seed);
+    const host = document.querySelector('.coach-host'); fill(host, q, right(q)); host.querySelector('[data-act=check]').click(); document.querySelector('.coach-next button').click();
+    await new Promise((res) => setTimeout(res, 100)); return { a: document.activeElement.className, label: document.querySelector('.mode-label').innerText };`);
+  check('a11y: after Next question, focus goes straight to the new answer box', /num-input/.test(r.a) && /Question 2 of 10/.test(r.label), r);
+
+  // "Show me a picture" and step-by-step solutions on a Practice Center division question.
+  await pcStart('div', 10);
+  await js(`const k = 'gml:v1:draft:pc-session', d = JSON.parse(localStorage.getItem(k)); d.i = d.set.findIndex((x) => { const q = GML.engine.make('pc', x.id, x.seed); return q.picture && /sol-steps/.test(q.solution) && (q.solution.match(/<li[ >]/g) || []).length >= 3; }); localStorage.setItem(k, JSON.stringify(d));`);
+  await b.reload();
+  r = await js(`const mb = document.querySelector('[data-act=model]'); const before = { exp: mb.getAttribute('aria-expanded'), hidden: document.querySelector('.coach-model').hidden };
+    mb.click(); return { before, exp: mb.getAttribute('aria-expanded'), hidden: document.querySelector('.coach-model').hidden, layout: !!document.querySelector('.coach-model .ldiv-model'), txt: mb.innerText };`);
+  check('practice center: "Show me a picture" opens the division layout before answering, and says when it is open', r.before.exp === 'false' && r.before.hidden && r.exp === 'true' && !r.hidden && r.layout && /Hide/.test(r.txt), r);
+  r = await js(`${H} const d = JSON.parse(localStorage.getItem('gml:v1:draft:pc-session')); const x = d.set[d.i]; const q = E.make('pc', x.id, x.seed); const host = document.querySelector('.coach-host');
+    for (let k = 0; k < 3; k++) { fill(host, q, wrongN(q, k)); host.querySelector('[data-act=check]').click(); }
+    host.querySelector('[data-act=solution]').click();
+    const items = () => [...host.querySelectorAll('.fb-solution .sol-steps > li')];
+    const total = items().length, first = items().filter((li) => !li.hidden).length, btn = host.querySelector('[data-act=sol-next]');
+    const endHidden = host.querySelector('.fb-solution .sol-end').hidden, laterAtStart = host.querySelectorAll('.fb-solution .ldiv-model .sol-later').length;
+    const quotientShown = [...host.querySelectorAll('.fb-solution .ld-q td')].filter((td) => td.textContent && !td.classList.contains('sol-later')).map((td) => td.textContent).join('');
+    btn.click(); const second = items().filter((li) => !li.hidden).length, cur = items().findIndex((li) => li.classList.contains('is-current')), focusLi = document.activeElement === items()[1];
+    for (let k = 0; k < total; k++) if (!btn.hidden) btn.click();
+    const lastFocused = document.activeElement === items()[total - 1];
+    return { total, first, second, cur, focusLi, endHidden, laterAtStart, quotientShown, answer: q.answer, lastFocused, endShown: !host.querySelector('.fb-solution .sol-end').hidden, laterAtEnd: host.querySelectorAll('.fb-solution .sol-later').length,
+      all: items().every((li) => !li.hidden), btnHidden: btn.hidden, work: host.querySelectorAll('.fb-solution .ldiv-model .ld-sub').length, next: !!host.querySelector('.coach-next button') };`);
+  check('worked solution: one step at a time, the current step highlighted and focused, then every step', r.total >= 3 && r.first === 1 && r.second === 2 && r.cur === 1 && r.focusLi && r.all && r.btnHidden && r.next, r);
+  check('worked solution: long division shows the subtraction and bring-down rows', r.work >= 2, r);
+  check('worked solution: the answer and the division working wait for their steps, then all show; focus stays on the last step',
+    r.endHidden && r.laterAtStart > 0 && r.quotientShown !== r.answer.replace(/^0(?=.)/, '0') && r.endShown && r.laterAtEnd === 0 && r.lastFocused, r);
+  await b.reload();
+  r = await js(`return [...document.querySelectorAll('.fb-solution .sol-steps > li')].every((li) => !li.hidden);`);
+  check('worked solution: revealed steps are remembered after a refresh', r === true);
+
+  // Lesson Practice: Options menu and focus after Next.
+  await b.load(URL + 'index.html#/d06/practice'); await b.reload();
+  r = await js(`${H} const q = qIn('practice', 'd06'); const host = document.querySelector('.coach-host'); fill(host, q, right(q)); host.querySelector('[data-act=check]').click(); document.querySelector('.coach-next button').click();
+    await new Promise((res) => setTimeout(res, 100)); const q2 = qIn('practice', 'd06');
+    return { opts: !!document.querySelector('details.q-options [data-act=restart]'), type: q2.type, a: document.activeElement.className || document.activeElement.tagName };`);
+  check('lesson practice: Start New Practice is in Options; after Next, focus goes to the answer (or the heading)', r.opts && (r.type === 'number' ? /num-input/.test(r.a) : true), r);
+
+  // Practice wizard: examples on skill cards, Back from step 3 goes to step 2.
+  await b.load(URL + 'index.html#/practice'); await b.reload();
+  r = await js(`return [...document.querySelectorAll('.pc-grid-modes .pc-sample')].map((x) => x.innerText).slice(0, 4);`);
+  check('practice wizard: each skill card shows an example problem', JSON.stringify(r) === JSON.stringify(['4.6 + 2.35', '10 − 4.65', '0.4 × 0.6', '7.5 ÷ 3']), r);
+  await js(`document.getElementById('pc-mode-mul').click(); document.querySelector('.pc-form button[type=submit]').click();`);
+  await js(`document.getElementById('pc-n-25').click(); document.querySelector('.pc-form button[type=submit]').click();`);
+  await js(`document.querySelector('[data-act=choices]').click();`);
+  r = await js(`return { legend: (document.querySelector('.pc-legend') || {}).innerText, n: (document.querySelector('[name=n]:checked') || {}).value, picked: (document.querySelector('.pc-picked') || {}).innerText };`);
+  check('practice wizard: Back on step 3 returns to step 2 with the choices kept', /Step 2 of 3/.test(r.legend) && r.n === '25' && /Multiplying/.test(r.picked), r);
+
+  // Test intro: the shorter ★ rule.
+  await b.load(URL + 'index.html#/d07/test'); await b.reload();
+  check('test intro: short ★ rule', /Do it on your own to earn ★\. If you open lessons or practice during the test, you still get a score, but no ★ this time\./.test(await js(`return document.getElementById('app').innerText;`)));
+
+  // Every page at the five required widths: no sideways scrolling, and new controls are at least 44px tall.
+  const uxTargets = async (label) => {
+    const bad = await js(`return [...document.querySelectorAll('.btn, .lc-link, .guide-chip, .q-options > summary, .pp-more > summary, .pp-rules > summary, .pc-card, .site-nav a, .crumbs a')]
+      .filter((e) => e.offsetParent && !e.closest('[hidden]') && e.getBoundingClientRect().height < 44).map((e) => (e.innerText || '').trim().slice(0, 20) + ' ' + Math.round(e.getBoundingClientRect().height));`);
+    check(`tap targets at least 44px: ${label}`, bad.length === 0, bad);
+  };
+  for (const w of [320, 390, 768, 1280, 1920]) {
+    await b.viewport(w, w < 768 ? 800 : 1000);
+    for (const route of ['#/', '#/learn', '#/practice', '#/guides', '#/parent', '#/d03/test', '#/d06/practice']) {
+      await b.load(URL + 'index.html' + route); await b.reload();
+      const ov = await js(`const doc = document.documentElement; return { sw: doc.scrollWidth, cw: doc.clientWidth };`);
+      check(`no horizontal scrolling: ${route} at ${w}px`, ov.sw <= ov.cw, ov);
+      await uxTargets(`${route} at ${w}px`);
+    }
+    await pcStart('div', 10);
+    const ov = await js(`const doc = document.documentElement; return { sw: doc.scrollWidth, cw: doc.clientWidth, cols: getComputedStyle(document.querySelector('.coach')).gridTemplateColumns };`);
+    check(`practice question at ${w}px: no sideways scrolling; ${w >= 1200 ? 'two columns' : 'one column'}`, ov.sw <= ov.cw && (w >= 1200 ? ov.cols.split(' ').length === 2 : ov.cols === 'none'), ov);
+    await uxTargets(`practice question at ${w}px`);
+  }
+  await b.viewport(390, 844);
+
   // ── NumberNova: restart controls and Parent Progress ──
   await js(`localStorage.clear(); localStorage.setItem('gml:v1:progress', JSON.stringify({ lessons: { d02: { teach: { screen: 5, furthest: 9, done: true }, practice: { sessions: 2, skills: {}, recentSigs: [] },
     tests: [{ id: 'old1', date: '2026-10-01T12:00:00Z', correct: 10, total: 10, percent: 100, mastered: true, goalMet: true, skills: {}, missedSkills: [] }], testsTaken: 1, masteredOn: '2026-10-01T12:00:00Z', lastTestSigs: [] } } }));
@@ -841,7 +983,7 @@ try {
     if (d.i === 3) { fill(host, q, wrongN(q, 0)); host.querySelector('[data-act=check]').click(); } fill(host, q, right(q)); host.querySelector('[data-act=check]').click(); document.querySelector('.coach-next button').click();`);
   await b.wait(150);
   await b.load(URL + 'index.html#/parent');
-  r = await js(`const sec = document.querySelector('.parent-practice'); return { t: sec ? sec.innerText : '', rows: sec ? sec.querySelectorAll('tbody tr').length : 0, d02: document.querySelector('#pl-d02').closest('section').innerText, rules: document.querySelector('#rules-h').closest('section').innerText };`);
+  r = await js(`document.querySelectorAll('#app details').forEach((d) => { d.open = true; }); const sec = document.querySelector('.parent-practice'); return { t: sec ? sec.innerText : '', rows: sec ? sec.querySelectorAll('tbody tr').length : 0, d02: document.querySelector('#pl-d02').closest('section').innerText, rules: document.querySelector('#rules-h').closest('section').innerText };`);
   check('parent: Practice Center section shows sessions, questions, accuracy, hints, recent practice and skills to review', /never counts as a Test/.test(r.t) && /Sessions finished\s*1/.test(r.t) && /Questions answered\s*10/.test(r.t) && /Correct\s*10 of 10/.test(r.t) && r.rows === 1 && /Skills to review/.test(r.t), r.t.slice(0, 400));
   check('parent: Practice Center results do not change lesson tests or mastery', /Tests taken\s*2/.test(r.d02) && /Yes ★/.test(r.d02) && /Practice Center/.test(r.rules), r.d02.slice(0, 300));
   // Opening the Practice Center during an unfinished lesson Test is noted on that Test.
@@ -854,7 +996,7 @@ try {
   // ── NumberNova review regressions ──
   await js(`localStorage.setItem('gml:v1:draft:pc-history', JSON.stringify({ sessions: [{ n: 10, completed: 'abc', clean: 'x' }], skills: { 'add.basic': null, 'sub.basic': { r: 'xx' } } }));`);
   await b.load(URL + 'index.html#/parent');
-  r = await js(`return document.getElementById('app').innerText;`);
+  r = await js(`document.querySelectorAll('#app details').forEach((d) => { d.open = true; }); return document.getElementById('app').innerText;`);
   check('review: damaged practice history does not break Parent Progress (no NaN or junk)', !/Something went wrong|NaN|abc/.test(r) && /Practice Center/.test(r), r.slice(0, 200));
   await b.load(URL + 'index.html#/practice'); await b.reload();
   await js(`document.getElementById('pc-mode-misses').click(); document.querySelector('.pc-form button[type=submit]').click();`);
@@ -878,7 +1020,7 @@ try {
   check('unready lesson route falls back to home', /Ready to make your next math discovery/.test(await js(`return document.querySelector('h1').innerText;`)));
   await b.load(URL + 'index.html#/parent');
   await js(`document.querySelector('[data-act=reset]').click(); document.querySelector('[data-act=really]').click();`);
-  check('parent: erase progress works', /No test taken yet/.test(await js(`return document.getElementById('app').innerText;`)) && (await js(`return Object.keys(localStorage).filter((k) => k.startsWith('gml:')).length;`)) === 0);
+  check('parent: erase progress works', /No test taken yet/.test(await js(`document.querySelectorAll('#app details').forEach((d) => { d.open = true; }); return document.getElementById('app').innerText;`)) && (await js(`return Object.keys(localStorage).filter((k) => k.startsWith('gml:')).length;`)) === 0);
 
   check('no console errors', b.errors.length === 0, b.errors);
   if (LIVE) {
