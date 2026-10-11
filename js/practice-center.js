@@ -279,6 +279,7 @@
     const item = d.set[d.i], q = G.engine.make('pc', item.id, item.seed), SK = gen().SKILLS[q.skill];
     const level = q.pcLevel > 5 ? `Challenge ${q.pcLevel - 5} of 3` : `Level ${q.pcLevel} of 5`;
     const block = d.n === 50 ? `Block ${Math.floor(d.i / 10) + 1} of 5` : '';
+    app.classList.add('page-question');
     const cheer = d.i > 0 && d.i % 10 === 0 ? `<p class="pc-cheer" role="status">${d.i} questions done${d.n === 50 ? `: block ${d.i / 10} of 5 finished` : ''}. Nice steady work!</p>` : '';
     app.innerHTML = `
       <div class="crumbs"><a href="#/practice">← Practice Center</a> <span class="crumb-note">(your place is saved)</span></div>
@@ -288,10 +289,12 @@
       <h1 tabindex="-1" class="q-heading">Question ${d.i + 1}</h1>
       <p class="skill-tag">Skill: ${esc(SK.name)} · ${level}</p>
       <div class="coach-host"></div>
-      <div class="pc-tools">
-        <a class="btn" href="#/practice">Pause and go to Practice Center</a>
-        <button type="button" class="btn" data-act="new">Start New Practice</button>
-      </div>
+      <details class="q-options"><summary>Options</summary>
+        <div class="pc-tools">
+          <a class="btn" href="#/practice">Pause and go to Practice Center</a>
+          <button type="button" class="btn" data-act="new">Start New Practice</button>
+        </div>
+      </details>
       <div class="confirm pc-new" hidden><p><b>Start a new practice?</b> This one (question ${d.i + 1} of ${d.n}) will be cleared. Your saved results from finished practices are kept.</p>
         <button type="button" class="btn btn-danger" data-act="really">Yes, start over</button> <button type="button" class="btn" data-act="cancel">No, keep going</button></div>`;
     G.coach(app.querySelector('.coach-host'), q, {
@@ -311,7 +314,7 @@
           const cur = G.store.getDraft(SESSION);
           if (!cur || cur.id !== d.id) { session(app); return; } // replaced in another tab
           if (last) { d.finished = true; saveSession(d); location.hash = '#/practice/results'; return; }
-          d.i++; saveSession(d); session(app); window.scrollTo(0, 0); const h = app.querySelector('h1'); if (h) h.focus();
+          d.i++; saveSession(d); session(app); window.scrollTo(0, 0); G.coach.focusAnswer(app);
         });
       }
     });

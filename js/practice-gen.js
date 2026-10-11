@@ -89,6 +89,8 @@
       type: 'number', sig: (o.sigPrefix || '') + expr,
       prompt: o.prompt || `${plus ? 'Add' : 'Subtract'}: <span class="expr">${expr}</span>`,
       visual: o.vertical ? M.vertical(nums, sym, { answer: '' }) : undefined,
+      // "Show me a picture": the same numbers written in columns (only when the question does not already show them).
+      picture: o.vertical ? undefined : M.vertical(nums, sym, { answer: '', label: `${nums.join(plus ? ' plus ' : ' minus ')}, written in columns with the decimal points lined up.` }),
       answer: ans, answerText: ansText, hints,
       why: `${expr} = <b>${o.money ? money(total) : ans}</b>${plus ? '' : `. Check by adding: ${ans} + ${nums[1]} = ${nums[0]}`}.`,
       solution: K.columnSolution(nums, sym),
@@ -286,7 +288,7 @@
     if (W === digits.length) steps.push('There are no decimal places, so the answer has none either.');
     const q = num(kq);
     steps.push(`Check by multiplying: ${q} × ${n} = ${a}.`);
-    return `<div class="solution-work">${M.longDiv(a, n, q)}<ol class="sol-steps">${steps.map((t) => `<li>${t}</li>`).join('')}</ol></div>`;
+    return `<div class="solution-work">${M.longDiv(a, n, q, { work: true })}<ol class="sol-steps">${steps.map((t) => `<li>${t}</li>`).join('')}</ol></div>`;
   }
   function div(ka, n, o = {}) {
     if (ka % n) return null;
@@ -309,6 +311,7 @@
       type: 'number', sig: (o.sigPrefix || '') + a + '/' + n,
       prompt: o.prompt || `Divide: <span class="expr">${a} ÷ ${n}</span>`,
       visual: o.layout ? M.longDiv(a, n, '') : undefined,
+      picture: o.layout || pow ? undefined : M.longDiv(a, n, ''),
       answer: q, answerText: o.money ? money(kq) : q, hints,
       why: `${a} ÷ ${n} = <b>${o.money ? money(kq) : q}</b>. Check: ${q} × ${n} = ${a}.`,
       solution: pow ? `<ol class="sol-steps"><li>÷ ${n} moves every digit ${plural(z, 'place')} to the right (the decimal point moves ${plural(z, 'place')} to the left).</li><li>${a} becomes ${q}.</li></ol>` : divSolution(ka, n, kq),

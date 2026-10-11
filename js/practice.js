@@ -29,6 +29,7 @@
       const bank = G.engine.banks[lessonId];
       const item = d.set[d.i];
       const q = G.engine.make(lessonId, item.id, item.seed);
+      app.classList.add('page-question');
       app.innerHTML = `
         <div class="crumbs"><a href="#/learn">← Lesson menu</a></div>
         <p class="mode-label">Lesson ${G.unit.find(lessonId).n} · Practice <span class="screen-count">Question ${d.i + 1} of ${d.set.length}</span></p>
@@ -36,7 +37,9 @@
         <h1 tabindex="-1" class="q-heading">Question ${d.i + 1}</h1>
         <p class="skill-tag">Skill: ${bank.skills[q.skill]}</p>
         <div class="coach-host"></div>
-        <div class="pc-tools"><button type="button" class="btn" data-act="restart">Start New Practice</button></div>
+        <details class="q-options"><summary>Options</summary>
+          <div class="pc-tools"><button type="button" class="btn" data-act="restart">Start New Practice</button></div>
+        </details>
         <div class="confirm restart-confirm" hidden><p><b>Start a new practice session?</b> Your answers, hints and feedback in this session will be cleared. Finished sessions and test results are kept.</p>
           <button type="button" class="btn btn-danger" data-act="restart-yes">Yes, start a new session</button> <button type="button" class="btn" data-act="restart-no">No, keep going</button></div>`;
       G.coach(app.querySelector('.coach-host'), q, {
@@ -54,7 +57,7 @@
             G.store.setDraft(draftName(lessonId), d);
             draw();
             window.scrollTo(0, 0);
-            const h = app.querySelector('h1'); if (h) h.focus();
+            G.coach.focusAnswer(app);
           });
         }
       });
@@ -71,6 +74,7 @@
     }
 
     function summary() {
+      app.classList.remove('page-question');
       const bank = G.engine.banks[lessonId];
       const L = G.lessonContent[lessonId];
       const qs = d.set.map((x) => G.engine.make(lessonId, x.id, x.seed));

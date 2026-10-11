@@ -255,7 +255,7 @@
   function route() {
     const h = location.hash || '#/';
     let m;
-    app.classList.remove('page-home');
+    app.classList.remove('page-home', 'page-question');
     const am = h.match(/^#\/(d\d\d)\/(teach|practice|notes)(?:\/\d+)?$/);
     if (am && ready(am[1])) noteAssist(am[1], am[2]);
     else if (/^#\/practice(\/(session|results))?$/.test(h)) noteAssist(null, 'center');
