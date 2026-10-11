@@ -898,7 +898,8 @@ try {
     return { total, first, second, cur, focusLi, endHidden, laterAtStart, quotientShown, answer: q.answer, lastFocused, endShown: !host.querySelector('.fb-solution .sol-end').hidden, laterAtEnd: host.querySelectorAll('.fb-solution .sol-later').length,
       all: items().every((li) => !li.hidden), btnHidden: btn.hidden, work: host.querySelectorAll('.fb-solution .ldiv-model .ld-sub').length, next: !!host.querySelector('.coach-next button') };`);
   check('worked solution: one step at a time, the current step highlighted and focused, then every step', r.total >= 3 && r.first === 1 && r.second === 2 && r.cur === 1 && r.focusLi && r.all && r.btnHidden && r.next, r);
-  check('worked solution: long division shows the subtraction and bring-down rows', r.work >= 2, r);
+  // A one-digit division (0.4 ÷ 2) needs only one subtraction; longer ones need more. Any valid number is fine.
+  check('worked solution: long division shows its subtraction rows (one or more)', r.work >= 1, r);
   check('worked solution: the answer and the division working wait for their steps, then all show; focus stays on the last step',
     r.endHidden && r.laterAtStart > 0 && r.quotientShown !== r.answer.replace(/^0(?=.)/, '0') && r.endShown && r.laterAtEnd === 0 && r.lastFocused, r);
   await b.reload();
