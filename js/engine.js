@@ -56,7 +56,8 @@
   function check(q, resp) {
     let ok = false, info = {};
     if (q.type === 'number') {
-      const s = String(resp == null ? '' : resp).trim();
+      // A leading dollar sign is fine on money answers.
+      const s = String(resp == null ? '' : resp).trim().replace(/^\$\s*/, '');
       if (!s) return { status: 'empty', message: 'Type your answer in the box first.' };
       const v = D.parse(s);
       if (!v) return { status: 'invalid', message: 'Type a number using only digits and a decimal point, like 0.25.' };

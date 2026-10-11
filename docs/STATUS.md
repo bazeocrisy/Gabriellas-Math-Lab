@@ -1,11 +1,40 @@
 # Project status
 
-Updated: 2026-10-10 · Live (Lessons 1–4): https://bazeocrisy.github.io/Gabriellas-Math-Lab/ · Lesson 1 audit: [LESSON-1-AUDIT.md](LESSON-1-AUDIT.md)
+Updated: 2026-10-10 · Live (Lessons 1–4): https://bazeocrisy.github.io/Gabriellas-Math-Lab/ · Lessons 5–8: branch `claude/decimals-d05-d08` · Lesson 1 audit: [LESSON-1-AUDIT.md](LESSON-1-AUDIT.md)
 
 ## Live site (main)
 - **Lessons 1–4 and the new homepage are live:** https://bazeocrisy.github.io/Gabriellas-Math-Lab/
 - PR #5 merged into `main` (merge commit `b61b65e`, 2026-10-10). The GitHub Pages build of `b61b65e` succeeded.
 - **Verified live:** the full browser suite ran against the live URL with **297/297 pass**. It covers Teach, Practice, Test, Notes and Parent Progress for Lessons 1–4, the homepage, saved Lesson 1 progress, layouts at 375–1920 px, no console errors, and all scripts and styles loading with HTTP 200.
+
+## Branch `claude/decimals-d05-d08`: Lessons 5–8, built and tested, NOT merged or deployed (awaiting approval)
+- [x] **Lesson 5, Rounding Decimals** (5.NR.4.3):
+  - 14 Teach screens and 6 guided checks: what rounding is, nearest tenth with a halfway mark, the rounding rule (also to the nearest whole number), nearest hundredth, rounding up 9s (2.96 → 3.0, 4.996 → 5.00), exactly halfway, working backward.
+  - 12 templates. Answers must show the rounding place (3.0, not 3).
+- [x] **Lesson 6, Adding Decimals** (5.NR.4.4, to hundredths):
+  - 13 Teach screens and 6 guided checks: grids, tenths bars and number-line jumps; lining up decimal points and regrouping (3.48 + 2.75); different numbers of places (2.5 + 1.37, plus the lined-up-from-the-right mistake); whole numbers and three addends; estimating; money.
+  - 12 templates.
+- [x] **Lesson 7, Subtracting Decimals** (5.NR.4.4, to hundredths):
+  - 14 Teach screens and 6 guided checks: taking away on grids and number lines; regrouping (5.32 − 2.67 with regrouping marks); across zeros (5 − 2.37); different numbers of places (4.06 − 1.8); checking by adding; change and comparison problems.
+  - 12 templates.
+- [x] **Lesson 8, Multiplying Decimals: SUPPLEMENTAL** (beyond the Grade 5 Georgia standards; extends 5.NR.1.2):
+  - Labelled on the home card ("Extra: beyond Grade 5"), in the lesson description, on the first Teach screen, in the Notes and on the review screen.
+  - 11 Teach screens and 5 guided checks: ×10/100/1000, a decimal × a whole number, tenths × tenths with an area model, placing the decimal point, word problems.
+  - 12 templates, all products within thousandths.
+- [x] **New pictures:**
+  - a number-line halfway mark
+  - column addition and subtraction (with carry and regroup marks, and the misaligned mistake)
+  - an area model
+  - crossed-out grid squares
+  - stacked charts up to thousands
+- [x] Number answers accept a leading "$".
+- [x] **Automated tests:**
+  - `npm test` **168/168** pass. Every template of every lesson is checked over 500 seeds, with independent answer recomputation and regression tests for both reviews.
+  - `npm run test:browser` **505/505** pass (headless Chrome). It runs Teach → Practice → Test → Notes → Parent for every lesson, at layouts from 375 to 1920 px.
+- [x] **Independent reviews:**
+  - Mathematics curriculum: 13 findings, 4 of them major; all fixed. It recomputed 75,000 answers with 0 mismatches.
+  - QA: 3 content and accessibility defects, all fixed. It checked 144,000 generated questions, scoring in all lessons, saved progress carried over from the live version, 2,914 layout checks and keyboard access.
+  - The fixes were re-checked by regression tests, not by a second review round.
 
 ## Lessons 2–4 and homepage (merged from `claude/decimals-d02-d04`)
 - [x] **Homepage:** Teach blue, Practice green, Test purple (cards, buttons, mode labels, progress bars); progress chips per lesson (Teach / Practice / Test, always in words); Lesson Notes as a resource button; all ten decimal lessons listed. Lessons 1–4 have working controls; Lessons 5–10 say "Coming later" with no controls or statuses. Lessons 8–9 are marked as including supplemental skills (no Grade 5 Georgia standard covers multiplying or dividing decimals).
@@ -53,7 +82,8 @@ Updated: 2026-10-10 · Live (Lessons 1–4): https://bazeocrisy.github.io/Gabrie
   - Answers can be worked out from the browser console.
   - Number-line "imagine placing" questions show the line without points, on purpose.
   - Expanded form does not accept fraction style (2/10).
-- [ ] Lessons 5–10 (intentionally not started)
+- [ ] Merge `claude/decimals-d05-d08` and deploy Lessons 5–8: **waiting for owner approval**; re-run the live suite after deploying.
+- [ ] Lessons 9–10 (not started)
 
 ## Definition of done for each lesson
 - Instruction and answer explanations mathematically audited

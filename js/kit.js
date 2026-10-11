@@ -78,5 +78,28 @@
     return w + '.' + ds.slice(wholeDigits, wholeDigits + places).join('');
   }
 
-  G.kit = { f, num, ORD, PL, PLACES, s, list, cap, textChoices, placeCheck, droppedZero, ZERO_TIP, digits5, expanded, distinctDigits, words: W.decimalWords };
+
+  /** Digits of a and b lined up by the decimal point: { da, db, W (whole digits), P (decimal places) }. */
+  function aligned(a, b) {
+    const x = D.parse(a), y = D.parse(b);
+    const P = Math.max(x.places, y.places), W = Math.max(x.whole.length, y.whole.length);
+    const dig = (v) => (v.whole.padStart(W, '0') + v.frac.padEnd(P, '0')).split('').map(Number);
+    return { da: dig(x), db: dig(y), W, P };
+  }
+  const fromDigits = (ds, W, P) => D.canonical(ds.slice(0, ds.length - P).join('') + (P ? '.' + ds.slice(ds.length - P).join('') : '')) || '0';
+  /** Common mistakes, so feedback can name them: adding each column without carrying. */
+  function noCarryAdd(a, b) { const { da, db, W, P } = aligned(a, b); return fromDigits(da.map((d, i) => (d + db[i]) % 10), W, P); }
+  /** Subtracting the smaller digit from the bigger one in every column (no regrouping). */
+  function noBorrowSub(a, b) { const { da, db, W, P } = aligned(a, b); return fromDigits(da.map((d, i) => Math.abs(d - db[i])), W, P); }
+  /** Lining the digits up from the right like whole numbers, then putting the point back for the longer number. */
+  function misaligned(a, b, op) {
+    const x = D.parse(a), y = D.parse(b), P = Math.max(x.places, y.places);
+    const ia = Number(x.whole + x.frac), ib = Number(y.whole + y.frac);
+    const v = op === '+' ? ia + ib : ia - ib;
+    if (v < 0) return null;
+    const str = String(v).padStart(P + 1, '0');
+    return D.canonical(P ? str.slice(0, str.length - P) + '.' + str.slice(str.length - P) : str);
+  }
+
+  G.kit = { aligned, noCarryAdd, noBorrowSub, misaligned, f, num, ORD, PL, PLACES, s, list, cap, textChoices, placeCheck, droppedZero, ZERO_TIP, digits5, expanded, distinctDigits, words: W.decimalWords };
 })(typeof window !== 'undefined' ? (window.GML = window.GML || {}) : (globalThis.GML = globalThis.GML || {}));

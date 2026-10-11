@@ -454,7 +454,7 @@ try {
   await b.viewport(390, 844);
 
   // ── Unknown routes and reset ──
-  await b.load(URL + 'index.html#/d05/teach/1');
+  await b.load(URL + 'index.html#/d10/teach/1');
   check('unready lesson route falls back to home', /Gabriella's Math Lab/.test(await js(`return document.querySelector('h1').innerText;`)));
   await b.load(URL + 'index.html#/parent');
   await js(`document.querySelector('[data-act=reset]').click(); document.querySelector('[data-act=really]').click();`);

@@ -107,6 +107,62 @@ function orderOk(q) {
   if (!up) want.reverse();
   assert.deepEqual(q.answer.map(val), want);
 }
+// Lesson 5: rounding recomputed with whole-number thousandths (exactly halfway rounds up).
+const rnd = (x, place) => { const k = D.toThousandths(x), u = place === 'tenth' ? 100 : 10, rm = k % u; return rm * 2 >= u ? k - rm + u : k - rm; };
+const placeIn = (q) => (/nearest <b>?tenth|nearest tenth/.test(q.prompt) ? 'tenth' : 'hundredth');
+const roundOk = (q) => { const x = decs(q)[0]; assert.equal(D.toThousandths(q.answer), rnd(x, placeIn(q)), `${x} ${placeIn(q)}`); };
+VERIFY.d05 = {
+  T1: roundOk, T2: roundOk, H1: roundOk, H2: roundOk, K1: roundOk, K3: roundOk, A2: roundOk,
+  R1: (q) => { const x = decs(q)[0]; const fr = D.parse(x).frac; assert.equal(q.answer, fr[placeIn(q) === 'tenth' ? 1 : 2]); },
+  R2: (q) => { const x = decs(q)[0]; const h = Number(D.parse(x).frac[1]); assert.ok(q.answer.startsWith(h >= 5 ? 'Round up' : 'Round down') && /hundredths digit/.test(q.answer)); },
+  K2: (q) => { const x = decs(q)[0]; assert.equal(D.toThousandths(q.answer), rnd(x, 'tenth')); },
+  A1: (q) => { const target = D.toThousandths(decs(q)[0]); for (const c of q.choices) assert.equal(c.value === q.answer, rnd(c.value, 'tenth') === target, c.value); },
+  A3: (q) => { const [x, said] = decs(q); assert.equal(q.answer.startsWith('Yes'), rnd(x, 'tenth') === D.toThousandths(said)); assert.equal(q.choices.filter((c) => c.value.startsWith('Yes')).length, 2); }
+};
+// Lesson 6: sums recomputed from the numbers in the question.
+const numbersIn = (q) => (strip(q.prompt).replace(/,/g, '').match(/\d+(\.\d+)?/g) || []);
+const sumOf = (xs) => xs.reduce((t, x) => t + D.toThousandths(x), 0);
+const pointCols = (html) => [...html.matchAll(/<tr[^>]*>([\s\S]*?)<\/tr>/g)].map((m) => [...m[1].matchAll(/<td[^>]*>([^<]*)<\/td>/g)].findIndex((c) => c[1] === '.'));
+VERIFY.d06 = {
+  AL1: (q) => assert.equal(D.toThousandths(q.answer), sumOf(numbersIn(q))),
+  MX1: (q) => assert.equal(D.toThousandths(q.answer), sumOf(numbersIn(q))),
+  MX2: (q) => assert.equal(D.toThousandths(q.answer), sumOf(numbersIn(q))),
+  WP1: (q) => assert.equal(D.toThousandths(q.answer), sumOf(numbersIn(q))),
+  WP2: (q) => assert.equal(D.toThousandths(q.answer), sumOf(numbersIn(q))),
+  AL3: (q) => { const [a, b, wrong] = numbersIn(q); assert.equal(D.toThousandths(q.answer), sumOf([a, b])); assert.notEqual(D.toThousandths(wrong), sumOf([a, b])); },
+  AM1: (q) => { const [g1, g2] = q.visual.split('Second grid'); assert.equal(D.toThousandths(q.answer), ((g1.match(/class="m-on"/g) || []).length + (g2.match(/class="m-on"/g) || []).length) * 10); },
+  AM2: (q) => { assert.equal(D.toThousandths(q.answer), (q.visual.match(/class="m-on"/g) || []).length * 100); assert.equal(D.toThousandths(q.answer), sumOf(numbersIn(q))); },
+  AL2: (q) => { for (const c of q.choices) { const cols = pointCols(c.html); assert.equal(c.value === q.answer, cols.every((x) => x === cols[0]), c.text); } },
+  AM3: (q) => { const [start, jump] = decs(q); const pt = linePoints(q.visual.replace(/m-small/g, 'x'))[0]; assert.equal(pt.v, D.toThousandths(start)); assert.equal(D.toThousandths(q.answer), sumOf([start, jump])); },
+  ES1: (q) => { const [a, b] = numbersIn(q); const rw = (x) => Math.floor((D.toThousandths(x) + 500) / 1000); assert.equal(q.answer, String(rw(a) + rw(b))); },
+  ES2: (q) => { const [a, b, said] = numbersIn(q); assert.equal(q.answer.startsWith('Yes'), sumOf([a, b]) === D.toThousandths(said)); }
+};
+// Lesson 7: differences recomputed from the numbers in the question.
+const diffOf = (a, b) => D.toThousandths(a) - D.toThousandths(b);
+const firstTwoDiff = (q) => { const [a, b] = numbersIn(q); assert.equal(D.toThousandths(q.answer), diffOf(a, b)); assert.ok(diffOf(a, b) > 0); };
+VERIFY.d07 = {
+  SL1: firstTwoDiff, SZ1: firstTwoDiff, SZ2: firstTwoDiff, SW2: firstTwoDiff, SL3: firstTwoDiff,
+  SW1: (q) => { const [cost, paid] = numbersIn(q); assert.equal(D.toThousandths(q.answer), diffOf(paid, cost)); },
+  SM1: (q) => { const [a, b] = numbersIn(q); assert.equal((q.visual.match(/class="m-on"/g) || []).length * 10, D.toThousandths(a)); assert.equal((q.visual.match(/class="m-x"/g) || []).length * 10, D.toThousandths(b)); assert.equal(D.toThousandths(q.answer), diffOf(a, b)); },
+  SM2: (q) => { const [start, jump] = decs(q); assert.equal(linePoints(q.visual)[0].v, D.toThousandths(start)); assert.equal(D.toThousandths(q.answer), diffOf(start, jump)); },
+  SL2: (q) => { for (const c of q.choices) { const cols = pointCols(c.html); assert.equal(c.value === q.answer, cols.every((x) => x === cols[0]), c.text); } },
+  SC1: (q) => { const [a, b, d] = numbersIn(q); const [x, y, z] = q.answer.match(/\d+(\.\d+)?/g); assert.equal(D.toThousandths(d), diffOf(a, b)); assert.ok(D.equal(x, d) && D.equal(y, b) && D.equal(z, a)); },
+  SC2: (q) => { const [a, b, said] = numbersIn(q); assert.equal(q.answer.startsWith('Yes'), diffOf(a, b) === D.toThousandths(said)); },
+  SC3: (q) => { const [a, b] = numbersIn(q); const rw = (x) => Math.floor((D.toThousandths(x) + 500) / 1000); assert.equal(q.answer, String(rw(a) - rw(b))); }
+};
+// Lesson 8: products recomputed with whole-number digits.
+const prodTh = (a, b) => { const x = D.parse(a), y = D.parse(b); const P = x.places + y.places; return Number(x.whole + x.frac) * Number(y.whole + y.frac) * Math.pow(10, 3 - P); };
+const twoProd = (q) => { const [a, b] = numbersIn(q); assert.equal(D.toThousandths(q.answer), prodTh(a, b)); };
+VERIFY.d08 = {
+  P1: twoProd, P2: twoProd, W1: twoProd, A2: twoProd, D1: (q) => { const n = numbersIn(q); assert.equal(Number(n[0]) * Number(n[1]), Number(n[2])); assert.equal(D.toThousandths(q.answer), prodTh(n[3], n[4])); },
+  K1: (q) => { const [price, n] = numbersIn(q); assert.equal(D.toThousandths(q.answer), prodTh(price, n)); },
+  K2: (q) => { const [a, b] = numbersIn(q); assert.equal(D.toThousandths(q.answer), prodTh(a, b)); },
+  W2: (q) => { const n = numbersIn(q); const bars = (q.visual.match(/model-strip/g) || []).length; assert.equal(bars, Number(n[0])); assert.equal((q.visual.match(/class="m-on"/g) || []).length * 100, D.toThousandths(q.answer)); assert.equal(D.toThousandths(q.answer), prodTh(n[1], n[0])); },
+  W3: (q) => { const [a, n] = numbersIn(q); for (const c of q.choices) { const parts = c.value.split(' + '); assert.equal(c.value === q.answer, parts.length === Number(n) && parts.every((x) => x === a), c.value); } },
+  A1: (q) => { const [a, b] = numbersIn(q); assert.equal((q.visual.match(/class="m-on"/g) || []).length * 10, prodTh(a, b)); assert.equal(D.toThousandths(q.answer), prodTh(a, b)); },
+  D2: (q) => { const [a, b] = numbersIn(q); const rw = (x) => Math.floor((D.toThousandths(x) + 500) / 1000); assert.equal(q.answer, String(rw(a) * rw(b))); },
+  D3: (q) => { const [a, b] = numbersIn(q); assert.equal(Number(q.answer), D.parse(a).places + D.parse(b).places); }
+};
 function decs(q) { return strip(q.prompt).match(/\d+\.\d+/g); }
 function pad(x) { const v = D.parse(x); return v.whole.padStart(2, '0').slice(-1) + '.' + v.frac.padEnd(3, '0'); }
 function symbolOk(q) { const [x, y] = decs(q); const c = D.cmp(x, y); assert.equal(q.answer, c < 0 ? '<' : c > 0 ? '>' : '='); }
@@ -197,4 +253,56 @@ test('curriculum review regressions (Lessons 2–4)', () => {
   // "Between" is taught before it is practised.
   assert.ok(G.lessonContent.d03.screens.some((x) => x.id === 'between'));
   assert.match(engine.make('d03', 'L3', 1).prompt, /up to three decimal places/);
+});
+
+test('curriculum review regressions (Lessons 5–8)', () => {
+  // L5: a rounded answer shows the rounding place (3.0, not 3), with a message that does not give it away.
+  const k1 = engine.make('d05', 'K1', 1, { x: '2.96', place: 'tenth' });
+  assert.equal(engine.check(k1, '3.0').status, 'correct');
+  assert.equal(engine.check(k1, '3').status, 'wrong');
+  assert.match(engine.check(k1, '3').message, /right amount/);
+  assert.equal(engine.check(engine.make('d05', 'T1', 1, { x: '6.28' }), '6.30').status, 'wrong');
+  assert.match(strip(engine.make('d05', 'K1', 1, { x: '6.997', place: 'hundredth' }).hints[2]), /keep regrouping/);
+  // L6/L7: number-line hints talk about jumps, like the feedback.
+  for (let seed = 1; seed <= 50; seed++) { assert.match(engine.make('d06', 'AM3', seed).hints[2], /jumps/); assert.match(engine.make('d07', 'SM2', seed).hints[2], /jumps/); }
+  // L7: SZ1 hint regroups from the tens when the ones digit is 0, and mentions hundredths only when needed.
+  const sz = engine.make('d07', 'SZ1', 1, { a: '10', b: '5.4' });
+  assert.match(sz.hints[2], /taking one ten/); assert.doesNotMatch(sz.hints[2], /hundredths/);
+  // L7: every equation offered in SC1 is true.
+  for (let seed = 1; seed <= 300; seed++) {
+    for (const c of engine.make('d07', 'SC1', seed).choices) {
+      const m = c.value.match(/^(\S+) ([+−]) (\S+) = (\S+)$/);
+      const v = m[2] === '+' ? D.toThousandths(m[1]) + D.toThousandths(m[3]) : D.toThousandths(m[1]) - D.toThousandths(m[3]);
+      assert.equal(v, D.toThousandths(m[4]), c.value);
+    }
+  }
+  // L8: P1 feedback for an unchanged number and for one place too few.
+  const p1 = engine.make('d08', 'P1', 1, { x: '2.37', f: 100 });
+  assert.match(engine.check(p1, '2.37').message, /started with/);
+  assert.match(engine.check(p1, '23.7').message, /one place too few/);
+  assert.match(engine.check(engine.make('d08', 'P1', 1, { x: '2.37', f: 1000 }), '237').message, /one place too few/);
+  // L8: no "about 0" estimates; D1 products never end in 0 (so counting places always matches the answer).
+  for (let seed = 1; seed <= 300; seed++) {
+    for (const id of ['W1', 'K1']) { const q = engine.make('d08', id, seed); const w = num1(engine.check(q, D.fromThousandths(D.toThousandths(q.answer) * 10, 3)).message); assert.doesNotMatch(w + strip(q.why), /about 0(?![.\d])/, id); }
+    const d1 = engine.make('d08', 'D1', seed); assert.equal(D.parse(d1.answer).places, D.parse(numbersIn(d1)[3]).places + D.parse(numbersIn(d1)[4]).places);
+  }
+});
+function num1(x) { return String(x || ''); }
+
+test('QA review regressions (Lessons 5–8)', () => {
+  // The area model's screen-reader text never states the overlap count (the answer in a test question).
+  for (let seed = 1; seed <= 200; seed++) assert.doesNotMatch(engine.make('d08', 'A1', seed).visual, /overlap in \d/);
+  // Lesson 8 explanations show the counted decimal places before simplifying.
+  assert.match(strip(engine.make('d08', 'A2', 1, { a: '0.4', b: '0.5' }).why), /0\.20 = 0\.2/);
+  assert.match(strip(engine.make('d08', 'W1', 1, { a: '6.5', n: 8 }).why), /52\.0 = 52/);
+  for (let seed = 1; seed <= 300; seed++) {
+    for (const id of ['W1', 'A2']) {
+      const q = engine.make('d08', id, seed); const t = strip(q.why);
+      const P = Number((t.match(/(\d) decimal place/) || [])[1]);
+      const shown = t.match(/= ([\d.]+)(?: = [\d.]+)?(?: \(|\.$)/)[1];
+      assert.equal(D.parse(shown).places, P, `${id}/${seed}: ${t}`);
+    }
+  }
+  // Stacked charts: no decimal point after a whole number when zeros are not written.
+  assert.doesNotMatch(G.models.stack(['3.47', '347'], { pad: false }), /<td>7<\/td><td class="pv-point" aria-label="decimal point">\.<\/td><\/tr>/);
 });
