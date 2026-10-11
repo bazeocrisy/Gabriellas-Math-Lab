@@ -10,11 +10,11 @@ Teach the concept clearly, provide meaningful practice, and assess independent m
 
 - **Teach:** one idea per screen, place-value visuals, worked examples revealed step by step, shade-it-yourself models, and guided "Try it together" questions with coaching.
 - **Practice:** 10 varied questions per session, three progressive hints per question, misconception-specific feedback, unlimited retries; attempts are not graded.
-- **Test:** 10 fresh questions with no hints and no feedback until submission, then score, percent, per-skill results and explanations. Mastery benchmark: 9 of 10 (an app benchmark, not an official Milestones score).
-- **Parent Progress:** lesson status, most recent test, skills correct / needing practice, suggested next step. Stored only in this browser.
+- **Test:** 10 fresh questions with no hints and no feedback until submission, then score, percent, per-skill results and explanations. Mastery benchmark: 9 of 10 on a test done on its own (an app benchmark, not an official Milestones score). A test can be left and resumed; if Teach, Practice or Lesson Notes is opened while it is unfinished, it is still scored but does not count for ★ Mastered.
+- **Parent Progress:** lesson status, most recent test, skills correct / needing practice, suggested next step, and how the test and mastery rules work. Stored only in this browser.
 
 ## Status
-**All ten Decimals lessons are live** at https://bazeocrisy.github.io/Gabriellas-Math-Lab/ (Lessons 8 and 9, Multiplying and Dividing, are supplemental). See [docs/STATUS.md](docs/STATUS.md).
+**All ten Decimals lessons are live** at https://bazeocrisy.github.io/Gabriellas-Math-Lab/ (Lessons 8 and 9, Multiplying and Dividing, are supplemental). Corrections from the full 10-lesson audit are on branch `claude/decimals-audit-corrections`, awaiting approval. See [docs/STATUS.md](docs/STATUS.md).
 
 ## Run it
 It is a static site with no build step and no dependencies.
@@ -23,8 +23,8 @@ It is a static site with no build step and no dependencies.
 - Routes: `#/` home, `#/d01/teach/1`, `#/d01/practice`, `#/d01/test`, `#/d01/notes` (printable Lesson Notes), `#/parent`; the same for `d02` through `d10`.
 
 ## Tests (Node 22+, no npm install needed)
-- `npm test` — verifies every question template in every lesson over hundreds of seeds, recomputing each answer independently (answer keys, pictures match numbers, valid choices, hints never contain the answer, feedback for wrong answers), scoring, and question-set rules.
-- `npm run test:browser` — drives headless Chrome/Edge through Home, all Teach screens, Practice, Test, Parent Progress, refreshes, damaged saved data, and five viewport sizes. Set `CHROME_PATH` if the browser is not found. Screenshots go to `tests/screenshots/` (ignored by git).
+- `npm test` — verifies every question template in every lesson over hundreds of seeds, recomputing each answer independently (answer keys, pictures match numbers, valid choices, hints never contain the answer, feedback for wrong answers), scoring, and question-set rules. `tests/integrity.test.mjs` adds the audit checks: no answer clues (length, position, whole part) in any multiple-choice bank; Practice never shows an open Test's questions; retakes avoid recent questions; attempts recorded once; older saved progress keeps its count and mastery; every Practice/Test format is taught first; exact number-line descriptions; clear feedback; contrast of the focus ring and diagram marks.
+- `npm run test:browser` — drives headless Chrome/Edge through Home, all Teach screens, Practice, Test, Parent Progress, refreshes, damaged saved data, a stale or second tab, lesson pages opened during a test, progress saved by earlier versions, keyboard focus, and viewport sizes from 320 to 1920 px. Set `CHROME_PATH` if the browser is not found. Screenshots go to `tests/screenshots/` (ignored by git).
 
 ## Project layout
 - `index.html`, `css/styles.css`

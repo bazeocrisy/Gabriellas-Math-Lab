@@ -17,16 +17,20 @@ Number ranges that follow: place value, reading/writing, comparing and ordering 
 ## Learning sequence (as shown in the app)
 | Lesson | Topic | Core evidence of learning | Standards | Status |
 |---|---|---|---|---|
-| D01 | Understanding Decimals | Model tenths, hundredths and thousandths; connect models, place-value chart, words and numerals; equivalent decimals and zero placeholders | Foundations for 5.NR.4.1, 5.NR.4.2; 5.NR.1.1 | **Built, audited, live** |
+| D01 | Understanding Decimals | Model tenths, hundredths and thousandths (bars, grids and number lines, including a zoomed 0.9–1 line); connect models, place-value chart, words and numerals; equivalent decimals and zero placeholders; the >, <, = symbols for the 0.4 vs 0.35 comparison | Foundations for 5.NR.4.1, 5.NR.4.2; 5.NR.1.1 | **Built, audited, live** (number-line teaching added on the correction branch) |
 | D02 | Decimal Place Value | Place vs value of a digit (tens to thousandths); ×10 and 1/10 between places; standard, expanded and word form; placeholder zeros | 5.NR.4.1, 5.NR.1.1 | **Built, live** |
-| D03 | Comparing Decimals | Compare to thousandths with >, <, =; different numbers of digits; equal decimals; place-value charts; number lines; explain why | 5.NR.4.2 | **Built, live** |
+| D03 | Comparing Decimals | Compare to thousandths with >, <, =; a missing digit that makes a comparison true; different numbers of digits; equal decimals; place-value charts; number lines; explain why | 5.NR.4.2 | **Built, live** (missing-digit teaching added on the correction branch) |
 | D04 | Ordering Decimals | Least to greatest and greatest to least; line up places with placeholder zeros; number lines; word problems | 5.NR.4.2 | **Built, live** |
 | D05 | Rounding Decimals | Round to tenths and hundredths with number lines (halfway point) and the rounding rule; 9s and exactly-halfway cases; working backward | 5.NR.4.3 | **Built, live** |
 | D06 | Adding Decimals | Add to hundredths with grids and number lines; line up decimal points; regroup; different numbers of places; estimate; word problems | 5.NR.4.4 | **Built, live** |
 | D07 | Subtracting Decimals | Subtract to hundredths with grids and number lines; regroup, including across zeros; check by adding; estimate; change and comparison problems | 5.NR.4.4 | **Built, live** |
 | D08 | Multiplying Decimals | Supplemental: ×10/×100/×1000, decimal × whole number, tenths × tenths (area model), placing the decimal point, word problems. Goes beyond the Grade 5 Georgia decimal standards (related: 5.NR.1.2) | Supplemental | **Built, live**, labelled "Extra: beyond Grade 5" |
-| D09 | Dividing Decimals | Supplemental: ÷10/÷100/÷1000, sharing with models, a decimal ÷ a whole number with exact quotients (decimal point lined up), answers less than 1, checking by multiplying, sharing word problems; no division by a decimal. Goes beyond the Grade 5 Georgia decimal standards (related: 5.NR.1.2, 5.NR.2.2) | Supplemental | **Built, live**, labelled "Extra: beyond Grade 5" |
+| D09 | Dividing Decimals | Supplemental: ÷10/÷100/÷1000, sharing with models, a decimal ÷ a whole number with exact quotients in a division layout (decimal point lined up; dividend, divisor, quotient), dividing hundredths, using a related whole-number fact, answers less than 1, checking by multiplying, sharing word problems; no division by a decimal. Goes beyond the Grade 5 Georgia decimal standards (related: 5.NR.1.2, 5.NR.2.2) | Supplemental | **Built, live**, labelled "Extra: beyond Grade 5" |
 | D10 | Mixed Decimal Review | Review of Lessons 1–7 (place value, comparing and ordering, rounding, adding and subtracting), multi-step problems and test tips; supplemental Lessons 8–9 are not reviewed | 5.NR.4.1–4.4, 5.NR.1.1 | **Built, live** |
+
+**Supplemental classification (owner decision, 2026-10-11):** Lessons 8–9 stay labelled "Extra: beyond Grade 5" for now. Multiplying and dividing by 10, 100 and 1000 may be Grade 5 content under 5.NR.1.2 ("patterns in the placement of digits when multiplied or divided by a power of 10"), while decimal × decimal, decimal × whole number and decimal ÷ whole number are beyond the Grade 5 standards. The official GaDOE text could not be reached (georgiastandards.org redirects to a "sunset" page), so the classification is unchanged until it can be verified.
+
+**Teach what is assessed (audit corrections, 2026-10-11):** every question format in Practice and Test now appears in that lesson's Teach screens or guided checks first (checked by an automated format-coverage test): number lines in D01, the missing-digit comparison in D03, number-line jumps in D06–D07, an area example in D08, dividing hundredths and related whole-number facts in D09, and the typed chart (D01) and typed expanded form (D02) as guided checks.
 
 This ten-lesson roadmap (project brief, 2026-10-10) replaces the earlier eight-lesson list. Georgia's Grade 5 standards list decimal work only in 5.NR.4.1–4.4 (read/write, compare/order, round, add/subtract); no Grade 5 standard covers multiplying or dividing decimals (checked against the same secondary source), so Lessons 8 and 9 are marked supplemental and must not be presented as Milestones requirements. The sequence is pedagogical, not a claim that Georgia designates ten lessons.
 
@@ -34,7 +38,8 @@ This ten-lesson roadmap (project brief, 2026-10-10) replaces the earlier eight-l
 - Expanded form is shown in Teach (0.627 = 0.6 + 0.02 + 0.007) and practiced in D02 (built).
 - The "10 times" relationship is taught and practiced as unit conversions (6 tenths = 60 hundredths); "the 4 in 0.4 is 10 times the 4 in 0.04" questions belong to D02.
 - Decimals greater than 1 appear in Teach and in some reading/place-value questions; models of numbers greater than 1 come later.
-- Comparing appears in D01 only as transfer practice for the 0.4 vs 0.35 misconception; full comparing and ordering are D03–D04.
+- Comparing appears in D01 only as transfer practice for the 0.4 vs 0.35 misconception (with the >, <, = symbols explained and one guided check); full comparing and ordering are D03–D04.
+- Number lines appear in D01 for reading tenths (0 to 1) and hundredths (a zoomed 0.9 to 1 line); comparing and ordering on number lines are D03–D04.
 
 ## Each lesson includes
 1. **Teach:** definition, purpose, visual representation, worked example, guided check.
