@@ -2,8 +2,31 @@
 
 Updated: 2026-10-11 · Live (Lessons 1–10): https://bazeocrisy.github.io/Gabriellas-Math-Lab/ · Full audit: [audits/decimals-full-audit](audits/decimals-full-audit/AUDIT-SUMMARY.md) · Lesson 1 audit: [LESSON-1-AUDIT.md](LESSON-1-AUDIT.md)
 
-## NumberNova UX improvements: pull request, not merged (2026-10-11)
-- **Branch:** `claude/numbernova-ux`. Not merged or deployed; waiting for the owner's approval. Details are in [UX-IMPROVEMENTS.md](UX-IMPROVEMENTS.md).
+## Version 1.0: deployed and frozen (2026-10-11)
+NumberNova is in **maintenance mode**. Future development should come from real student feedback or confirmed defects.
+
+- **Production:** `main` at commit **`94d2072`** ("Merge PR #15: NumberNova UX improvements"), served by GitHub Pages at https://bazeocrisy.github.io/Gabriellas-Math-Lab/. The Pages build of `94d2072` succeeded.
+- **Release tag:** `v1.0-numbernova`, an annotated tag created after this housekeeping update is merged and verified (https://github.com/bazeocrisy/Gabriellas-Math-Lab/releases/tag/v1.0-numbernova). It points at that merge commit, which has the same application code as `94d2072`; only docs and one test changed.
+- **Production readiness audit (2026-10-11):** READY TO FREEZE.
+  - The live files match `94d2072` byte for byte: 11 app files, 8 PDFs and 8 brand files.
+  - All four sections, all ten lessons, all seven Practice Center modes with 10/25/50 (33 combinations) and all eight PDFs work.
+  - No missing scripts, styles or assets, and no console errors.
+- **Latest verification:** `npm test` **236/236**; `npm run test:browser` **810/810** locally and **810/810 against the live site**.
+- **Assessment and progress integrity:** answers are checked over hundreds of seeds per template, equivalent decimals are accepted, hints don't affect scoring, Practice never changes Test mastery, and Test attempts and mastery history are kept. Progress survives a reload, paused practice resumes, and reset and restart act only within their scope. All of this was checked with synthetic data in throwaway browser profiles.
+- **Storage:** keys `gml:v1:progress` and `gml:v1:draft:*` are unchanged since NumberNova launched. Storage, engine, scoring, lessons and PDFs are unchanged since `4b23347`.
+- **Recovery points:**
+  - `94d2072`: v1.0 application code.
+  - `4b23347`: NumberNova before the UX improvements, verified live 705/705.
+  - `2686431`: the audit corrections before NumberNova.
+- **Housekeeping:** one browser check now accepts long-division solutions with one or more subtraction rows (some divisions, such as 0.4 ÷ 2, correctly need only one). Before the fix it could fail by chance; the app was always correct.
+- **Accepted limitations (not defects):**
+  - The study-guide PDFs still say "Gabriella's Math Lab".
+  - Progress is saved only in that browser on that device (no cloud sync; clearing browser data erases it; one browser profile is one student).
+  - Testing used desktop Chrome simulating 320–1920 px. There was no testing on physical phones or tablets, Safari, Firefox or real screen readers.
+  - Some division working shows a correct "− 0" row before bringing down the next digit.
+
+## NumberNova UX improvements: deployed (2026-10-11)
+- **Merged:** PR #15 into `main` as `94d2072` (after PR #14, `eebb2d5`); deployed and verified live with **810/810**. Details are in [UX-IMPROVEMENTS.md](UX-IMPROVEMENTS.md).
 - [x] **Stage A:** UX audit and design plan, approved by the owner.
 - [x] **Stage B, built:**
   - Home "Pick up where you left off".
@@ -20,7 +43,7 @@ Updated: 2026-10-11 · Live (Lessons 1–10): https://bazeocrisy.github.io/Gabri
 - [x] **Tests:** `npm test` **236/236**; `npm run test:browser` **810/810**, including 105 new checks at 320, 390, 768, 1280 and 1920 px.
 - [x] **Independent UX review** of the finished work: 1 critical, 2 major, 5 minor and 3 cosmetic findings, all fixed.
 
-## NumberNova: live (2026-10-11)
+## NumberNova: first release, live (2026-10-11)
 - **Deployed and verified live.**
   - PR #13 merged into `main` (merge commit `4b23347`); the GitHub Pages build of `4b23347` succeeded.
   - All 47 app and asset files served live match the merge commit.

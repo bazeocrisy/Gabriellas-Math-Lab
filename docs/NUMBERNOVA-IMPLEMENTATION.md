@@ -3,9 +3,20 @@
 | | |
 |---|---|
 | Branch | `claude/numbernova`, from verified production `main` `d623166` |
-| Status | Built, tested and independently reviewed. **Not merged or deployed.** |
-| Live site | Still the previous build, under the old name |
+| Status | **Deployed; version 1.0, maintenance mode.** First released by PR #13 (`4b23347`). The UX improvements followed in PR #15 (`94d2072`, see [UX-IMPROVEMENTS.md](UX-IMPROVEMENTS.md)). |
+| Live site | https://bazeocrisy.github.io/Gabriellas-Math-Lab/ from `main` at `94d2072`; release tag `v1.0-numbernova` |
 | Repository | Not renamed; the deployment path is unchanged |
+
+## Deployment and release
+
+- **2026-10-11, first release:** PR #13 merged as `4b23347`; verified live with **705/705**.
+- **2026-10-11, UX improvements:** PR #14 (`eebb2d5`) and PR #15 (`94d2072`) merged; verified live with **810/810**. The live files match `94d2072`.
+- **Production readiness audit (2026-10-11):** READY TO FREEZE.
+  - `npm test` **236/236**.
+  - `npm run test:browser` **810/810** locally and **810/810 against the live site**, after the housekeeping fix to one long-division check.
+  - All sections, lessons, modes, lengths, PDFs and assets work.
+  - Storage keys and saved-data formats are unchanged.
+- **Release tag:** `v1.0-numbernova`, an annotated tag on the merge commit of the v1.0 housekeeping update (application code identical to `94d2072`).
 
 ## Commits
 
@@ -111,7 +122,7 @@ Both are repaired field by field when read. "Erase all progress" clears them too
 | Suite | Before (main `d623166`) | After |
 |---|---|---|
 | `npm test` | 226 | **236/236** |
-| `npm run test:browser` | 658 | **705/705** |
+| `npm run test:browser` | 658 | **705/705** at first release; **810/810** at v1.0 (`94d2072`, local and live) |
 
 **New unit tests** (`tests/numbernova.test.mjs`):
 - the study-guide library;
@@ -152,9 +163,12 @@ All device results come from headless Chrome emulation.
 
 ## Limitations
 
-- **Study-guide PDFs still say "Gabriella's Math Lab · Decimals Workbook"** on their covers and footers. This assignment said not to change or regenerate the PDFs or touch the separate study-guide project. Rebranding them needs the owner's decision: edit the HTML sources in `study-guides/lessons/decimals/` and rebuild the PDFs.
+Accepted for version 1.0; none is a defect with a demonstrated effect on students.
+
+- **Progress stays on one device.** It is stored only in the browser on that device: no accounts and no cloud sync. Clearing browser data erases it, and one browser profile is one student.
+- **Study-guide PDFs still say "Gabriella's Math Lab · Decimals Workbook"** on their covers and footers. The owner accepted this for the release. This assignment said not to change or regenerate the PDFs or touch the separate study-guide project. Rebranding them needs the owner's decision: edit the HTML sources in `study-guides/lessons/decimals/` and rebuild the PDFs.
 - **Original Decimal Lab reference** (`reference/decimal-lab/index.html`) says "Hi, Gabriella!". It is kept unchanged on purpose; no page links to it, but GitHub Pages would serve it at its path. Move it out of the published folder, or delete it after review, if that matters.
 - **Separate student profiles are not built.** A proposal is in `docs/STUDENT-PROFILES-PROPOSAL.md`.
 - **Whole-number answers.** Add, subtract, multiply and divide answers are never whole numbers, except multiplying and dividing by 10, 100 and 1000. This keeps estimate hints from giving answers away, but a student could notice it.
 - **Repository name.** The URL is still `/Gabriellas-Math-Lab/`; renaming the repository needs approval.
-- **Testing.** No physical-device, real screen reader, Safari or Firefox testing; device results are simulated in Chrome. No real student has used the Practice Center yet.
+- **Testing.** No physical-device, real screen reader, Safari or Firefox testing; device results are simulated in Chrome. Real student use starts with version 1.0.
