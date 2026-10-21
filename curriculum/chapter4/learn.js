@@ -87,7 +87,7 @@
       [
         "Cross one whole",
         p(
-          "0.8 + 0.47 = 80 + 47 = 127 hundredths. Exchange 100 for one whole: 1.27. You can also combine 8 tenths + 4 tenths + 7 hundredths, then exchange 10 tenths for 1 whole.",
+          "Rename 0.8 as 80 hundredths and 0.47 as 47 hundredths. Combining them gives 127 hundredths. Exchange 100 hundredths for one whole: 1.27. You can also combine 8 tenths + 4 tenths + 7 hundredths, then exchange 10 tenths for 1 whole.",
         ) + C.grid(127),
       ],
       [
