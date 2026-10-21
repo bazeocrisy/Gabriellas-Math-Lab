@@ -142,7 +142,7 @@ try {
     ),
   );
   // An external completion must never be overwritten by a stale page's next input.
-  check('Completed session rejects stale same-ID writes', await js(`const k='c4-session-4-8-test',d=GML.store.getDraft(k),original=JSON.stringify(d);d.done=true;GML.store.setDraft(k,d);const frozen=JSON.stringify(GML.store.getDraft(k)),q=GML.chapter4.make(d.set[0]);${fill}const ok=JSON.stringify(GML.store.getDraft(k))===frozen&&/newer session/.test(document.querySelector('.c4-status').textContent);GML.store.setDraft(k,JSON.parse(original));return ok;`));
+  check('Completed session rejects stale same-ID writes', await js(`const k='c4-session-4-8-test',d=GML.store.getDraft(k),original=JSON.stringify(d);d.done=true;GML.store.setDraft(k,d);const frozen=JSON.stringify(GML.store.getDraft(k)),q=GML.chapter4.make(d.set[0]);document.querySelectorAll('.c4-question input[type=radio]').forEach(x=>x.checked=false);${fill}const ok=JSON.stringify(GML.store.getDraft(k))===frozen&&/newer session/.test(document.querySelector('.c4-status').textContent);GML.store.setDraft(k,JSON.parse(original));return ok;`));
   // Opening an old saved result also marks active old and new assessments assisted.
   await load("#/d04/test");
   await js(`document.querySelector('[data-act=start]').click();`);
