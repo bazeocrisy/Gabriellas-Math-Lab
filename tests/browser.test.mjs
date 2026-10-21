@@ -933,6 +933,10 @@ try {
       .filter((e) => e.offsetParent && !e.closest('[hidden]') && e.getBoundingClientRect().height < 44).map((e) => (e.innerText || '').trim().slice(0, 20) + ' ' + Math.round(e.getBoundingClientRect().height));`);
     check(`tap targets at least 44px: ${label}`, bad.length === 0, bad);
   };
+  await b.viewport(320, 800);
+  await b.load(URL + 'index.html#/d06/practice'); await b.reload();
+  r = await js(`const q = GML.engine.make('d06', 'MX2', 1, {kind:'three',xs:['9.99','9.9','9.99']}); document.querySelector('.problem-panel .q-prompt').innerHTML=q.prompt; return {sw:document.documentElement.scrollWidth,cw:document.documentElement.clientWidth,text:document.querySelector('.expr').textContent};`);
+  check('three-addend decimal expression wraps at 320px with every operand visible', r.sw <= r.cw && r.text === '9.99 + 9.9 + 9.99', r);
   for (const w of [320, 390, 768, 1280, 1920]) {
     await b.viewport(w, w < 768 ? 800 : 1000);
     for (const route of ['#/', '#/learn', '#/practice', '#/guides', '#/parent', '#/d03/test', '#/d06/practice']) {
