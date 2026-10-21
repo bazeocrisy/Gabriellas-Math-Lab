@@ -562,6 +562,7 @@ body { background: var(--nn-bg); display: flex; flex-direction: column; min-heig
 .problem-panel .q-prompt { margin-top: 0; font-size: 1.2rem; line-height: 1.45; }
 .problem-panel .q-prompt .expr { display: inline-block; font-size: clamp(1.5rem, 6vw, 2rem); font-weight: 800; font-variant-numeric: tabular-nums; letter-spacing: .01em; color: var(--nn-ink); line-height: 1.25; margin-top: 2px; }
 .problem-panel .q-visual { margin-bottom: 0; }
+.problem-panel .q-prompt .expr { max-width: 100%; white-space: normal; }
 .problem-panel .ldiv-model, .problem-panel .vcalc-model { font-size: 1.6rem; }
 .problem-panel .ldiv-model .ld-top { border-top-width: 3px; }
 .problem-panel .ldiv-model .ld-first { border-left-width: 3px; }
