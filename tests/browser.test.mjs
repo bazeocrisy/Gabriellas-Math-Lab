@@ -297,7 +297,7 @@ try {
   const more = await js(`return GML.unit.lessons.filter((l) => GML.unit.available(l.id) && l.id !== 'd01').map((l) => l.id);`);
   for (const id of more) {
     await js('localStorage.clear();');
-    await b.load(URL + 'index.html#/decimals' + id + '/teach/1');
+    await b.load(URL + 'index.html#/' + id + '/teach/1');
     const n = await js(`return GML.lessonContent['${id}'].screens.length;`);
     let order = true, checksN = 0, coachedN = 0, gatedN = 0, whyShown = 0, whyN = 0, goals = 0;
     for (let i = 1; i <= n; i++) {
@@ -328,7 +328,7 @@ try {
     check(`${id} teach: marked finished`, await js(`return JSON.parse(localStorage.getItem('gml:v1:progress')).lessons['${id}'].teach.done;`) === true);
 
     // Practice: 3 hints in order on question 1; every question answered wrong first (odd ones) then right.
-    await b.load(URL + 'index.html#/decimals' + id + '/practice');
+    await b.load(URL + 'index.html#/' + id + '/practice');
     let rr = await js(`${H} const q = qIn('practice', '${id}'); const host = document.querySelector('.coach-host'); const hb = host.querySelector('[data-act=hint]');
       hb.click(); hb.click(); hb.click(); hb.click();
       return { n: host.querySelectorAll('.hint').length, titles: [...host.querySelectorAll('.hint-title')].map((x) => x.textContent).join('|'), dis: hb.disabled, noAns: !host.querySelector('.fb-right, .fb-solution') };`);
@@ -352,7 +352,7 @@ try {
     check(`${id} practice: summary and saved session`, /Practice complete/.test(rr.t) && /4 of 10/.test(rr.t) && rr.p.sessions === 1, { s: rr.p.sessions });
 
     // Test: no help on any screen; 8 right, 1 wrong, 1 blank -> 80%, not mastered; retake all right -> mastered.
-    await b.load(URL + 'index.html#/decimals' + id + '/test');
+    await b.load(URL + 'index.html#/' + id + '/test');
     await js(`document.querySelector('[data-act=start]').click();`);
     const t1 = await js(`${H} return draft('test-${id}').set.map((x) => x.sig);`);
     const leak = [];
@@ -378,7 +378,7 @@ try {
     rr = await js(`return document.getElementById('app').innerText;`);
     check(`${id} test: retake is fresh; 10 of 10 is mastered`, t2.every((x) => !t1.includes(x)) && /Your score: 10 out of 10 \(100%\)/.test(rr) && /mastered!/.test(rr), rr.slice(0, 150));
 
-    await b.load(URL + 'index.html#/decimals' + id + '/notes');
+    await b.load(URL + 'index.html#/' + id + '/notes');
     rr = await js(`return { h: document.querySelector('h1').innerText, t: document.getElementById('app').innerText };`);
     check(`${id} notes: printable notes with vocabulary and worked examples`, rr.h === await js(`return GML.lessonContent['${id}'].title;`) && /Vocabulary|Review sheet/.test(rr.t) && /Worked example/.test(rr.t));
     await b.load(URL + 'index.html#/parent');
