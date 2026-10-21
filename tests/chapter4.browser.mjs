@@ -250,7 +250,7 @@ try {
   check('Lesson menu resumes the last Learn screen',await js(`return document.querySelector('a.btn-primary').hash==='#/chapter4/4-1/learn/3';`));
   await load('#/chapter4');
   await b.viewport(1440,900);
-  check('Chapter card button rows align across each pair',await js(`const cards=[...document.querySelectorAll('.c4-lesson-card')];return cards.every((c,i)=>i%2||Math.abs(c.querySelector('.c4-mode-nav').getBoundingClientRect().top-cards[i+1].querySelector('.c4-mode-nav').getBoundingClientRect().top)<2);`));
+  check('Chapter cards use three compact columns with aligned activity links',await js(`const cards=[...document.querySelectorAll('.c4-lesson-card')],top=cards[0].getBoundingClientRect().top;return cards.filter(c=>Math.abs(c.getBoundingClientRect().top-top)<2).length===3&&cards.every(c=>cards.filter(x=>Math.abs(x.getBoundingClientRect().top-c.getBoundingClientRect().top)<2).every(x=>Math.abs(x.querySelector('.c4-card-links').getBoundingClientRect().top-c.querySelector('.c4-card-links').getBoundingClientRect().top)<2))&&cards.every(c=>c.querySelectorAll('.lc-progress .chip').length===3&&c.querySelectorAll('.lc-links .lc-link').length===4);`));
   await b.shot(path.join(ROOT,'tests/screenshots','chapter4-aligned-cards.png'));
   await load('#/chapter4/4-2/practice');
   await b.shot(path.join(ROOT,'tests/screenshots','chapter4-worked-help.png'));
