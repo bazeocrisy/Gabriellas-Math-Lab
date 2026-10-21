@@ -17,6 +17,8 @@
                   Number.isInteger(x.correct) &&
                   x.correct >= 0 &&
                   x.correct <= x.total &&
+                  Number.isInteger(x.total) &&
+                  x.total === x.set?.length &&
                   typeof x.id === "string" &&
                   typeof x.date === "string" &&
                   ["practice", "independent", "test"].includes(x.mode) &&

@@ -141,6 +141,8 @@ try {
       `return GML.store.getDraft('c4-session-4-8-test').assist.includes('External tab opened Learn');`,
     ),
   );
+  // An external completion must never be overwritten by a stale page's next input.
+  check('Completed session rejects stale same-ID writes', await js(`const k='c4-session-4-8-test',d=GML.store.getDraft(k),original=JSON.stringify(d);d.done=true;GML.store.setDraft(k,d);const frozen=JSON.stringify(GML.store.getDraft(k)),q=GML.chapter4.make(d.set[0]);${fill}const ok=JSON.stringify(GML.store.getDraft(k))===frozen&&/newer session/.test(document.querySelector('.c4-status').textContent);GML.store.setDraft(k,JSON.parse(original));return ok;`));
   // Opening an old saved result also marks active old and new assessments assisted.
   await load("#/d04/test");
   await js(`document.querySelector('[data-act=start]').click();`);
@@ -194,6 +196,11 @@ try {
       `return GML.store.getDraft('c4-session-4-4-practice').i===1&&['INPUT','H1'].includes(document.activeElement.tagName);`,
     ),
   );
+  await js(`const host=document.querySelector('.c4-question');for(const value of ['99999','99998','99997']){const input=host.querySelector('.num-input');input.value=value;input.dispatchEvent(new Event('input',{bubbles:true}));host.querySelector('[data-act=check]').click();}`);
+  check('Three distinct unsuccessful attempts offer worked solution', await js(`return !!document.querySelector('[data-act=solution]');`));
+  await js(`document.querySelector('[data-act=solution]').click();let i=0;while(document.querySelector('[data-act=sol-next]:not([hidden])')&&i++<20)document.querySelector('[data-act=sol-next]').click();document.querySelector('[data-c4=next]').click();`);
+  for(let i=2;i<10;i++){await js(`const d=GML.store.getDraft('c4-session-4-4-practice'),q=GML.chapter4.make(d.set[d.i]);${fill}document.querySelector('[data-act=check]').click();document.querySelector('[data-c4=next]').click();`);}
+  check('Finished practice records one coached session without changing tests', await js(`const p=GML.chapter4.progress('4-4');return p.history.filter(x=>x.mode==='practice').length===1&&p.history.filter(x=>x.mode==='test').length===1&&/Practice complete/.test(document.body.innerText);`));
   // Final complete and by-lesson report.
   await start("final", "test");
   await answerAll("final", "test", 2);
@@ -236,6 +243,7 @@ try {
       const bad = await js(
         `return {overflow:document.documentElement.scrollWidth>document.documentElement.clientWidth,small:[...document.querySelectorAll('.btn,.c4-parent summary,.choice')].filter(x=>x.offsetParent&&!x.closest('[hidden]')&&x.getBoundingClientRect().height<44).map(x=>x.innerText.slice(0,25))};`,
       );
+      if([320,1440].includes(width))await b.shot(path.join(ROOT,'tests/screenshots',`c4-${h.replace(/[^a-z0-9]/gi,'_')}-${width}.png`));
       check(
         `${h} at ${width}px: fits, touch targets ≥44px`,
         !bad.overflow && !bad.small.length,

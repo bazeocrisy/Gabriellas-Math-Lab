@@ -1,28 +1,39 @@
 name: NumberNova quality gates
 on:
   push:
-    branches: [main, feature/chapter-4-textbook]
+    branches: [main]
   pull_request:
     branches: [main]
 jobs:
-  curriculum-and-browser:
+  unit:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: 22
       - run: npm test
-      - run: npm run test:browser
-        env:
-          CHROME_PATH: /usr/bin/google-chrome
-      - if: ${{ !cancelled() }}
-        run: npm run test:chapter4:browser
+  browser:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - label: legacy
+            script: test:browser
+          - label: chapter4
+            script: test:chapter4:browser
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm run ${{ matrix.script }}
         env:
           CHROME_PATH: /usr/bin/google-chrome
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: browser-screenshots
+          name: browser-screenshots-${{ matrix.label }}
           path: tests/screenshots/

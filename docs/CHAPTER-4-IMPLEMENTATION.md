@@ -1,6 +1,6 @@
 # Chapter 4 — Add and Subtract Decimals: implementation contract
 
-Status: implementation planned; no lesson code is complete merely because this file exists.
+Status: runtime implemented; release evidence and quality gates are recorded in ASSIGNMENT-005-STATUS.md.
 
 ## Non-negotiables
 - Keep all existing NumberNova decimal lessons, practice center, guides, parent progress, and saved data intact.
@@ -10,7 +10,7 @@ Status: implementation planned; no lesson code is complete merely because this f
 - Reuse existing exact-decimal helpers, question engine, coaching, scoring, local storage and accessible UI.
 - Avoid copying textbook pages/questions verbatim into publicly hosted code; write original aligned problems and explanations.
 - Decimal grid visuals must correctly reflect place values and regrouping.
-- No production merge or deployment without owner approval.
+- Owner authorization in Assignment 005 permits merge and deployment only after all acceptance criteria pass.
 
 ## Textbook sequence (verified from provided pages)
 4-1 Estimate Sums and Differences of Decimals — p.101
@@ -28,4 +28,4 @@ Unit Review — p.135; Fluency/Performance — p.139
 - Independently recompute every generated answer across many seeds, check hint and choice integrity.
 - Test both new and existing navigation at 320, 375, 768, 1024, and 1440px; keyboard and touch behavior.
 - Run npm test and npm run test:browser; preserve existing progress fixtures.
-- Review with owner in PR before merge.
+- Complete independent reviews and all required checks in the PR before merge.

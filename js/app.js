@@ -378,7 +378,7 @@
     else if (/^#\/practice(\/(session|results))?$/.test(h)) noteAssist(null, 'center');
     else if (h === '#/guides') noteAssist(null, 'guides');
     const instructional = /^#\/chapter4\/(4-[1-8]|review)\/(learn|practice)/.test(h) || /^#\/(d\d\d)\/(teach|practice|notes)/.test(h) || /^#\/(practice|guides)/.test(h);
-    if ((instructional || /^#\/d\d\d\/test$/.test(h) && !G.store.openTest(h.split('/')[1])) && G.chapter4) G.chapter4.assist();
+    if (instructional && G.chapter4) G.chapter4.assist();
     if (/^#\/chapter4\/(4-[1-8]|review)\/(learn|practice)/.test(h)) noteAssist(null, 'center');
     try {
       if (G.chapter4 && G.chapter4.route(app, h)) { /* Chapter route rendered. */ }

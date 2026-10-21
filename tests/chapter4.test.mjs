@@ -1,7 +1,5 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import fs from "node:fs";
-import vm from "node:vm";
 import { loadGML, CORE } from "./lib/load.mjs";
 globalThis.window = globalThis;
 const G = loadGML([
@@ -113,3 +111,5 @@ test("Model grids have exactly 100 cells per whole and accurate shaded counts", 
     );
   }
 });
+
+test('Thousandths benchmark comparisons independently match the sum',()=>{for(let seed=1;seed<=500;seed++){const q=G.engine.make('4-1','multi-3',seed);const [a,b]=q.meta.thousandths;assert.equal(q.answer,a+b<1000?'less':a+b>1000?'greater':'equal');}});
