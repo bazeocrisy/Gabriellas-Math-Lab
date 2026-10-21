@@ -350,6 +350,7 @@ details[open] > summary::before { content: "▾"; }
 
 @media (max-width: 480px) {
   body { font-size: 17px; }
+  .choices-models { grid-template-columns: minmax(0, 1fr); }
   h1 { font-size: 1.45rem; }
   .hero h1 { font-size: 1.65rem; }
   .btn-mode { font-size: .95rem; letter-spacing: .02em; }
