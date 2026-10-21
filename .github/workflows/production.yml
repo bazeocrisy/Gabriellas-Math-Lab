@@ -24,7 +24,22 @@ jobs:
         with:
           node-version: 22
       - name: Verify deployed source matches main
-        run: node -e "const fs=require('fs'); fetch('https://bazeocrisy.github.io/Gabriellas-Math-Lab/js/chapter4.js', {cache:'no-store'}).then(async r=>{if(!r.ok || await r.text()!==fs.readFileSync('js/chapter4.js','utf8')) process.exit(1);});"
+        run: |
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs';
+          const files = ['js/chapter4.js', 'css/styles.css'];
+          for (let attempt = 0; attempt < 60; attempt++) {
+            const matches = await Promise.all(files.map(async path => {
+              try {
+                const response = await fetch('https://bazeocrisy.github.io/Gabriellas-Math-Lab/' + path + '?verify=' + Date.now(), {cache:'no-store'});
+                return response.ok && await response.text() === fs.readFileSync(path, 'utf8');
+              } catch { return false; }
+            }));
+            if (matches.every(Boolean)) process.exit(0);
+            await new Promise(resolve => setTimeout(resolve, 5000));
+          }
+          throw new Error('Pages did not publish the current source within five minutes');
+          NODE
       - run: npm run ${{ matrix.script }}
         env:
           CHROME_PATH: /usr/bin/google-chrome
