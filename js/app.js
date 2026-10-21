@@ -353,7 +353,7 @@
     document.title = 'Parent Progress · NumberNova';
   }
 
-  const ASSIST = { teach: 'Teach', practice: 'Practice', notes: 'Lesson Notes', center: 'the Practice Center', guides: 'the Study Guides' };
+  const ASSIST = { teach: 'Teach', practice: 'Practice', notes: 'Lesson Notes', center: 'the Practice Center', guides: 'the Study Guides', results: 'test results and explanations' };
   /** Opening Teach, Practice or Lesson Notes while a Test is unfinished is noted on that Test (only pages in this app). */
   function noteAssist(lessonId, mode) {
     const label = lessonId ? `${lessonName(lessonId)} ${ASSIST[mode]}` : ASSIST[mode];
@@ -367,7 +367,7 @@
     });
   }
 
-  if (G.chapter4) G.chapter4.noteResults = () => { G.chapter4.assist(); noteAssist(null, 'center'); };
+  if (G.chapter4) G.chapter4.noteResults = () => { G.chapter4.assist(); noteAssist(null, 'results'); };
 
   function route() {
     const h = location.hash || '#/';

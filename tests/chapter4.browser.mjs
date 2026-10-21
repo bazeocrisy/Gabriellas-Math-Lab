@@ -241,7 +241,7 @@ try {
     ]) {
       await load(h);
       const bad = await js(
-        `return {overflow:document.documentElement.scrollWidth>document.documentElement.clientWidth,small:[...document.querySelectorAll('.btn,.c4-parent summary,.choice')].filter(x=>x.offsetParent&&!x.closest('[hidden]')&&x.getBoundingClientRect().height<44).map(x=>x.innerText.slice(0,25))};`,
+        `return {overflow:document.documentElement.scrollWidth>document.documentElement.clientWidth,small:[...document.querySelectorAll('.btn,.c4-parent summary,.choice,.c4-crumbs a')].filter(x=>x.offsetParent&&!x.closest('[hidden]')&&x.getBoundingClientRect().height<44).map(x=>x.innerText.slice(0,25))};`,
       );
       if([320,1440].includes(width))await b.shot(path.join(ROOT,'tests/screenshots',`c4-${h.replace(/[^a-z0-9]/gi,'_')}-${width}.png`));
       check(

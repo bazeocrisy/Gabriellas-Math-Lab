@@ -39,7 +39,7 @@
         ? "Chapter 4 Review"
         : C.lessons.find((l) => l.id === id).title;
   const homeLink =
-    '<div class="crumbs"><a href="#/">Home</a><a href="#/chapter4">Chapter 4</a><a href="#/parent">Parent Progress</a></div>';
+    '<div class="crumbs c4-crumbs"><a href="#/">Home</a><a href="#/chapter4">Chapter 4</a><a href="#/parent">Parent Progress</a></div>';
   const modes = [
     ["learn", "Learn"],
     ["practice", "Practice"],
