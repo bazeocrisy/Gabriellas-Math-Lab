@@ -935,6 +935,10 @@ try {
   };
   await b.viewport(320, 800);
   await b.load(URL + 'index.html#/d06/practice'); await b.reload();
+  for (const template of await js(`return GML.engine.banks.d06.templates.map(t=>t.id);`)) {
+    r = await js(`const bad=[]; for(let seed=1;seed<=10;seed++){const q=GML.engine.make('d06',${JSON.stringify(template)},seed);GML.coach(document.querySelector('.coach-host'),q,{});if(document.documentElement.scrollWidth>320)bad.push({seed,prompt:q.prompt,elements:[...document.querySelectorAll('.coach *')].filter(e=>e.getBoundingClientRect().right>320).map(e=>e.className)});}return bad;`);
+    check('all phone variants fit for decimal addition template '+template, r.length===0, r);
+  }
   r = await js(`const q = GML.engine.make('d06', 'MX2', 1, {kind:'three',xs:['9.99','9.9','9.99']}); document.querySelector('.problem-panel .q-prompt').innerHTML=q.prompt; return {sw:document.documentElement.scrollWidth,cw:document.documentElement.clientWidth,text:document.querySelector('.expr').textContent};`);
   check('three-addend decimal expression wraps at 320px with every operand visible', r.sw <= r.cw && r.text === '9.99 + 9.9 + 9.99', r);
   for (const w of [320, 390, 768, 1280, 1920]) {
