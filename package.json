@@ -3,7 +3,8 @@
   "private": true,
   "description": "Gabriella's Math Lab: Grade 5 decimals (static site for GitHub Pages). No dependencies.",
   "scripts": {
-    "test": "node --test tests/bank.test.mjs tests/logic.test.mjs tests/lessons.test.mjs tests/integrity.test.mjs tests/numbernova.test.mjs",
-    "test:browser": "node tests/browser.test.mjs"
+    "test": "node --test tests/bank.test.mjs tests/logic.test.mjs tests/lessons.test.mjs tests/integrity.test.mjs tests/numbernova.test.mjs tests/chapter4.test.mjs",
+    "test:browser": "node tests/browser.test.mjs",
+    "test:chapter4:browser": "node tests/chapter4.browser.mjs"
   }
 }
