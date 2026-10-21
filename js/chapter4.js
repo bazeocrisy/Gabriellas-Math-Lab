@@ -68,14 +68,14 @@
     app.classList.add("c4-menu");
     app.innerHTML = `${homeLink}<section class="hero"><p class="section-kicker">Textbook learning path · printed pages 101–140</p><h1 tabindex="-1">Chapter 4 — Add and Subtract Decimals</h1><p>Choose any lesson. Learn, practice with hints, try independent questions, then take a test. No prerequisites.</p></section><div class="lesson-grid">${C.lessons
       .map((l) => {
-        const d = get(l.id);
+        const d = get(l.id), lastTest = latest(d,"test");
         return `<article class="lesson-card c4-lesson-card" aria-labelledby="c4-title-${l.id}">
           <div class="lc-head"><span class="lc-num" aria-hidden="true">${l.id}</span><div class="lc-titles"><p class="lesson-num">Lesson ${l.id} · p. ${l.page}</p><h3 id="c4-title-${l.id}">${l.title}</h3></div></div>
           <p class="lc-blurb">${l.goal}</p>
           <ul class="lc-progress" aria-label="Lesson ${l.id} progress">
             <li class="chip"><span class="chip-k">Learn</span>${d.learn ? "Finished ✓" : "Not finished"}</li>
             <li class="chip"><span class="chip-k">Practice</span>${d.history.filter(x=>x.mode==="practice").length} sessions</li>
-            <li class="chip"><span class="chip-k">Test</span>${scoreText(latest(d,"test"))}${mastered(d) ? " · ★" : ""}</li>
+            <li class="chip"><span class="chip-k">Test</span>${lastTest ? lastTest.correct+"/"+lastTest.total+(lastTest.assisted ? ' · <span title="Learning pages opened during this test">Helped</span>' : "") : "Not taken"}${mastered(d) ? " · ★" : ""}</li>
           </ul>
           <p class="c4-independent-status">Independent: ${scoreText(latest(d,"independent"))}</p>
           <a class="btn btn-big lc-next" href="#/chapter4/${l.id}">${d.learn || d.history.length || G.store.getDraft("c4-learn-"+l.id) ? "Continue" : "Start"} <span aria-hidden="true">→</span><span class="sr-only"> Lesson ${l.id}</span></a>
