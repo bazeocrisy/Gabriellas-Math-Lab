@@ -210,6 +210,7 @@
     }
 
     function results() {
+      if (G.chapter4 && G.chapter4.noteResults) G.chapter4.noteResults();
       const r = d.result;
       const okAt = (k) => G.engine.check(qs[k], d.answers[k]).status === 'correct';
       const missedIdx = qs.map((_, k) => k).filter((k) => !okAt(k)), rightIdx = qs.map((_, k) => k).filter(okAt);

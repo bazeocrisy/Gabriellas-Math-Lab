@@ -1,0 +1,38 @@
+name: Verify production Pages
+on:
+  workflow_run:
+    workflows: [pages build and deployment]
+    types: [completed]
+permissions:
+  contents: read
+jobs:
+  production:
+    if: github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_branch == 'main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - label: legacy
+            script: test:browser
+          - label: chapter4
+            script: test:chapter4:browser
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Verify deployed source matches main
+        run: node -e "const fs=require('fs'); fetch('https://bazeocrisy.github.io/Gabriellas-Math-Lab/js/chapter4.js', {cache:'no-store'}).then(async r=>{if(!r.ok || await r.text()!==fs.readFileSync('js/chapter4.js','utf8')) process.exit(1);});"
+      - run: npm run ${{ matrix.script }}
+        env:
+          CHROME_PATH: /usr/bin/google-chrome
+          LIVE_URL: https://bazeocrisy.github.io/Gabriellas-Math-Lab/
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: production-screenshots-${{ matrix.label }}
+          path: tests/screenshots/

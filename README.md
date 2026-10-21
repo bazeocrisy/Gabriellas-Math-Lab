@@ -4,7 +4,15 @@
 
 NumberNova (formerly Gabriella's Math Lab) is a friendly Grade 5 mathematics platform for classroom understanding and Georgia Milestones preparation. It starts with decimals and is for any student; no student name is built in.
 
-## Four parts
+## Two learning paths
+
+The homepage offers **Decimal Skills — Georgia Standards** (`#/decimals`) and **Chapter 4 — Add and Subtract Decimals** (`#/chapter4`). Chapter 4 contains eight textbook-aligned lessons, each with Learn, 10-question coached Practice at three levels, 10 Independent Questions, and a 10-question Test. It also includes a 24-question Chapter Review and 25-question Final Assessment.
+
+Chapter scores and prior attempts appear in Parent Progress. Only independent Lesson Tests at 9/10 or higher award mastery. Opening learning pages or result explanations during a test marks it assisted. The original Decimal Skills curriculum and saved data remain intact.
+
+`npm test` runs logic and generated-content checks. `npm run test:browser` verifies the original curriculum, and `npm run test:chapter4:browser` verifies Chapter 4. GitHub Actions runs these gates and captures responsive screenshots.
+
+## Decimal Skills: four parts
 
 | Part | Route | What it is |
 |---|---|---|

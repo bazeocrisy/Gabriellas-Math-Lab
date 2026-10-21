@@ -704,3 +704,12 @@ h1, h2, h3, .pillar-title, .brand { font-family: ui-rounded, "SF Pro Rounded", "
 @media (max-width: 699px) { html { scroll-padding-bottom: 96px; } }
 .pc-paused.continue-card { flex-direction: row; justify-content: space-between; }
 .pc-paused.continue-card p { margin: 0; }
+
+/* Chapter 4 reuses NumberNova controls and models. */
+.c4-home{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1.25rem;margin:2rem 0}.c4-home .pillar{min-height:230px}
+.c4-mode-nav,.c4-session-nav,.c4-operands{display:flex;flex-wrap:wrap;gap:.75rem;margin:1rem 0}.c4-mode-nav .btn{flex:1 1 130px;text-align:center}
+.c4-operands{align-items:center}.c4-operands figure{margin:0;flex:1 1 180px;min-width:0}.c4-operands figcaption{text-align:center;font-weight:700}.c4-models{display:flex;flex-wrap:wrap;gap:.4rem}.c4-models .model-grid{width:min(100%,180px);height:auto}
+.c4-learn{font-size:1.12rem;line-height:1.7;max-width:850px}.c4-learn .model-line{width:100%;max-width:540px}.c4-parent summary,.c4-result summary{min-height:48px;padding:.75rem;cursor:pointer}.c4-parent{border-top:1px solid #ccd2e5}.c4-result{margin:1rem 0}.c4-question{margin:1rem 0}.c4-session-nav{display:block}.c4-mode-nav a:focus-visible,select:focus-visible{outline:3px solid #2439b0;outline-offset:3px}#c4-level{min-height:48px;max-width:100%;display:block;margin:.5rem 0 1rem;padding:.5rem;font:inherit}.c4-status:empty{display:none}
+@media(max-width:600px){.c4-home{grid-template-columns:1fr}.c4-home .pillar{min-height:190px}.c4-learn{padding:1rem}.c4-operands figure{flex-basis:100px}.c4-mode-nav .btn{flex-basis:110px}}
+.c4-crumbs{display:flex;flex-wrap:wrap;column-gap:1rem;row-gap:.25rem}.c4-crumbs a{display:inline-flex;align-items:center;min-height:44px}
+@media(max-width:599px){.plt-table{table-layout:fixed;font-size:.8rem}.plt-table th,.plt-table td{padding:6px 4px;overflow-wrap:anywhere;white-space:normal}.plt-table th:first-child{width:36%}.plt-table th:last-child{width:10%}}

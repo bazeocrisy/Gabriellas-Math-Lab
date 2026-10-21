@@ -96,7 +96,7 @@
   ];
 
   /** The NumberNova landing page: brand, a welcome, and the four main sections. */
-  function landing() {
+  function decimalHome() {
     const pausedHtml = G.practiceCenter && G.practiceCenter.pausedSummary ? G.practiceCenter.pausedSummary() : '';
     app.innerHTML = `
       <section class="nn-hero">
@@ -117,6 +117,12 @@
       </nav>`;
     app.classList.add('page-home');
     document.title = 'NumberNova · Learn. Practice. Shine.';
+  }
+
+  function landing() {
+    app.innerHTML = `<section class="nn-hero"><img class="nn-hero-logo" src="assets/brand/numbernova-logo.svg" alt="NumberNova. Learn. Practice. Shine." width="200" height="46"><div><h1 tabindex="-1">Ready to make your next math discovery?</h1><p>Choose your learning path.</p></div></section>
+      <nav class="c4-home" aria-label="Learning paths"><a class="pillar pillar-learn" href="#/decimals"><span class="pillar-title">Decimal Skills — Georgia Standards</span><span class="pillar-text">All 10 decimal lessons, Practice Center, Study Guides and Parent Progress.</span><span class="pillar-go">Open Decimal Skills →</span></a><a class="pillar pillar-practice" href="#/chapter4"><span class="pillar-title">Chapter 4 — Add and Subtract Decimals</span><span class="pillar-text">Eight textbook lessons, chapter review and final assessment. Learn, practice and show what you know.</span><span class="pillar-go">Open Chapter 4 →</span></a></nav>`;
+    app.classList.add('page-home'); document.title = 'NumberNova · Learn. Practice. Shine.';
   }
 
   /** Learn: the ten decimal lessons, each with Teach, Practice, Test and Lesson Notes. */
@@ -317,6 +323,7 @@
         <p><b>Progress is saved only in this browser on this device.</b> It does not transfer to other devices or browsers, and clearing browser data erases it. No account, name or personal information is collected or sent anywhere.</p>
         ${persistent ? '' : '<p><b>This browser cannot save progress right now (storage is blocked or full, for example in a private window), so progress will be lost when the page is closed.</b></p>'}
       </div>
+      ${G.chapter4 ? G.chapter4.parentBlock() : ''}
       ${parentOverview(shown, done)}
       ${parentTable(shown)}
       ${blocks}
@@ -346,7 +353,7 @@
     document.title = 'Parent Progress · NumberNova';
   }
 
-  const ASSIST = { teach: 'Teach', practice: 'Practice', notes: 'Lesson Notes', center: 'the Practice Center', guides: 'the Study Guides' };
+  const ASSIST = { teach: 'Teach', practice: 'Practice', notes: 'Lesson Notes', center: 'the Practice Center', guides: 'the Study Guides', results: 'test results and explanations' };
   /** Opening Teach, Practice or Lesson Notes while a Test is unfinished is noted on that Test (only pages in this app). */
   function noteAssist(lessonId, mode) {
     const label = lessonId ? `${lessonName(lessonId)} ${ASSIST[mode]}` : ASSIST[mode];
@@ -360,6 +367,8 @@
     });
   }
 
+  if (G.chapter4) G.chapter4.noteResults = () => { G.chapter4.assist(); noteAssist(null, 'results'); };
+
   function route() {
     const h = location.hash || '#/';
     let m;
@@ -368,8 +377,13 @@
     if (am && ready(am[1])) noteAssist(am[1], am[2]);
     else if (/^#\/practice(\/(session|results))?$/.test(h)) noteAssist(null, 'center');
     else if (h === '#/guides') noteAssist(null, 'guides');
+    const instructional = /^#\/chapter4\/(4-[1-8]|review)\/(learn|practice)/.test(h) || /^#\/(d\d\d)\/(teach|practice|notes)/.test(h) || /^#\/(practice|guides)/.test(h);
+    if (instructional && G.chapter4) G.chapter4.assist();
+    if (/^#\/chapter4\/(4-[1-8]|review)\/(learn|practice)/.test(h)) noteAssist(null, 'center');
     try {
-      if ((m = h.match(/^#\/(d\d\d)\/teach(?:\/(\d+))?$/)) && ready(m[1])) G.views.teach(app, m[1], Number(m[2] || 1));
+      if (G.chapter4 && G.chapter4.route(app, h)) { /* Chapter route rendered. */ }
+      else if (h === '#/decimals') decimalHome();
+      else if ((m = h.match(/^#\/(d\d\d)\/teach(?:\/(\d+))?$/)) && ready(m[1])) G.views.teach(app, m[1], Number(m[2] || 1));
       else if ((m = h.match(/^#\/(d\d\d)\/practice$/)) && ready(m[1])) G.views.practice(app, m[1]);
       else if ((m = h.match(/^#\/(d\d\d)\/test$/)) && ready(m[1])) G.views.test(app, m[1]);
       else if ((m = h.match(/^#\/(d\d\d)\/notes$/)) && ready(m[1])) notes(m[1]);
@@ -385,7 +399,7 @@
     const mm = h.match(/^#\/d\d\d\/(teach|practice|test|notes)/);
     app.dataset.mode = mm && app.innerHTML.indexOf('Something went wrong') < 0 ? mm[1] : '';
     const shownHome = !!app.querySelector('.nn-hero');
-    const section = shownHome ? 'home' : /^#\/(d\d\d|learn)\b/.test(h) ? 'learn' : /^#\/practice\b/.test(h) ? 'practice' : h === '#/guides' ? 'guides' : h === '#/parent' ? 'parent' : 'home';
+    const section = /^#\/chapter4/.test(h) ? 'chapter4' : shownHome ? 'home' : /^#\/(d\d\d|learn)\b/.test(h) ? 'learn' : /^#\/practice\b/.test(h) ? 'practice' : h === '#/guides' ? 'guides' : h === '#/parent' ? 'parent' : 'home';
     document.body.dataset.section = section;
     window.scrollTo(0, 0);
     const h1 = app.querySelector('h1');

@@ -79,9 +79,9 @@ async function bigTargets(label) {
 
 try {
   await b.viewport(390, 844);
-  await b.load(URL + 'index.html');
+  await b.load(URL + 'index.html#/decimals');
   await js('localStorage.clear();');
-  await b.load(URL + 'index.html#/');
+  await b.load(URL + 'index.html#/decimals');
 
   // ── NumberNova landing page ──
   let r = await js(`return { t: document.getElementById('app').innerText, h1: document.querySelector('h1').innerText, title: document.title,
@@ -400,7 +400,7 @@ try {
     // Test results page with all question pictures.
     await b.load(URL + 'index.html#/d01/test');
     await noOverflow(`${name} test results`);
-    await b.load(URL + 'index.html#/');
+    await b.load(URL + 'index.html#/decimals');
     await b.shot(path.join(SHOTS, `home-${w}.png`), false);
   }
   // A model-choice question and a chart-entry question on the phone.
@@ -513,7 +513,7 @@ try {
   // A refresh during a test is not counted as opening a lesson page; a test done on its own is mastered.
   await b.load(URL + 'index.html#/d09/test');
   await js(`document.querySelector('[data-act=new]').click(); document.querySelector('[data-act=start]').click();`);
-  await b.reload(); await b.load(URL + 'index.html#/'); await b.load(URL + 'index.html#/d09/test');
+  await b.reload(); await b.load(URL + 'index.html#/decimals'); await b.load(URL + 'index.html#/d09/test');
   r = await js(`return JSON.parse(localStorage.getItem('gml:v1:draft:test-d09')).assist;`);
   check('integrity: refreshing, or visiting Home, during a test is not counted', Array.isArray(r) && r.length === 0, r);
   await js(setAll('d09', 'right(q)')); await b.reload();
@@ -640,7 +640,7 @@ try {
   check('upgrade: an old answer that matches no choice is asked for again (not scored as wrong)', /question 1 again/.test(r.note) && r.a0 === null, r);
   // An unfinished test the updated app cannot rebuild says so.
   await js(`localStorage.setItem('gml:v1:draft:test-d03', JSON.stringify({ set: [{ id: 'E1', seed: 1, sig: 'E1:old' }], answers: [null], i: 0, started: true, submitted: false, review: false }));`);
-  await b.load(URL + 'index.html#/'); await b.load(URL + 'index.html#/d03/test');
+  await b.load(URL + 'index.html#/decimals'); await b.load(URL + 'index.html#/d03/test');
   check('upgrade: an unfinished test that cannot be continued explains why', /could not be continued/.test(await js(`return document.getElementById('app').innerText;`)));
   // Old saved state for a guided check whose question type changed does not show on the new check.
   await js(`localStorage.setItem('gml:v1:draft:teach-d01-check-chart', JSON.stringify({ solved: true, fb: { kind: 'correct' }, resp: 'hundredths' }));`);
@@ -762,7 +762,7 @@ try {
     return { hints: document.querySelectorAll('.hint').length, wrong: gotWrong, right: !!host.querySelector('.fb-right'), next: !!host.querySelector('.coach-next button') };`);
   check('practice center: three hints, feedback for a wrong answer, a right answer unlocks Next', r.hints === 3 && r.wrong && r.right && r.next, r);
   await js(`document.querySelector('.coach-next button').click();`);
-  await b.load(URL + 'index.html#/');
+  await b.load(URL + 'index.html#/decimals');
   r = await js(`return (document.querySelector('.pc-paused') || {}).innerText || '';`);
   check('practice center: a paused session shows on the home page', /question 2 of 10/.test(r) && /Resume/.test(r), r);
   await b.reload();
@@ -815,7 +815,7 @@ try {
     d04: { teach: { screen: 0, furthest: 0, done: true }, practice: { sessions: 0, skills: {}, recentSigs: [] }, tests: [], testsTaken: 0, lastTestSigs: [] },
     d05: { teach: { screen: 0, furthest: 0, done: true }, practice: { sessions: 1, skills: {}, recentSigs: [] }, tests: [], testsTaken: 0, lastTestSigs: [] } } }));`;
   await b.viewport(1280, 900);
-  await b.load(URL + 'index.html#/'); await js(UX_SEED);
+  await b.load(URL + 'index.html#/decimals'); await js(UX_SEED);
   const progressBefore = await js(`return localStorage.getItem('gml:v1:progress');`);
   await b.load(URL + 'index.html#/learn'); await b.reload();
   r = await js(`return { next: [...document.querySelectorAll('.lc-next')].slice(0, 6).map((a) => a.childNodes[0].textContent + '>' + a.getAttribute('href')),
@@ -826,7 +826,7 @@ try {
     JSON.stringify(r.next) === JSON.stringify(['Review>#/d01/teach/1', 'Continue Teach>#/d02/teach/7', 'Practice again>#/d03/practice', 'Practice>#/d04/practice', 'Take the Test>#/d05/test', 'Start>#/d06/teach/1']), r.next);
   check('learn: the Continue banner names the furthest unfinished lesson and links to its next step', /Pick up where you left off/.test(r.banner) && /Lesson 5/.test(r.banner) && r.bannerHref === '#/d05/test', r);
   check('learn: three lesson cards per row at 1280px, each with Teach, Practice, Test and Notes links', r.perRow === 1 && r.links === 4, r);
-  await b.load(URL + 'index.html#/'); await b.reload();
+  await b.load(URL + 'index.html#/decimals'); await b.reload();
   r = await js(`return { t: (document.querySelector('.cont-home') || {}).innerText || '', logo: document.querySelector('.nn-hero-logo').getBoundingClientRect().width, tags: !!document.querySelector('.nn-hero-tags'), foot: document.querySelector('.site-footer').innerText };`);
   check('home: "Pick up where you left off" card, a smaller logo, and the grade tags in the footer', /Pick up where you left off/.test(r.t) && /Lesson 5/.test(r.t) && r.logo <= 210 && !r.tags && /Georgia Milestones Preparation/.test(r.foot), r);
   check('UX: looking at Home and Learn changes no saved progress', (await js(`return localStorage.getItem('gml:v1:progress');`)) === progressBefore);
