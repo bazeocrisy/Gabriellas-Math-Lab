@@ -20,10 +20,14 @@ Curriculum and QA re-review reported no remaining high/critical defects. Indepen
 
 ## Verification status
 
-Local Node suite: 263 passed, 0 failed before the final added benchmark test. Required browser suites are running in GitHub Actions. Local Chrome could be installed but this workspace blocks its required process socket; local browser launch cannot provide verification. The GitHub-hosted job uses real headless Chrome, existing end-to-end tests, Chapter tests, all eight Learn/Test flows, refresh/retakes, independent scores, assistance, legacy fixtures and 320/375/768/1024/1440px layouts. Screenshots are uploaded as a workflow artifact for visual review.
+Local Node suite: 264 passed, 0 failed. The Chapter 4 real-Chrome browser suite passed 132 checks. GitHub Actions records the complete regression and current-commit gate results. Local Chrome could be installed but this workspace blocks its required process socket; local browser launch cannot provide verification. The GitHub-hosted job uses real headless Chrome, existing end-to-end tests, Chapter tests, all eight Learn/Test flows, refresh/retakes, independent scores, assistance, legacy fixtures and 320/375/768/1024/1440px layouts. Screenshots are uploaded as a workflow artifact for visual review.
 
-**Release gate remains pending until both browser suites pass and screenshots are reviewed.** No merge is permitted on an unresolved failing gate. The owner explicitly authorized merging after acceptance criteria pass in Assignment 005; this supersedes older approval wording.
+**Release rule:** both browser suites must pass and screenshots must be reviewed before merge. Current-commit results are recorded in PR #17 and GitHub Actions; those results are authoritative. No merge is permitted on an unresolved failing gate. The owner explicitly authorized merging after acceptance criteria pass in Assignment 005; this supersedes older approval wording.
 
 ## Limitations
 
 Strategy explanations are selected from original explanations and supported by oral explanation prompts; written responses are not automatically graded. Storage is browser-local and cannot detect outside help. No accounts, backend, analytics, names or identifying data were added. A blocked/full storage environment falls back to shared in-memory storage for the current visit.
+
+## Visual review
+
+The UX reviewer inspected nine representative desktop, tablet and mobile screenshots. No critical/high visual defects remained after correcting breadcrumb spacing. The existing Parent Progress at-a-glance table now wraps within narrow phone containers instead of extending beyond its bounds. Post-deployment production browser checks are configured to verify that deployed source matches main and rerun both end-to-end suites.
