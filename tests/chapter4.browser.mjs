@@ -240,7 +240,7 @@ try {
   check('Practice can ask for help before any wrong answer',await js(`const d=GML.store.getDraft('c4-session-4-2-practice');return !d.states[0].attempts&&!!document.querySelector('[data-act=solution]')&&document.querySelector('[data-c4=prev]').disabled;`));
   await js(`document.querySelector('[data-act=solution]').click();document.querySelector('[data-act=sol-all]').click();document.querySelector('[data-c4=next]').click();document.querySelector('[data-c4=prev]').click();`);
   await b.reload();
-  check('Previous question and refresh preserve the supported answer without first-try credit',await js(`const d=GML.store.getDraft('c4-session-4-2-practice');return d.i===0&&d.states[0].shown&&!d.states[0].firstTry&&!document.querySelector('.sol-end').hidden;`));
+  check('Previous question and refresh preserve the supported answer without first-try credit',await js(`const d=GML.store.getDraft('c4-session-4-2-practice');return d.i===0&&d.states[0].shown&&!d.states[0].firstTry&&!document.querySelector('.sol-end').hidden&&document.querySelector('[data-act=sol-all]').hidden;`));
   await js(`document.querySelector('.c4-back a').click();`);
   check('Back to lesson opens an activity menu without discarding work',await js(`return /Choose your activity/.test(document.body.innerText)&&document.querySelectorAll('.c4-mode-nav a').length===4;`));
   await load('#/chapter4/4-2/practice');

@@ -232,7 +232,7 @@
       })
       .join(
         "",
-      )}</ul><button class="btn btn-primary" data-c4="new">Start fresh ${isTest ? "test" : "session"}</button> <a class="btn" href="#/chapter4">Chapter menu</a></section><h2>Question review</h2>${qs.map((q, i) => `<details class="card c4-result"><summary>${i + 1}. ${practice ? (d.states[i].firstTry ? "First try" : "Coached / retry") : sc.items[i].correct ? "Correct" : "Review"} · Lesson ${q.lesson}</summary><div>${q.prompt}</div>${q.visual || ""}<p>Your answer: ${esc(G.engine.describe(q, answers[i]))}</p><p>Answer: ${esc(q.answerText)}</p>${q.solution}<p>${q.why}</p></details>`).join("")}`;
+      )}</ul><button class="btn btn-primary" data-c4="new">Start fresh ${isTest ? "test" : "session"}</button> <a class="btn" href="#/chapter4">Chapter menu</a></section><h2>Question review</h2>${qs.map((q, i) => `<details class="card c4-result"><summary>${i + 1}. ${practice ? (d.states[i].firstTry && !d.states[i].hints && !d.states[i].shown ? "First try" : "Coached / retry") : sc.items[i].correct ? "Correct" : "Review"} · Lesson ${q.lesson}</summary><div>${q.prompt}</div>${q.visual || ""}<p>Your answer: ${esc(G.engine.describe(q, answers[i]))}</p><p>Answer: ${esc(q.answerText)}</p>${q.solution}<p>${q.why}</p></details>`).join("")}`;
     app.querySelector("h1").focus({ preventScroll: true });
     app.querySelector("[data-c4=new]").onclick = () => {
       G.store.clearDraft(key(id, d.mode));

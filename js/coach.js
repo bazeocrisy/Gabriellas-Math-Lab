@@ -84,6 +84,7 @@
         const shown = Math.min(Math.max(Number.isInteger(st.solStep) ? st.solStep : 1, 1), total);
         items.forEach((li, k) => { li.hidden = k >= shown; li.classList.toggle('is-current', k === shown - 1); });
         btn.hidden = shown >= total;
+        const all=el.querySelector("[data-act=sol-all]");if(all)all.hidden=shown>=total;
         btn.textContent = `Show next step (${shown + 1} of ${total})`;
         if (end) end.hidden = shown < total;
         // A worked layout (long division) fills in with the steps: digits and rows appear when their step does.
@@ -103,6 +104,7 @@
         const all = document.createElement('button');
         all.type = 'button'; all.className = 'btn sol-all'; all.dataset.act = 'sol-all';
         all.textContent = 'Show all steps and answer';
+        all.hidden=(st.solStep||1)>=total;
         btn.after(all);
         all.onclick = () => { st.solStep = total; save(); draw(); all.hidden = true; if(end){end.tabIndex=-1;end.focus({preventScroll:true});end.scrollIntoView({block:'nearest'});} };
       }
