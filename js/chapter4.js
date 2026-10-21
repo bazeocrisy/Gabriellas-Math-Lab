@@ -47,7 +47,12 @@
     ["test", "Lesson Test"],
   ];
   function nav(id) {
-    return `<nav class="c4-mode-nav" aria-label="Lesson ${id} modes">${modes.map(([m, t]) => `<a class="btn" href="#/chapter4/${id}/${m}">${t}</a>`).join("")}</nav>`;
+    return `<nav class="c4-mode-nav" aria-label="Lesson ${id} modes">${modes.map(([m, t]) => `<a class="btn" ${location.hash.includes(`/${id}/${m}`) ? 'aria-current="page"' : ""} href="#/chapter4/${id}/${m}">${t}</a>`).join("")}</nav>`;
+  }
+  const back = (id) => `<div class="c4-back"><a class="btn" href="${id.startsWith('4-') ? '#/chapter4/'+id : '#/chapter4'}">← ${id.startsWith('4-') ? 'Back to lesson '+id : 'Back to chapter'}</a><span>Your work is saved as you go.</span></div>`;
+  function overview(app,id) {
+    const l=C.lessons.find(x=>x.id===id), p=get(id), d=G.store.getDraft('c4-learn-'+id);
+    app.innerHTML=`${homeLink}<a class="btn" href="#/chapter4">← Back to all lessons</a><h1 tabindex="-1">Lesson ${id}: ${l.title}</h1><p>${l.goal}</p><section class="card"><h2>Choose your activity</h2><p><b>Learn:</b> examples and a guided question. Help is always available.</p><p><b>Practice:</b> ten questions with hints and worked answers.</p><p><b>Independent Questions:</b> ten questions on your own; feedback after submission.</p><p><b>Lesson Test:</b> ten questions without help; 9/10 earns mastery.</p>${nav(id)}<a class="btn btn-primary" href="#/chapter4/${id}/learn/${Number.isInteger(d?.page)?d.page+1:1}">${d?'Continue':'Start'} Learn</a><p>Learn: ${p.learn?'Finished':'Not finished'} · Test: ${scoreText(latest(p,'test'))}</p></section>`;
   }
   const latest = (d, m) => d.history.filter((x) => x.mode === m).at(-1);
   const mastered = (d) =>
@@ -63,7 +68,7 @@
     app.innerHTML = `${homeLink}<section class="hero"><p class="section-kicker">Textbook learning path · printed pages 101–140</p><h1 tabindex="-1">Chapter 4 — Add and Subtract Decimals</h1><p>Choose any lesson. Learn, practice with hints, try independent questions, then take a test. No prerequisites.</p></section><div class="lesson-grid">${C.lessons
       .map((l) => {
         const d = get(l.id);
-        return `<article class="lesson-card"><p class="lesson-num">Lesson ${l.id} · starts on p. ${l.page}</p><h2>${l.title}</h2><p>${l.goal}</p><p>Learn: ${d.learn ? "Finished" : "Not finished"} · Practice: ${d.history.filter((x) => x.mode === "practice").length} sessions</p><p>Independent: ${scoreText(latest(d, "independent"))} · Test: ${scoreText(latest(d, "test"))}${mastered(d) ? " · ★ Mastered" : ""}</p>${nav(l.id)}</article>`;
+        return `<article class="lesson-card c4-lesson-card"><p class="lesson-num">Lesson ${l.id} · starts on p. ${l.page}</p><h2 class="c4-card-title">${l.title}</h2><p class="c4-card-goal">${l.goal}</p><p>Learn: ${d.learn ? "Finished" : "Not finished"} · Practice: ${d.history.filter((x) => x.mode === "practice").length} sessions</p><p>Independent: ${scoreText(latest(d, "independent"))} · Test: ${scoreText(latest(d, "test"))}${mastered(d) ? " · ★ Mastered" : ""}</p>${nav(l.id)}</article>`;
       })
       .join(
         "",
@@ -76,15 +81,18 @@
     const dk = "c4-learn-" + id;
     let d = G.store.getDraft(dk);
     if (!d || typeof d !== "object") d = {};
+    d.page = idx;
     const save = () => G.store.setDraft(dk, d);
+    save();
     const persist = G.store.persistent()
       ? ""
       : '<p class="fb fb-info">Saving is unavailable in this browser. Progress will last only for this visit.</p>';
-    app.innerHTML = `${homeLink}${nav(id)}${persist}<p class="mode-label">Lesson ${id} · Learn · ${idx + 1} of ${ss.length}</p><h1 tabindex="-1">${s.title}</h1><section class="card c4-learn">${s.html}<div class="c4-guided"></div></section><div class="done-actions"><a class="btn" href="#/chapter4/${id}/learn/${Math.max(1, idx)}">Previous</a><button class="btn btn-primary" data-c4="next">${idx === ss.length - 1 ? "Finish Learn" : "Next screen"}</button><button class="btn" data-c4="restart">Restart Learn</button></div>`;
+    app.innerHTML = `${homeLink}${back(id)}${nav(id)}${persist}<p class="mode-label">Lesson ${id} · Learn · ${idx + 1} of ${ss.length}</p><h1 tabindex="-1">${s.title}</h1><section class="card c4-learn">${s.html}<div class="c4-guided"></div></section><div class="done-actions"><a class="btn" href="${idx === 0 ? `#/chapter4/${id}` : `#/chapter4/${id}/learn/${idx}`}">${idx === 0 ? "Back to lesson" : "Previous screen"}</a><button class="btn btn-primary" data-c4="next">${idx === ss.length - 1 ? "Finish Learn" : "Next screen"}</button><button class="btn" data-c4="restart">Restart Learn</button></div>`;
     const next = app.querySelector("[data-c4=next]");
     if (s.check) {
       const q = C.make({ lesson: id, id: "calculate-2", seed: 31415 });
       const coach = G.coach(app.querySelector(".c4-guided"), q, {
+        easyHelp: true,
         state: d.check || {},
         onChange: (st) => {
           d.check = st;
@@ -215,7 +223,7 @@
     const first = practice
       ? d.states.filter((x) => x.firstTry && !x.hints && !x.shown).length
       : sc.correct;
-    app.innerHTML = `${homeLink}<h1 tabindex="-1">${title(id)} · Results</h1><section class="card"><h2>${practice ? "Practice complete" : `${sc.correct} of ${sc.total} correct (${sc.percent}%)`}</h2>${practice ? `<p>${first}/${sc.total} correct on the first try without hints. Coached work does not award mastery.</p>` : isTest ? `<p>${d.assisted ? "Learning pages were opened during this assessment. This score does not award independent mastery." : id === "final" ? "Final assessment complete. Review performance by lesson below." : sc.correct >= 9 ? "★ Mastered: at least 9/10 independently." : "Mastery goal: 9/10. Review missed skills and try a fresh test."}</p>` : "<p>Independent Questions are for checking readiness. Only Lesson Tests award mastery.</p>"}<h2>Performance and next steps</h2><ul>${Object.entries(
+    app.innerHTML = `${homeLink}${back(id)}<h1 tabindex="-1">${title(id)} · Results</h1><section class="card"><h2>${practice ? "Practice complete" : `${sc.correct} of ${sc.total} correct (${sc.percent}%)`}</h2>${practice ? `<p>${first}/${sc.total} correct on the first try without hints. Coached work does not award mastery.</p>` : isTest ? `<p>${d.assisted ? "Learning pages were opened during this assessment. This score does not award independent mastery." : id === "final" ? "Final assessment complete. Review performance by lesson below." : sc.correct >= 9 ? "★ Mastered: at least 9/10 independently." : "Mastery goal: 9/10. Review missed skills and try a fresh test."}</p>` : "<p>Independent Questions are for checking readiness. Only Lesson Tests award mastery.</p>"}<h2>Performance and next steps</h2><ul>${Object.entries(
       sc.skills,
     )
       .map(([tag, v]) => {
@@ -224,7 +232,7 @@
       })
       .join(
         "",
-      )}</ul><button class="btn btn-primary" data-c4="new">Start fresh ${isTest ? "test" : "session"}</button> <a class="btn" href="#/chapter4">Chapter menu</a></section><h2>Question review</h2>${qs.map((q, i) => `<details class="card c4-result"><summary>${i + 1}. ${practice ? (d.states[i].firstTry ? "First try" : "Coached / retry") : sc.items[i].correct ? "Correct" : "Review"} · Lesson ${q.lesson}</summary><div>${q.prompt}</div>${q.visual || ""}<p>Your answer: ${esc(G.engine.describe(q, answers[i]))}</p><p>Answer: ${esc(q.answerText)}</p>${q.solution}<p>${q.why}</p></details>`).join("")}`;
+      )}</ul><button class="btn btn-primary" data-c4="new">Start fresh ${isTest ? "test" : "session"}</button> <a class="btn" href="#/chapter4">Chapter menu</a></section><h2>Question review</h2>${qs.map((q, i) => `<details class="card c4-result"><summary>${i + 1}. ${practice ? (d.states[i].firstTry && !d.states[i].hints && !d.states[i].shown ? "First try" : "Coached / retry") : sc.items[i].correct ? "Correct" : "Review"} · Lesson ${q.lesson}</summary><div>${q.prompt}</div>${q.visual || ""}<p>Your answer: ${esc(G.engine.describe(q, answers[i]))}</p><p>Answer: ${esc(q.answerText)}</p>${q.solution}<p>${q.why}</p></details>`).join("")}`;
     app.querySelector("h1").focus({ preventScroll: true });
     app.querySelector("[data-c4=new]").onclick = () => {
       G.store.clearDraft(key(id, d.mode));
@@ -251,7 +259,7 @@
       return;
     }
     if (!d) {
-      app.innerHTML = `${homeLink}${C.lessons.some((l) => l.id === id) ? nav(id) : ""}<h1 tabindex="-1">${title(id)} · ${mode === "test" ? "Test" : mode === "independent" ? "Independent Questions" : "Practice"}</h1><section class="card"><p>${id === "final" ? 25 : id === "review" ? 24 : 10} fresh questions. ${mode === "practice" ? "Three progressive hints, retries and worked solutions are available." : "No hints, coaching or correctness feedback until you submit. Answers are saved as you go."}</p>${mode === "test" ? "<p>Work independently. Opening learning pages during a test is recorded; that attempt cannot award mastery. Earlier scores are retained.</p>" : ""}${mode === "practice" ? '<label for="c4-level">Difficulty</label><select id="c4-level"><option value="1">1 · Starting out</option><option value="2" selected>2 · Building skill</option><option value="3">3 · Challenge</option></select>' : ""}<button class="btn btn-primary" data-c4="start">Start ${mode === "test" ? "test" : "session"}</button></section>`;
+      app.innerHTML = `${homeLink}${back(id)}${C.lessons.some((l) => l.id === id) ? nav(id) : ""}<h1 tabindex="-1">${title(id)} · ${mode === "test" ? "Test" : mode === "independent" ? "Independent Questions" : "Practice"}</h1><section class="card"><p>${id === "final" ? 25 : id === "review" ? 24 : 10} fresh questions. ${mode === "practice" ? "Three progressive hints, retries and worked solutions are available." : "No hints, coaching or correctness feedback until you submit. Answers are saved as you go."}</p>${mode === "test" ? "<p>Work independently. Opening learning pages during a test is recorded; that attempt cannot award mastery. Earlier scores are retained.</p>" : ""}${mode === "practice" ? '<label for="c4-level">Difficulty</label><select id="c4-level"><option value="1">1 · Starting out</option><option value="2" selected>2 · Building skill</option><option value="3">3 · Challenge</option></select>' : ""}<button class="btn btn-primary" data-c4="start">Start ${mode === "test" ? "test" : "session"}</button></section>`;
       app.querySelector("h1").focus({ preventScroll: true });
       app.querySelector("[data-c4=start]").onclick = () => {
         fresh(id, mode, Number(app.querySelector("select")?.value) || 2);
@@ -299,13 +307,15 @@
     const q = C.make(d.set[d.i]);
     const focus = () => app.querySelector("h1")?.focus({ preventScroll: true });
     queueMicrotask(focus);
-    app.innerHTML = `${homeLink}<p class="mode-label">${mode === "test" ? "Assessment" : mode === "independent" ? "Independent Questions" : "Coached Practice"} · Lesson ${q.lesson} · ${d.i + 1} of ${d.set.length}</p><h1 tabindex="-1">${title(id)}</h1><p class="c4-status" role="status"></p><div class="c4-question"></div><div class="c4-session-nav"></div>`;
+    app.innerHTML = `${homeLink}${back(id)}<p class="mode-label c4-banner c4-${mode}">${mode === "test" ? "Assessment" : mode === "independent" ? "Independent Questions" : "Coached Practice · Help available"} · Lesson ${q.lesson} · ${d.i + 1} of ${d.set.length}</p><h1 tabindex="-1">${title(id)}</h1><p class="c4-status" role="status"></p><div class="c4-question"></div><div class="c4-session-nav"></div>`;
     const host = app.querySelector(".c4-question"),
       bar = app.querySelector(".c4-session-nav");
     if (mode === "practice") {
       const drawNext = () => {
-        bar.innerHTML = `<button class="btn btn-primary" data-c4="next">${d.i === d.set.length - 1 ? "Finish practice" : "Next question"}</button>`;
-        bar.querySelector("button").onclick = () => {
+        bar.innerHTML = `<button class="btn" data-c4="prev" ${d.i===0?'disabled':''}>Previous question</button>${d.states[d.i].solved ? `<button class="btn btn-primary" data-c4="next">${d.i === d.set.length - 1 ? "Finish practice" : "Next question"}</button>` : '<span class="hint-small">Try the question, or choose “I don’t know — show me how” to continue with help.</span>'}`;
+        bar.querySelector('[data-c4=prev]').onclick=()=>{if(d.i>0){d.i--;if(save())session(app,id,mode);}};
+        const next=bar.querySelector("[data-c4=next]");
+        if(next) next.onclick = () => {
           if (d.i === d.set.length - 1) finish();
           else {
             d.i++;
@@ -316,7 +326,9 @@
           }
         };
       };
+      drawNext();
       G.coach(host, q, {
+        easyHelp: true,
         state: d.states[d.i],
         onChange: (st) => {
           d.states[d.i] = st;
@@ -330,12 +342,14 @@
         onChange: (resp) => {
           d.states[d.i].resp = resp;
           save();
+          const count=d.states.filter((state,i)=>G.engine.isAnswered(C.make(d.set[i]),state.resp)).length;
+          const note=bar.querySelector("p");if(note)note.textContent=`${count} of ${d.set.length} answered. You may review and change answers before submitting.`;
         },
       });
       const answered = d.states.filter((s, i) =>
         G.engine.isAnswered(C.make(d.set[i]), s.resp),
       ).length;
-      bar.innerHTML = `<p>${answered} of ${d.set.length} answered. You may review and change answers before submitting.</p><div class="done-actions"><button class="btn" data-c4="prev" ${d.i === 0 ? "disabled" : ""}>Previous</button><button class="btn" data-c4="next" ${d.i === d.set.length - 1 ? "disabled" : ""}>Next</button><button class="btn btn-primary" data-c4="submit">Submit all answers</button></div><div class="c4-submit" hidden><p>Submit now? Unanswered questions count as missed. You cannot change answers after submitting.</p><button class="btn btn-primary" data-c4="confirm">Yes, submit</button> <button class="btn" data-c4="cancel">Keep working</button></div>`;
+      bar.innerHTML = `<p>${answered} of ${d.set.length} answered. You may review and change answers before submitting.</p><div class="done-actions"><button class="btn" data-c4="prev" ${d.i === 0 ? "disabled" : ""}>Previous question</button><button class="btn" data-c4="next" ${d.i === d.set.length - 1 ? "disabled" : ""}>Next</button><button class="btn btn-primary" data-c4="submit">Submit all answers</button></div><div class="c4-submit" hidden><p>Submit now? Unanswered questions count as missed. You cannot change answers after submitting.</p><button class="btn btn-primary" data-c4="confirm">Yes, submit</button> <button class="btn" data-c4="cancel">Keep working</button></div>`;
       for (const [act, delta] of [
         ["prev", -1],
         ["next", 1],
@@ -357,10 +371,12 @@
   }
   function route(app, h) {
     const m = h.match(
-      /^#\/chapter4(?:\/(4-[1-8]|review|final)\/(learn|practice|independent|test)(?:\/(\d+|result\/[^/]+))?)?$/,
+      /^#\/chapter4(?:\/(4-[1-8]|review|final)(?:\/(learn|practice|independent|test)(?:\/(\d+|result\/[^/]+))?)?)?$/,
     );
     if (!m) return false;
+    app.classList.add("page-chapter4");
     if (!m[1]) menu(app);
+    else if (!m[2]) { if(m[1].startsWith("4-")) overview(app,m[1]); else menu(app); }
     else if (m[2] === "learn" && m[1].startsWith("4-")) learn(app, m[1], m[3]);
     else if (
       (m[1] === "final" && m[2] !== "test") ||

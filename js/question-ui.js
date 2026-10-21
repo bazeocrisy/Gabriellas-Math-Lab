@@ -91,7 +91,8 @@
       };
     } else if (q.type === 'number') {
       area.innerHTML = `<label class="num-label" for="${id}-in">Your answer</label>
-        <input id="${id}-in" class="num-input" type="text" inputmode="decimal" autocomplete="off" autocapitalize="off" spellcheck="false" aria-describedby="${id}-p" maxlength="12">`;
+        <input id="${id}-in" class="num-input" type="text" inputmode="decimal" autocomplete="off" autocapitalize="off" spellcheck="false" aria-describedby="${id}-p ${id}-format" maxlength="12">
+        <p class="hint-small" id="${id}-format">Enter the final number only, such as 4.8. Do not type an equation.</p>`;
       const inp = area.querySelector('input');
       inp.addEventListener('input', changed);
       inp.addEventListener('keydown', (e) => { if (e.key === 'Enter' && opts.onEnter) { e.preventDefault(); opts.onEnter(); } });

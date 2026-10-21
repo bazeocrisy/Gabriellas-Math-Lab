@@ -72,7 +72,7 @@
       meta: { n, kind, level, a, b, op, value: v },
       hints: [
         "Decide whether to combine amounts or find a difference. Keep each place value in its own column.",
-        "Line up decimal points. Write trailing zeros if needed. One tenth is ten hundredths.",
+        `Write ${f(a)} as ${(a/100).toFixed(2)} and ${f(b)} as ${(b/100).toFixed(2)}. Line up their decimal points; hundredths go under hundredths.`,
         sub
           ? "Exchange a unit from the place to the left if a column has too few units. Subtract from right to left and add back to check."
           : "Combine like units. Exchange ten hundredths for one tenth, and ten tenths for one whole when needed.",
@@ -112,8 +112,8 @@
       q.prompt = `Estimate ${eq} by rounding EACH number to the nearest ${unit === 100 ? "whole number" : "tenth"} first.`;
       q.hints = [
         "This asks for an estimate. Round each operand before calculating.",
-        "Look at the digit just to the right of the rounding place. A digit 5 or greater rounds up.",
-        "Use the operation shown on the rounded numbers. Do not round the exact result instead.",
+        `For ${f(a)}, look at the ${unit===100?"tenths":"hundredths"} digit: ${Math.floor(a/(unit/10))%10}. A digit 5 or greater rounds up; otherwise keep the rounding digit.`,
+        `${f(a)} rounds to ${f(ra)} and ${f(b)} rounds to ${f(rb)}. Now ${sub?"subtract":"add"} these rounded numbers. Enter just the final number.`,
       ];
       q.why = `${f(a)} rounds to ${f(ra)}; ${f(b)} rounds to ${f(rb)}. ${f(ra)} ${op} ${f(rb)} = ${f(est)}. An estimate checks size; it need not equal the exact answer.`;
       q.solution = `<ol class="sol-steps"><li>Round each operand separately.</li><li>${f(a)} → ${f(ra)}; ${f(b)} → ${f(rb)}.</li><li>${f(ra)} ${op} ${f(rb)} = ${f(est)}.</li></ol>`;
@@ -267,6 +267,8 @@
         ];
       }
     }
+    if(n!==1 && kind==='error') q.hints=[`Compare ${f(a)} with the same number followed by a zero.`, 'Check whether any existing digit moved to a different place.', 'A zero at the right end adds no tenths or hundredths. Choose the explanation that keeps the value unchanged.'];
+    if(n!==1 && kind==='reason') q.hints=[`Look at ${eq}. Are you combining amounts or finding a difference?`, sub?'A valid subtraction strategy can remove parts or count up from the smaller amount.':'A valid addition strategy combines like place values and exchanges when needed.', 'Reject any explanation that misaligns decimal points or skips a needed exchange.'];
     if (q.type === "mc")
       q.diagnose = () =>
         "Read each explanation carefully. Check whether it preserves place value and matches the operation.";

@@ -227,6 +227,33 @@ try {
       `return !/Something went wrong|NaN/.test(document.body.innerText)&&!!document.getElementById('chapter4-progress');`,
     ),
   );
+  // Stuck-student flow: every lesson provides immediate teaching help without guessing.
+  for(let n=1;n<=8;n++){
+    const id=`4-${n}`;
+    await js(`GML.store.clearDraft('c4-learn-${id}');`);
+    await load(`#/chapter4/${id}/learn/5`);
+    check(`${id} has visible back navigation and immediate worked help`,await js(`return !!document.querySelector('.c4-back .btn')&&!!document.querySelector('[data-act=solution]')&&document.querySelector('[data-c4=next]').disabled;`));
+    await js(`document.querySelector('[data-act=solution]').click();document.querySelector('[data-act=sol-all]').click();`);
+    check(`${id} can finish Learn after a supported walkthrough`,await js(`const d=GML.store.getDraft('c4-learn-${id}');return d.check.shown&&!d.check.firstTry&&!document.querySelector('[data-c4=next]').disabled&&!document.querySelector('.sol-end').hidden;`));
+  }
+  await start('4-2','practice');
+  check('Practice can ask for help before any wrong answer',await js(`const d=GML.store.getDraft('c4-session-4-2-practice');return !d.states[0].attempts&&!!document.querySelector('[data-act=solution]')&&document.querySelector('[data-c4=prev]').disabled;`));
+  await js(`document.querySelector('[data-act=solution]').click();document.querySelector('[data-act=sol-all]').click();document.querySelector('[data-c4=next]').click();document.querySelector('[data-c4=prev]').click();`);
+  await b.reload();
+  check('Previous question and refresh preserve the supported answer without first-try credit',await js(`const d=GML.store.getDraft('c4-session-4-2-practice');return d.i===0&&d.states[0].shown&&!d.states[0].firstTry&&!document.querySelector('.sol-end').hidden&&document.querySelector('[data-act=sol-all]').hidden;`));
+  await js(`document.querySelector('.c4-back a').click();`);
+  check('Back to lesson opens an activity menu without discarding work',await js(`return /Choose your activity/.test(document.body.innerText)&&document.querySelectorAll('.c4-mode-nav a').length===4;`));
+  await load('#/chapter4/4-2/practice');
+  check('Returning from the lesson menu resumes the same question',await js(`return GML.store.getDraft('c4-session-4-2-practice').i===0&&!!document.querySelector('.fb-solution');`));
+  await load('#/chapter4/4-1/learn/3');
+  await load('#/chapter4/4-1');
+  check('Lesson menu resumes the last Learn screen',await js(`return document.querySelector('a.btn-primary').hash==='#/chapter4/4-1/learn/3';`));
+  await load('#/chapter4');
+  await b.viewport(1440,900);
+  check('Chapter card button rows align across each pair',await js(`const cards=[...document.querySelectorAll('.c4-lesson-card')];return cards.every((c,i)=>i%2||Math.abs(c.querySelector('.c4-mode-nav').getBoundingClientRect().top-cards[i+1].querySelector('.c4-mode-nav').getBoundingClientRect().top)<2);`));
+  await b.shot(path.join(ROOT,'tests/screenshots','chapter4-aligned-cards.png'));
+  await load('#/chapter4/4-2/practice');
+  await b.shot(path.join(ROOT,'tests/screenshots','chapter4-worked-help.png'));
   for (const width of [320, 375, 768, 1024, 1440]) {
     await b.viewport(width, 900);
     for (const h of [
