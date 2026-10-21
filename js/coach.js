@@ -21,6 +21,7 @@
         <div class="coach-actions">
           <button type="button" class="btn btn-primary btn-check" data-act="check">Check answer</button>
           <button type="button" class="btn btn-hint" data-act="hint">Get a hint</button>
+          ${opts.easyHelp ? `<button type="button" class="btn btn-help" data-act="solution">I don’t know — show me how</button>` : ""}
           ${model ? `<button type="button" class="btn btn-model" data-act="model" aria-expanded="false">${modelLabel}</button>` : ''}
         </div>
         ${model ? `<div class="coach-model" hidden>${model}</div>` : ''}
@@ -35,8 +36,9 @@
     const ctl = G.qui.render(q, $('.coach-q'), { response: st.resp, onChange: (r) => { st.resp = r; if (st.fb && st.fb.kind === 'info') { st.fb = null; drawFeedback(); } save(); }, onEnter: () => doCheck() });
 
     function drawHints() {
-      $('.hints').innerHTML = q.hints.slice(0, st.hints).map((h, i) =>
-        `<div class="hint"><p class="hint-title">Hint ${i + 1} of 3</p><div>${h}</div></div>`).join('');
+      const blocks = q.hints.slice(0, st.hints).map((h, i) =>
+        `<div class="hint"><p class="hint-title">Hint ${i + 1} of 3</p><div>${h}</div></div>`);
+      $('.hints').innerHTML = opts.easyHelp && blocks.length > 1 ? `<details class="c4-earlier-hints"><summary>Earlier hints (${blocks.length - 1})</summary>${blocks.slice(0,-1).join('')}</details>${blocks.at(-1)}` : blocks.join('');
       const b = $('[data-act="hint"]');
       b.textContent = st.hints === 0 ? 'Get a hint' : st.hints < 3 ? `Next hint (${st.hints + 1} of 3)` : 'No more hints';
       b.disabled = st.hints >= 3;
@@ -63,7 +65,7 @@
         <p>${G.models.esc(fb.msg)}</p>
         ${(q.remind || opts.remind) && !(model && !q.picture && !q.remind) ? `<details class="remind"><summary>${model && !q.picture ? 'Reminder for this question' : 'Show me a reminder'}</summary>${q.remind || opts.remind}</details>` : ''}
         <p><b>Try again:</b> change your answer, then press Check answer. ${tip}</p>
-        ${st.attempts >= SOLUTION_AFTER ? '<button type="button" class="btn btn-link" data-act="solution">Show me how to solve it</button>' : ''}
+        ${!opts.easyHelp && st.attempts >= SOLUTION_AFTER ? '<button type="button" class="btn btn-link" data-act="solution">Show me how to solve it</button>' : ''}
       </div>`;
       const sol = el.querySelector('[data-act="solution"]');
       if (sol) sol.addEventListener('click', showSolution);
@@ -97,6 +99,13 @@
       const lists = el.querySelectorAll('.sol-steps');
       lists[lists.length - 1].after(btn);
       draw();
+      if (opts.easyHelp) {
+        const all = document.createElement('button');
+        all.type = 'button'; all.className = 'btn sol-all'; all.dataset.act = 'sol-all';
+        all.textContent = 'Show all steps and answer';
+        btn.after(all);
+        all.onclick = () => { st.solStep = total; save(); draw(); all.hidden = true; if(end){end.tabIndex=-1;end.focus({preventScroll:true});end.scrollIntoView({block:'nearest'});} };
+      }
     }
 
     function finish(moveFocus) {
@@ -150,6 +159,7 @@
     }
 
     $('[data-act="check"]').addEventListener('click', doCheck);
+    if(opts.easyHelp) $('[data-act="solution"]').addEventListener('click', showSolution);
     if (model) {
       const mb = $('[data-act="model"]'), panel = $('.coach-model');
       const drawModel = () => { panel.hidden = !st.model; mb.setAttribute('aria-expanded', String(!!st.model)); mb.textContent = st.model ? (q.picture ? 'Hide the picture' : 'Hide the reminder') : modelLabel; };
