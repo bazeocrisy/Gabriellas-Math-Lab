@@ -29,7 +29,7 @@ try {
   await b.viewport(width,height);
   for(const route of routes){
    if(route==='#/practice/session'||route==='#/practice/results'){
-    await b.js(`const d=GML.store.getDraft('pc-session');d.finished=${route.endsWith('results')};d.recorded=false;d.states=d.set.map(()=>${route.endsWith('results')?'{solved:true,firstTry:true,hints:0}':'{}'});GML.store.setDraft('pc-session',d);`);
+    await b.js(`const d=GML.store.getDraft('pc-session');d.finished=${route.endsWith('results')};d.recorded=false;d.states=d.set.map(()=>(${route.endsWith('results')?'{solved:true,firstTry:true,hints:0}':'{}'}));GML.store.setDraft('pc-session',d);`);
    }
    await load(route);
    const actual=await b.js(`return {route:location.hash,heading:document.querySelector('h1')?.textContent,coach:!!document.querySelector('.coach-host'),results:!!document.querySelector('.pc-stats')};`);
