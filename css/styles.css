@@ -764,4 +764,6 @@ h1, h2, h3, .pillar-title, .brand { font-family: ui-rounded, "SF Pro Rounded", "
  .site-header .brand { gap:8px; }
  .site-header .brand-icon { width:32px; height:32px; }
  .site-header .brand-name { font-size:1.1rem; }
+ .pager { flex-wrap:wrap; }
+ .pager .btn { flex:1 1 100%; max-width:100%; white-space:normal; }
 }

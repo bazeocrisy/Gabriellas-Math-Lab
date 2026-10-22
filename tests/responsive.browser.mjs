@@ -21,11 +21,14 @@ try {
   const data=await b.js(`const doc=document.documentElement;const visible=e=>e.getClientRects().length&&!e.closest('[hidden]');return {
    error:/Something went wrong/.test(document.getElementById('app').textContent),overflow:doc.scrollWidth>doc.clientWidth+1,
    small:[...document.querySelectorAll('#app .btn,#app .lc-link')].filter(visible).filter(e=>{const r=e.getBoundingClientRect();return r.height<43.5||r.width<43.5}).map(e=>e.textContent.trim().slice(0,35)),
-   clipped:[...document.querySelectorAll('#app .card,#app .lesson-card,#app .coach-main,#app .coach-help,#app .q-visual')].filter(visible).filter(e=>{const r=e.getBoundingClientRect();return r.left < -1 || r.right>doc.clientWidth+1;}).map(e=>e.className)
+   clipped:[...document.querySelectorAll('#app .card,#app .lesson-card,#app .coach-main,#app .coach-help,#app .q-visual')].filter(visible).filter(e=>{const r=e.getBoundingClientRect();return r.left < -1 || r.right>doc.clientWidth+1;}).map(e=>e.className),
+   wide:[...document.querySelectorAll('#app *')].filter(visible).filter(e=>!e.classList.contains('sr-only')).filter(e=>{const r=e.getBoundingClientRect();return r.right>doc.clientWidth+1;}).slice(0,4).map(e=>e.tagName+'.'+e.className)
   };`);
   check(label,!data.error&&!data.overflow&&!data.small.length&&!data.clipped.length,data);
+  if(data.overflow||data.clipped.length)await b.shot(path.join(ROOT,'tests/screenshots',`failure-${label.replace(/[^a-z0-9]/gi,'_')}.png`));
  }
  for(const [width,height]of viewports){
+  const frameFailures=failed;
   await b.viewport(width,height);
   for(const route of routes){
    if(route==='#/practice/session'||route==='#/practice/results'){
@@ -35,7 +38,7 @@ try {
    const actual=await b.js(`return {route:location.hash,heading:document.querySelector('h1')?.textContent,coach:!!document.querySelector('.coach-host'),results:!!document.querySelector('.pc-stats')};`);
    check('expected screen '+route+' @'+width,actual.route===route&&!!actual.heading&&(route!=='#/practice/session'||actual.coach)&&(route!=='#/practice/results'||actual.results),actual);
    await fits(route+' @'+width);
-   if(width===390||width===1366)await b.shot(path.join(ROOT,'tests/screenshots',`all-${route.replace(/[^a-z0-9]/gi,'_')}-${width}.png`));
+   if(width===390||width===1366||width===320&&['#/d01/teach/3','#/d03/teach/2','#/d09/teach/2','#/chapter4/4-3/learn/3'].includes(route))await b.shot(path.join(ROOT,'tests/screenshots',`all-${route.replace(/[^a-z0-9]/gi,'_')}-${width}.png`));
    if(/chapter4\/4-[1-8]\/learn\/[1-4]$/.test(route)){
     const pos=await b.js(`return {top:document.querySelector('.c4-learn').getBoundingClientRect().top,height:innerHeight};`);
     check('instruction visible in first view '+route+' @'+width,pos.top<pos.height-80,pos);
@@ -66,6 +69,7 @@ try {
    await b.js(chapter?`document.querySelector('[data-c4=next]').click();`:`document.querySelector('.coach-next button').click();`);
    check('forward review retains next question hint '+id+' @'+width,await b.js(`const d=GML.store.getDraft(${JSON.stringify(key)});return d.i===1&&d.states[1].hints===1&&!!document.querySelector('.hint');`));
   }
+  if(failed>frameFailures)throw new Error('Responsive failures at '+width+'px; fix this viewport before continuing.');
  }
  check('No console errors',b.errors.length===0,b.errors);
  check('No missing files',server.missing.length===0,server.missing);
