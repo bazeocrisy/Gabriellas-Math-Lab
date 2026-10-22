@@ -321,7 +321,7 @@
         ];
       }
     }
-    if(n!==1 && kind==='error') q.hints=[`Compare ${f(a)} with the same number followed by a zero.`, 'Check whether any existing digit moved to a different place.', 'A zero at the right end adds no tenths or hundredths. Choose the explanation that keeps the value unchanged.'];
+    if(n!==1 && kind==='error') q.hints=[`Compare ${f(a)} with ${f(a).includes('.') ? f(a)+'0' : f(a)+'.00'}.`, 'Check whether any existing digit moved to a different place.', 'A zero at the right end of a decimal adds no tenths or hundredths. Choose the explanation that keeps the value unchanged.'];
     if(n!==1 && kind==='reason') q.hints=[`Look at ${eq}. Are you combining amounts or finding a difference?`, sub?'A valid subtraction strategy can remove parts or count up from the smaller amount.':'A valid addition strategy combines like place values and exchanges when needed.', 'Reject any explanation that misaligns decimal points or skips a needed exchange.'];
     if(n!==1 && kind==='visual') q.solution = strategySolution(n, a, b, sub, level, kind);
     if (q.type === "mc")

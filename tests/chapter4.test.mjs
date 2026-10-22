@@ -125,3 +125,14 @@ test('worked help follows the model or strategy being assessed', () => {
     if (l.id==='4-4' || (l.id==='4-8' && q.meta.op==='+')) assert.match(q.solution,/partial sums/);
   }
 });
+
+test('equivalent-decimal hints show the decimal point when the starting value is whole', () => {
+  let whole=0;
+  for(let seed=1;seed<=2000;seed++){
+    const q=G.engine.make('4-4','error-2',seed);
+    if(q.meta.a%100!==0)continue;
+    whole++;
+    assert.ok(q.hints[0].includes(G.chapter4.f(q.meta.a)+'.00'));
+  }
+  assert.ok(whole>0);
+});
