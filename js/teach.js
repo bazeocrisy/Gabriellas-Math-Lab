@@ -107,6 +107,7 @@
       const q = G.engine.make(lessonId, sc.check.t, 1, sc.check.params);
       const draftKey = `teach-${lessonId}-${sc.id}`;
       G.coach(app.querySelector('.check-host'), q, {
+        easyHelp: true,
         state: G.store.getDraft(draftKey) || {},
         remind: sc.reteach,
         onChange: (st) => G.store.setDraft(draftKey, st),

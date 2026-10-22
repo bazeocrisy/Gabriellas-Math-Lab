@@ -27,6 +27,71 @@
   }
 
   const kinds = ["calculate", "visual", "word", "reason", "error", "multi"];
+  // Independently selected, comparable paraphrases keep sentence length from identifying the key.
+  const alignmentErrors = [
+    "Align the final digits instead of the decimal points, then calculate.",
+    "Line up the rightmost digits, even when they represent different place values.",
+    "Keep the last digits aligned, even if their decimal points fall in different columns.",
+  ];
+  const operationErrors = (sub) => sub ? [
+    "Subtract the smaller digit from the larger in each column, without exchanges.",
+    "In each column, subtract whichever digit is smaller from whichever digit is larger.",
+    "Choose the larger digit in each column first so exchanges are never needed.",
+  ] : [
+    "Add each column separately and leave out any units that would be carried.",
+    "Add matching digits, keeping only the last digit when a column totals ten or more.",
+    "Combine each column but drop extra units instead of carrying to the next place.",
+  ];
+  const reasoning = (n, sub) => n === 4 || (n === 8 && !sub) ? [
+    "Add matching whole-number and decimal parts, then combine the partial sums.",
+    "Split both addends by place value, add like units, then combine the partial sums.",
+    "Decompose the numbers into place-value parts, then add the matching units.",
+  ] : n === 7 ? [
+    "Subtract the whole-number part first, then remove the remaining decimal part.",
+    "Split the amount being removed into whole-number and decimal parts, then subtract each.",
+    "Remove whole units first, then decimal units; add the difference back to check.",
+  ] : n === 8 && sub ? [
+    "Count up from the smaller amount to the larger, then combine the jumps.",
+    "Start at the smaller amount and add the jumps needed to reach the larger amount.",
+    "Add the jumps between the smaller and larger numbers to find the difference.",
+  ] : sub ? [
+    "Rename the amounts in hundredths, then remove the second amount from the first.",
+    "Rename the first amount in hundredths, then remove the hundredths in the second amount.",
+    "Exchange tenths for hundredths as needed, then remove the second amount.",
+  ] : [
+    "Combine both amounts in hundredths, then exchange for whole units as needed.",
+    "Rename both amounts in hundredths, combine them, and exchange each hundred for one whole.",
+    "Combine like hundredths and exchange each group of one hundred for a whole.",
+  ];
+  const solutionSteps = (xs) => `<ol class="sol-steps">${xs.map(x => `<li>${x}</li>`).join('')}</ol>`;
+  function strategySolution(n, a, b, sub, level, kind) {
+    const v = sub ? a - b : a + b;
+    if ([2, 3, 5, 6].includes(n)) {
+      if (n === 5 && level > 1 && kind === 'visual') return line(a, b) + solutionSteps([
+        `Start at ${f(b)} and find the distance to ${f(a)}.`,
+        `The distance is ${a} − ${b} = ${v} hundredths, or ${f(v)}.`,
+        `Check: ${f(b)} + ${f(v)} = ${f(a)}.`,
+      ]);
+      return solutionSteps([
+        `Each small square is one hundredth. Rename ${f(a)} as ${a} hundredths and ${f(b)} as ${b} hundredths.`,
+        sub ? `Start with ${a} hundredths. Remove ${b} hundredths; ${v} remain.` : `Combine ${a} + ${b} = ${v} hundredths.`,
+        `${v} hundredths = ${f(v)}. ${sub ? `Add back to check: ${f(b)} + ${f(v)} = ${f(a)}.` : v < 100 ? 'The combined amount is less than one whole, so no whole-unit exchange is needed.' : `Exchange each group of 100 hundredths for one whole: ${Math.floor(v / 100)} ${Math.floor(v / 100) === 1 ? 'whole' : 'wholes'} and ${v % 100} hundredths.`}`,
+      ]) + (sub ? `<p>Start with ${f(a)} and cross out ${f(b)}:</p><div class="c4-models">${Array.from({length:Math.ceil(a/100)}, (_, i) => M.grid(Math.min(100, a-i*100), {cross:Math.min(Math.max(b-i*100,0),Math.min(100,a-i*100))})).join('')}</div>` : `<p>The combined amount:</p>${grid(v)}`);
+    }
+    if (n === 7) {
+      const whole = Math.floor(b / 100) * 100, part = b % 100;
+      return solutionSteps([`Split ${f(b)} into ${f(whole)} + ${f(part)}.`, `First remove whole units: ${f(a)} − ${f(whole)} = ${f(a-whole)}.`, `Then remove the decimal part: ${f(a-whole)} − ${f(part)} = ${f(v)}.`, `Check: ${f(b)} + ${f(v)} = ${f(a)}.`]);
+    }
+    if (n === 8 && sub) {
+      const middle = Math.min(a, Math.ceil(b/100)*100);
+      return solutionSteps([`Start at ${f(b)}, the smaller amount.`, `Count up to ${f(middle)}: add ${f(middle-b)}. Then count up to ${f(a)}: add ${f(a-middle)}.`, `Combine the jumps: ${f(middle-b)} + ${f(a-middle)} = ${f(v)}.`, `The difference is ${f(v)}. Check: ${f(b)} + ${f(v)} = ${f(a)}.`]);
+    }
+    if (!sub) {
+      const parts = [100,10,1].map(unit => (Math.floor(a/unit) % (unit===100?100:10) + Math.floor(b/unit) % (unit===100?100:10))*unit);
+      return solutionSteps([`Split each addend into whole-number, tenth and hundredth parts.`, `Add whole-number parts: ${f(Math.floor(a/100)*100)} + ${f(Math.floor(b/100)*100)} = ${f(parts[0])}.`, `Add tenths: ${f(Math.floor(a%100/10)*10)} + ${f(Math.floor(b%100/10)*10)} = ${f(parts[1])}. Add hundredths: ${f(a%10)} + ${f(b%10)} = ${f(parts[2])}.`, `Combine the partial sums: ${parts.map(f).join(' + ')} = ${f(v)}.`]);
+    }
+    return K.columnSolution([f(a),f(b)], '−');
+  }
   function task(n, kind, level, r) {
     const sub = n === 1 || n === 8 ? r.int(0, 1) === 1 : n >= 5 && n <= 7,
       op = sub ? "−" : "+";
@@ -92,7 +157,11 @@
         return "Check the operation and each exchange. A tenth is ten hundredths.";
       },
     };
+    // Wording uses its own stream: existing saved question signatures and numeric values stay stable.
+    const wording = E.rng((a * 65537) ^ (b * 257) ^ (n * 4099) ^ (level * 131) ^ kinds.indexOf(kind));
     const mc = (answer, correct, wrongs) => {
+      correct = Array.isArray(correct) ? wording.pick(correct) : correct;
+      wrongs = wrongs.map(x => Array.isArray(x) ? wording.pick(x) : x);
       q.type = "mc";
       q.answer = answer;
       q.answerText = correct;
@@ -132,19 +201,19 @@
         q.prompt = `A trail is ${f(a)} km long. ${sub ? `${f(b)} km has been walked. Estimate the distance remaining` : `Another section is ${f(b)} km long. Estimate the combined length`} by rounding EACH length to the nearest ${unit === 100 ? "whole number" : "tenth"} first.`;
       if (kind === "reason" || kind === "error") {
         q.prompt = `Which method follows “estimate ${eq} by rounding each operand to the nearest ${unit === 100 ? "whole number" : "tenth"}”?`;
-        mc("round", "Round each operand first, then calculate.", [
-          "Calculate exactly, then round only the result.",
-          "Remove the decimal points, then calculate.",
+        mc("round", ["Round both numbers to the stated place, then calculate the estimate.", "Round each number to the stated place before calculating the sum or difference.", "First round both numbers separately, then add or subtract those rounded amounts."], [
+          ["Calculate the exact answer first, then round only the result to the stated place.", "Find the exact sum or difference, then round that result to the stated place.", "Add or subtract the original numbers, then round the answer at the end."],
+          ["Drop both decimal points and calculate with the whole-number digits left.", "Remove the decimal points first, then calculate with the whole numbers left.", "Treat the decimal digits as whole numbers, then calculate with those amounts."],
         ]);
       }
       if (kind === "multi") {
         q.prompt = `Which explanation helps judge whether an answer to ${eq} is reasonable?`;
         mc(
           "check",
-          "Use nearby compatible numbers to check the size, then compute exactly if needed.",
+          ["Use nearby easy numbers to estimate and check the size of the exact answer.", "Use nearby compatible numbers to check the size, then compute exactly if needed.", "Choose nearby easy numbers, calculate mentally, then compare the estimated size."],
           [
-            "Every estimate must equal the exact answer.",
-            "Ignore place value when checking the size.",
+            ["An estimate must match the exact answer or it cannot check the answer's size.", "Reject every estimate that differs from the exact result of the calculation.", "Use estimates only if they give exactly the same amount as the original calculation."],
+            ["Drop the decimal points before calculating to check the size of the answer.", "Ignore decimal points and use the whole-number digits to check the answer's size.", "Treat both decimals as whole numbers, then use that result to check the size."],
           ],
         );
         q.why =
@@ -201,26 +270,11 @@
           ? `A ribbon is ${f(a)} m long. ${f(b)} m is cut off. How many meters remain?`
           : `Nia walks ${f(a)} km, then ${f(b)} km. How many kilometers does she walk altogether?`;
       if (kind === "reason") {
-        const correct =
-          n === 4
-            ? "Decompose into like place values, add the partial sums, then combine them."
-            : n === 7
-              ? `Subtract the whole-number part of ${f(b)}, then its decimal part; add back to check.`
-              : n === 8
-                ? sub
-                  ? `Count up from ${f(b)} to ${f(a)}; the total distance is the difference.`
-                  : "Decompose the addends by place value and combine partial sums."
-                : sub
-                  ? "Rename one tenth as ten hundredths when needed, then remove the second amount."
-                  : "Combine hundredths; exchange 100 hundredths for one whole when needed.";
-        q.prompt = `Which explanation correctly describes a strategy for ${eq}?`;
-        mc("valid", correct, [
-          sub
-            ? "Subtract the smaller digit from the larger in every column."
-            : "Add digits without exchanging when a place totals ten or more.",
-          "Align final digits even if decimal points do not line up.",
-        ]);
-        q.why = `${correct} ${q.why}`;
+        const correct = reasoning(n, sub);
+        q.prompt = `Which strategy preserves place value when ${sub ? 'subtracting' : 'adding'} decimals, including ${eq}?`;
+        mc("valid", correct, [operationErrors(sub), alignmentErrors]);
+        q.why = `${q.answerText} ${q.why} Skipping exchanges changes the amount; aligning last digits can mix different place values.`;
+        q.solution = strategySolution(n, a, b, sub, level, kind);
       }
       if (kind === "error") {
         const base = f(a),
@@ -228,10 +282,10 @@
         q.prompt = `A student says ${base} and ${padded} have different values. Which explanation corrects this mistake?`;
         mc(
           "place",
-          "Trailing zeros preserve the amount because the existing digits stay in the same places.",
+          ["A final decimal zero adds no extra value; existing digits keep their same places.", "A zero at the right end adds no value; all existing digits keep the same places.", "A zero after the last decimal digit leaves the amount unchanged; no other digit moves."],
           [
-            "A trailing zero always multiplies a decimal by ten.",
-            "The number with more digits is always larger.",
+            ["A final decimal zero makes the amount ten times larger, like whole numbers.", "A zero at the right end multiplies the amount by ten, as it does for whole numbers.", "Appending a zero after the last decimal digit makes the original amount ten times larger."],
+            ["More decimal places mean a larger amount, regardless of the digit values.", "The number with more decimal places has a larger value, regardless of the digits.", "Adding another decimal place always increases the amount, even when the new digit is zero."],
           ],
         );
         q.why = `${base} = ${padded}. A tenth is ten hundredths; trailing zeros do not change the quantity.`;
@@ -267,8 +321,9 @@
         ];
       }
     }
-    if(n!==1 && kind==='error') q.hints=[`Compare ${f(a)} with the same number followed by a zero.`, 'Check whether any existing digit moved to a different place.', 'A zero at the right end adds no tenths or hundredths. Choose the explanation that keeps the value unchanged.'];
+    if(n!==1 && kind==='error') q.hints=[`Compare ${f(a)} with ${f(a).includes('.') ? f(a)+'0' : f(a)+'.00'}.`, 'Check whether any existing digit moved to a different place.', 'A zero at the right end of a decimal adds no tenths or hundredths. Choose the explanation that keeps the value unchanged.'];
     if(n!==1 && kind==='reason') q.hints=[`Look at ${eq}. Are you combining amounts or finding a difference?`, sub?'A valid subtraction strategy can remove parts or count up from the smaller amount.':'A valid addition strategy combines like place values and exchanges when needed.', 'Reject any explanation that misaligns decimal points or skips a needed exchange.'];
+    if(n!==1 && kind==='visual') q.solution = strategySolution(n, a, b, sub, level, kind);
     if (q.type === "mc")
       q.diagnose = () =>
         "Read each explanation carefully. Check whether it preserves place value and matches the operation.";

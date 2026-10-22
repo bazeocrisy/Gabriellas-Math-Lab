@@ -24,6 +24,8 @@ jobs:
             script: test:browser
           - label: chapter4
             script: test:chapter4:browser
+          - label: responsive
+            script: test:responsive:browser
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4

@@ -242,7 +242,7 @@
           <h2 id="pc-confirm-h">Step 3 of 3: Ready?</h2>
           <dl class="facts-dl"><dt>Skill</dt><dd>${esc(label)}</dd><dt>Questions</dt><dd>${wiz.n}${wiz.n === 50 ? ' (five blocks of ten)' : ''}</dd></dl>
           <p class="pc-expect">${esc(expect)}</p>
-          <p class="pc-expect fine">Up to three hints per question, feedback on mistakes, and the steps after three different tries. Your place is saved, so you can pause any time.</p>
+          <p class="pc-expect fine">Up to three hints per question, feedback on mistakes, and worked help whenever you need it. Showing a solution is recorded as helped work. Your place is saved, so you can pause any time.</p>
           <div class="confirm" hidden><p><b>You already have a practice in progress.</b> Starting a new one will replace it (your past results are kept). Start anyway?</p>
             <button type="button" class="btn btn-practice" data-act="really">Yes, start the new practice</button> <button type="button" class="btn" data-act="cancel">No, keep it</button></div>
           <div class="pc-actions"><button type="button" class="btn btn-big" data-act="choices">← Back</button><button type="button" class="btn btn-practice btn-big" data-act="start">Start Practice</button></div>
@@ -286,6 +286,7 @@
       <h1 tabindex="-1" class="q-heading">Question ${d.i + 1}</h1>
       <p class="skill-tag">Skill: ${esc(SK.name)} · ${level}</p>
       <div class="coach-host"></div>
+      <nav class="practice-pager" aria-label="Practice questions"><button type="button" class="btn" data-act="previous" ${d.i === 0 ? 'disabled' : ''}>← Previous question</button></nav>
       <details class="q-options"><summary>Options</summary>
         <div class="pc-tools">
           <a class="btn" href="#/practice">Pause and go to Practice Center</a>
@@ -295,6 +296,7 @@
       <div class="confirm pc-new" hidden><p><b>Start a new practice?</b> This one (question ${d.i + 1} of ${d.n}) will be cleared. Your saved results from finished practices are kept.</p>
         <button type="button" class="btn btn-danger" data-act="really">Yes, start over</button> <button type="button" class="btn" data-act="cancel">No, keep going</button></div>`;
     G.coach(app.querySelector('.coach-host'), q, {
+      easyHelp: true,
       state: d.states[d.i],
       remind: REMIND[q.pcOp], seeIt: true,
       onChange: (st) => {
@@ -314,6 +316,12 @@
           d.i++; saveSession(d); session(app); window.scrollTo(0, 0); G.coach.focusAnswer(app);
         });
       }
+    });
+    app.querySelector('[data-act=previous]').addEventListener('click', () => {
+      if (d.i === 0) return;
+      const current = G.store.getDraft(SESSION);
+      if (!current || current.id !== d.id) { session(app); return; }
+      d.i--; saveSession(d); session(app); window.scrollTo(0, 0); G.coach.focusAnswer(app);
     });
     const conf = app.querySelector('.pc-new');
     app.querySelector('[data-act=new]').addEventListener('click', () => { conf.hidden = false; conf.querySelector('[data-act=really]').focus(); });

@@ -66,7 +66,7 @@
       : "Not taken";
   function menu(app) {
     app.classList.add("c4-menu");
-    app.innerHTML = `${homeLink}<section class="hero"><p class="section-kicker">Textbook learning path · printed pages 101–140</p><h1 tabindex="-1">Chapter 4 — Add and Subtract Decimals</h1><p>Choose any lesson. Learn, practice with hints, try independent questions, then take a test. No prerequisites.</p></section><div class="lesson-grid">${C.lessons
+    app.innerHTML = `${homeLink}<section class="hero"><p class="section-kicker">Textbook learning path · printed pages 101–140</p><h1 tabindex="-1">Chapter 4 — Add and Subtract Decimals</h1><p>Choose any lesson. Learn, practice with hints, try independent questions, then take a test. No prerequisites.</p><p class="fine">Helped means learning pages were opened during that test, so it cannot earn mastery. ★ marks mastery earned on an independent test, even if a later attempt used help.</p></section><div class="lesson-grid">${C.lessons
       .map((l) => {
         const d = get(l.id), lastTest = latest(d,"test");
         return `<article class="lesson-card c4-lesson-card" aria-labelledby="c4-title-${l.id}">
@@ -103,10 +103,13 @@
     const persist = G.store.persistent()
       ? ""
       : '<p class="fb fb-info">Saving is unavailable in this browser. Progress will last only for this visit.</p>';
-    app.innerHTML = `${homeLink}${back(id)}${nav(id)}${persist}<p class="mode-label">Lesson ${id} · Learn · ${idx + 1} of ${ss.length}</p><h1 tabindex="-1">${s.title}</h1><section class="card c4-learn">${s.html}<div class="c4-guided"></div></section><div class="done-actions"><a class="btn" href="${idx === 0 ? `#/chapter4/${id}` : `#/chapter4/${id}/learn/${idx}`}">${idx === 0 ? "Back to lesson" : "Previous screen"}</a><button class="btn btn-primary" data-c4="next">${idx === ss.length - 1 ? "Finish Learn" : "Next screen"}</button><button class="btn" data-c4="restart">Restart Learn</button></div>`;
+    d.reviewed = Array.isArray(d.reviewed) ? [...new Set(d.reviewed.filter(x => Number.isInteger(x) && x >= 0 && x < ss.length))] : [];
+    const earlierMissing = ss.some((_, i) => i < idx && !d.reviewed.includes(i));
+    const finishLabel = earlierMissing ? 'Review earlier screens' : 'Finish Learn';
+    app.innerHTML = `<div class="c4-learn-context">${back(id)}<details class="c4-activity-picker"><summary class="btn">Other activities</summary>${nav(id)}</details></div>${persist}<p class="mode-label">Lesson ${id} · Learn · ${idx + 1} of ${ss.length}</p><h1 tabindex="-1">${s.title}</h1><section class="card c4-learn">${s.html}<div class="c4-guided"></div></section>${idx === ss.length - 1 && earlierMissing ? '<p class="fine">Review the earlier screens before marking this lesson finished. Your guided answer is saved.</p>' : ''}<div class="done-actions"><a class="btn" href="${idx === 0 ? `#/chapter4/${id}` : `#/chapter4/${id}/learn/${idx}`}">${idx === 0 ? "Back to lesson" : "Previous screen"}</a><button class="btn btn-primary" data-c4="next">${idx === ss.length - 1 ? finishLabel : "Next screen"}</button><button class="btn" data-c4="restart">Restart Learn</button></div>`;
     const next = app.querySelector("[data-c4=next]");
     if (s.check) {
-      const q = C.make({ lesson: id, id: "calculate-2", seed: 31415 });
+      const q = C.make({ lesson: id, id: ["4-2", "4-3", "4-5", "4-6"].includes(id) ? "visual-2" : "calculate-2", seed: 31415 });
       const coach = G.coach(app.querySelector(".c4-guided"), q, {
         easyHelp: true,
         state: d.check || {},
@@ -121,9 +124,14 @@
       next.disabled = !coach.state.solved;
     }
     next.onclick = () => {
+      if (next.disabled) return;
+      if (!d.reviewed.includes(idx)) d.reviewed.push(idx);
+      save();
       if (idx < ss.length - 1)
         location.hash = `#/chapter4/${id}/learn/${idx + 2}`;
       else {
+        const firstMissing = ss.findIndex((_, i) => !d.reviewed.includes(i));
+        if (firstMissing !== -1) { location.hash = `#/chapter4/${id}/learn/${firstMissing + 1}`; return; }
         const p = get(id);
         p.learn = true;
         put(id, p);
@@ -131,6 +139,9 @@
       }
     };
     app.querySelector("[data-c4=restart]").onclick = () => {
+      const p = get(id);
+      p.learn = false;
+      put(id, p);
       d = {};
       save();
       if (idx === 0) learn(app, id, 1);

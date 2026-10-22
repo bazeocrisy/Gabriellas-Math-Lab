@@ -113,3 +113,26 @@ test("Model grids have exactly 100 cells per whole and accurate shaded counts", 
 });
 
 test('Thousandths benchmark comparisons independently match the sum',()=>{for(let seed=1;seed<=500;seed++){const q=G.engine.make('4-1','multi-3',seed);const [a,b]=q.meta.thousandths;assert.equal(q.answer,a+b<1000?'less':a+b>1000?'greater':'equal');}});
+
+test('worked help follows the model or strategy being assessed', () => {
+  for (const l of G.chapter4.lessons.slice(1)) for (let seed=1;seed<=120;seed++) {
+    const q=G.engine.make(l.id,'reason-2',seed);
+    assert.match(q.solution,/sol-steps/);
+    assert.ok(q.solution.includes(q.meta.op==='−' ? G.chapter4.f(q.meta.a-q.meta.b) : G.chapter4.f(q.meta.a+q.meta.b)));
+    if (['4-2','4-3','4-5','4-6'].includes(l.id)) assert.match(q.solution,/hundredths/);
+    if (l.id==='4-7') assert.match(q.solution,/whole units|whole-number/);
+    if (l.id==='4-8' && q.meta.op==='−') assert.match(q.solution,/jumps/);
+    if (l.id==='4-4' || (l.id==='4-8' && q.meta.op==='+')) assert.match(q.solution,/partial sums/);
+  }
+});
+
+test('equivalent-decimal hints show the decimal point when the starting value is whole', () => {
+  let whole=0;
+  for(let seed=1;seed<=2000;seed++){
+    const q=G.engine.make('4-4','error-2',seed);
+    if(q.meta.a%100!==0)continue;
+    whole++;
+    assert.ok(q.hints[0].includes(G.chapter4.f(q.meta.a)+'.00'));
+  }
+  assert.ok(whole>0);
+});
