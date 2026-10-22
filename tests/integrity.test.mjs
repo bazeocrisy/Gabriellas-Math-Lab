@@ -6,7 +6,8 @@ import assert from 'node:assert/strict';
 import { loadGML, CORE, LESSONS } from './lib/load.mjs';
 import { strip } from './lib/generic.mjs';
 
-const G = loadGML([...CORE, 'js/scoring.js', 'js/storage.js', 'js/practice.js', 'js/test.js']);
+globalThis.window = globalThis;
+const G = loadGML([...CORE, 'js/scoring.js', 'js/storage.js', 'js/practice.js', 'js/test.js', 'curriculum/chapter4/outline.js', 'curriculum/chapter4/content.js']);
 const { engine, store } = G;
 // A stand-in for the browser's localStorage (saved items are its own properties, like the real one).
 class FakeStorage {
@@ -25,7 +26,7 @@ const FIXED_LABELS = new Set(['d02/R1', 'd03/S1', 'd03/S3', 'd03/L1', 'd03/E1', 
 test('answer clues: no multiple-choice template gives its answer away by length or position', () => {
   const N = 1000;
   const report = [];
-  for (const id of LESSONS) for (const t of engine.banks[id].templates) {
+  for (const id of [...LESSONS, ...G.chapter4.lessons.map(l => l.id)]) for (const t of engine.banks[id].templates) {
     let mc = 0, longest = 0, shortest = 0, clear = 0, n = 0;
     const pos = [0, 0, 0, 0, 0, 0];
     for (let seed = 1; seed <= N; seed++) {

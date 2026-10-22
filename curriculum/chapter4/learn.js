@@ -33,8 +33,12 @@
       [
         "Choose useful compatible numbers",
         p(
-          "For 19.82 − 4.91, nearby compatible numbers 20 and 5 give 20 − 5 = 15. If more precision is useful, round each operand to tenths: 19.8 − 4.9 = 14.9. State which method you used. The exact difference is 14.91; both estimates help check its size. For a benchmark comparison such as 0.87 + 0.126, the gap from 0.87 to 1 is 0.130. Since 0.126 is smaller than that gap, the sum is less than 1 (exactly 0.996). Equivalent decimals let you compare tenths, hundredths and thousandths.",
-        ),
+          "Compatible numbers are nearby numbers that are easy to calculate with. For 19.82 − 4.91, use 20 − 5 = 15. Rounding each number to tenths instead gives 19.8 − 4.9 = 14.9. Both estimates help check the exact difference, 14.91. State which method you used.",
+        ) + p("You can also compare a sum with a benchmark, such as 1. For 0.87 + 0.126:") + steps([
+          "Find the gap from 0.87 to 1: 1 − 0.870 = 0.130.",
+          "Compare the second amount with that gap: 0.126 &lt; 0.130.",
+          "The sum is less than 1. Its exact value is 0.996.",
+        ]),
       ],
       [
         "Use an estimate to catch a mistake",

@@ -60,6 +60,7 @@ try {
           `return !/Something went wrong/.test(document.body.innerText)&&!!document.querySelector('.c4-learn');`,
         ),
       );
+      if (page < 5) { await js(`document.querySelector('[data-c4=next]').click();`); await b.wait(50); }
     }
     await js(
       `const q=GML.chapter4.make({lesson:'${id}',id:'calculate-2',seed:31415});const host=document.querySelector('.c4-guided'),inp=host.querySelector('.num-input');inp.value=q.answer;inp.dispatchEvent(new Event('input',{bubbles:true}));host.querySelector('[data-act=check]').click();document.querySelector('[data-c4=next]').click();`,
@@ -237,6 +238,20 @@ try {
     check(`${id} can finish Learn after a supported walkthrough`,await js(`const d=GML.store.getDraft('c4-learn-${id}');return d.check.shown&&!d.check.firstTry&&!document.querySelector('[data-c4=next]').disabled&&!document.querySelector('.sol-end').hidden;`));
   }
   await start('4-2','practice');
+  // A last-page deep link must not count the earlier teaching screens as reviewed.
+  await js(`const p=GML.chapter4.progress('4-1');p.learn=false;GML.store.setDraft('c4-progress-4-1',p);GML.store.clearDraft('c4-learn-4-1');`);
+  await load('#/chapter4/4-1/learn/5');
+  await js(`document.querySelector('[data-act=solution]').click();document.querySelector('[data-act=sol-all]').click();document.querySelector('[data-c4=next]').click();`);
+  await b.wait(100);
+  check('Last-page deep link returns to missing instruction without awarding completion',await js(`return location.hash==='#/chapter4/4-1/learn/1'&&!GML.chapter4.progress('4-1').learn;`));
+  for(let page=1;page<=4;page++){await load('#/chapter4/4-1/learn/'+page);await js(`document.querySelector('[data-c4=next]').click();`);await b.wait(50);}
+  await js(`document.querySelector('[data-c4=next]').click();`);
+  check('Reviewing all earlier screens then finishing awards Learn completion',await js(`return GML.chapter4.progress('4-1').learn;`));
+  const historyBeforeRestart=await js(`return JSON.stringify(GML.chapter4.progress('4-1').history);`);
+  await load('#/chapter4/4-1/learn/1');
+  await js(`document.querySelector('[data-c4=restart]').click();`);
+  check('Restart clears current Learn completion and retains assessment history',await js(`return !GML.chapter4.progress('4-1').learn&&JSON.stringify(GML.chapter4.progress('4-1').history)===${JSON.stringify(historyBeforeRestart)};`));
+  await load('#/chapter4/4-2/practice');
   check('Practice can ask for help before any wrong answer',await js(`const d=GML.store.getDraft('c4-session-4-2-practice');return !d.states[0].attempts&&!!document.querySelector('[data-act=solution]')&&document.querySelector('[data-c4=prev]').disabled;`));
   await js(`document.querySelector('[data-act=solution]').click();document.querySelector('[data-act=sol-all]').click();document.querySelector('[data-c4=next]').click();document.querySelector('[data-c4=prev]').click();`);
   await b.reload();
@@ -267,6 +282,12 @@ try {
       "#/parent",
     ]) {
       await load(h);
+      if(h==='#/chapter4/4-4/practice'){
+        await js(`GML.store.clearDraft('c4-session-4-4-practice');`);
+        await b.reload();
+        await js(`document.querySelector('[data-c4=start]').click();`);
+        check(`Responsive Practice is an active question at ${width}px`,await js(`return !!document.querySelector('.c4-question .q-prompt')&&!/Practice complete/.test(document.querySelector('h1').textContent);`));
+      }
       const bad = await js(
         `return {overflow:document.documentElement.scrollWidth>document.documentElement.clientWidth,small:[...document.querySelectorAll('.btn,.c4-parent summary,.choice,.c4-crumbs a')].filter(x=>x.offsetParent&&!x.closest('[hidden]')&&x.getBoundingClientRect().height<44).map(x=>x.innerText.slice(0,25))};`,
       );

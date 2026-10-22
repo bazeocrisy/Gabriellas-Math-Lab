@@ -171,8 +171,8 @@ try {
     return { blank, att0, ...w };`);
   check('practice: blank answer asks for an answer and is not counted', /first|Choose|shade|Type/.test(r.blank) && r.att0 === 0, r);
   check('practice: wrong answer says not correct, explains, stays on the question', r.wrong && r.msg.length > 15 && r.next === '' && r.idx === 0, r);
-  check('practice: checking the same wrong answer again is not counted and cannot unlock the solution', r.sameAgain === 1 && !r.solEarly, r);
-  check('practice: "Show me how" appears only after 3 different wrong tries', r.skip || r.sol, r);
+  check('practice: checking the same wrong answer again is not counted', r.sameAgain === 1, r);
+  check('practice: worked help remains available without guessing', r.solEarly && r.sol, r);
   // Refresh in the middle: same question, same hints and attempts.
   await b.reload();
   r = await js(`${H} return { idx: draft('practice-d01').i, hints: document.querySelectorAll('.hint').length, wrongShown: !!document.querySelector('.fb-wrong') };`);
@@ -408,6 +408,9 @@ try {
   for (const id of ['M4', 'PL5', 'M5', 'M9', 'C2', 'E4']) {
     await js(`const q = GML.engine.make('d01', '${id}', 3); localStorage.setItem('gml:v1:draft:practice-d01', JSON.stringify({ set: Array.from({ length: 10 }, () => ({ id: '${id}', seed: 3, sig: q.sig })), i: 0, states: Array.from({ length: 10 }, () => ({})), finished: false }));`);
     await b.load(URL + 'index.html#/d01/practice');
+    await b.reload();
+    const fixture = await js(`const d=GML.store.getDraft('practice-d01');const q=GML.engine.make('d01',d.set[0].id,d.set[0].seed);return {id:d.set[0].id,prompt:document.querySelector('.coach-q .q-prompt').textContent,expected:new DOMParser().parseFromString(q.prompt,'text/html').body.textContent};`);
+    check(`format fixture renders ${id}`, fixture.id === id && fixture.prompt === fixture.expected, fixture);
     await noOverflow(`iPhone SE practice ${id}`);
     await bigTargets(`iPhone SE practice ${id}`);
     await b.shot(path.join(SHOTS, `practice-${id}-375.png`), false);

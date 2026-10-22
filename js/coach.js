@@ -1,5 +1,5 @@
 // Coached question (Practice and Teach "Try it together"): Check answer, three progressive hints,
-// misconception-specific feedback, unlimited retries, and a worked solution only after several tries.
+// misconception-specific feedback, unlimited retries, and optional immediate worked help in learning modes.
 (function (G) {
   'use strict';
   const SOLUTION_AFTER = 3; // wrong attempts before "Show me how to solve it" is offered

@@ -745,3 +745,18 @@ h1, h2, h3, .pillar-title, .brand { font-family: ui-rounded, "SF Pro Rounded", "
 .c4-lesson-card .c4-card-links { display:flex;gap:2px 4px;margin:0;padding-top:4px; }
 .c4-lesson-card .lc-next { margin-top:8px; }
 @media(min-width:1100px){.c4-menu .lesson-grid { grid-template-columns:repeat(3,minmax(0,1fr)); }}
+
+/* Keep the lesson itself near the top; other modes remain one tap away. */
+.c4-learn-context { display:flex; flex-wrap:wrap; align-items:center; gap:.5rem 1rem; margin:0 0 .75rem; }
+.c4-learn-context .c4-back { margin:0; }
+.c4-activity-picker { margin:0; }
+.c4-activity-picker > summary { cursor:pointer; display:list-item; list-style:none; min-height:44px; }
+.c4-activity-picker[open] { flex-basis:100%; }
+.c4-activity-picker .c4-mode-nav { margin:.5rem 0; }
+.practice-pager { margin:1rem 0; }
+.btn-help { border-color:var(--practice); color:var(--practice-dark); background:var(--practice-soft); }
+@media(max-width:600px){
+ .c4-learn-context .c4-back span { display:none; }
+ .c4-learn-context { gap:.5rem; }
+ .page-chapter4 .c4-learn { font-size:1.05rem; line-height:1.6; }
+}
