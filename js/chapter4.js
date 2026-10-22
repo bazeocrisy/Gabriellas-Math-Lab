@@ -66,7 +66,7 @@
       : "Not taken";
   function menu(app) {
     app.classList.add("c4-menu");
-    app.innerHTML = `${homeLink}<section class="hero"><p class="section-kicker">Textbook learning path · printed pages 101–140</p><h1 tabindex="-1">Chapter 4 — Add and Subtract Decimals</h1><p>Choose any lesson. Learn, practice with hints, try independent questions, then take a test. No prerequisites.</p></section><div class="lesson-grid">${C.lessons
+    app.innerHTML = `${homeLink}<section class="hero"><p class="section-kicker">Textbook learning path · printed pages 101–140</p><h1 tabindex="-1">Chapter 4 — Add and Subtract Decimals</h1><p>Choose any lesson. Learn, practice with hints, try independent questions, then take a test. No prerequisites.</p><p class="fine">Helped means learning pages were opened during that test, so it cannot earn mastery. ★ marks mastery earned on an independent test, even if a later attempt used help.</p></section><div class="lesson-grid">${C.lessons
       .map((l) => {
         const d = get(l.id), lastTest = latest(d,"test");
         return `<article class="lesson-card c4-lesson-card" aria-labelledby="c4-title-${l.id}">

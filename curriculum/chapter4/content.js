@@ -75,7 +75,7 @@
       return solutionSteps([
         `Each small square is one hundredth. Rename ${f(a)} as ${a} hundredths and ${f(b)} as ${b} hundredths.`,
         sub ? `Start with ${a} hundredths. Remove ${b} hundredths; ${v} remain.` : `Combine ${a} + ${b} = ${v} hundredths.`,
-        `${v} hundredths = ${f(v)}. ${sub ? `Add back to check: ${f(b)} + ${f(v)} = ${f(a)}.` : `Exchange each group of 100 hundredths for one whole; ${Math.floor(v / 100)} whole(s) and ${v % 100} hundredths remain.`}`,
+        `${v} hundredths = ${f(v)}. ${sub ? `Add back to check: ${f(b)} + ${f(v)} = ${f(a)}.` : v < 100 ? 'The combined amount is less than one whole, so no whole-unit exchange is needed.' : `Exchange each group of 100 hundredths for one whole: ${Math.floor(v / 100)} ${Math.floor(v / 100) === 1 ? 'whole' : 'wholes'} and ${v % 100} hundredths.`}`,
       ]) + (sub ? `<p>Start with ${f(a)} and cross out ${f(b)}:</p><div class="c4-models">${Array.from({length:Math.ceil(a/100)}, (_, i) => M.grid(Math.min(100, a-i*100), {cross:Math.min(Math.max(b-i*100,0),Math.min(100,a-i*100))})).join('')}</div>` : `<p>The combined amount:</p>${grid(v)}`);
     }
     if (n === 7) {
