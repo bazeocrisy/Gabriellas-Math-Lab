@@ -34,9 +34,9 @@ async function answerAll(id, mode, miss = 0) {
 try {
   await load("#/");
   check(
-    "Two learning paths on home",
+    "Three learning paths on home, including Chapter 5",
     await js(
-      `return document.querySelectorAll('.c4-home .pillar').length===2;`,
+      `return document.querySelectorAll('.c4-home .pillar').length===3&&document.querySelector('.c4-home .pillar-chapter5').getAttribute('href')==='chapter-5/';`,
     ),
   );
   await js(
