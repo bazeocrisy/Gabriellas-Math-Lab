@@ -38,78 +38,47 @@
   <symbol id="i-fit" viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v3"/><path d="M21 8V5a2 2 0 0 0-2-2h-3"/><path d="M3 16v3a2 2 0 0 0 2 2h3"/><path d="M16 21h3a2 2 0 0 0 2-2v-3"/></symbol>
 </svg>
 
-<!-- AREA 1 · Header card -->
+<!-- Top bar: title, page navigation, save status -->
 <header class="card app-header">
-  <a class="brand" href="../index.html" aria-label="Gabriella's Math Lab — return to home">
+  <a class="brand" href="../index.html" aria-label="Gabriella's Math Lab, return to home">
     <span class="brand-mark" aria-hidden="true">G</span>
-    <span class="brand-text"><span class="brand-name">Gabriella's Math Lab</span><span class="brand-sub">Chapter 5 · <span id="lessonTitle">Lesson 5-1</span></span></span>
+    <span class="brand-text"><span class="brand-name">Gabriella's Math Lab</span><span class="brand-sub">Chapter 5 · Lesson 5-1</span></span>
   </a>
+  <nav class="pager" aria-label="Page navigation">
+    <button id="prev" class="btn btn-icon" aria-label="Previous page"><svg class="icon" aria-hidden="true"><use href="#i-left"/></svg></button>
+    <label class="page-select"><span class="sr-only">Textbook page</span><select id="pages" aria-label="Textbook page"></select></label>
+    <button id="next" class="btn btn-icon" aria-label="Next page"><svg class="icon" aria-hidden="true"><use href="#i-right"/></svg></button>
+  </nav>
   <div class="header-actions">
-    <label class="lesson-select"><span class="sr-only">Lesson</span>
-      <select id="lesson" aria-label="Lesson">
-        <option value="5-1" selected>Lesson 5-1 · Powers and Exponents</option>
-        <option disabled>Lesson 5-2 · coming soon</option>
-        <option disabled>Lesson 5-3 · coming soon</option>
-        <option disabled>Lesson 5-4 · coming soon</option>
-      </select>
-    </label>
-    <span class="save-chip" data-state="saved"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><span id="saveStatus" role="status">Loading…</span></span>
+    <span class="save-chip"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><span id="saveStatus" role="status">Loading…</span></span>
     <a class="btn btn-ghost home-link" href="../index.html"><svg class="icon" aria-hidden="true"><use href="#i-home"/></svg><span class="label">Home</span></a>
   </div>
 </header>
 
-<div class="workspace">
-  <!-- Left rail: AREA 2 (navigation + progress) and the page's question navigator -->
-  <aside class="rail" aria-label="Lesson navigation">
-    <nav class="card nav-card" aria-label="Page navigation">
-      <div class="nav-heading">
-        <p class="eyebrow" id="pageSection">Be Curious</p>
-        <p class="page-title"><span id="pageLabel">Page 143</span> <span class="muted" id="pageOf">of 146</span></p>
-      </div>
-      <div class="pager">
-        <button id="prev" class="btn btn-icon" aria-label="Previous page"><svg class="icon" aria-hidden="true"><use href="#i-left"/></svg></button>
-        <label class="page-select"><span class="sr-only">Textbook page</span><select id="pages" aria-label="Textbook page"></select></label>
-        <button id="next" class="btn btn-icon" aria-label="Next page"><svg class="icon" aria-hidden="true"><use href="#i-right"/></svg></button>
-      </div>
-      <div class="progress-block">
-        <div class="steps-meter" id="pageSteps" aria-hidden="true"></div>
-        <p class="meter-caption"><span id="pageProgress"></span></p>
-        <div class="meter" aria-hidden="true"><span id="completionBar"></span></div>
-        <p class="meter-caption"><span id="completion"></span></p>
-      </div>
-      <button id="questions" class="btn btn-soft questions-btn"><svg class="icon" aria-hidden="true"><use href="#i-list"/></svg><span>Questions</span><span class="count" id="questionCount"></span></button>
-    </nav>
-
-    <section class="card qnav-card" aria-labelledby="qnavTitle">
-      <div class="card-head"><h2 id="qnavTitle">Questions on this page</h2><span class="count" id="qnavCount"></span></div>
-      <ul class="qlist" id="pageQuestions"></ul>
-    </section>
-  </aside>
-
-  <!-- AREA 3 · Original textbook card -->
-  <section class="card book-card" aria-label="Textbook">
-    <div class="toolbar" role="toolbar" aria-label="Writing and reading tools">
-      <div class="tool-group segmented" role="group" aria-label="Input mode">
-        <button data-mode="type" aria-pressed="true" title="Type an answer"><svg class="icon" aria-hidden="true"><use href="#i-type"/></svg><span class="label">Type</span></button>
-        <button data-mode="pen" aria-pressed="false" title="Write with a pencil"><svg class="icon" aria-hidden="true"><use href="#i-pencil"/></svg><span class="label">Pencil</span></button>
-        <button data-mode="eraser" aria-pressed="false" title="Erase handwriting"><svg class="icon" aria-hidden="true"><use href="#i-eraser"/></svg><span class="label">Eraser</span></button>
-        <button data-mode="pan" aria-pressed="false" title="Move the page"><svg class="icon" aria-hidden="true"><use href="#i-move"/></svg><span class="label">Pan</span></button>
-      </div>
-      <div class="tool-group" role="group" aria-label="History">
-        <button id="undo" class="btn btn-icon" aria-label="Undo" title="Undo"><svg class="icon" aria-hidden="true"><use href="#i-undo"/></svg></button>
-        <button id="redo" class="btn btn-icon" aria-label="Redo" title="Redo"><svg class="icon" aria-hidden="true"><use href="#i-redo"/></svg></button>
-      </div>
-      <div class="tool-group zoom" role="group" aria-label="Zoom">
-        <button id="zoomOut" class="btn btn-icon" aria-label="Zoom out" title="Zoom out"><svg class="icon" aria-hidden="true"><use href="#i-minus"/></svg></button>
-        <output id="zoomLabel" aria-live="polite"></output>
-        <button id="zoomIn" class="btn btn-icon" aria-label="Zoom in" title="Zoom in"><svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg></button>
-        <label class="fit-select"><span class="sr-only">Page fit</span>
-          <select id="fit" aria-label="Page zoom"><option value="width">Fit width</option><option value="page">Fit page</option><option value="actual">100%</option></select>
-        </label>
-      </div>
-      <div class="tool-group tool-end">
-        <label class="toggle-chip" title="Show only the original page"><input id="original" type="checkbox"><svg class="icon" aria-hidden="true"><use href="#i-eye"/></svg><span class="label">Original only</span></label>
-        <details class="menu">
+<!-- The textbook -->
+<section class="card book-card" aria-label="Textbook">
+  <div class="toolbar" role="toolbar" aria-label="Writing and reading tools">
+    <div class="tool-group segmented" role="group" aria-label="Input mode">
+      <button data-mode="type" aria-pressed="true" title="Type an answer"><svg class="icon" aria-hidden="true"><use href="#i-type"/></svg><span class="label">Type</span></button>
+      <button data-mode="pen" aria-pressed="false" title="Write with a pencil"><svg class="icon" aria-hidden="true"><use href="#i-pencil"/></svg><span class="label">Pencil</span></button>
+      <button data-mode="eraser" aria-pressed="false" title="Erase handwriting"><svg class="icon" aria-hidden="true"><use href="#i-eraser"/></svg><span class="label">Eraser</span></button>
+      <button data-mode="pan" aria-pressed="false" title="Move the page"><svg class="icon" aria-hidden="true"><use href="#i-move"/></svg><span class="label">Pan</span></button>
+    </div>
+    <div class="tool-group" role="group" aria-label="History">
+      <button id="undo" class="btn btn-icon" aria-label="Undo" title="Undo"><svg class="icon" aria-hidden="true"><use href="#i-undo"/></svg></button>
+      <button id="redo" class="btn btn-icon" aria-label="Redo" title="Redo"><svg class="icon" aria-hidden="true"><use href="#i-redo"/></svg></button>
+    </div>
+    <div class="tool-group zoom" role="group" aria-label="Zoom">
+      <button id="zoomOut" class="btn btn-icon" aria-label="Zoom out" title="Zoom out"><svg class="icon" aria-hidden="true"><use href="#i-minus"/></svg></button>
+      <output id="zoomLabel" aria-live="polite"></output>
+      <button id="zoomIn" class="btn btn-icon" aria-label="Zoom in" title="Zoom in"><svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg></button>
+      <label class="fit-select"><span class="sr-only">Page fit</span>
+        <select id="fit" aria-label="Page zoom"><option value="width">Fit width</option><option value="page">Fit page</option><option value="actual">100%</option></select>
+      </label>
+    </div>
+    <div class="tool-group tool-end">
+      <label class="toggle-chip" title="Show only the original page (hides the ? buttons)"><input id="original" type="checkbox"><svg class="icon" aria-hidden="true"><use href="#i-eye"/></svg><span class="label">Original only</span></label>
+      <details class="menu">
           <summary aria-label="More options"><svg class="icon" aria-hidden="true"><use href="#i-more"/></svg><span class="label">More</span></summary>
           <div class="card menu-card">
             <p class="menu-title">Your work</p>
@@ -123,56 +92,32 @@
             <p class="menu-note">Work saves automatically in this browser. Export a backup to keep a separate copy.</p>
           </div>
         </details>
-      </div>
     </div>
-    <main id="viewer" aria-label="Textbook workspace" tabindex="-1"><div id="stage"></div></main>
-  </section>
+  </div>
+  <main id="viewer" aria-label="Textbook workspace" tabindex="-1"><div id="stage"></div></main>
+</section>
 
-  <!-- AREA 4 · Question assistance card (side panel on desktop, drawer on smaller screens) -->
-  <dialog id="drawer" class="assist" aria-labelledby="drawerTitle">
-    <div class="assist-head">
-      <div>
-        <p class="eyebrow" id="identity"></p>
-        <h2 id="drawerTitle" tabindex="-1">Questions</h2>
-        <p class="assist-detail" id="drawerDetail"></p>
-      </div>
-      <button id="closeDrawer" class="btn btn-icon btn-ghost" aria-label="Close assistance"><svg class="icon" aria-hidden="true"><use href="#i-x"/></svg></button>
-    </div>
-    <div class="assist-body">
-      <ul class="qlist" id="questionList"></ul>
-      <section id="assistance" hidden>
-        <figure class="source-card">
-          <figcaption>From your textbook</figcaption>
-          <div id="sourceQuestion" aria-label="Selected original textbook question"></div>
-        </figure>
-
-        <section class="help-card hint-card" aria-labelledby="hintTitle">
-          <h3 id="hintTitle"><span class="help-icon"><svg class="icon" aria-hidden="true"><use href="#i-bulb"/></svg></span>Hint</h3>
-          <p id="hint"></p>
-        </section>
-
-        <section class="help-card steps-card" aria-labelledby="stepsTitle">
-          <h3 id="stepsTitle"><span class="help-icon"><svg class="icon" aria-hidden="true"><use href="#i-steps"/></svg></span>Show Me How</h3>
-          <button id="showSteps" class="btn btn-soft reveal-btn" aria-expanded="false" aria-controls="steps">Show the steps</button>
-          <ol id="steps" class="step-list" hidden></ol>
-        </section>
-
-        <section class="help-card answer-card" aria-labelledby="answerTitle">
-          <h3 id="answerTitle"><span class="help-icon"><svg class="icon" aria-hidden="true"><use href="#i-answer"/></svg></span>Answer <span class="badge" id="answerBadge"></span></h3>
-          <button id="reveal" class="btn btn-soft reveal-btn" aria-expanded="false" aria-controls="answer">Reveal the answer</button>
-          <p id="answer" class="answer-text" hidden></p>
-        </section>
-
-        <label class="done-toggle"><input id="done" type="checkbox"><span class="done-box" aria-hidden="true"><svg class="icon"><use href="#i-check"/></svg></span><span>I finished this question</span></label>
-      </section>
-    </div>
-    <div class="assist-foot" id="assistFoot" hidden>
-      <button id="prevQuestion" class="btn btn-ghost"><svg class="icon" aria-hidden="true"><use href="#i-left"/></svg>Previous</button>
-      <button id="allQuestions" class="btn btn-ghost">All questions</button>
-      <button id="nextQuestion" class="btn btn-ghost">Next<svg class="icon" aria-hidden="true"><use href="#i-right"/></svg></button>
-    </div>
-  </dialog>
-</div>
+<!-- Solution card: appears at the bottom when a ? is tapped -->
+<section id="help" class="card help" role="region" aria-labelledby="helpTitle" hidden>
+  <div class="help-head">
+    <div><h2 id="helpTitle" tabindex="-1">Question</h2><p class="help-detail" id="helpDetail"></p></div>
+    <button id="closeHelp" class="btn btn-icon btn-ghost" aria-label="Close solution"><svg class="icon" aria-hidden="true"><use href="#i-x"/></svg></button>
+  </div>
+  <div class="help-grid">
+    <section class="help-card hint-card" aria-labelledby="hintTitle">
+      <h3 id="hintTitle"><span class="help-icon"><svg class="icon" aria-hidden="true"><use href="#i-bulb"/></svg></span>Hint</h3>
+      <p id="hint"></p>
+    </section>
+    <section class="help-card steps-card" aria-labelledby="stepsTitle">
+      <h3 id="stepsTitle"><span class="help-icon"><svg class="icon" aria-hidden="true"><use href="#i-steps"/></svg></span>Show Me How</h3>
+      <ol id="steps" class="step-list"></ol>
+    </section>
+    <section class="help-card answer-card" aria-labelledby="answerTitle">
+      <h3 id="answerTitle"><span class="help-icon"><svg class="icon" aria-hidden="true"><use href="#i-answer"/></svg></span>Answer <span class="badge" id="answerBadge"></span></h3>
+      <p id="answer" class="answer-text"></p>
+    </section>
+  </div>
+</section>
 
 <dialog id="clearDialog" class="card confirm" aria-labelledby="clearTitle">
   <h2 id="clearTitle">Clear this page?</h2>

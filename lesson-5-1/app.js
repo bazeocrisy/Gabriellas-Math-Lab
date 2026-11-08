@@ -5,7 +5,6 @@ import { paint, point, hit } from './lib/ink.js';
 
 const $ = (id) => document.getElementById(id);
 const SVG_NS = 'http://www.w3.org/2000/svg';
-const WIDE = matchMedia('(min-width: 1180px)');
 const fetchJSON = async (p) => { const r = await fetch(p); if (!r.ok) throw new Error(`Could not load ${p}`); return r.json(); };
 
 function icon(name, cls = 'icon') {
@@ -18,7 +17,6 @@ function el(tag, cls, text) { const e = document.createElement(tag); if (cls) e.
 try {
   const [manifest, fields, questions] = await Promise.all(['manifest', 'fields', 'questions'].map((n) => fetchJSON(`data/${n}.json`)));
   const numbers = manifest.pages.map((p) => p.number);
-  const questionKeys = Object.entries(questions).flatMap(([p, qs]) => qs.map((q) => p + '_' + q.id));
   const pageInfo = (p) => manifest.pages.find((x) => x.number === p);
   const asset = (p) => pageInfo(p).asset;
 
@@ -27,7 +25,7 @@ try {
   try { state = load(localStorage); }
   catch (e) { state = blank(); blocked = true; setStatus(e.message, true); }
   let page = state.page, mode = 'type', width = 700, scaleMode = 'width';
-  let selected = null, current = null, gesture = null, pan = null, lastFocus = null, quietClose = false;
+  let selected = null, current = null, gesture = null, pan = null, lastFocus = null;
   const undo = {}, redo = {};
 
   function setStatus(text, error = false) { $('saveStatus').textContent = text; document.body.dataset.error = String(error); }
@@ -55,38 +53,9 @@ try {
     const [first, ...rest] = q.title.split(' · ');
     return isNumbered(q) ? { heading: `Question ${q.id.toUpperCase()}`, detail: rest.join(' · ') } : { heading: first, detail: rest.join(' · ') };
   }
-  const done = (q) => !!state.completed[page + '_' + q.id];
 
-  /* ---------- Progress + navigation card ---------- */
-  function progress() {
-    const count = questionKeys.filter((k) => state.completed[k]).length, idx = numbers.indexOf(page);
-    $('completion').textContent = `${count} of ${questionKeys.length} questions done`;
-    $('completionBar').style.width = (count / questionKeys.length * 100) + '%';
-    $('pageProgress').textContent = `Page ${idx + 1} of ${numbers.length} in this lesson`;
-    $('pageLabel').textContent = `Page ${page}`;
-    $('pageOf').textContent = `of ${numbers.at(-1)}`;
-    $('pageSection').textContent = pageInfo(page).section;
-    $('pageSteps').replaceChildren(...numbers.map((n, i) => el('span', i < idx ? 'seen' : i === idx ? 'current' : '')));
-    const n = questions[page].length;
-    $('questionCount').textContent = n; $('qnavCount').textContent = n;
-  }
-
-  /* ---------- Question navigator (rail card + drawer list) ---------- */
-  function questionItem(q, onClick) {
-    const li = el('li'), b = el('button', 'qitem' + (done(q) ? ' complete' : ''));
-    const { heading, detail } = label(q);
-    const badge = el('span', 'qbadge'); badge.setAttribute('aria-hidden', 'true');
-    if (isNumbered(q)) badge.textContent = q.id.toUpperCase(); else badge.append(icon('star'));
-    const text = el('span', 'qtext'); text.append(el('strong', '', heading)); if (detail) text.append(el('span', '', detail));
-    const st = el('span', 'qstate'); st.append(icon('check'));
-    b.append(badge, text, st);
-    b.dataset.question = q.id;
-    b.setAttribute('aria-label', `${heading}${detail ? ', ' + detail : ''}${done(q) ? ', completed' : ''}`);
-    if (selected?.id === q.id) b.setAttribute('aria-current', 'true');
-    b.onclick = () => onClick(q, b);
-    li.append(b); return li;
-  }
-  function renderRail() { $('pageQuestions').replaceChildren(...questions[page].map((q) => questionItem(q, openQuestion))); }
+  /* ---------- Page label ---------- */
+  function updateNav() { $('pages').value = page; $('prev').disabled = page === numbers[0]; $('next').disabled = page === numbers.at(-1); }
 
   /* ---------- Textbook page ---------- */
   function sheet(p, printing = false) {
@@ -115,10 +84,10 @@ try {
     if (!printing) {
       for (const q of questions[p]) {
         const { heading, detail } = label(q);
-        const b = el('button', 'marker ' + q.side + (state.completed[p + '_' + q.id] ? ' complete' : ''));
-        b.style.top = q.anchor * 100 + '%';
-        if (isNumbered(q)) b.textContent = q.id.toUpperCase(); else b.append(icon('star'));
-        b.title = q.title; b.dataset.question = q.id;
+        const b = el('button', 'marker ' + q.side);
+        b.style.top = q.anchor * 100 + '%'; b.dataset.y = q.anchor;
+        b.textContent = '?';
+        b.title = `Help with ${heading}`; b.dataset.question = q.id;
         b.setAttribute('aria-label', `Help with ${heading}${detail ? ', ' + detail : ''}`);
         b.onclick = () => openQuestion(q, b);
         layer.append(b);
@@ -145,9 +114,7 @@ try {
   function render() {
     finish();
     $('stage').replaceChildren(sheet(page));
-    $('pages').value = page;
-    $('prev').disabled = page === numbers[0]; $('next').disabled = page === numbers.at(-1);
-    progress(); renderRail(); updateHistory(); applyZoom();
+    updateNav(); updateHistory(); applyZoom();
     if (selected) highlight(selected, false);
   }
 
@@ -156,12 +123,24 @@ try {
     const viewer = $('viewer'), cs = getComputedStyle(viewer);
     const padX = parseFloat(cs.paddingLeft) + parseFloat(cs.paddingRight), padY = parseFloat(cs.paddingTop) + parseFloat(cs.paddingBottom);
     const available = Math.max(160, viewer.clientWidth - padX);
-    if (scaleMode === 'width') width = available;
+    if (scaleMode === 'width') width = Math.min(available, 1000);
     else if (scaleMode === 'page') width = Math.min(available, Math.max(160, (viewer.clientHeight - padY) * 612 / 792));
     else if (scaleMode === 'actual') width = 816;
     width = Math.max(160, Math.min(3264, width));
     $('stage').style.width = width + 'px'; $('stage').style.setProperty('--page-width', width + 'px');
     $('zoomLabel').textContent = Math.round(width / 816 * 100) + '%';
+    spaceMarkers();
+  }
+  // Keep neighbouring ? buttons from overlapping when the page is small: push apart from the top down.
+  function spaceMarkers() {
+    const sheetEl = $('stage').querySelector('.sheet'); if (!sheetEl) return;
+    const H = sheetEl.clientHeight, size = 44, gap = 40;
+    for (const side of ['left', 'right']) {
+      const ms = [...sheetEl.querySelectorAll('.marker.' + side)].sort((a, b) => a.dataset.y - b.dataset.y);
+      let prev = -Infinity;
+      for (const m of ms) { const y = Math.max(m.dataset.y * H, prev + gap, size / 2); m.style.top = y + 'px'; prev = y; }
+      for (let i = ms.length - 1, next = Infinity; i >= 0; i--) { const y = Math.min(parseFloat(ms[i].style.top), next - gap, H - size / 2); ms[i].style.top = y + 'px'; next = y; }
+    }
   }
   function zoom(f) { scaleMode = 'manual'; width *= f; applyZoom(); }
 
@@ -171,7 +150,7 @@ try {
     finish(); document.activeElement?.blur?.();
     page = p; state.page = p; save();
     if (pushHistory && location.hash !== `#page=${p}`) location.hash = `page=${p}`;
-    if ($('drawer').open) { quietClose = true; $('drawer').close(); }
+    if (!$('help').hidden) hideHelp(false);
     selected = null;
     render(); $('viewer').scrollTo(0, 0);
   }
@@ -180,60 +159,34 @@ try {
     document.querySelectorAll('[data-mode]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.mode === m)));
   }
 
-  /* ---------- Question assistance card ---------- */
-  function showDrawer(trigger) {
-    const d = $('drawer');
-    if (trigger) lastFocus = trigger; else if (!d.open) lastFocus = document.activeElement;
-    // Side panel when wide (page stays usable); modal drawer on smaller screens.
-    if (d.open && d.matches(':modal') === WIDE.matches) { quietClose = true; d.close(); }
-    document.body.classList.add('help-open');
-    if (!d.open) { if (WIDE.matches) d.show(); else d.showModal(); }
-    applyZoom();
-    $('drawerTitle').focus({ preventScroll: true });
-  }
-  function listQuestions() {
-    clearHighlight(); selected = null;
-    $('drawer').dataset.question = '';
-    $('identity').textContent = `Page ${page} · ${pageInfo(page).section}`;
-    $('drawerTitle').textContent = 'Questions';
-    $('drawerDetail').textContent = `${questions[page].length} on this page. Choose one for a hint, steps and the answer.`;
-    $('questionList').replaceChildren(...questions[page].map((q) => questionItem(q, openQuestion)));
-    $('questionList').hidden = false; $('assistance').hidden = true; $('assistFoot').hidden = true;
-    renderRail(); showDrawer();
-  }
+  /* ---------- Solution card ---------- */
   function openQuestion(q, trigger) {
-    selected = q;
-    const { heading, detail } = label(q), list = questions[page], i = list.indexOf(q);
-    $('drawer').dataset.question = q.id;
-    $('identity').textContent = `Page ${page} · ${pageInfo(page).section}`;
-    $('drawerTitle').textContent = heading;
-    $('drawerDetail').textContent = detail;
-    $('questionList').hidden = true; $('assistance').hidden = false; $('assistFoot').hidden = false;
+    selected = q; lastFocus = trigger || lastFocus;
+    const { heading, detail } = label(q);
+    $('helpTitle').textContent = heading; $('helpDetail').textContent = detail;
+    $('help').dataset.question = q.id;
     $('hint').textContent = q.hint;
     $('steps').replaceChildren(...q.steps.map((s) => el('li', '', s)));
-    setReveal('showSteps', 'steps', false); setReveal('reveal', 'answer', false);
     $('answer').textContent = q.answer;
     $('answerBadge').textContent = q.openEnded ? 'Sample answer' : 'Verified';
     $('answerBadge').title = q.openEnded ? 'Other answers can also be correct when well explained.' : q.verification || '';
-    $('done').checked = done(q);
-    $('prevQuestion').disabled = i <= 0; $('nextQuestion').disabled = i >= list.length - 1;
-    // Unmodified excerpt of the original page, cropped by viewBox only.
-    const svg = document.createElementNS(SVG_NS, 'svg'), im = document.createElementNS(SVG_NS, 'image');
-    const [x, y, w, h] = q.crop;
-    svg.setAttribute('viewBox', `${x * 612} ${y * 792} ${w * 612} ${h * 792}`); svg.setAttribute('role', 'img');
-    svg.setAttribute('aria-label', `Unmodified source excerpt for ${q.title}`);
-    im.setAttribute('href', asset(page)); im.setAttribute('width', '612'); im.setAttribute('height', '792');
-    svg.append(im); $('sourceQuestion').replaceChildren(svg);
-    $('drawer').querySelector('.assist-body').scrollTop = 0;
-    renderRail(); highlight(q, true);
-    showDrawer(trigger);
+    $('help').querySelector('.help-grid').scrollTop = 0;
+    $('help').hidden = false;
+    document.body.classList.add('help-open');
+    document.body.style.setProperty('--help-h', ($('help').offsetHeight + 12) + 'px');
+    applyZoom(); highlight(q, true);
+    $('helpTitle').focus({ preventScroll: true });
   }
-  function setReveal(btnId, targetId, open) {
-    const b = $(btnId), t = $(targetId);
-    t.hidden = !open; b.setAttribute('aria-expanded', String(open));
-    b.textContent = btnId === 'showSteps' ? (open ? 'Hide the steps' : 'Show the steps') : (open ? 'Hide the answer' : 'Reveal the answer');
+  function hideHelp(restoreFocus = true) {
+    const q = selected; selected = null;
+    $('help').hidden = true; document.body.classList.remove('help-open'); document.body.style.removeProperty('--help-h');
+    clearHighlight(); applyZoom();
+    if (!restoreFocus) return;
+    // Return focus to the textbook: the question's ? button, else the page.
+    const marker = q && $('stage').querySelector(`.marker[data-question="${q.id}"]`);
+    (marker || $('viewer')).focus({ preventScroll: !marker });
   }
-  // Outline the question on the page (overlay only) and bring it into view.
+  // Outline the question on the page (overlay only) and bring it into view above the card.
   function highlight(q, scroll) {
     clearHighlight();
     const layer = $('stage').querySelector('.layer'); if (!layer) return;
@@ -243,41 +196,16 @@ try {
     layer.querySelector(`.marker[data-question="${q.id}"]`)?.classList.add('active');
     if (scroll) requestAnimationFrame(() => {
       const v = $('viewer'), vr = v.getBoundingClientRect(), rr = ring.getBoundingClientRect();
-      if (rr.top < vr.top || rr.bottom > vr.bottom) v.scrollBy({ top: rr.top - vr.top - 24, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+      const helpTop = $('help').hidden ? vr.bottom : Math.min(vr.bottom, $('help').getBoundingClientRect().top);
+      if (rr.top < vr.top || rr.bottom > helpTop) v.scrollBy({ top: rr.top - vr.top - 24, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
     });
   }
   function clearHighlight() {
     $('stage').querySelectorAll('.q-focus').forEach((n) => n.remove());
     $('stage').querySelectorAll('.marker.active').forEach((n) => n.classList.remove('active'));
   }
-  function refreshCompletion() {
-    $('stage').querySelectorAll('.marker').forEach((m) => m.classList.toggle('complete', !!state.completed[page + '_' + m.dataset.question]));
-    renderRail(); progress();
-  }
-
-  // 'close' is dispatched asynchronously: ignore it if the panel was reopened in another mode.
-  $('drawer').addEventListener('close', () => {
-    if ($('drawer').open) { quietClose = false; return; }
-    document.body.classList.remove('help-open');
-    const q = selected; clearHighlight(); applyZoom();
-    if (quietClose) { quietClose = false; renderRail(); return; }
-    selected = null; renderRail();
-    // Return focus to the textbook: the question's marker, else the original trigger, else the page.
-    const marker = q && $('stage').querySelector(`.marker[data-question="${q.id}"]`);
-    const target = marker || (lastFocus?.isConnected ? lastFocus : $('viewer'));
-    target.focus({ preventScroll: !marker });
-  });
-  $('closeDrawer').onclick = () => $('drawer').close();
-  document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && $('drawer').open && !$('drawer').matches(':modal')) $('drawer').close(); });
-  $('showSteps').onclick = () => setReveal('showSteps', 'steps', $('steps').hidden);
-  $('reveal').onclick = () => { const open = $('answer').hidden; setReveal('reveal', 'answer', open); if (open) setReveal('showSteps', 'steps', true); };
-  $('done').onchange = () => { if (!selected) return; state.completed[page + '_' + selected.id] = $('done').checked; save(); refreshCompletion(); };
-  const stepQuestion = (d) => { const list = questions[page], q = list[list.indexOf(selected) + d]; if (q) openQuestion(q, $('stage').querySelector(`.marker[data-question="${q.id}"]`)); };
-  $('prevQuestion').onclick = () => stepQuestion(-1);
-  $('nextQuestion').onclick = () => stepQuestion(1);
-  $('allQuestions').onclick = listQuestions;
-  $('questions').onclick = listQuestions;
-  WIDE.addEventListener('change', () => { if ($('drawer').open) showDrawer(lastFocus); applyZoom(); });
+  $('closeHelp').onclick = () => hideHelp();
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !$('help').hidden) hideHelp(); });
 
   /* ---------- Wiring: navigation, tools, menu ---------- */
   for (const p of manifest.pages) { const o = el('option', '', `Page ${p.number}`); o.value = p.number; $('pages').append(o); }

@@ -15,33 +15,29 @@ try{
  await b.viewport(1440,1050,false);await b.load(url);
  check('lesson loads original first page and navigation boundary',await value(`document.querySelector('.source').naturalWidth===1836 && document.getElementById('prev').disabled && !document.getElementById('next').disabled`));
  await shot('desktop');
- // GML-006 card layout checks.
- check('desktop shows header, navigation, question navigator and textbook cards',await value(`['.app-header','.nav-card','.qnav-card','.book-card'].every(s=>{const e=document.querySelector(s);return e&&e.getClientRects().length&&e.getBoundingClientRect().width>0;})`));
- check('textbook card is the largest area on desktop',await value(`(()=>{const a=e=>{const r=document.querySelector(e).getBoundingClientRect();return r.width*r.height};return a('.book-card')>2*a('.rail')&&a('.book-card')>innerWidth*innerHeight*.5;})()`));
- check('navigation shows printed page of last page, no rows of page buttons',await value(`document.getElementById('pageLabel').textContent==='Page 143'&&document.getElementById('pageOf').textContent==='of 146'&&document.querySelectorAll('nav button').length<=3`));
- check('question navigator lists only current page questions',await value(`document.querySelectorAll('#pageQuestions .qitem').length===2`));
- await b.js(`document.querySelector('#pageQuestions .qitem').click()`);
- check('desktop assistance opens as a side panel, not a modal, with answer hidden',await value(`(()=>{const d=document.getElementById('drawer');return d.open&&!d.matches(':modal')&&document.body.classList.contains('help-open')&&document.getElementById('answer').hidden&&document.getElementById('steps').hidden&&document.getElementById('hint').textContent.length>0;})()`));
- check('selected question is highlighted on the page and in the navigator',await value(`document.querySelectorAll('.layer .q-focus').length===1&&document.querySelector('#pageQuestions [aria-current="true"]').dataset.question==='curious'`));
+ // GML-006 simplified layout checks: top bar + textbook, a ? beside each problem, no side panes.
+ check('only the top bar and textbook card are on screen; no side panes',await value(`!document.querySelector('.rail,.qnav-card,#drawer,.nav-card')&&['.app-header','.book-card'].every(s=>document.querySelector(s).getBoundingClientRect().width>0)&&document.getElementById('help').hidden`));
+ check('textbook card fills the width and most of the height on desktop',await value(`(()=>{const r=document.querySelector('.book-card').getBoundingClientRect();return r.width>innerWidth-40&&r.height>innerHeight*.75;})()`));
+ check('page controls: Page 143, previous, next',await value(`document.getElementById('pages').value==='143'&&document.getElementById('prev').disabled&&document.querySelectorAll('.pager button').length===2`));
+ check('every problem has a ? button',await value(`[...document.querySelectorAll('.marker')].length===2&&[...document.querySelectorAll('.marker')].every(m=>m.textContent==='?')`));
+ await b.js(`document.querySelector('.marker').click()`);
+ check('tapping ? shows hint, steps and answer in the solution card',await value(`(()=>{const h=document.getElementById('help');return !h.hidden&&document.getElementById('hint').textContent.length>0&&document.querySelectorAll('#steps li').length>0&&document.getElementById('answer').textContent.length>0&&document.querySelectorAll('.layer .q-focus').length===1;})()`));
  await b.js(`document.getElementById('original').checked=true;document.getElementById('original').dispatchEvent(new Event('change'))`);
- check('original-only view hides every overlay including markers and highlight',await value(`getComputedStyle(document.querySelector('.layer')).visibility==='hidden'&&getComputedStyle(document.querySelector('.q-focus')).visibility==='hidden'`));
+ check('original-only view hides every overlay including ? buttons and highlight',await value(`getComputedStyle(document.querySelector('.layer')).visibility==='hidden'&&getComputedStyle(document.querySelector('.q-focus')).visibility==='hidden'`));
  await b.js(`document.getElementById('original').checked=false;document.getElementById('original').dispatchEvent(new Event('change'))`);
- await click('closeDrawer');await b.wait(50);
- check('closing assistance removes highlight and returns focus to the textbook',await value(`!document.getElementById('drawer').open&&!document.querySelector('.q-focus')&&document.activeElement.matches('.marker[data-question="curious"]')`));
+ await click('closeHelp');await b.wait(50);
+ check('closing the solution removes highlight and returns focus to that ? button',await value(`document.getElementById('help').hidden&&!document.querySelector('.q-focus')&&document.activeElement.matches('.marker[data-question="curious"]')`));
  for(const p of ['143','144','145','146']){
   await b.js(`document.getElementById('pages').value='${p}';document.getElementById('pages').dispatchEvent(new Event('change'));`);await b.wait(100);
   check('page '+p+' identity and preserved aspect ratio',await value(`(()=>{const s=document.querySelector('.sheet'),r=s.getBoundingClientRect();return s.dataset.page==='${p}'&&Math.abs(r.width/r.height-612/792)<.001;})()`));
   check('page '+p+' exact image loaded',await value(`document.querySelector('.source').src.endsWith('page-${p}.png')`));
-  await click('questions');
-  const n=await value(`document.querySelectorAll('#questionList button').length`);check('page '+p+' question count',n===({'143':2,'144':3,'145':14,'146':6}[p]));
+  const n=await value(`document.querySelectorAll('.marker').length`);check('page '+p+' question count',n===({'143':2,'144':3,'145':14,'146':6}[p]));
   for(let i=0;i<n;i++){
    await b.js(`document.querySelectorAll('.marker')[${i}].click()`);
-   check(`page ${p} margin help ${i+1} maps to its own question without covering source`,await value(`(()=>{const m=document.querySelectorAll('.marker')[${i}],r=m.getBoundingClientRect(),s=document.querySelector('.source').getBoundingClientRect();return m.dataset.question===document.getElementById('drawer').dataset.question && document.querySelectorAll('.layer .q-focus').length===1 && m.classList.contains('active') && (r.right<=s.left||r.left>=s.right) && document.getElementById('answer').hidden;})()`));
-   await click('questions');await b.js(`document.querySelectorAll('#questionList button')[${i}].click()`);
-   check(`page ${p} question ${i+1} hint first`,await value(`!document.getElementById('steps').hidden===false && document.getElementById('answer').hidden && document.getElementById('hint').textContent.length>0 && getComputedStyle(document.getElementById('questionList')).display==='none' && document.querySelector('#sourceQuestion image').getAttribute('href').endsWith('page-${p}.png')`));
-   await click('showSteps');check('Show Me How leaves final answer hidden',await value(`document.getElementById('answer').hidden`));await click('reveal');if(p==='145'&&i===12)await shot('assistance');check('solution can be revealed',await value(`!document.getElementById('steps').hidden&&!document.getElementById('answer').hidden`));
+   check(`page ${p} ? button ${i+1} shows its own solution without covering the source`,await value(`(()=>{const m=document.querySelectorAll('.marker')[${i}],r=m.getBoundingClientRect(),s=document.querySelector('.source').getBoundingClientRect();return m.dataset.question===document.getElementById('help').dataset.question && document.getElementById('hint').textContent.length>0 && document.querySelectorAll('#steps li').length>0 && document.getElementById('answer').textContent.length>0 && document.querySelectorAll('.layer .q-focus').length===1 && m.classList.contains('active') && (r.right<=s.left+1||r.left>=s.right-1);})()`));
+   if(p==='145'&&i===12)await shot('assistance');
   }
-  await click('closeDrawer');
+  await click('closeHelp');
   await b.js(`document.getElementById('original').checked=true;document.getElementById('original').dispatchEvent(new Event('change'));document.getElementById('fit').value='page';document.getElementById('fit').dispatchEvent(new Event('change'));document.getElementById('viewer').scrollTo(0,0);`);
   await shot('original-'+p);
   await b.js(`document.getElementById('original').checked=false;document.getElementById('original').dispatchEvent(new Event('change'));`);await click('resetZoom');
@@ -49,7 +45,7 @@ try{
  await b.hash('page=145');
  await b.js(`const e=document.querySelector('[data-id="1"]');e.focus();e.value='10 × 10 × 10 × 10';e.dispatchEvent(new Event('input',{bubbles:true}));e.blur();`);
  await click('save');await b.reload();check('typed answer restores after refresh',await value(`document.querySelector('[data-id="1"]').value==='10 × 10 × 10 × 10'`));
- await b.js(`document.querySelector('.marker').click();`);await click('showSteps');await click('reveal');await click('closeDrawer');check('typed answer survives assistance open and close',await value(`document.querySelector('[data-id="1"]').value==='10 × 10 × 10 × 10'`));
+ await b.js(`document.querySelector('.marker').click();`);await click('closeHelp');check('typed answer survives assistance open and close',await value(`document.querySelector('[data-id="1"]').value==='10 × 10 × 10 × 10'`));
  await b.js(`document.querySelector('[data-mode="pen"]').click();`);
  const r=await value(`(()=>{const r=document.querySelector('.ink').getBoundingClientRect();return{x:r.x,y:r.y,w:r.width,h:r.height}})()`);
  for(const y of [.08,.5,.90]){
@@ -74,8 +70,7 @@ try{
  check('handwriting geometry remains unchanged on zoom and resize',await value(`document.querySelector('.ink path').getAttribute('d')`)===inkBefore);
  check('typed overlay remains aligned on zoom and resize',before.every((n,i)=>Math.abs(n-after[i])<.0001));
  await click('resetZoom');await b.js(`document.getElementById('viewer').scrollTo(0,0)`);await shot('tablet');
- await click('questions');check('tablet assistance opens as a modal drawer',await value(`document.getElementById('drawer').matches(':modal')`));await click('closeDrawer');
- await click('questions');await b.js(`document.querySelector('#questionList button').click();document.getElementById('done').click();`);await click('closeDrawer');await b.reload();check('completion state restores',await value(`JSON.parse(localStorage.getItem('gml:lesson-5-1:v2')).completed['145_1']===true`));
+ await b.js(`document.querySelector('.marker').click()`);check('tablet solution card fits the screen',await value(`(()=>{const r=document.getElementById('help').getBoundingClientRect();return r.left>=0&&r.right<=innerWidth&&r.bottom<=innerHeight;})()`));await click('closeHelp');
  await b.viewport(390,844,true);await click('resetZoom');await b.js(`document.getElementById('viewer').scrollTo(0,0)`);
  check('mobile chrome has no horizontal overflow',await value(`document.documentElement.scrollWidth<=390`));await shot('mobile');
  // Exercise the real backup file and restore picker, preserving a recovery copy.
@@ -107,7 +102,7 @@ try{
  await b.send('Emulation.setEmulatedMedia',{media:''});
  for(const width of [320,390,768,820,1440]){
   await b.viewport(width,1000,width<1024);await click('resetZoom');
-  check(`lesson navigation and toolbar touch targets at least 44px with no overflow at ${width}`,await value(`document.documentElement.scrollWidth<=innerWidth&&[...document.querySelectorAll('header a,header select,nav button,nav select,.toolbar button,.toolbar select,.toolbar summary,.toolbar .toggle-chip,.qitem')].filter(e=>e.getClientRects().length).every(e=>{const r=e.getBoundingClientRect();return r.width>=43.5&&r.height>=43.5;})`));
+  check(`lesson navigation and toolbar touch targets at least 44px with no overflow at ${width}`,await value(`document.documentElement.scrollWidth<=innerWidth&&[...document.querySelectorAll('header a,header select,nav button,nav select,.toolbar button,.toolbar select,.toolbar summary,.toolbar .toggle-chip,.marker')].filter(e=>e.getClientRects().length).every(e=>{const r=e.getBoundingClientRect();return r.width>=43.5&&r.height>=43.5;})`));
  }
 
  await b.close();b=await startBrowser({profile});await b.load(url);

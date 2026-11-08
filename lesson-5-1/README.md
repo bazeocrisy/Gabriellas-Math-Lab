@@ -13,7 +13,7 @@ Open `lesson-5-1/index.html` through any static HTTP server. No build step or ru
 - `lib/storage.js`: versioned persistence, nondestructive import of legacy Lesson 5-1 work, backup validation.
 - `app.js`, `index.html`, `style.css`: controller and card-based responsive UI (GML-006). Design tokens live at the top of `style.css`.
 
-Layout (GML-006): header card, navigation/progress card, a per-page question navigator card, the textbook card with one compact toolbar (mode · undo/redo · zoom · Original only · More), and a question-assistance card. Question markers sit in the page margin, outside the artwork; selecting a question outlines it with a non-destructive overlay. Original only hides every overlay. Assistance shows the Hint first; Show Me How and the Answer are explicit student actions. At ≥1180px assistance is a side panel; on tablets it is a right-hand drawer and on phones a bottom sheet (Close or Escape). See `docs/gml-006/REPORT.md`.
+Layout (GML-006): a top bar (title, page navigation, save status) and the textbook card with one compact toolbar. A "?" button in the page margin, outside the artwork, sits beside each problem. Tapping it outlines the problem with a non-destructive overlay and opens a bottom card with the Hint, Show Me How steps and Answer. Original only hides every overlay. See `docs/gml-006/REPORT.md`.
 
 ## Work and recovery
 
