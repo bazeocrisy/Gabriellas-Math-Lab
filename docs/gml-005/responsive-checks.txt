@@ -8,7 +8,7 @@
 ✔ expected screen #/decimals @320
 ✔ #/decimals @320
 ✔ expected screen #/learn @320
-✖ #/learn @320 {"error":false,"overflow":false,"small":["Test","Test","Test","Test","Test","Test","Test","Test","Test","Test"],"clipped":[],"wide":[]}
+✔ #/learn @320
 ✔ expected screen #/practice @320
 ✔ #/practice @320
 ✔ expected screen #/guides @320
@@ -374,7 +374,7 @@
 ✔ expected screen #/d10/test @320
 ✔ #/d10/test @320
 ✔ expected screen #/chapter4 @320
-✖ #/chapter4 @320 {"error":false,"overflow":false,"small":["Test","Test","Test","Test","Test","Test","Test","Test"],"clipped":[],"wide":[]}
+✔ #/chapter4 @320
 ✔ expected screen #/chapter4/4-1 @320
 ✔ #/chapter4/4-1 @320
 ✔ expected screen #/chapter4/4-1/learn/1 @320
@@ -669,8 +669,4005 @@
 ✔ expanded solution 4-8 @320
 ✔ Previous and refresh retain assisted review 4-8 @320
 ✔ forward review retains next question hint 4-8 @320
-✖ Responsive suite completed "Error: Responsive failures at 320px; fix this viewport before continuing.\n    at file:///workspace/work/Gabriellas-Math-Lab/tests/responsive.browser.mjs:72:33"
-{"passed":665,"failed":3}
+✔ expected screen #/ @375
+✔ #/ @375
+✔ expected screen #/decimals @375
+✔ #/decimals @375
+✔ expected screen #/learn @375
+✔ #/learn @375
+✔ expected screen #/practice @375
+✔ #/practice @375
+✔ expected screen #/guides @375
+✔ #/guides @375
+✔ expected screen #/parent @375
+✔ #/parent @375
+✔ expected screen #/practice/session @375
+✔ #/practice/session @375
+✔ expected screen #/practice/results @375
+✔ #/practice/results @375
+✔ expected screen #/d01/teach/1 @375
+✔ #/d01/teach/1 @375
+✔ expected screen #/d01/teach/2 @375
+✔ #/d01/teach/2 @375
+✔ expected screen #/d01/teach/3 @375
+✔ #/d01/teach/3 @375
+✔ expected screen #/d01/teach/4 @375
+✔ #/d01/teach/4 @375
+✔ expected screen #/d01/teach/5 @375
+✔ #/d01/teach/5 @375
+✔ expected screen #/d01/teach/6 @375
+✔ #/d01/teach/6 @375
+✔ expected screen #/d01/teach/7 @375
+✔ #/d01/teach/7 @375
+✔ expected screen #/d01/teach/8 @375
+✔ #/d01/teach/8 @375
+✔ expected screen #/d01/teach/9 @375
+✔ #/d01/teach/9 @375
+✔ expected screen #/d01/teach/10 @375
+✔ #/d01/teach/10 @375
+✔ expected screen #/d01/teach/11 @375
+✔ #/d01/teach/11 @375
+✔ expected screen #/d01/teach/12 @375
+✔ #/d01/teach/12 @375
+✔ expected screen #/d01/teach/13 @375
+✔ #/d01/teach/13 @375
+✔ expected screen #/d01/teach/14 @375
+✔ #/d01/teach/14 @375
+✔ expected screen #/d01/teach/15 @375
+✔ #/d01/teach/15 @375
+✔ expected screen #/d01/teach/16 @375
+✔ #/d01/teach/16 @375
+✔ expected screen #/d01/teach/17 @375
+✔ #/d01/teach/17 @375
+✔ expected screen #/d01/teach/18 @375
+✔ #/d01/teach/18 @375
+✔ expected screen #/d01/teach/19 @375
+✔ #/d01/teach/19 @375
+✔ expected screen #/d01/teach/20 @375
+✔ #/d01/teach/20 @375
+✔ expected screen #/d01/teach/21 @375
+✔ #/d01/teach/21 @375
+✔ expected screen #/d01/teach/22 @375
+✔ #/d01/teach/22 @375
+✔ expected screen #/d01/teach/23 @375
+✔ #/d01/teach/23 @375
+✔ expected screen #/d01/notes @375
+✔ #/d01/notes @375
+✔ expected screen #/d01/practice @375
+✔ #/d01/practice @375
+✔ expected screen #/d01/test @375
+✔ #/d01/test @375
+✔ expected screen #/d02/teach/1 @375
+✔ #/d02/teach/1 @375
+✔ expected screen #/d02/teach/2 @375
+✔ #/d02/teach/2 @375
+✔ expected screen #/d02/teach/3 @375
+✔ #/d02/teach/3 @375
+✔ expected screen #/d02/teach/4 @375
+✔ #/d02/teach/4 @375
+✔ expected screen #/d02/teach/5 @375
+✔ #/d02/teach/5 @375
+✔ expected screen #/d02/teach/6 @375
+✔ #/d02/teach/6 @375
+✔ expected screen #/d02/teach/7 @375
+✔ #/d02/teach/7 @375
+✔ expected screen #/d02/teach/8 @375
+✔ #/d02/teach/8 @375
+✔ expected screen #/d02/teach/9 @375
+✔ #/d02/teach/9 @375
+✔ expected screen #/d02/teach/10 @375
+✔ #/d02/teach/10 @375
+✔ expected screen #/d02/teach/11 @375
+✔ #/d02/teach/11 @375
+✔ expected screen #/d02/teach/12 @375
+✔ #/d02/teach/12 @375
+✔ expected screen #/d02/teach/13 @375
+✔ #/d02/teach/13 @375
+✔ expected screen #/d02/teach/14 @375
+✔ #/d02/teach/14 @375
+✔ expected screen #/d02/teach/15 @375
+✔ #/d02/teach/15 @375
+✔ expected screen #/d02/notes @375
+✔ #/d02/notes @375
+✔ expected screen #/d02/practice @375
+✔ #/d02/practice @375
+✔ expected screen #/d02/test @375
+✔ #/d02/test @375
+✔ expected screen #/d03/teach/1 @375
+✔ #/d03/teach/1 @375
+✔ expected screen #/d03/teach/2 @375
+✔ #/d03/teach/2 @375
+✔ expected screen #/d03/teach/3 @375
+✔ #/d03/teach/3 @375
+✔ expected screen #/d03/teach/4 @375
+✔ #/d03/teach/4 @375
+✔ expected screen #/d03/teach/5 @375
+✔ #/d03/teach/5 @375
+✔ expected screen #/d03/teach/6 @375
+✔ #/d03/teach/6 @375
+✔ expected screen #/d03/teach/7 @375
+✔ #/d03/teach/7 @375
+✔ expected screen #/d03/teach/8 @375
+✔ #/d03/teach/8 @375
+✔ expected screen #/d03/teach/9 @375
+✔ #/d03/teach/9 @375
+✔ expected screen #/d03/teach/10 @375
+✔ #/d03/teach/10 @375
+✔ expected screen #/d03/teach/11 @375
+✔ #/d03/teach/11 @375
+✔ expected screen #/d03/teach/12 @375
+✔ #/d03/teach/12 @375
+✔ expected screen #/d03/teach/13 @375
+✔ #/d03/teach/13 @375
+✔ expected screen #/d03/teach/14 @375
+✔ #/d03/teach/14 @375
+✔ expected screen #/d03/teach/15 @375
+✔ #/d03/teach/15 @375
+✔ expected screen #/d03/teach/16 @375
+✔ #/d03/teach/16 @375
+✔ expected screen #/d03/teach/17 @375
+✔ #/d03/teach/17 @375
+✔ expected screen #/d03/teach/18 @375
+✔ #/d03/teach/18 @375
+✔ expected screen #/d03/notes @375
+✔ #/d03/notes @375
+✔ expected screen #/d03/practice @375
+✔ #/d03/practice @375
+✔ expected screen #/d03/test @375
+✔ #/d03/test @375
+✔ expected screen #/d04/teach/1 @375
+✔ #/d04/teach/1 @375
+✔ expected screen #/d04/teach/2 @375
+✔ #/d04/teach/2 @375
+✔ expected screen #/d04/teach/3 @375
+✔ #/d04/teach/3 @375
+✔ expected screen #/d04/teach/4 @375
+✔ #/d04/teach/4 @375
+✔ expected screen #/d04/teach/5 @375
+✔ #/d04/teach/5 @375
+✔ expected screen #/d04/teach/6 @375
+✔ #/d04/teach/6 @375
+✔ expected screen #/d04/teach/7 @375
+✔ #/d04/teach/7 @375
+✔ expected screen #/d04/teach/8 @375
+✔ #/d04/teach/8 @375
+✔ expected screen #/d04/teach/9 @375
+✔ #/d04/teach/9 @375
+✔ expected screen #/d04/teach/10 @375
+✔ #/d04/teach/10 @375
+✔ expected screen #/d04/teach/11 @375
+✔ #/d04/teach/11 @375
+✔ expected screen #/d04/teach/12 @375
+✔ #/d04/teach/12 @375
+✔ expected screen #/d04/notes @375
+✔ #/d04/notes @375
+✔ expected screen #/d04/practice @375
+✔ #/d04/practice @375
+✔ expected screen #/d04/test @375
+✔ #/d04/test @375
+✔ expected screen #/d05/teach/1 @375
+✔ #/d05/teach/1 @375
+✔ expected screen #/d05/teach/2 @375
+✔ #/d05/teach/2 @375
+✔ expected screen #/d05/teach/3 @375
+✔ #/d05/teach/3 @375
+✔ expected screen #/d05/teach/4 @375
+✔ #/d05/teach/4 @375
+✔ expected screen #/d05/teach/5 @375
+✔ #/d05/teach/5 @375
+✔ expected screen #/d05/teach/6 @375
+✔ #/d05/teach/6 @375
+✔ expected screen #/d05/teach/7 @375
+✔ #/d05/teach/7 @375
+✔ expected screen #/d05/teach/8 @375
+✔ #/d05/teach/8 @375
+✔ expected screen #/d05/teach/9 @375
+✔ #/d05/teach/9 @375
+✔ expected screen #/d05/teach/10 @375
+✔ #/d05/teach/10 @375
+✔ expected screen #/d05/teach/11 @375
+✔ #/d05/teach/11 @375
+✔ expected screen #/d05/teach/12 @375
+✔ #/d05/teach/12 @375
+✔ expected screen #/d05/teach/13 @375
+✔ #/d05/teach/13 @375
+✔ expected screen #/d05/teach/14 @375
+✔ #/d05/teach/14 @375
+✔ expected screen #/d05/notes @375
+✔ #/d05/notes @375
+✔ expected screen #/d05/practice @375
+✔ #/d05/practice @375
+✔ expected screen #/d05/test @375
+✔ #/d05/test @375
+✔ expected screen #/d06/teach/1 @375
+✔ #/d06/teach/1 @375
+✔ expected screen #/d06/teach/2 @375
+✔ #/d06/teach/2 @375
+✔ expected screen #/d06/teach/3 @375
+✔ #/d06/teach/3 @375
+✔ expected screen #/d06/teach/4 @375
+✔ #/d06/teach/4 @375
+✔ expected screen #/d06/teach/5 @375
+✔ #/d06/teach/5 @375
+✔ expected screen #/d06/teach/6 @375
+✔ #/d06/teach/6 @375
+✔ expected screen #/d06/teach/7 @375
+✔ #/d06/teach/7 @375
+✔ expected screen #/d06/teach/8 @375
+✔ #/d06/teach/8 @375
+✔ expected screen #/d06/teach/9 @375
+✔ #/d06/teach/9 @375
+✔ expected screen #/d06/teach/10 @375
+✔ #/d06/teach/10 @375
+✔ expected screen #/d06/teach/11 @375
+✔ #/d06/teach/11 @375
+✔ expected screen #/d06/teach/12 @375
+✔ #/d06/teach/12 @375
+✔ expected screen #/d06/teach/13 @375
+✔ #/d06/teach/13 @375
+✔ expected screen #/d06/notes @375
+✔ #/d06/notes @375
+✔ expected screen #/d06/practice @375
+✔ #/d06/practice @375
+✔ expected screen #/d06/test @375
+✔ #/d06/test @375
+✔ expected screen #/d07/teach/1 @375
+✔ #/d07/teach/1 @375
+✔ expected screen #/d07/teach/2 @375
+✔ #/d07/teach/2 @375
+✔ expected screen #/d07/teach/3 @375
+✔ #/d07/teach/3 @375
+✔ expected screen #/d07/teach/4 @375
+✔ #/d07/teach/4 @375
+✔ expected screen #/d07/teach/5 @375
+✔ #/d07/teach/5 @375
+✔ expected screen #/d07/teach/6 @375
+✔ #/d07/teach/6 @375
+✔ expected screen #/d07/teach/7 @375
+✔ #/d07/teach/7 @375
+✔ expected screen #/d07/teach/8 @375
+✔ #/d07/teach/8 @375
+✔ expected screen #/d07/teach/9 @375
+✔ #/d07/teach/9 @375
+✔ expected screen #/d07/teach/10 @375
+✔ #/d07/teach/10 @375
+✔ expected screen #/d07/teach/11 @375
+✔ #/d07/teach/11 @375
+✔ expected screen #/d07/teach/12 @375
+✔ #/d07/teach/12 @375
+✔ expected screen #/d07/teach/13 @375
+✔ #/d07/teach/13 @375
+✔ expected screen #/d07/notes @375
+✔ #/d07/notes @375
+✔ expected screen #/d07/practice @375
+✔ #/d07/practice @375
+✔ expected screen #/d07/test @375
+✔ #/d07/test @375
+✔ expected screen #/d08/teach/1 @375
+✔ #/d08/teach/1 @375
+✔ expected screen #/d08/teach/2 @375
+✔ #/d08/teach/2 @375
+✔ expected screen #/d08/teach/3 @375
+✔ #/d08/teach/3 @375
+✔ expected screen #/d08/teach/4 @375
+✔ #/d08/teach/4 @375
+✔ expected screen #/d08/teach/5 @375
+✔ #/d08/teach/5 @375
+✔ expected screen #/d08/teach/6 @375
+✔ #/d08/teach/6 @375
+✔ expected screen #/d08/teach/7 @375
+✔ #/d08/teach/7 @375
+✔ expected screen #/d08/teach/8 @375
+✔ #/d08/teach/8 @375
+✔ expected screen #/d08/teach/9 @375
+✔ #/d08/teach/9 @375
+✔ expected screen #/d08/teach/10 @375
+✔ #/d08/teach/10 @375
+✔ expected screen #/d08/teach/11 @375
+✔ #/d08/teach/11 @375
+✔ expected screen #/d08/notes @375
+✔ #/d08/notes @375
+✔ expected screen #/d08/practice @375
+✔ #/d08/practice @375
+✔ expected screen #/d08/test @375
+✔ #/d08/test @375
+✔ expected screen #/d09/teach/1 @375
+✔ #/d09/teach/1 @375
+✔ expected screen #/d09/teach/2 @375
+✔ #/d09/teach/2 @375
+✔ expected screen #/d09/teach/3 @375
+✔ #/d09/teach/3 @375
+✔ expected screen #/d09/teach/4 @375
+✔ #/d09/teach/4 @375
+✔ expected screen #/d09/teach/5 @375
+✔ #/d09/teach/5 @375
+✔ expected screen #/d09/teach/6 @375
+✔ #/d09/teach/6 @375
+✔ expected screen #/d09/teach/7 @375
+✔ #/d09/teach/7 @375
+✔ expected screen #/d09/teach/8 @375
+✔ #/d09/teach/8 @375
+✔ expected screen #/d09/teach/9 @375
+✔ #/d09/teach/9 @375
+✔ expected screen #/d09/teach/10 @375
+✔ #/d09/teach/10 @375
+✔ expected screen #/d09/teach/11 @375
+✔ #/d09/teach/11 @375
+✔ expected screen #/d09/teach/12 @375
+✔ #/d09/teach/12 @375
+✔ expected screen #/d09/teach/13 @375
+✔ #/d09/teach/13 @375
+✔ expected screen #/d09/teach/14 @375
+✔ #/d09/teach/14 @375
+✔ expected screen #/d09/teach/15 @375
+✔ #/d09/teach/15 @375
+✔ expected screen #/d09/notes @375
+✔ #/d09/notes @375
+✔ expected screen #/d09/practice @375
+✔ #/d09/practice @375
+✔ expected screen #/d09/test @375
+✔ #/d09/test @375
+✔ expected screen #/d10/teach/1 @375
+✔ #/d10/teach/1 @375
+✔ expected screen #/d10/teach/2 @375
+✔ #/d10/teach/2 @375
+✔ expected screen #/d10/teach/3 @375
+✔ #/d10/teach/3 @375
+✔ expected screen #/d10/teach/4 @375
+✔ #/d10/teach/4 @375
+✔ expected screen #/d10/teach/5 @375
+✔ #/d10/teach/5 @375
+✔ expected screen #/d10/teach/6 @375
+✔ #/d10/teach/6 @375
+✔ expected screen #/d10/teach/7 @375
+✔ #/d10/teach/7 @375
+✔ expected screen #/d10/teach/8 @375
+✔ #/d10/teach/8 @375
+✔ expected screen #/d10/teach/9 @375
+✔ #/d10/teach/9 @375
+✔ expected screen #/d10/teach/10 @375
+✔ #/d10/teach/10 @375
+✔ expected screen #/d10/teach/11 @375
+✔ #/d10/teach/11 @375
+✔ expected screen #/d10/teach/12 @375
+✔ #/d10/teach/12 @375
+✔ expected screen #/d10/teach/13 @375
+✔ #/d10/teach/13 @375
+✔ expected screen #/d10/notes @375
+✔ #/d10/notes @375
+✔ expected screen #/d10/practice @375
+✔ #/d10/practice @375
+✔ expected screen #/d10/test @375
+✔ #/d10/test @375
+✔ expected screen #/chapter4 @375
+✔ #/chapter4 @375
+✔ expected screen #/chapter4/4-1 @375
+✔ #/chapter4/4-1 @375
+✔ expected screen #/chapter4/4-1/learn/1 @375
+✔ #/chapter4/4-1/learn/1 @375
+✔ instruction visible in first view #/chapter4/4-1/learn/1 @375
+✔ expected screen #/chapter4/4-1/learn/2 @375
+✔ #/chapter4/4-1/learn/2 @375
+✔ instruction visible in first view #/chapter4/4-1/learn/2 @375
+✔ expected screen #/chapter4/4-1/learn/3 @375
+✔ #/chapter4/4-1/learn/3 @375
+✔ instruction visible in first view #/chapter4/4-1/learn/3 @375
+✔ expected screen #/chapter4/4-1/learn/4 @375
+✔ #/chapter4/4-1/learn/4 @375
+✔ instruction visible in first view #/chapter4/4-1/learn/4 @375
+✔ expected screen #/chapter4/4-1/learn/5 @375
+✔ #/chapter4/4-1/learn/5 @375
+✔ expected screen #/chapter4/4-1/practice @375
+✔ #/chapter4/4-1/practice @375
+✔ expected screen #/chapter4/4-1/independent @375
+✔ #/chapter4/4-1/independent @375
+✔ expected screen #/chapter4/4-1/test @375
+✔ #/chapter4/4-1/test @375
+✔ expected screen #/chapter4/4-2 @375
+✔ #/chapter4/4-2 @375
+✔ expected screen #/chapter4/4-2/learn/1 @375
+✔ #/chapter4/4-2/learn/1 @375
+✔ instruction visible in first view #/chapter4/4-2/learn/1 @375
+✔ expected screen #/chapter4/4-2/learn/2 @375
+✔ #/chapter4/4-2/learn/2 @375
+✔ instruction visible in first view #/chapter4/4-2/learn/2 @375
+✔ expected screen #/chapter4/4-2/learn/3 @375
+✔ #/chapter4/4-2/learn/3 @375
+✔ instruction visible in first view #/chapter4/4-2/learn/3 @375
+✔ expected screen #/chapter4/4-2/learn/4 @375
+✔ #/chapter4/4-2/learn/4 @375
+✔ instruction visible in first view #/chapter4/4-2/learn/4 @375
+✔ expected screen #/chapter4/4-2/learn/5 @375
+✔ #/chapter4/4-2/learn/5 @375
+✔ expected screen #/chapter4/4-2/practice @375
+✔ #/chapter4/4-2/practice @375
+✔ expected screen #/chapter4/4-2/independent @375
+✔ #/chapter4/4-2/independent @375
+✔ expected screen #/chapter4/4-2/test @375
+✔ #/chapter4/4-2/test @375
+✔ expected screen #/chapter4/4-3 @375
+✔ #/chapter4/4-3 @375
+✔ expected screen #/chapter4/4-3/learn/1 @375
+✔ #/chapter4/4-3/learn/1 @375
+✔ instruction visible in first view #/chapter4/4-3/learn/1 @375
+✔ expected screen #/chapter4/4-3/learn/2 @375
+✔ #/chapter4/4-3/learn/2 @375
+✔ instruction visible in first view #/chapter4/4-3/learn/2 @375
+✔ expected screen #/chapter4/4-3/learn/3 @375
+✔ #/chapter4/4-3/learn/3 @375
+✔ instruction visible in first view #/chapter4/4-3/learn/3 @375
+✔ expected screen #/chapter4/4-3/learn/4 @375
+✔ #/chapter4/4-3/learn/4 @375
+✔ instruction visible in first view #/chapter4/4-3/learn/4 @375
+✔ expected screen #/chapter4/4-3/learn/5 @375
+✔ #/chapter4/4-3/learn/5 @375
+✔ expected screen #/chapter4/4-3/practice @375
+✔ #/chapter4/4-3/practice @375
+✔ expected screen #/chapter4/4-3/independent @375
+✔ #/chapter4/4-3/independent @375
+✔ expected screen #/chapter4/4-3/test @375
+✔ #/chapter4/4-3/test @375
+✔ expected screen #/chapter4/4-4 @375
+✔ #/chapter4/4-4 @375
+✔ expected screen #/chapter4/4-4/learn/1 @375
+✔ #/chapter4/4-4/learn/1 @375
+✔ instruction visible in first view #/chapter4/4-4/learn/1 @375
+✔ expected screen #/chapter4/4-4/learn/2 @375
+✔ #/chapter4/4-4/learn/2 @375
+✔ instruction visible in first view #/chapter4/4-4/learn/2 @375
+✔ expected screen #/chapter4/4-4/learn/3 @375
+✔ #/chapter4/4-4/learn/3 @375
+✔ instruction visible in first view #/chapter4/4-4/learn/3 @375
+✔ expected screen #/chapter4/4-4/learn/4 @375
+✔ #/chapter4/4-4/learn/4 @375
+✔ instruction visible in first view #/chapter4/4-4/learn/4 @375
+✔ expected screen #/chapter4/4-4/learn/5 @375
+✔ #/chapter4/4-4/learn/5 @375
+✔ expected screen #/chapter4/4-4/practice @375
+✔ #/chapter4/4-4/practice @375
+✔ expected screen #/chapter4/4-4/independent @375
+✔ #/chapter4/4-4/independent @375
+✔ expected screen #/chapter4/4-4/test @375
+✔ #/chapter4/4-4/test @375
+✔ expected screen #/chapter4/4-5 @375
+✔ #/chapter4/4-5 @375
+✔ expected screen #/chapter4/4-5/learn/1 @375
+✔ #/chapter4/4-5/learn/1 @375
+✔ instruction visible in first view #/chapter4/4-5/learn/1 @375
+✔ expected screen #/chapter4/4-5/learn/2 @375
+✔ #/chapter4/4-5/learn/2 @375
+✔ instruction visible in first view #/chapter4/4-5/learn/2 @375
+✔ expected screen #/chapter4/4-5/learn/3 @375
+✔ #/chapter4/4-5/learn/3 @375
+✔ instruction visible in first view #/chapter4/4-5/learn/3 @375
+✔ expected screen #/chapter4/4-5/learn/4 @375
+✔ #/chapter4/4-5/learn/4 @375
+✔ instruction visible in first view #/chapter4/4-5/learn/4 @375
+✔ expected screen #/chapter4/4-5/learn/5 @375
+✔ #/chapter4/4-5/learn/5 @375
+✔ expected screen #/chapter4/4-5/practice @375
+✔ #/chapter4/4-5/practice @375
+✔ expected screen #/chapter4/4-5/independent @375
+✔ #/chapter4/4-5/independent @375
+✔ expected screen #/chapter4/4-5/test @375
+✔ #/chapter4/4-5/test @375
+✔ expected screen #/chapter4/4-6 @375
+✔ #/chapter4/4-6 @375
+✔ expected screen #/chapter4/4-6/learn/1 @375
+✔ #/chapter4/4-6/learn/1 @375
+✔ instruction visible in first view #/chapter4/4-6/learn/1 @375
+✔ expected screen #/chapter4/4-6/learn/2 @375
+✔ #/chapter4/4-6/learn/2 @375
+✔ instruction visible in first view #/chapter4/4-6/learn/2 @375
+✔ expected screen #/chapter4/4-6/learn/3 @375
+✔ #/chapter4/4-6/learn/3 @375
+✔ instruction visible in first view #/chapter4/4-6/learn/3 @375
+✔ expected screen #/chapter4/4-6/learn/4 @375
+✔ #/chapter4/4-6/learn/4 @375
+✔ instruction visible in first view #/chapter4/4-6/learn/4 @375
+✔ expected screen #/chapter4/4-6/learn/5 @375
+✔ #/chapter4/4-6/learn/5 @375
+✔ expected screen #/chapter4/4-6/practice @375
+✔ #/chapter4/4-6/practice @375
+✔ expected screen #/chapter4/4-6/independent @375
+✔ #/chapter4/4-6/independent @375
+✔ expected screen #/chapter4/4-6/test @375
+✔ #/chapter4/4-6/test @375
+✔ expected screen #/chapter4/4-7 @375
+✔ #/chapter4/4-7 @375
+✔ expected screen #/chapter4/4-7/learn/1 @375
+✔ #/chapter4/4-7/learn/1 @375
+✔ instruction visible in first view #/chapter4/4-7/learn/1 @375
+✔ expected screen #/chapter4/4-7/learn/2 @375
+✔ #/chapter4/4-7/learn/2 @375
+✔ instruction visible in first view #/chapter4/4-7/learn/2 @375
+✔ expected screen #/chapter4/4-7/learn/3 @375
+✔ #/chapter4/4-7/learn/3 @375
+✔ instruction visible in first view #/chapter4/4-7/learn/3 @375
+✔ expected screen #/chapter4/4-7/learn/4 @375
+✔ #/chapter4/4-7/learn/4 @375
+✔ instruction visible in first view #/chapter4/4-7/learn/4 @375
+✔ expected screen #/chapter4/4-7/learn/5 @375
+✔ #/chapter4/4-7/learn/5 @375
+✔ expected screen #/chapter4/4-7/practice @375
+✔ #/chapter4/4-7/practice @375
+✔ expected screen #/chapter4/4-7/independent @375
+✔ #/chapter4/4-7/independent @375
+✔ expected screen #/chapter4/4-7/test @375
+✔ #/chapter4/4-7/test @375
+✔ expected screen #/chapter4/4-8 @375
+✔ #/chapter4/4-8 @375
+✔ expected screen #/chapter4/4-8/learn/1 @375
+✔ #/chapter4/4-8/learn/1 @375
+✔ instruction visible in first view #/chapter4/4-8/learn/1 @375
+✔ expected screen #/chapter4/4-8/learn/2 @375
+✔ #/chapter4/4-8/learn/2 @375
+✔ instruction visible in first view #/chapter4/4-8/learn/2 @375
+✔ expected screen #/chapter4/4-8/learn/3 @375
+✔ #/chapter4/4-8/learn/3 @375
+✔ instruction visible in first view #/chapter4/4-8/learn/3 @375
+✔ expected screen #/chapter4/4-8/learn/4 @375
+✔ #/chapter4/4-8/learn/4 @375
+✔ instruction visible in first view #/chapter4/4-8/learn/4 @375
+✔ expected screen #/chapter4/4-8/learn/5 @375
+✔ #/chapter4/4-8/learn/5 @375
+✔ expected screen #/chapter4/4-8/practice @375
+✔ #/chapter4/4-8/practice @375
+✔ expected screen #/chapter4/4-8/independent @375
+✔ #/chapter4/4-8/independent @375
+✔ expected screen #/chapter4/4-8/test @375
+✔ #/chapter4/4-8/test @375
+✔ expected screen #/chapter4/review/practice @375
+✔ #/chapter4/review/practice @375
+✔ expected screen #/chapter4/final/test @375
+✔ #/chapter4/final/test @375
+✔ active coached question d01 @375
+✔ active d01 @375
+✔ immediate help is assisted d01 @375
+✔ expanded solution d01 @375
+✔ Previous and refresh retain assisted review d01 @375
+✔ forward review retains next question hint d01 @375
+✔ active coached question d02 @375
+✔ active d02 @375
+✔ immediate help is assisted d02 @375
+✔ expanded solution d02 @375
+✔ Previous and refresh retain assisted review d02 @375
+✔ forward review retains next question hint d02 @375
+✔ active coached question d03 @375
+✔ active d03 @375
+✔ immediate help is assisted d03 @375
+✔ expanded solution d03 @375
+✔ Previous and refresh retain assisted review d03 @375
+✔ forward review retains next question hint d03 @375
+✔ active coached question d04 @375
+✔ active d04 @375
+✔ immediate help is assisted d04 @375
+✔ expanded solution d04 @375
+✔ Previous and refresh retain assisted review d04 @375
+✔ forward review retains next question hint d04 @375
+✔ active coached question d05 @375
+✔ active d05 @375
+✔ immediate help is assisted d05 @375
+✔ expanded solution d05 @375
+✔ Previous and refresh retain assisted review d05 @375
+✔ forward review retains next question hint d05 @375
+✔ active coached question d06 @375
+✔ active d06 @375
+✔ immediate help is assisted d06 @375
+✔ expanded solution d06 @375
+✔ Previous and refresh retain assisted review d06 @375
+✔ forward review retains next question hint d06 @375
+✔ active coached question d07 @375
+✔ active d07 @375
+✔ immediate help is assisted d07 @375
+✔ expanded solution d07 @375
+✔ Previous and refresh retain assisted review d07 @375
+✔ forward review retains next question hint d07 @375
+✔ active coached question d08 @375
+✔ active d08 @375
+✔ immediate help is assisted d08 @375
+✔ expanded solution d08 @375
+✔ Previous and refresh retain assisted review d08 @375
+✔ forward review retains next question hint d08 @375
+✔ active coached question d09 @375
+✔ active d09 @375
+✔ immediate help is assisted d09 @375
+✔ expanded solution d09 @375
+✔ Previous and refresh retain assisted review d09 @375
+✔ forward review retains next question hint d09 @375
+✔ active coached question d10 @375
+✔ active d10 @375
+✔ immediate help is assisted d10 @375
+✔ expanded solution d10 @375
+✔ Previous and refresh retain assisted review d10 @375
+✔ forward review retains next question hint d10 @375
+✔ active coached question pc @375
+✔ active pc @375
+✔ immediate help is assisted pc @375
+✔ expanded solution pc @375
+✔ Previous and refresh retain assisted review pc @375
+✔ forward review retains next question hint pc @375
+✔ active coached question 4-1 @375
+✔ active 4-1 @375
+✔ immediate help is assisted 4-1 @375
+✔ expanded solution 4-1 @375
+✔ Previous and refresh retain assisted review 4-1 @375
+✔ forward review retains next question hint 4-1 @375
+✔ active coached question 4-2 @375
+✔ active 4-2 @375
+✔ immediate help is assisted 4-2 @375
+✔ expanded solution 4-2 @375
+✔ Previous and refresh retain assisted review 4-2 @375
+✔ forward review retains next question hint 4-2 @375
+✔ active coached question 4-3 @375
+✔ active 4-3 @375
+✔ immediate help is assisted 4-3 @375
+✔ expanded solution 4-3 @375
+✔ Previous and refresh retain assisted review 4-3 @375
+✔ forward review retains next question hint 4-3 @375
+✔ active coached question 4-4 @375
+✔ active 4-4 @375
+✔ immediate help is assisted 4-4 @375
+✔ expanded solution 4-4 @375
+✔ Previous and refresh retain assisted review 4-4 @375
+✔ forward review retains next question hint 4-4 @375
+✔ active coached question 4-5 @375
+✔ active 4-5 @375
+✔ immediate help is assisted 4-5 @375
+✔ expanded solution 4-5 @375
+✔ Previous and refresh retain assisted review 4-5 @375
+✔ forward review retains next question hint 4-5 @375
+✔ active coached question 4-6 @375
+✔ active 4-6 @375
+✔ immediate help is assisted 4-6 @375
+✔ expanded solution 4-6 @375
+✔ Previous and refresh retain assisted review 4-6 @375
+✔ forward review retains next question hint 4-6 @375
+✔ active coached question 4-7 @375
+✔ active 4-7 @375
+✔ immediate help is assisted 4-7 @375
+✔ expanded solution 4-7 @375
+✔ Previous and refresh retain assisted review 4-7 @375
+✔ forward review retains next question hint 4-7 @375
+✔ active coached question 4-8 @375
+✔ active 4-8 @375
+✔ immediate help is assisted 4-8 @375
+✔ expanded solution 4-8 @375
+✔ Previous and refresh retain assisted review 4-8 @375
+✔ forward review retains next question hint 4-8 @375
+✔ expected screen #/ @390
+✔ #/ @390
+✔ expected screen #/decimals @390
+✔ #/decimals @390
+✔ expected screen #/learn @390
+✔ #/learn @390
+✔ expected screen #/practice @390
+✔ #/practice @390
+✔ expected screen #/guides @390
+✔ #/guides @390
+✔ expected screen #/parent @390
+✔ #/parent @390
+✔ expected screen #/practice/session @390
+✔ #/practice/session @390
+✔ expected screen #/practice/results @390
+✔ #/practice/results @390
+✔ expected screen #/d01/teach/1 @390
+✔ #/d01/teach/1 @390
+✔ expected screen #/d01/teach/2 @390
+✔ #/d01/teach/2 @390
+✔ expected screen #/d01/teach/3 @390
+✔ #/d01/teach/3 @390
+✔ expected screen #/d01/teach/4 @390
+✔ #/d01/teach/4 @390
+✔ expected screen #/d01/teach/5 @390
+✔ #/d01/teach/5 @390
+✔ expected screen #/d01/teach/6 @390
+✔ #/d01/teach/6 @390
+✔ expected screen #/d01/teach/7 @390
+✔ #/d01/teach/7 @390
+✔ expected screen #/d01/teach/8 @390
+✔ #/d01/teach/8 @390
+✔ expected screen #/d01/teach/9 @390
+✔ #/d01/teach/9 @390
+✔ expected screen #/d01/teach/10 @390
+✔ #/d01/teach/10 @390
+✔ expected screen #/d01/teach/11 @390
+✔ #/d01/teach/11 @390
+✔ expected screen #/d01/teach/12 @390
+✔ #/d01/teach/12 @390
+✔ expected screen #/d01/teach/13 @390
+✔ #/d01/teach/13 @390
+✔ expected screen #/d01/teach/14 @390
+✔ #/d01/teach/14 @390
+✔ expected screen #/d01/teach/15 @390
+✔ #/d01/teach/15 @390
+✔ expected screen #/d01/teach/16 @390
+✔ #/d01/teach/16 @390
+✔ expected screen #/d01/teach/17 @390
+✔ #/d01/teach/17 @390
+✔ expected screen #/d01/teach/18 @390
+✔ #/d01/teach/18 @390
+✔ expected screen #/d01/teach/19 @390
+✔ #/d01/teach/19 @390
+✔ expected screen #/d01/teach/20 @390
+✔ #/d01/teach/20 @390
+✔ expected screen #/d01/teach/21 @390
+✔ #/d01/teach/21 @390
+✔ expected screen #/d01/teach/22 @390
+✔ #/d01/teach/22 @390
+✔ expected screen #/d01/teach/23 @390
+✔ #/d01/teach/23 @390
+✔ expected screen #/d01/notes @390
+✔ #/d01/notes @390
+✔ expected screen #/d01/practice @390
+✔ #/d01/practice @390
+✔ expected screen #/d01/test @390
+✔ #/d01/test @390
+✔ expected screen #/d02/teach/1 @390
+✔ #/d02/teach/1 @390
+✔ expected screen #/d02/teach/2 @390
+✔ #/d02/teach/2 @390
+✔ expected screen #/d02/teach/3 @390
+✔ #/d02/teach/3 @390
+✔ expected screen #/d02/teach/4 @390
+✔ #/d02/teach/4 @390
+✔ expected screen #/d02/teach/5 @390
+✔ #/d02/teach/5 @390
+✔ expected screen #/d02/teach/6 @390
+✔ #/d02/teach/6 @390
+✔ expected screen #/d02/teach/7 @390
+✔ #/d02/teach/7 @390
+✔ expected screen #/d02/teach/8 @390
+✔ #/d02/teach/8 @390
+✔ expected screen #/d02/teach/9 @390
+✔ #/d02/teach/9 @390
+✔ expected screen #/d02/teach/10 @390
+✔ #/d02/teach/10 @390
+✔ expected screen #/d02/teach/11 @390
+✔ #/d02/teach/11 @390
+✔ expected screen #/d02/teach/12 @390
+✔ #/d02/teach/12 @390
+✔ expected screen #/d02/teach/13 @390
+✔ #/d02/teach/13 @390
+✔ expected screen #/d02/teach/14 @390
+✔ #/d02/teach/14 @390
+✔ expected screen #/d02/teach/15 @390
+✔ #/d02/teach/15 @390
+✔ expected screen #/d02/notes @390
+✔ #/d02/notes @390
+✔ expected screen #/d02/practice @390
+✔ #/d02/practice @390
+✔ expected screen #/d02/test @390
+✔ #/d02/test @390
+✔ expected screen #/d03/teach/1 @390
+✔ #/d03/teach/1 @390
+✔ expected screen #/d03/teach/2 @390
+✔ #/d03/teach/2 @390
+✔ expected screen #/d03/teach/3 @390
+✔ #/d03/teach/3 @390
+✔ expected screen #/d03/teach/4 @390
+✔ #/d03/teach/4 @390
+✔ expected screen #/d03/teach/5 @390
+✔ #/d03/teach/5 @390
+✔ expected screen #/d03/teach/6 @390
+✔ #/d03/teach/6 @390
+✔ expected screen #/d03/teach/7 @390
+✔ #/d03/teach/7 @390
+✔ expected screen #/d03/teach/8 @390
+✔ #/d03/teach/8 @390
+✔ expected screen #/d03/teach/9 @390
+✔ #/d03/teach/9 @390
+✔ expected screen #/d03/teach/10 @390
+✔ #/d03/teach/10 @390
+✔ expected screen #/d03/teach/11 @390
+✔ #/d03/teach/11 @390
+✔ expected screen #/d03/teach/12 @390
+✔ #/d03/teach/12 @390
+✔ expected screen #/d03/teach/13 @390
+✔ #/d03/teach/13 @390
+✔ expected screen #/d03/teach/14 @390
+✔ #/d03/teach/14 @390
+✔ expected screen #/d03/teach/15 @390
+✔ #/d03/teach/15 @390
+✔ expected screen #/d03/teach/16 @390
+✔ #/d03/teach/16 @390
+✔ expected screen #/d03/teach/17 @390
+✔ #/d03/teach/17 @390
+✔ expected screen #/d03/teach/18 @390
+✔ #/d03/teach/18 @390
+✔ expected screen #/d03/notes @390
+✔ #/d03/notes @390
+✔ expected screen #/d03/practice @390
+✔ #/d03/practice @390
+✔ expected screen #/d03/test @390
+✔ #/d03/test @390
+✔ expected screen #/d04/teach/1 @390
+✔ #/d04/teach/1 @390
+✔ expected screen #/d04/teach/2 @390
+✔ #/d04/teach/2 @390
+✔ expected screen #/d04/teach/3 @390
+✔ #/d04/teach/3 @390
+✔ expected screen #/d04/teach/4 @390
+✔ #/d04/teach/4 @390
+✔ expected screen #/d04/teach/5 @390
+✔ #/d04/teach/5 @390
+✔ expected screen #/d04/teach/6 @390
+✔ #/d04/teach/6 @390
+✔ expected screen #/d04/teach/7 @390
+✔ #/d04/teach/7 @390
+✔ expected screen #/d04/teach/8 @390
+✔ #/d04/teach/8 @390
+✔ expected screen #/d04/teach/9 @390
+✔ #/d04/teach/9 @390
+✔ expected screen #/d04/teach/10 @390
+✔ #/d04/teach/10 @390
+✔ expected screen #/d04/teach/11 @390
+✔ #/d04/teach/11 @390
+✔ expected screen #/d04/teach/12 @390
+✔ #/d04/teach/12 @390
+✔ expected screen #/d04/notes @390
+✔ #/d04/notes @390
+✔ expected screen #/d04/practice @390
+✔ #/d04/practice @390
+✔ expected screen #/d04/test @390
+✔ #/d04/test @390
+✔ expected screen #/d05/teach/1 @390
+✔ #/d05/teach/1 @390
+✔ expected screen #/d05/teach/2 @390
+✔ #/d05/teach/2 @390
+✔ expected screen #/d05/teach/3 @390
+✔ #/d05/teach/3 @390
+✔ expected screen #/d05/teach/4 @390
+✔ #/d05/teach/4 @390
+✔ expected screen #/d05/teach/5 @390
+✔ #/d05/teach/5 @390
+✔ expected screen #/d05/teach/6 @390
+✔ #/d05/teach/6 @390
+✔ expected screen #/d05/teach/7 @390
+✔ #/d05/teach/7 @390
+✔ expected screen #/d05/teach/8 @390
+✔ #/d05/teach/8 @390
+✔ expected screen #/d05/teach/9 @390
+✔ #/d05/teach/9 @390
+✔ expected screen #/d05/teach/10 @390
+✔ #/d05/teach/10 @390
+✔ expected screen #/d05/teach/11 @390
+✔ #/d05/teach/11 @390
+✔ expected screen #/d05/teach/12 @390
+✔ #/d05/teach/12 @390
+✔ expected screen #/d05/teach/13 @390
+✔ #/d05/teach/13 @390
+✔ expected screen #/d05/teach/14 @390
+✔ #/d05/teach/14 @390
+✔ expected screen #/d05/notes @390
+✔ #/d05/notes @390
+✔ expected screen #/d05/practice @390
+✔ #/d05/practice @390
+✔ expected screen #/d05/test @390
+✔ #/d05/test @390
+✔ expected screen #/d06/teach/1 @390
+✔ #/d06/teach/1 @390
+✔ expected screen #/d06/teach/2 @390
+✔ #/d06/teach/2 @390
+✔ expected screen #/d06/teach/3 @390
+✔ #/d06/teach/3 @390
+✔ expected screen #/d06/teach/4 @390
+✔ #/d06/teach/4 @390
+✔ expected screen #/d06/teach/5 @390
+✔ #/d06/teach/5 @390
+✔ expected screen #/d06/teach/6 @390
+✔ #/d06/teach/6 @390
+✔ expected screen #/d06/teach/7 @390
+✔ #/d06/teach/7 @390
+✔ expected screen #/d06/teach/8 @390
+✔ #/d06/teach/8 @390
+✔ expected screen #/d06/teach/9 @390
+✔ #/d06/teach/9 @390
+✔ expected screen #/d06/teach/10 @390
+✔ #/d06/teach/10 @390
+✔ expected screen #/d06/teach/11 @390
+✔ #/d06/teach/11 @390
+✔ expected screen #/d06/teach/12 @390
+✔ #/d06/teach/12 @390
+✔ expected screen #/d06/teach/13 @390
+✔ #/d06/teach/13 @390
+✔ expected screen #/d06/notes @390
+✔ #/d06/notes @390
+✔ expected screen #/d06/practice @390
+✔ #/d06/practice @390
+✔ expected screen #/d06/test @390
+✔ #/d06/test @390
+✔ expected screen #/d07/teach/1 @390
+✔ #/d07/teach/1 @390
+✔ expected screen #/d07/teach/2 @390
+✔ #/d07/teach/2 @390
+✔ expected screen #/d07/teach/3 @390
+✔ #/d07/teach/3 @390
+✔ expected screen #/d07/teach/4 @390
+✔ #/d07/teach/4 @390
+✔ expected screen #/d07/teach/5 @390
+✔ #/d07/teach/5 @390
+✔ expected screen #/d07/teach/6 @390
+✔ #/d07/teach/6 @390
+✔ expected screen #/d07/teach/7 @390
+✔ #/d07/teach/7 @390
+✔ expected screen #/d07/teach/8 @390
+✔ #/d07/teach/8 @390
+✔ expected screen #/d07/teach/9 @390
+✔ #/d07/teach/9 @390
+✔ expected screen #/d07/teach/10 @390
+✔ #/d07/teach/10 @390
+✔ expected screen #/d07/teach/11 @390
+✔ #/d07/teach/11 @390
+✔ expected screen #/d07/teach/12 @390
+✔ #/d07/teach/12 @390
+✔ expected screen #/d07/teach/13 @390
+✔ #/d07/teach/13 @390
+✔ expected screen #/d07/notes @390
+✔ #/d07/notes @390
+✔ expected screen #/d07/practice @390
+✔ #/d07/practice @390
+✔ expected screen #/d07/test @390
+✔ #/d07/test @390
+✔ expected screen #/d08/teach/1 @390
+✔ #/d08/teach/1 @390
+✔ expected screen #/d08/teach/2 @390
+✔ #/d08/teach/2 @390
+✔ expected screen #/d08/teach/3 @390
+✔ #/d08/teach/3 @390
+✔ expected screen #/d08/teach/4 @390
+✔ #/d08/teach/4 @390
+✔ expected screen #/d08/teach/5 @390
+✔ #/d08/teach/5 @390
+✔ expected screen #/d08/teach/6 @390
+✔ #/d08/teach/6 @390
+✔ expected screen #/d08/teach/7 @390
+✔ #/d08/teach/7 @390
+✔ expected screen #/d08/teach/8 @390
+✔ #/d08/teach/8 @390
+✔ expected screen #/d08/teach/9 @390
+✔ #/d08/teach/9 @390
+✔ expected screen #/d08/teach/10 @390
+✔ #/d08/teach/10 @390
+✔ expected screen #/d08/teach/11 @390
+✔ #/d08/teach/11 @390
+✔ expected screen #/d08/notes @390
+✔ #/d08/notes @390
+✔ expected screen #/d08/practice @390
+✔ #/d08/practice @390
+✔ expected screen #/d08/test @390
+✔ #/d08/test @390
+✔ expected screen #/d09/teach/1 @390
+✔ #/d09/teach/1 @390
+✔ expected screen #/d09/teach/2 @390
+✔ #/d09/teach/2 @390
+✔ expected screen #/d09/teach/3 @390
+✔ #/d09/teach/3 @390
+✔ expected screen #/d09/teach/4 @390
+✔ #/d09/teach/4 @390
+✔ expected screen #/d09/teach/5 @390
+✔ #/d09/teach/5 @390
+✔ expected screen #/d09/teach/6 @390
+✔ #/d09/teach/6 @390
+✔ expected screen #/d09/teach/7 @390
+✔ #/d09/teach/7 @390
+✔ expected screen #/d09/teach/8 @390
+✔ #/d09/teach/8 @390
+✔ expected screen #/d09/teach/9 @390
+✔ #/d09/teach/9 @390
+✔ expected screen #/d09/teach/10 @390
+✔ #/d09/teach/10 @390
+✔ expected screen #/d09/teach/11 @390
+✔ #/d09/teach/11 @390
+✔ expected screen #/d09/teach/12 @390
+✔ #/d09/teach/12 @390
+✔ expected screen #/d09/teach/13 @390
+✔ #/d09/teach/13 @390
+✔ expected screen #/d09/teach/14 @390
+✔ #/d09/teach/14 @390
+✔ expected screen #/d09/teach/15 @390
+✔ #/d09/teach/15 @390
+✔ expected screen #/d09/notes @390
+✔ #/d09/notes @390
+✔ expected screen #/d09/practice @390
+✔ #/d09/practice @390
+✔ expected screen #/d09/test @390
+✔ #/d09/test @390
+✔ expected screen #/d10/teach/1 @390
+✔ #/d10/teach/1 @390
+✔ expected screen #/d10/teach/2 @390
+✔ #/d10/teach/2 @390
+✔ expected screen #/d10/teach/3 @390
+✔ #/d10/teach/3 @390
+✔ expected screen #/d10/teach/4 @390
+✔ #/d10/teach/4 @390
+✔ expected screen #/d10/teach/5 @390
+✔ #/d10/teach/5 @390
+✔ expected screen #/d10/teach/6 @390
+✔ #/d10/teach/6 @390
+✔ expected screen #/d10/teach/7 @390
+✔ #/d10/teach/7 @390
+✔ expected screen #/d10/teach/8 @390
+✔ #/d10/teach/8 @390
+✔ expected screen #/d10/teach/9 @390
+✔ #/d10/teach/9 @390
+✔ expected screen #/d10/teach/10 @390
+✔ #/d10/teach/10 @390
+✔ expected screen #/d10/teach/11 @390
+✔ #/d10/teach/11 @390
+✔ expected screen #/d10/teach/12 @390
+✔ #/d10/teach/12 @390
+✔ expected screen #/d10/teach/13 @390
+✔ #/d10/teach/13 @390
+✔ expected screen #/d10/notes @390
+✔ #/d10/notes @390
+✔ expected screen #/d10/practice @390
+✔ #/d10/practice @390
+✔ expected screen #/d10/test @390
+✔ #/d10/test @390
+✔ expected screen #/chapter4 @390
+✔ #/chapter4 @390
+✔ expected screen #/chapter4/4-1 @390
+✔ #/chapter4/4-1 @390
+✔ expected screen #/chapter4/4-1/learn/1 @390
+✔ #/chapter4/4-1/learn/1 @390
+✔ instruction visible in first view #/chapter4/4-1/learn/1 @390
+✔ expected screen #/chapter4/4-1/learn/2 @390
+✔ #/chapter4/4-1/learn/2 @390
+✔ instruction visible in first view #/chapter4/4-1/learn/2 @390
+✔ expected screen #/chapter4/4-1/learn/3 @390
+✔ #/chapter4/4-1/learn/3 @390
+✔ instruction visible in first view #/chapter4/4-1/learn/3 @390
+✔ expected screen #/chapter4/4-1/learn/4 @390
+✔ #/chapter4/4-1/learn/4 @390
+✔ instruction visible in first view #/chapter4/4-1/learn/4 @390
+✔ expected screen #/chapter4/4-1/learn/5 @390
+✔ #/chapter4/4-1/learn/5 @390
+✔ expected screen #/chapter4/4-1/practice @390
+✔ #/chapter4/4-1/practice @390
+✔ expected screen #/chapter4/4-1/independent @390
+✔ #/chapter4/4-1/independent @390
+✔ expected screen #/chapter4/4-1/test @390
+✔ #/chapter4/4-1/test @390
+✔ expected screen #/chapter4/4-2 @390
+✔ #/chapter4/4-2 @390
+✔ expected screen #/chapter4/4-2/learn/1 @390
+✔ #/chapter4/4-2/learn/1 @390
+✔ instruction visible in first view #/chapter4/4-2/learn/1 @390
+✔ expected screen #/chapter4/4-2/learn/2 @390
+✔ #/chapter4/4-2/learn/2 @390
+✔ instruction visible in first view #/chapter4/4-2/learn/2 @390
+✔ expected screen #/chapter4/4-2/learn/3 @390
+✔ #/chapter4/4-2/learn/3 @390
+✔ instruction visible in first view #/chapter4/4-2/learn/3 @390
+✔ expected screen #/chapter4/4-2/learn/4 @390
+✔ #/chapter4/4-2/learn/4 @390
+✔ instruction visible in first view #/chapter4/4-2/learn/4 @390
+✔ expected screen #/chapter4/4-2/learn/5 @390
+✔ #/chapter4/4-2/learn/5 @390
+✔ expected screen #/chapter4/4-2/practice @390
+✔ #/chapter4/4-2/practice @390
+✔ expected screen #/chapter4/4-2/independent @390
+✔ #/chapter4/4-2/independent @390
+✔ expected screen #/chapter4/4-2/test @390
+✔ #/chapter4/4-2/test @390
+✔ expected screen #/chapter4/4-3 @390
+✔ #/chapter4/4-3 @390
+✔ expected screen #/chapter4/4-3/learn/1 @390
+✔ #/chapter4/4-3/learn/1 @390
+✔ instruction visible in first view #/chapter4/4-3/learn/1 @390
+✔ expected screen #/chapter4/4-3/learn/2 @390
+✔ #/chapter4/4-3/learn/2 @390
+✔ instruction visible in first view #/chapter4/4-3/learn/2 @390
+✔ expected screen #/chapter4/4-3/learn/3 @390
+✔ #/chapter4/4-3/learn/3 @390
+✔ instruction visible in first view #/chapter4/4-3/learn/3 @390
+✔ expected screen #/chapter4/4-3/learn/4 @390
+✔ #/chapter4/4-3/learn/4 @390
+✔ instruction visible in first view #/chapter4/4-3/learn/4 @390
+✔ expected screen #/chapter4/4-3/learn/5 @390
+✔ #/chapter4/4-3/learn/5 @390
+✔ expected screen #/chapter4/4-3/practice @390
+✔ #/chapter4/4-3/practice @390
+✔ expected screen #/chapter4/4-3/independent @390
+✔ #/chapter4/4-3/independent @390
+✔ expected screen #/chapter4/4-3/test @390
+✔ #/chapter4/4-3/test @390
+✔ expected screen #/chapter4/4-4 @390
+✔ #/chapter4/4-4 @390
+✔ expected screen #/chapter4/4-4/learn/1 @390
+✔ #/chapter4/4-4/learn/1 @390
+✔ instruction visible in first view #/chapter4/4-4/learn/1 @390
+✔ expected screen #/chapter4/4-4/learn/2 @390
+✔ #/chapter4/4-4/learn/2 @390
+✔ instruction visible in first view #/chapter4/4-4/learn/2 @390
+✔ expected screen #/chapter4/4-4/learn/3 @390
+✔ #/chapter4/4-4/learn/3 @390
+✔ instruction visible in first view #/chapter4/4-4/learn/3 @390
+✔ expected screen #/chapter4/4-4/learn/4 @390
+✔ #/chapter4/4-4/learn/4 @390
+✔ instruction visible in first view #/chapter4/4-4/learn/4 @390
+✔ expected screen #/chapter4/4-4/learn/5 @390
+✔ #/chapter4/4-4/learn/5 @390
+✔ expected screen #/chapter4/4-4/practice @390
+✔ #/chapter4/4-4/practice @390
+✔ expected screen #/chapter4/4-4/independent @390
+✔ #/chapter4/4-4/independent @390
+✔ expected screen #/chapter4/4-4/test @390
+✔ #/chapter4/4-4/test @390
+✔ expected screen #/chapter4/4-5 @390
+✔ #/chapter4/4-5 @390
+✔ expected screen #/chapter4/4-5/learn/1 @390
+✔ #/chapter4/4-5/learn/1 @390
+✔ instruction visible in first view #/chapter4/4-5/learn/1 @390
+✔ expected screen #/chapter4/4-5/learn/2 @390
+✔ #/chapter4/4-5/learn/2 @390
+✔ instruction visible in first view #/chapter4/4-5/learn/2 @390
+✔ expected screen #/chapter4/4-5/learn/3 @390
+✔ #/chapter4/4-5/learn/3 @390
+✔ instruction visible in first view #/chapter4/4-5/learn/3 @390
+✔ expected screen #/chapter4/4-5/learn/4 @390
+✔ #/chapter4/4-5/learn/4 @390
+✔ instruction visible in first view #/chapter4/4-5/learn/4 @390
+✔ expected screen #/chapter4/4-5/learn/5 @390
+✔ #/chapter4/4-5/learn/5 @390
+✔ expected screen #/chapter4/4-5/practice @390
+✔ #/chapter4/4-5/practice @390
+✔ expected screen #/chapter4/4-5/independent @390
+✔ #/chapter4/4-5/independent @390
+✔ expected screen #/chapter4/4-5/test @390
+✔ #/chapter4/4-5/test @390
+✔ expected screen #/chapter4/4-6 @390
+✔ #/chapter4/4-6 @390
+✔ expected screen #/chapter4/4-6/learn/1 @390
+✔ #/chapter4/4-6/learn/1 @390
+✔ instruction visible in first view #/chapter4/4-6/learn/1 @390
+✔ expected screen #/chapter4/4-6/learn/2 @390
+✔ #/chapter4/4-6/learn/2 @390
+✔ instruction visible in first view #/chapter4/4-6/learn/2 @390
+✔ expected screen #/chapter4/4-6/learn/3 @390
+✔ #/chapter4/4-6/learn/3 @390
+✔ instruction visible in first view #/chapter4/4-6/learn/3 @390
+✔ expected screen #/chapter4/4-6/learn/4 @390
+✔ #/chapter4/4-6/learn/4 @390
+✔ instruction visible in first view #/chapter4/4-6/learn/4 @390
+✔ expected screen #/chapter4/4-6/learn/5 @390
+✔ #/chapter4/4-6/learn/5 @390
+✔ expected screen #/chapter4/4-6/practice @390
+✔ #/chapter4/4-6/practice @390
+✔ expected screen #/chapter4/4-6/independent @390
+✔ #/chapter4/4-6/independent @390
+✔ expected screen #/chapter4/4-6/test @390
+✔ #/chapter4/4-6/test @390
+✔ expected screen #/chapter4/4-7 @390
+✔ #/chapter4/4-7 @390
+✔ expected screen #/chapter4/4-7/learn/1 @390
+✔ #/chapter4/4-7/learn/1 @390
+✔ instruction visible in first view #/chapter4/4-7/learn/1 @390
+✔ expected screen #/chapter4/4-7/learn/2 @390
+✔ #/chapter4/4-7/learn/2 @390
+✔ instruction visible in first view #/chapter4/4-7/learn/2 @390
+✔ expected screen #/chapter4/4-7/learn/3 @390
+✔ #/chapter4/4-7/learn/3 @390
+✔ instruction visible in first view #/chapter4/4-7/learn/3 @390
+✔ expected screen #/chapter4/4-7/learn/4 @390
+✔ #/chapter4/4-7/learn/4 @390
+✔ instruction visible in first view #/chapter4/4-7/learn/4 @390
+✔ expected screen #/chapter4/4-7/learn/5 @390
+✔ #/chapter4/4-7/learn/5 @390
+✔ expected screen #/chapter4/4-7/practice @390
+✔ #/chapter4/4-7/practice @390
+✔ expected screen #/chapter4/4-7/independent @390
+✔ #/chapter4/4-7/independent @390
+✔ expected screen #/chapter4/4-7/test @390
+✔ #/chapter4/4-7/test @390
+✔ expected screen #/chapter4/4-8 @390
+✔ #/chapter4/4-8 @390
+✔ expected screen #/chapter4/4-8/learn/1 @390
+✔ #/chapter4/4-8/learn/1 @390
+✔ instruction visible in first view #/chapter4/4-8/learn/1 @390
+✔ expected screen #/chapter4/4-8/learn/2 @390
+✔ #/chapter4/4-8/learn/2 @390
+✔ instruction visible in first view #/chapter4/4-8/learn/2 @390
+✔ expected screen #/chapter4/4-8/learn/3 @390
+✔ #/chapter4/4-8/learn/3 @390
+✔ instruction visible in first view #/chapter4/4-8/learn/3 @390
+✔ expected screen #/chapter4/4-8/learn/4 @390
+✔ #/chapter4/4-8/learn/4 @390
+✔ instruction visible in first view #/chapter4/4-8/learn/4 @390
+✔ expected screen #/chapter4/4-8/learn/5 @390
+✔ #/chapter4/4-8/learn/5 @390
+✔ expected screen #/chapter4/4-8/practice @390
+✔ #/chapter4/4-8/practice @390
+✔ expected screen #/chapter4/4-8/independent @390
+✔ #/chapter4/4-8/independent @390
+✔ expected screen #/chapter4/4-8/test @390
+✔ #/chapter4/4-8/test @390
+✔ expected screen #/chapter4/review/practice @390
+✔ #/chapter4/review/practice @390
+✔ expected screen #/chapter4/final/test @390
+✔ #/chapter4/final/test @390
+✔ active coached question d01 @390
+✔ active d01 @390
+✔ immediate help is assisted d01 @390
+✔ expanded solution d01 @390
+✔ Previous and refresh retain assisted review d01 @390
+✔ forward review retains next question hint d01 @390
+✔ active coached question d02 @390
+✔ active d02 @390
+✔ immediate help is assisted d02 @390
+✔ expanded solution d02 @390
+✔ Previous and refresh retain assisted review d02 @390
+✔ forward review retains next question hint d02 @390
+✔ active coached question d03 @390
+✔ active d03 @390
+✔ immediate help is assisted d03 @390
+✔ expanded solution d03 @390
+✔ Previous and refresh retain assisted review d03 @390
+✔ forward review retains next question hint d03 @390
+✔ active coached question d04 @390
+✔ active d04 @390
+✔ immediate help is assisted d04 @390
+✔ expanded solution d04 @390
+✔ Previous and refresh retain assisted review d04 @390
+✔ forward review retains next question hint d04 @390
+✔ active coached question d05 @390
+✔ active d05 @390
+✔ immediate help is assisted d05 @390
+✔ expanded solution d05 @390
+✔ Previous and refresh retain assisted review d05 @390
+✔ forward review retains next question hint d05 @390
+✔ active coached question d06 @390
+✔ active d06 @390
+✔ immediate help is assisted d06 @390
+✔ expanded solution d06 @390
+✔ Previous and refresh retain assisted review d06 @390
+✔ forward review retains next question hint d06 @390
+✔ active coached question d07 @390
+✔ active d07 @390
+✔ immediate help is assisted d07 @390
+✔ expanded solution d07 @390
+✔ Previous and refresh retain assisted review d07 @390
+✔ forward review retains next question hint d07 @390
+✔ active coached question d08 @390
+✔ active d08 @390
+✔ immediate help is assisted d08 @390
+✔ expanded solution d08 @390
+✔ Previous and refresh retain assisted review d08 @390
+✔ forward review retains next question hint d08 @390
+✔ active coached question d09 @390
+✔ active d09 @390
+✔ immediate help is assisted d09 @390
+✔ expanded solution d09 @390
+✔ Previous and refresh retain assisted review d09 @390
+✔ forward review retains next question hint d09 @390
+✔ active coached question d10 @390
+✔ active d10 @390
+✔ immediate help is assisted d10 @390
+✔ expanded solution d10 @390
+✔ Previous and refresh retain assisted review d10 @390
+✔ forward review retains next question hint d10 @390
+✔ active coached question pc @390
+✔ active pc @390
+✔ immediate help is assisted pc @390
+✔ expanded solution pc @390
+✔ Previous and refresh retain assisted review pc @390
+✔ forward review retains next question hint pc @390
+✔ active coached question 4-1 @390
+✔ active 4-1 @390
+✔ immediate help is assisted 4-1 @390
+✔ expanded solution 4-1 @390
+✔ Previous and refresh retain assisted review 4-1 @390
+✔ forward review retains next question hint 4-1 @390
+✔ active coached question 4-2 @390
+✔ active 4-2 @390
+✔ immediate help is assisted 4-2 @390
+✔ expanded solution 4-2 @390
+✔ Previous and refresh retain assisted review 4-2 @390
+✔ forward review retains next question hint 4-2 @390
+✔ active coached question 4-3 @390
+✔ active 4-3 @390
+✔ immediate help is assisted 4-3 @390
+✔ expanded solution 4-3 @390
+✔ Previous and refresh retain assisted review 4-3 @390
+✔ forward review retains next question hint 4-3 @390
+✔ active coached question 4-4 @390
+✔ active 4-4 @390
+✔ immediate help is assisted 4-4 @390
+✔ expanded solution 4-4 @390
+✔ Previous and refresh retain assisted review 4-4 @390
+✔ forward review retains next question hint 4-4 @390
+✔ active coached question 4-5 @390
+✔ active 4-5 @390
+✔ immediate help is assisted 4-5 @390
+✔ expanded solution 4-5 @390
+✔ Previous and refresh retain assisted review 4-5 @390
+✔ forward review retains next question hint 4-5 @390
+✔ active coached question 4-6 @390
+✔ active 4-6 @390
+✔ immediate help is assisted 4-6 @390
+✔ expanded solution 4-6 @390
+✔ Previous and refresh retain assisted review 4-6 @390
+✔ forward review retains next question hint 4-6 @390
+✔ active coached question 4-7 @390
+✔ active 4-7 @390
+✔ immediate help is assisted 4-7 @390
+✔ expanded solution 4-7 @390
+✔ Previous and refresh retain assisted review 4-7 @390
+✔ forward review retains next question hint 4-7 @390
+✔ active coached question 4-8 @390
+✔ active 4-8 @390
+✔ immediate help is assisted 4-8 @390
+✔ expanded solution 4-8 @390
+✔ Previous and refresh retain assisted review 4-8 @390
+✔ forward review retains next question hint 4-8 @390
+✔ expected screen #/ @768
+✔ #/ @768
+✔ expected screen #/decimals @768
+✔ #/decimals @768
+✔ expected screen #/learn @768
+✔ #/learn @768
+✔ expected screen #/practice @768
+✔ #/practice @768
+✔ expected screen #/guides @768
+✔ #/guides @768
+✔ expected screen #/parent @768
+✔ #/parent @768
+✔ expected screen #/practice/session @768
+✔ #/practice/session @768
+✔ expected screen #/practice/results @768
+✔ #/practice/results @768
+✔ expected screen #/d01/teach/1 @768
+✔ #/d01/teach/1 @768
+✔ expected screen #/d01/teach/2 @768
+✔ #/d01/teach/2 @768
+✔ expected screen #/d01/teach/3 @768
+✔ #/d01/teach/3 @768
+✔ expected screen #/d01/teach/4 @768
+✔ #/d01/teach/4 @768
+✔ expected screen #/d01/teach/5 @768
+✔ #/d01/teach/5 @768
+✔ expected screen #/d01/teach/6 @768
+✔ #/d01/teach/6 @768
+✔ expected screen #/d01/teach/7 @768
+✔ #/d01/teach/7 @768
+✔ expected screen #/d01/teach/8 @768
+✔ #/d01/teach/8 @768
+✔ expected screen #/d01/teach/9 @768
+✔ #/d01/teach/9 @768
+✔ expected screen #/d01/teach/10 @768
+✔ #/d01/teach/10 @768
+✔ expected screen #/d01/teach/11 @768
+✔ #/d01/teach/11 @768
+✔ expected screen #/d01/teach/12 @768
+✔ #/d01/teach/12 @768
+✔ expected screen #/d01/teach/13 @768
+✔ #/d01/teach/13 @768
+✔ expected screen #/d01/teach/14 @768
+✔ #/d01/teach/14 @768
+✔ expected screen #/d01/teach/15 @768
+✔ #/d01/teach/15 @768
+✔ expected screen #/d01/teach/16 @768
+✔ #/d01/teach/16 @768
+✔ expected screen #/d01/teach/17 @768
+✔ #/d01/teach/17 @768
+✔ expected screen #/d01/teach/18 @768
+✔ #/d01/teach/18 @768
+✔ expected screen #/d01/teach/19 @768
+✔ #/d01/teach/19 @768
+✔ expected screen #/d01/teach/20 @768
+✔ #/d01/teach/20 @768
+✔ expected screen #/d01/teach/21 @768
+✔ #/d01/teach/21 @768
+✔ expected screen #/d01/teach/22 @768
+✔ #/d01/teach/22 @768
+✔ expected screen #/d01/teach/23 @768
+✔ #/d01/teach/23 @768
+✔ expected screen #/d01/notes @768
+✔ #/d01/notes @768
+✔ expected screen #/d01/practice @768
+✔ #/d01/practice @768
+✔ expected screen #/d01/test @768
+✔ #/d01/test @768
+✔ expected screen #/d02/teach/1 @768
+✔ #/d02/teach/1 @768
+✔ expected screen #/d02/teach/2 @768
+✔ #/d02/teach/2 @768
+✔ expected screen #/d02/teach/3 @768
+✔ #/d02/teach/3 @768
+✔ expected screen #/d02/teach/4 @768
+✔ #/d02/teach/4 @768
+✔ expected screen #/d02/teach/5 @768
+✔ #/d02/teach/5 @768
+✔ expected screen #/d02/teach/6 @768
+✔ #/d02/teach/6 @768
+✔ expected screen #/d02/teach/7 @768
+✔ #/d02/teach/7 @768
+✔ expected screen #/d02/teach/8 @768
+✔ #/d02/teach/8 @768
+✔ expected screen #/d02/teach/9 @768
+✔ #/d02/teach/9 @768
+✔ expected screen #/d02/teach/10 @768
+✔ #/d02/teach/10 @768
+✔ expected screen #/d02/teach/11 @768
+✔ #/d02/teach/11 @768
+✔ expected screen #/d02/teach/12 @768
+✔ #/d02/teach/12 @768
+✔ expected screen #/d02/teach/13 @768
+✔ #/d02/teach/13 @768
+✔ expected screen #/d02/teach/14 @768
+✔ #/d02/teach/14 @768
+✔ expected screen #/d02/teach/15 @768
+✔ #/d02/teach/15 @768
+✔ expected screen #/d02/notes @768
+✔ #/d02/notes @768
+✔ expected screen #/d02/practice @768
+✔ #/d02/practice @768
+✔ expected screen #/d02/test @768
+✔ #/d02/test @768
+✔ expected screen #/d03/teach/1 @768
+✔ #/d03/teach/1 @768
+✔ expected screen #/d03/teach/2 @768
+✔ #/d03/teach/2 @768
+✔ expected screen #/d03/teach/3 @768
+✔ #/d03/teach/3 @768
+✔ expected screen #/d03/teach/4 @768
+✔ #/d03/teach/4 @768
+✔ expected screen #/d03/teach/5 @768
+✔ #/d03/teach/5 @768
+✔ expected screen #/d03/teach/6 @768
+✔ #/d03/teach/6 @768
+✔ expected screen #/d03/teach/7 @768
+✔ #/d03/teach/7 @768
+✔ expected screen #/d03/teach/8 @768
+✔ #/d03/teach/8 @768
+✔ expected screen #/d03/teach/9 @768
+✔ #/d03/teach/9 @768
+✔ expected screen #/d03/teach/10 @768
+✔ #/d03/teach/10 @768
+✔ expected screen #/d03/teach/11 @768
+✔ #/d03/teach/11 @768
+✔ expected screen #/d03/teach/12 @768
+✔ #/d03/teach/12 @768
+✔ expected screen #/d03/teach/13 @768
+✔ #/d03/teach/13 @768
+✔ expected screen #/d03/teach/14 @768
+✔ #/d03/teach/14 @768
+✔ expected screen #/d03/teach/15 @768
+✔ #/d03/teach/15 @768
+✔ expected screen #/d03/teach/16 @768
+✔ #/d03/teach/16 @768
+✔ expected screen #/d03/teach/17 @768
+✔ #/d03/teach/17 @768
+✔ expected screen #/d03/teach/18 @768
+✔ #/d03/teach/18 @768
+✔ expected screen #/d03/notes @768
+✔ #/d03/notes @768
+✔ expected screen #/d03/practice @768
+✔ #/d03/practice @768
+✔ expected screen #/d03/test @768
+✔ #/d03/test @768
+✔ expected screen #/d04/teach/1 @768
+✔ #/d04/teach/1 @768
+✔ expected screen #/d04/teach/2 @768
+✔ #/d04/teach/2 @768
+✔ expected screen #/d04/teach/3 @768
+✔ #/d04/teach/3 @768
+✔ expected screen #/d04/teach/4 @768
+✔ #/d04/teach/4 @768
+✔ expected screen #/d04/teach/5 @768
+✔ #/d04/teach/5 @768
+✔ expected screen #/d04/teach/6 @768
+✔ #/d04/teach/6 @768
+✔ expected screen #/d04/teach/7 @768
+✔ #/d04/teach/7 @768
+✔ expected screen #/d04/teach/8 @768
+✔ #/d04/teach/8 @768
+✔ expected screen #/d04/teach/9 @768
+✔ #/d04/teach/9 @768
+✔ expected screen #/d04/teach/10 @768
+✔ #/d04/teach/10 @768
+✔ expected screen #/d04/teach/11 @768
+✔ #/d04/teach/11 @768
+✔ expected screen #/d04/teach/12 @768
+✔ #/d04/teach/12 @768
+✔ expected screen #/d04/notes @768
+✔ #/d04/notes @768
+✔ expected screen #/d04/practice @768
+✔ #/d04/practice @768
+✔ expected screen #/d04/test @768
+✔ #/d04/test @768
+✔ expected screen #/d05/teach/1 @768
+✔ #/d05/teach/1 @768
+✔ expected screen #/d05/teach/2 @768
+✔ #/d05/teach/2 @768
+✔ expected screen #/d05/teach/3 @768
+✔ #/d05/teach/3 @768
+✔ expected screen #/d05/teach/4 @768
+✔ #/d05/teach/4 @768
+✔ expected screen #/d05/teach/5 @768
+✔ #/d05/teach/5 @768
+✔ expected screen #/d05/teach/6 @768
+✔ #/d05/teach/6 @768
+✔ expected screen #/d05/teach/7 @768
+✔ #/d05/teach/7 @768
+✔ expected screen #/d05/teach/8 @768
+✔ #/d05/teach/8 @768
+✔ expected screen #/d05/teach/9 @768
+✔ #/d05/teach/9 @768
+✔ expected screen #/d05/teach/10 @768
+✔ #/d05/teach/10 @768
+✔ expected screen #/d05/teach/11 @768
+✔ #/d05/teach/11 @768
+✔ expected screen #/d05/teach/12 @768
+✔ #/d05/teach/12 @768
+✔ expected screen #/d05/teach/13 @768
+✔ #/d05/teach/13 @768
+✔ expected screen #/d05/teach/14 @768
+✔ #/d05/teach/14 @768
+✔ expected screen #/d05/notes @768
+✔ #/d05/notes @768
+✔ expected screen #/d05/practice @768
+✔ #/d05/practice @768
+✔ expected screen #/d05/test @768
+✔ #/d05/test @768
+✔ expected screen #/d06/teach/1 @768
+✔ #/d06/teach/1 @768
+✔ expected screen #/d06/teach/2 @768
+✔ #/d06/teach/2 @768
+✔ expected screen #/d06/teach/3 @768
+✔ #/d06/teach/3 @768
+✔ expected screen #/d06/teach/4 @768
+✔ #/d06/teach/4 @768
+✔ expected screen #/d06/teach/5 @768
+✔ #/d06/teach/5 @768
+✔ expected screen #/d06/teach/6 @768
+✔ #/d06/teach/6 @768
+✔ expected screen #/d06/teach/7 @768
+✔ #/d06/teach/7 @768
+✔ expected screen #/d06/teach/8 @768
+✔ #/d06/teach/8 @768
+✔ expected screen #/d06/teach/9 @768
+✔ #/d06/teach/9 @768
+✔ expected screen #/d06/teach/10 @768
+✔ #/d06/teach/10 @768
+✔ expected screen #/d06/teach/11 @768
+✔ #/d06/teach/11 @768
+✔ expected screen #/d06/teach/12 @768
+✔ #/d06/teach/12 @768
+✔ expected screen #/d06/teach/13 @768
+✔ #/d06/teach/13 @768
+✔ expected screen #/d06/notes @768
+✔ #/d06/notes @768
+✔ expected screen #/d06/practice @768
+✔ #/d06/practice @768
+✔ expected screen #/d06/test @768
+✔ #/d06/test @768
+✔ expected screen #/d07/teach/1 @768
+✔ #/d07/teach/1 @768
+✔ expected screen #/d07/teach/2 @768
+✔ #/d07/teach/2 @768
+✔ expected screen #/d07/teach/3 @768
+✔ #/d07/teach/3 @768
+✔ expected screen #/d07/teach/4 @768
+✔ #/d07/teach/4 @768
+✔ expected screen #/d07/teach/5 @768
+✔ #/d07/teach/5 @768
+✔ expected screen #/d07/teach/6 @768
+✔ #/d07/teach/6 @768
+✔ expected screen #/d07/teach/7 @768
+✔ #/d07/teach/7 @768
+✔ expected screen #/d07/teach/8 @768
+✔ #/d07/teach/8 @768
+✔ expected screen #/d07/teach/9 @768
+✔ #/d07/teach/9 @768
+✔ expected screen #/d07/teach/10 @768
+✔ #/d07/teach/10 @768
+✔ expected screen #/d07/teach/11 @768
+✔ #/d07/teach/11 @768
+✔ expected screen #/d07/teach/12 @768
+✔ #/d07/teach/12 @768
+✔ expected screen #/d07/teach/13 @768
+✔ #/d07/teach/13 @768
+✔ expected screen #/d07/notes @768
+✔ #/d07/notes @768
+✔ expected screen #/d07/practice @768
+✔ #/d07/practice @768
+✔ expected screen #/d07/test @768
+✔ #/d07/test @768
+✔ expected screen #/d08/teach/1 @768
+✔ #/d08/teach/1 @768
+✔ expected screen #/d08/teach/2 @768
+✔ #/d08/teach/2 @768
+✔ expected screen #/d08/teach/3 @768
+✔ #/d08/teach/3 @768
+✔ expected screen #/d08/teach/4 @768
+✔ #/d08/teach/4 @768
+✔ expected screen #/d08/teach/5 @768
+✔ #/d08/teach/5 @768
+✔ expected screen #/d08/teach/6 @768
+✔ #/d08/teach/6 @768
+✔ expected screen #/d08/teach/7 @768
+✔ #/d08/teach/7 @768
+✔ expected screen #/d08/teach/8 @768
+✔ #/d08/teach/8 @768
+✔ expected screen #/d08/teach/9 @768
+✔ #/d08/teach/9 @768
+✔ expected screen #/d08/teach/10 @768
+✔ #/d08/teach/10 @768
+✔ expected screen #/d08/teach/11 @768
+✔ #/d08/teach/11 @768
+✔ expected screen #/d08/notes @768
+✔ #/d08/notes @768
+✔ expected screen #/d08/practice @768
+✔ #/d08/practice @768
+✔ expected screen #/d08/test @768
+✔ #/d08/test @768
+✔ expected screen #/d09/teach/1 @768
+✔ #/d09/teach/1 @768
+✔ expected screen #/d09/teach/2 @768
+✔ #/d09/teach/2 @768
+✔ expected screen #/d09/teach/3 @768
+✔ #/d09/teach/3 @768
+✔ expected screen #/d09/teach/4 @768
+✔ #/d09/teach/4 @768
+✔ expected screen #/d09/teach/5 @768
+✔ #/d09/teach/5 @768
+✔ expected screen #/d09/teach/6 @768
+✔ #/d09/teach/6 @768
+✔ expected screen #/d09/teach/7 @768
+✔ #/d09/teach/7 @768
+✔ expected screen #/d09/teach/8 @768
+✔ #/d09/teach/8 @768
+✔ expected screen #/d09/teach/9 @768
+✔ #/d09/teach/9 @768
+✔ expected screen #/d09/teach/10 @768
+✔ #/d09/teach/10 @768
+✔ expected screen #/d09/teach/11 @768
+✔ #/d09/teach/11 @768
+✔ expected screen #/d09/teach/12 @768
+✔ #/d09/teach/12 @768
+✔ expected screen #/d09/teach/13 @768
+✔ #/d09/teach/13 @768
+✔ expected screen #/d09/teach/14 @768
+✔ #/d09/teach/14 @768
+✔ expected screen #/d09/teach/15 @768
+✔ #/d09/teach/15 @768
+✔ expected screen #/d09/notes @768
+✔ #/d09/notes @768
+✔ expected screen #/d09/practice @768
+✔ #/d09/practice @768
+✔ expected screen #/d09/test @768
+✔ #/d09/test @768
+✔ expected screen #/d10/teach/1 @768
+✔ #/d10/teach/1 @768
+✔ expected screen #/d10/teach/2 @768
+✔ #/d10/teach/2 @768
+✔ expected screen #/d10/teach/3 @768
+✔ #/d10/teach/3 @768
+✔ expected screen #/d10/teach/4 @768
+✔ #/d10/teach/4 @768
+✔ expected screen #/d10/teach/5 @768
+✔ #/d10/teach/5 @768
+✔ expected screen #/d10/teach/6 @768
+✔ #/d10/teach/6 @768
+✔ expected screen #/d10/teach/7 @768
+✔ #/d10/teach/7 @768
+✔ expected screen #/d10/teach/8 @768
+✔ #/d10/teach/8 @768
+✔ expected screen #/d10/teach/9 @768
+✔ #/d10/teach/9 @768
+✔ expected screen #/d10/teach/10 @768
+✔ #/d10/teach/10 @768
+✔ expected screen #/d10/teach/11 @768
+✔ #/d10/teach/11 @768
+✔ expected screen #/d10/teach/12 @768
+✔ #/d10/teach/12 @768
+✔ expected screen #/d10/teach/13 @768
+✔ #/d10/teach/13 @768
+✔ expected screen #/d10/notes @768
+✔ #/d10/notes @768
+✔ expected screen #/d10/practice @768
+✔ #/d10/practice @768
+✔ expected screen #/d10/test @768
+✔ #/d10/test @768
+✔ expected screen #/chapter4 @768
+✔ #/chapter4 @768
+✔ expected screen #/chapter4/4-1 @768
+✔ #/chapter4/4-1 @768
+✔ expected screen #/chapter4/4-1/learn/1 @768
+✔ #/chapter4/4-1/learn/1 @768
+✔ instruction visible in first view #/chapter4/4-1/learn/1 @768
+✔ expected screen #/chapter4/4-1/learn/2 @768
+✔ #/chapter4/4-1/learn/2 @768
+✔ instruction visible in first view #/chapter4/4-1/learn/2 @768
+✔ expected screen #/chapter4/4-1/learn/3 @768
+✔ #/chapter4/4-1/learn/3 @768
+✔ instruction visible in first view #/chapter4/4-1/learn/3 @768
+✔ expected screen #/chapter4/4-1/learn/4 @768
+✔ #/chapter4/4-1/learn/4 @768
+✔ instruction visible in first view #/chapter4/4-1/learn/4 @768
+✔ expected screen #/chapter4/4-1/learn/5 @768
+✔ #/chapter4/4-1/learn/5 @768
+✔ expected screen #/chapter4/4-1/practice @768
+✔ #/chapter4/4-1/practice @768
+✔ expected screen #/chapter4/4-1/independent @768
+✔ #/chapter4/4-1/independent @768
+✔ expected screen #/chapter4/4-1/test @768
+✔ #/chapter4/4-1/test @768
+✔ expected screen #/chapter4/4-2 @768
+✔ #/chapter4/4-2 @768
+✔ expected screen #/chapter4/4-2/learn/1 @768
+✔ #/chapter4/4-2/learn/1 @768
+✔ instruction visible in first view #/chapter4/4-2/learn/1 @768
+✔ expected screen #/chapter4/4-2/learn/2 @768
+✔ #/chapter4/4-2/learn/2 @768
+✔ instruction visible in first view #/chapter4/4-2/learn/2 @768
+✔ expected screen #/chapter4/4-2/learn/3 @768
+✔ #/chapter4/4-2/learn/3 @768
+✔ instruction visible in first view #/chapter4/4-2/learn/3 @768
+✔ expected screen #/chapter4/4-2/learn/4 @768
+✔ #/chapter4/4-2/learn/4 @768
+✔ instruction visible in first view #/chapter4/4-2/learn/4 @768
+✔ expected screen #/chapter4/4-2/learn/5 @768
+✔ #/chapter4/4-2/learn/5 @768
+✔ expected screen #/chapter4/4-2/practice @768
+✔ #/chapter4/4-2/practice @768
+✔ expected screen #/chapter4/4-2/independent @768
+✔ #/chapter4/4-2/independent @768
+✔ expected screen #/chapter4/4-2/test @768
+✔ #/chapter4/4-2/test @768
+✔ expected screen #/chapter4/4-3 @768
+✔ #/chapter4/4-3 @768
+✔ expected screen #/chapter4/4-3/learn/1 @768
+✔ #/chapter4/4-3/learn/1 @768
+✔ instruction visible in first view #/chapter4/4-3/learn/1 @768
+✔ expected screen #/chapter4/4-3/learn/2 @768
+✔ #/chapter4/4-3/learn/2 @768
+✔ instruction visible in first view #/chapter4/4-3/learn/2 @768
+✔ expected screen #/chapter4/4-3/learn/3 @768
+✔ #/chapter4/4-3/learn/3 @768
+✔ instruction visible in first view #/chapter4/4-3/learn/3 @768
+✔ expected screen #/chapter4/4-3/learn/4 @768
+✔ #/chapter4/4-3/learn/4 @768
+✔ instruction visible in first view #/chapter4/4-3/learn/4 @768
+✔ expected screen #/chapter4/4-3/learn/5 @768
+✔ #/chapter4/4-3/learn/5 @768
+✔ expected screen #/chapter4/4-3/practice @768
+✔ #/chapter4/4-3/practice @768
+✔ expected screen #/chapter4/4-3/independent @768
+✔ #/chapter4/4-3/independent @768
+✔ expected screen #/chapter4/4-3/test @768
+✔ #/chapter4/4-3/test @768
+✔ expected screen #/chapter4/4-4 @768
+✔ #/chapter4/4-4 @768
+✔ expected screen #/chapter4/4-4/learn/1 @768
+✔ #/chapter4/4-4/learn/1 @768
+✔ instruction visible in first view #/chapter4/4-4/learn/1 @768
+✔ expected screen #/chapter4/4-4/learn/2 @768
+✔ #/chapter4/4-4/learn/2 @768
+✔ instruction visible in first view #/chapter4/4-4/learn/2 @768
+✔ expected screen #/chapter4/4-4/learn/3 @768
+✔ #/chapter4/4-4/learn/3 @768
+✔ instruction visible in first view #/chapter4/4-4/learn/3 @768
+✔ expected screen #/chapter4/4-4/learn/4 @768
+✔ #/chapter4/4-4/learn/4 @768
+✔ instruction visible in first view #/chapter4/4-4/learn/4 @768
+✔ expected screen #/chapter4/4-4/learn/5 @768
+✔ #/chapter4/4-4/learn/5 @768
+✔ expected screen #/chapter4/4-4/practice @768
+✔ #/chapter4/4-4/practice @768
+✔ expected screen #/chapter4/4-4/independent @768
+✔ #/chapter4/4-4/independent @768
+✔ expected screen #/chapter4/4-4/test @768
+✔ #/chapter4/4-4/test @768
+✔ expected screen #/chapter4/4-5 @768
+✔ #/chapter4/4-5 @768
+✔ expected screen #/chapter4/4-5/learn/1 @768
+✔ #/chapter4/4-5/learn/1 @768
+✔ instruction visible in first view #/chapter4/4-5/learn/1 @768
+✔ expected screen #/chapter4/4-5/learn/2 @768
+✔ #/chapter4/4-5/learn/2 @768
+✔ instruction visible in first view #/chapter4/4-5/learn/2 @768
+✔ expected screen #/chapter4/4-5/learn/3 @768
+✔ #/chapter4/4-5/learn/3 @768
+✔ instruction visible in first view #/chapter4/4-5/learn/3 @768
+✔ expected screen #/chapter4/4-5/learn/4 @768
+✔ #/chapter4/4-5/learn/4 @768
+✔ instruction visible in first view #/chapter4/4-5/learn/4 @768
+✔ expected screen #/chapter4/4-5/learn/5 @768
+✔ #/chapter4/4-5/learn/5 @768
+✔ expected screen #/chapter4/4-5/practice @768
+✔ #/chapter4/4-5/practice @768
+✔ expected screen #/chapter4/4-5/independent @768
+✔ #/chapter4/4-5/independent @768
+✔ expected screen #/chapter4/4-5/test @768
+✔ #/chapter4/4-5/test @768
+✔ expected screen #/chapter4/4-6 @768
+✔ #/chapter4/4-6 @768
+✔ expected screen #/chapter4/4-6/learn/1 @768
+✔ #/chapter4/4-6/learn/1 @768
+✔ instruction visible in first view #/chapter4/4-6/learn/1 @768
+✔ expected screen #/chapter4/4-6/learn/2 @768
+✔ #/chapter4/4-6/learn/2 @768
+✔ instruction visible in first view #/chapter4/4-6/learn/2 @768
+✔ expected screen #/chapter4/4-6/learn/3 @768
+✔ #/chapter4/4-6/learn/3 @768
+✔ instruction visible in first view #/chapter4/4-6/learn/3 @768
+✔ expected screen #/chapter4/4-6/learn/4 @768
+✔ #/chapter4/4-6/learn/4 @768
+✔ instruction visible in first view #/chapter4/4-6/learn/4 @768
+✔ expected screen #/chapter4/4-6/learn/5 @768
+✔ #/chapter4/4-6/learn/5 @768
+✔ expected screen #/chapter4/4-6/practice @768
+✔ #/chapter4/4-6/practice @768
+✔ expected screen #/chapter4/4-6/independent @768
+✔ #/chapter4/4-6/independent @768
+✔ expected screen #/chapter4/4-6/test @768
+✔ #/chapter4/4-6/test @768
+✔ expected screen #/chapter4/4-7 @768
+✔ #/chapter4/4-7 @768
+✔ expected screen #/chapter4/4-7/learn/1 @768
+✔ #/chapter4/4-7/learn/1 @768
+✔ instruction visible in first view #/chapter4/4-7/learn/1 @768
+✔ expected screen #/chapter4/4-7/learn/2 @768
+✔ #/chapter4/4-7/learn/2 @768
+✔ instruction visible in first view #/chapter4/4-7/learn/2 @768
+✔ expected screen #/chapter4/4-7/learn/3 @768
+✔ #/chapter4/4-7/learn/3 @768
+✔ instruction visible in first view #/chapter4/4-7/learn/3 @768
+✔ expected screen #/chapter4/4-7/learn/4 @768
+✔ #/chapter4/4-7/learn/4 @768
+✔ instruction visible in first view #/chapter4/4-7/learn/4 @768
+✔ expected screen #/chapter4/4-7/learn/5 @768
+✔ #/chapter4/4-7/learn/5 @768
+✔ expected screen #/chapter4/4-7/practice @768
+✔ #/chapter4/4-7/practice @768
+✔ expected screen #/chapter4/4-7/independent @768
+✔ #/chapter4/4-7/independent @768
+✔ expected screen #/chapter4/4-7/test @768
+✔ #/chapter4/4-7/test @768
+✔ expected screen #/chapter4/4-8 @768
+✔ #/chapter4/4-8 @768
+✔ expected screen #/chapter4/4-8/learn/1 @768
+✔ #/chapter4/4-8/learn/1 @768
+✔ instruction visible in first view #/chapter4/4-8/learn/1 @768
+✔ expected screen #/chapter4/4-8/learn/2 @768
+✔ #/chapter4/4-8/learn/2 @768
+✔ instruction visible in first view #/chapter4/4-8/learn/2 @768
+✔ expected screen #/chapter4/4-8/learn/3 @768
+✔ #/chapter4/4-8/learn/3 @768
+✔ instruction visible in first view #/chapter4/4-8/learn/3 @768
+✔ expected screen #/chapter4/4-8/learn/4 @768
+✔ #/chapter4/4-8/learn/4 @768
+✔ instruction visible in first view #/chapter4/4-8/learn/4 @768
+✔ expected screen #/chapter4/4-8/learn/5 @768
+✔ #/chapter4/4-8/learn/5 @768
+✔ expected screen #/chapter4/4-8/practice @768
+✔ #/chapter4/4-8/practice @768
+✔ expected screen #/chapter4/4-8/independent @768
+✔ #/chapter4/4-8/independent @768
+✔ expected screen #/chapter4/4-8/test @768
+✔ #/chapter4/4-8/test @768
+✔ expected screen #/chapter4/review/practice @768
+✔ #/chapter4/review/practice @768
+✔ expected screen #/chapter4/final/test @768
+✔ #/chapter4/final/test @768
+✔ active coached question d01 @768
+✔ active d01 @768
+✔ immediate help is assisted d01 @768
+✔ expanded solution d01 @768
+✔ Previous and refresh retain assisted review d01 @768
+✔ forward review retains next question hint d01 @768
+✔ active coached question d02 @768
+✔ active d02 @768
+✔ immediate help is assisted d02 @768
+✔ expanded solution d02 @768
+✔ Previous and refresh retain assisted review d02 @768
+✔ forward review retains next question hint d02 @768
+✔ active coached question d03 @768
+✔ active d03 @768
+✔ immediate help is assisted d03 @768
+✔ expanded solution d03 @768
+✔ Previous and refresh retain assisted review d03 @768
+✔ forward review retains next question hint d03 @768
+✔ active coached question d04 @768
+✔ active d04 @768
+✔ immediate help is assisted d04 @768
+✔ expanded solution d04 @768
+✔ Previous and refresh retain assisted review d04 @768
+✔ forward review retains next question hint d04 @768
+✔ active coached question d05 @768
+✔ active d05 @768
+✔ immediate help is assisted d05 @768
+✔ expanded solution d05 @768
+✔ Previous and refresh retain assisted review d05 @768
+✔ forward review retains next question hint d05 @768
+✔ active coached question d06 @768
+✔ active d06 @768
+✔ immediate help is assisted d06 @768
+✔ expanded solution d06 @768
+✔ Previous and refresh retain assisted review d06 @768
+✔ forward review retains next question hint d06 @768
+✔ active coached question d07 @768
+✔ active d07 @768
+✔ immediate help is assisted d07 @768
+✔ expanded solution d07 @768
+✔ Previous and refresh retain assisted review d07 @768
+✔ forward review retains next question hint d07 @768
+✔ active coached question d08 @768
+✔ active d08 @768
+✔ immediate help is assisted d08 @768
+✔ expanded solution d08 @768
+✔ Previous and refresh retain assisted review d08 @768
+✔ forward review retains next question hint d08 @768
+✔ active coached question d09 @768
+✔ active d09 @768
+✔ immediate help is assisted d09 @768
+✔ expanded solution d09 @768
+✔ Previous and refresh retain assisted review d09 @768
+✔ forward review retains next question hint d09 @768
+✔ active coached question d10 @768
+✔ active d10 @768
+✔ immediate help is assisted d10 @768
+✔ expanded solution d10 @768
+✔ Previous and refresh retain assisted review d10 @768
+✔ forward review retains next question hint d10 @768
+✔ active coached question pc @768
+✔ active pc @768
+✔ immediate help is assisted pc @768
+✔ expanded solution pc @768
+✔ Previous and refresh retain assisted review pc @768
+✔ forward review retains next question hint pc @768
+✔ active coached question 4-1 @768
+✔ active 4-1 @768
+✔ immediate help is assisted 4-1 @768
+✔ expanded solution 4-1 @768
+✔ Previous and refresh retain assisted review 4-1 @768
+✔ forward review retains next question hint 4-1 @768
+✔ active coached question 4-2 @768
+✔ active 4-2 @768
+✔ immediate help is assisted 4-2 @768
+✔ expanded solution 4-2 @768
+✔ Previous and refresh retain assisted review 4-2 @768
+✔ forward review retains next question hint 4-2 @768
+✔ active coached question 4-3 @768
+✔ active 4-3 @768
+✔ immediate help is assisted 4-3 @768
+✔ expanded solution 4-3 @768
+✔ Previous and refresh retain assisted review 4-3 @768
+✔ forward review retains next question hint 4-3 @768
+✔ active coached question 4-4 @768
+✔ active 4-4 @768
+✔ immediate help is assisted 4-4 @768
+✔ expanded solution 4-4 @768
+✔ Previous and refresh retain assisted review 4-4 @768
+✔ forward review retains next question hint 4-4 @768
+✔ active coached question 4-5 @768
+✔ active 4-5 @768
+✔ immediate help is assisted 4-5 @768
+✔ expanded solution 4-5 @768
+✔ Previous and refresh retain assisted review 4-5 @768
+✔ forward review retains next question hint 4-5 @768
+✔ active coached question 4-6 @768
+✔ active 4-6 @768
+✔ immediate help is assisted 4-6 @768
+✔ expanded solution 4-6 @768
+✔ Previous and refresh retain assisted review 4-6 @768
+✔ forward review retains next question hint 4-6 @768
+✔ active coached question 4-7 @768
+✔ active 4-7 @768
+✔ immediate help is assisted 4-7 @768
+✔ expanded solution 4-7 @768
+✔ Previous and refresh retain assisted review 4-7 @768
+✔ forward review retains next question hint 4-7 @768
+✔ active coached question 4-8 @768
+✔ active 4-8 @768
+✔ immediate help is assisted 4-8 @768
+✔ expanded solution 4-8 @768
+✔ Previous and refresh retain assisted review 4-8 @768
+✔ forward review retains next question hint 4-8 @768
+✔ expected screen #/ @820
+✔ #/ @820
+✔ expected screen #/decimals @820
+✔ #/decimals @820
+✔ expected screen #/learn @820
+✔ #/learn @820
+✔ expected screen #/practice @820
+✔ #/practice @820
+✔ expected screen #/guides @820
+✔ #/guides @820
+✔ expected screen #/parent @820
+✔ #/parent @820
+✔ expected screen #/practice/session @820
+✔ #/practice/session @820
+✔ expected screen #/practice/results @820
+✔ #/practice/results @820
+✔ expected screen #/d01/teach/1 @820
+✔ #/d01/teach/1 @820
+✔ expected screen #/d01/teach/2 @820
+✔ #/d01/teach/2 @820
+✔ expected screen #/d01/teach/3 @820
+✔ #/d01/teach/3 @820
+✔ expected screen #/d01/teach/4 @820
+✔ #/d01/teach/4 @820
+✔ expected screen #/d01/teach/5 @820
+✔ #/d01/teach/5 @820
+✔ expected screen #/d01/teach/6 @820
+✔ #/d01/teach/6 @820
+✔ expected screen #/d01/teach/7 @820
+✔ #/d01/teach/7 @820
+✔ expected screen #/d01/teach/8 @820
+✔ #/d01/teach/8 @820
+✔ expected screen #/d01/teach/9 @820
+✔ #/d01/teach/9 @820
+✔ expected screen #/d01/teach/10 @820
+✔ #/d01/teach/10 @820
+✔ expected screen #/d01/teach/11 @820
+✔ #/d01/teach/11 @820
+✔ expected screen #/d01/teach/12 @820
+✔ #/d01/teach/12 @820
+✔ expected screen #/d01/teach/13 @820
+✔ #/d01/teach/13 @820
+✔ expected screen #/d01/teach/14 @820
+✔ #/d01/teach/14 @820
+✔ expected screen #/d01/teach/15 @820
+✔ #/d01/teach/15 @820
+✔ expected screen #/d01/teach/16 @820
+✔ #/d01/teach/16 @820
+✔ expected screen #/d01/teach/17 @820
+✔ #/d01/teach/17 @820
+✔ expected screen #/d01/teach/18 @820
+✔ #/d01/teach/18 @820
+✔ expected screen #/d01/teach/19 @820
+✔ #/d01/teach/19 @820
+✔ expected screen #/d01/teach/20 @820
+✔ #/d01/teach/20 @820
+✔ expected screen #/d01/teach/21 @820
+✔ #/d01/teach/21 @820
+✔ expected screen #/d01/teach/22 @820
+✔ #/d01/teach/22 @820
+✔ expected screen #/d01/teach/23 @820
+✔ #/d01/teach/23 @820
+✔ expected screen #/d01/notes @820
+✔ #/d01/notes @820
+✔ expected screen #/d01/practice @820
+✔ #/d01/practice @820
+✔ expected screen #/d01/test @820
+✔ #/d01/test @820
+✔ expected screen #/d02/teach/1 @820
+✔ #/d02/teach/1 @820
+✔ expected screen #/d02/teach/2 @820
+✔ #/d02/teach/2 @820
+✔ expected screen #/d02/teach/3 @820
+✔ #/d02/teach/3 @820
+✔ expected screen #/d02/teach/4 @820
+✔ #/d02/teach/4 @820
+✔ expected screen #/d02/teach/5 @820
+✔ #/d02/teach/5 @820
+✔ expected screen #/d02/teach/6 @820
+✔ #/d02/teach/6 @820
+✔ expected screen #/d02/teach/7 @820
+✔ #/d02/teach/7 @820
+✔ expected screen #/d02/teach/8 @820
+✔ #/d02/teach/8 @820
+✔ expected screen #/d02/teach/9 @820
+✔ #/d02/teach/9 @820
+✔ expected screen #/d02/teach/10 @820
+✔ #/d02/teach/10 @820
+✔ expected screen #/d02/teach/11 @820
+✔ #/d02/teach/11 @820
+✔ expected screen #/d02/teach/12 @820
+✔ #/d02/teach/12 @820
+✔ expected screen #/d02/teach/13 @820
+✔ #/d02/teach/13 @820
+✔ expected screen #/d02/teach/14 @820
+✔ #/d02/teach/14 @820
+✔ expected screen #/d02/teach/15 @820
+✔ #/d02/teach/15 @820
+✔ expected screen #/d02/notes @820
+✔ #/d02/notes @820
+✔ expected screen #/d02/practice @820
+✔ #/d02/practice @820
+✔ expected screen #/d02/test @820
+✔ #/d02/test @820
+✔ expected screen #/d03/teach/1 @820
+✔ #/d03/teach/1 @820
+✔ expected screen #/d03/teach/2 @820
+✔ #/d03/teach/2 @820
+✔ expected screen #/d03/teach/3 @820
+✔ #/d03/teach/3 @820
+✔ expected screen #/d03/teach/4 @820
+✔ #/d03/teach/4 @820
+✔ expected screen #/d03/teach/5 @820
+✔ #/d03/teach/5 @820
+✔ expected screen #/d03/teach/6 @820
+✔ #/d03/teach/6 @820
+✔ expected screen #/d03/teach/7 @820
+✔ #/d03/teach/7 @820
+✔ expected screen #/d03/teach/8 @820
+✔ #/d03/teach/8 @820
+✔ expected screen #/d03/teach/9 @820
+✔ #/d03/teach/9 @820
+✔ expected screen #/d03/teach/10 @820
+✔ #/d03/teach/10 @820
+✔ expected screen #/d03/teach/11 @820
+✔ #/d03/teach/11 @820
+✔ expected screen #/d03/teach/12 @820
+✔ #/d03/teach/12 @820
+✔ expected screen #/d03/teach/13 @820
+✔ #/d03/teach/13 @820
+✔ expected screen #/d03/teach/14 @820
+✔ #/d03/teach/14 @820
+✔ expected screen #/d03/teach/15 @820
+✔ #/d03/teach/15 @820
+✔ expected screen #/d03/teach/16 @820
+✔ #/d03/teach/16 @820
+✔ expected screen #/d03/teach/17 @820
+✔ #/d03/teach/17 @820
+✔ expected screen #/d03/teach/18 @820
+✔ #/d03/teach/18 @820
+✔ expected screen #/d03/notes @820
+✔ #/d03/notes @820
+✔ expected screen #/d03/practice @820
+✔ #/d03/practice @820
+✔ expected screen #/d03/test @820
+✔ #/d03/test @820
+✔ expected screen #/d04/teach/1 @820
+✔ #/d04/teach/1 @820
+✔ expected screen #/d04/teach/2 @820
+✔ #/d04/teach/2 @820
+✔ expected screen #/d04/teach/3 @820
+✔ #/d04/teach/3 @820
+✔ expected screen #/d04/teach/4 @820
+✔ #/d04/teach/4 @820
+✔ expected screen #/d04/teach/5 @820
+✔ #/d04/teach/5 @820
+✔ expected screen #/d04/teach/6 @820
+✔ #/d04/teach/6 @820
+✔ expected screen #/d04/teach/7 @820
+✔ #/d04/teach/7 @820
+✔ expected screen #/d04/teach/8 @820
+✔ #/d04/teach/8 @820
+✔ expected screen #/d04/teach/9 @820
+✔ #/d04/teach/9 @820
+✔ expected screen #/d04/teach/10 @820
+✔ #/d04/teach/10 @820
+✔ expected screen #/d04/teach/11 @820
+✔ #/d04/teach/11 @820
+✔ expected screen #/d04/teach/12 @820
+✔ #/d04/teach/12 @820
+✔ expected screen #/d04/notes @820
+✔ #/d04/notes @820
+✔ expected screen #/d04/practice @820
+✔ #/d04/practice @820
+✔ expected screen #/d04/test @820
+✔ #/d04/test @820
+✔ expected screen #/d05/teach/1 @820
+✔ #/d05/teach/1 @820
+✔ expected screen #/d05/teach/2 @820
+✔ #/d05/teach/2 @820
+✔ expected screen #/d05/teach/3 @820
+✔ #/d05/teach/3 @820
+✔ expected screen #/d05/teach/4 @820
+✔ #/d05/teach/4 @820
+✔ expected screen #/d05/teach/5 @820
+✔ #/d05/teach/5 @820
+✔ expected screen #/d05/teach/6 @820
+✔ #/d05/teach/6 @820
+✔ expected screen #/d05/teach/7 @820
+✔ #/d05/teach/7 @820
+✔ expected screen #/d05/teach/8 @820
+✔ #/d05/teach/8 @820
+✔ expected screen #/d05/teach/9 @820
+✔ #/d05/teach/9 @820
+✔ expected screen #/d05/teach/10 @820
+✔ #/d05/teach/10 @820
+✔ expected screen #/d05/teach/11 @820
+✔ #/d05/teach/11 @820
+✔ expected screen #/d05/teach/12 @820
+✔ #/d05/teach/12 @820
+✔ expected screen #/d05/teach/13 @820
+✔ #/d05/teach/13 @820
+✔ expected screen #/d05/teach/14 @820
+✔ #/d05/teach/14 @820
+✔ expected screen #/d05/notes @820
+✔ #/d05/notes @820
+✔ expected screen #/d05/practice @820
+✔ #/d05/practice @820
+✔ expected screen #/d05/test @820
+✔ #/d05/test @820
+✔ expected screen #/d06/teach/1 @820
+✔ #/d06/teach/1 @820
+✔ expected screen #/d06/teach/2 @820
+✔ #/d06/teach/2 @820
+✔ expected screen #/d06/teach/3 @820
+✔ #/d06/teach/3 @820
+✔ expected screen #/d06/teach/4 @820
+✔ #/d06/teach/4 @820
+✔ expected screen #/d06/teach/5 @820
+✔ #/d06/teach/5 @820
+✔ expected screen #/d06/teach/6 @820
+✔ #/d06/teach/6 @820
+✔ expected screen #/d06/teach/7 @820
+✔ #/d06/teach/7 @820
+✔ expected screen #/d06/teach/8 @820
+✔ #/d06/teach/8 @820
+✔ expected screen #/d06/teach/9 @820
+✔ #/d06/teach/9 @820
+✔ expected screen #/d06/teach/10 @820
+✔ #/d06/teach/10 @820
+✔ expected screen #/d06/teach/11 @820
+✔ #/d06/teach/11 @820
+✔ expected screen #/d06/teach/12 @820
+✔ #/d06/teach/12 @820
+✔ expected screen #/d06/teach/13 @820
+✔ #/d06/teach/13 @820
+✔ expected screen #/d06/notes @820
+✔ #/d06/notes @820
+✔ expected screen #/d06/practice @820
+✔ #/d06/practice @820
+✔ expected screen #/d06/test @820
+✔ #/d06/test @820
+✔ expected screen #/d07/teach/1 @820
+✔ #/d07/teach/1 @820
+✔ expected screen #/d07/teach/2 @820
+✔ #/d07/teach/2 @820
+✔ expected screen #/d07/teach/3 @820
+✔ #/d07/teach/3 @820
+✔ expected screen #/d07/teach/4 @820
+✔ #/d07/teach/4 @820
+✔ expected screen #/d07/teach/5 @820
+✔ #/d07/teach/5 @820
+✔ expected screen #/d07/teach/6 @820
+✔ #/d07/teach/6 @820
+✔ expected screen #/d07/teach/7 @820
+✔ #/d07/teach/7 @820
+✔ expected screen #/d07/teach/8 @820
+✔ #/d07/teach/8 @820
+✔ expected screen #/d07/teach/9 @820
+✔ #/d07/teach/9 @820
+✔ expected screen #/d07/teach/10 @820
+✔ #/d07/teach/10 @820
+✔ expected screen #/d07/teach/11 @820
+✔ #/d07/teach/11 @820
+✔ expected screen #/d07/teach/12 @820
+✔ #/d07/teach/12 @820
+✔ expected screen #/d07/teach/13 @820
+✔ #/d07/teach/13 @820
+✔ expected screen #/d07/notes @820
+✔ #/d07/notes @820
+✔ expected screen #/d07/practice @820
+✔ #/d07/practice @820
+✔ expected screen #/d07/test @820
+✔ #/d07/test @820
+✔ expected screen #/d08/teach/1 @820
+✔ #/d08/teach/1 @820
+✔ expected screen #/d08/teach/2 @820
+✔ #/d08/teach/2 @820
+✔ expected screen #/d08/teach/3 @820
+✔ #/d08/teach/3 @820
+✔ expected screen #/d08/teach/4 @820
+✔ #/d08/teach/4 @820
+✔ expected screen #/d08/teach/5 @820
+✔ #/d08/teach/5 @820
+✔ expected screen #/d08/teach/6 @820
+✔ #/d08/teach/6 @820
+✔ expected screen #/d08/teach/7 @820
+✔ #/d08/teach/7 @820
+✔ expected screen #/d08/teach/8 @820
+✔ #/d08/teach/8 @820
+✔ expected screen #/d08/teach/9 @820
+✔ #/d08/teach/9 @820
+✔ expected screen #/d08/teach/10 @820
+✔ #/d08/teach/10 @820
+✔ expected screen #/d08/teach/11 @820
+✔ #/d08/teach/11 @820
+✔ expected screen #/d08/notes @820
+✔ #/d08/notes @820
+✔ expected screen #/d08/practice @820
+✔ #/d08/practice @820
+✔ expected screen #/d08/test @820
+✔ #/d08/test @820
+✔ expected screen #/d09/teach/1 @820
+✔ #/d09/teach/1 @820
+✔ expected screen #/d09/teach/2 @820
+✔ #/d09/teach/2 @820
+✔ expected screen #/d09/teach/3 @820
+✔ #/d09/teach/3 @820
+✔ expected screen #/d09/teach/4 @820
+✔ #/d09/teach/4 @820
+✔ expected screen #/d09/teach/5 @820
+✔ #/d09/teach/5 @820
+✔ expected screen #/d09/teach/6 @820
+✔ #/d09/teach/6 @820
+✔ expected screen #/d09/teach/7 @820
+✔ #/d09/teach/7 @820
+✔ expected screen #/d09/teach/8 @820
+✔ #/d09/teach/8 @820
+✔ expected screen #/d09/teach/9 @820
+✔ #/d09/teach/9 @820
+✔ expected screen #/d09/teach/10 @820
+✔ #/d09/teach/10 @820
+✔ expected screen #/d09/teach/11 @820
+✔ #/d09/teach/11 @820
+✔ expected screen #/d09/teach/12 @820
+✔ #/d09/teach/12 @820
+✔ expected screen #/d09/teach/13 @820
+✔ #/d09/teach/13 @820
+✔ expected screen #/d09/teach/14 @820
+✔ #/d09/teach/14 @820
+✔ expected screen #/d09/teach/15 @820
+✔ #/d09/teach/15 @820
+✔ expected screen #/d09/notes @820
+✔ #/d09/notes @820
+✔ expected screen #/d09/practice @820
+✔ #/d09/practice @820
+✔ expected screen #/d09/test @820
+✔ #/d09/test @820
+✔ expected screen #/d10/teach/1 @820
+✔ #/d10/teach/1 @820
+✔ expected screen #/d10/teach/2 @820
+✔ #/d10/teach/2 @820
+✔ expected screen #/d10/teach/3 @820
+✔ #/d10/teach/3 @820
+✔ expected screen #/d10/teach/4 @820
+✔ #/d10/teach/4 @820
+✔ expected screen #/d10/teach/5 @820
+✔ #/d10/teach/5 @820
+✔ expected screen #/d10/teach/6 @820
+✔ #/d10/teach/6 @820
+✔ expected screen #/d10/teach/7 @820
+✔ #/d10/teach/7 @820
+✔ expected screen #/d10/teach/8 @820
+✔ #/d10/teach/8 @820
+✔ expected screen #/d10/teach/9 @820
+✔ #/d10/teach/9 @820
+✔ expected screen #/d10/teach/10 @820
+✔ #/d10/teach/10 @820
+✔ expected screen #/d10/teach/11 @820
+✔ #/d10/teach/11 @820
+✔ expected screen #/d10/teach/12 @820
+✔ #/d10/teach/12 @820
+✔ expected screen #/d10/teach/13 @820
+✔ #/d10/teach/13 @820
+✔ expected screen #/d10/notes @820
+✔ #/d10/notes @820
+✔ expected screen #/d10/practice @820
+✔ #/d10/practice @820
+✔ expected screen #/d10/test @820
+✔ #/d10/test @820
+✔ expected screen #/chapter4 @820
+✔ #/chapter4 @820
+✔ expected screen #/chapter4/4-1 @820
+✔ #/chapter4/4-1 @820
+✔ expected screen #/chapter4/4-1/learn/1 @820
+✔ #/chapter4/4-1/learn/1 @820
+✔ instruction visible in first view #/chapter4/4-1/learn/1 @820
+✔ expected screen #/chapter4/4-1/learn/2 @820
+✔ #/chapter4/4-1/learn/2 @820
+✔ instruction visible in first view #/chapter4/4-1/learn/2 @820
+✔ expected screen #/chapter4/4-1/learn/3 @820
+✔ #/chapter4/4-1/learn/3 @820
+✔ instruction visible in first view #/chapter4/4-1/learn/3 @820
+✔ expected screen #/chapter4/4-1/learn/4 @820
+✔ #/chapter4/4-1/learn/4 @820
+✔ instruction visible in first view #/chapter4/4-1/learn/4 @820
+✔ expected screen #/chapter4/4-1/learn/5 @820
+✔ #/chapter4/4-1/learn/5 @820
+✔ expected screen #/chapter4/4-1/practice @820
+✔ #/chapter4/4-1/practice @820
+✔ expected screen #/chapter4/4-1/independent @820
+✔ #/chapter4/4-1/independent @820
+✔ expected screen #/chapter4/4-1/test @820
+✔ #/chapter4/4-1/test @820
+✔ expected screen #/chapter4/4-2 @820
+✔ #/chapter4/4-2 @820
+✔ expected screen #/chapter4/4-2/learn/1 @820
+✔ #/chapter4/4-2/learn/1 @820
+✔ instruction visible in first view #/chapter4/4-2/learn/1 @820
+✔ expected screen #/chapter4/4-2/learn/2 @820
+✔ #/chapter4/4-2/learn/2 @820
+✔ instruction visible in first view #/chapter4/4-2/learn/2 @820
+✔ expected screen #/chapter4/4-2/learn/3 @820
+✔ #/chapter4/4-2/learn/3 @820
+✔ instruction visible in first view #/chapter4/4-2/learn/3 @820
+✔ expected screen #/chapter4/4-2/learn/4 @820
+✔ #/chapter4/4-2/learn/4 @820
+✔ instruction visible in first view #/chapter4/4-2/learn/4 @820
+✔ expected screen #/chapter4/4-2/learn/5 @820
+✔ #/chapter4/4-2/learn/5 @820
+✔ expected screen #/chapter4/4-2/practice @820
+✔ #/chapter4/4-2/practice @820
+✔ expected screen #/chapter4/4-2/independent @820
+✔ #/chapter4/4-2/independent @820
+✔ expected screen #/chapter4/4-2/test @820
+✔ #/chapter4/4-2/test @820
+✔ expected screen #/chapter4/4-3 @820
+✔ #/chapter4/4-3 @820
+✔ expected screen #/chapter4/4-3/learn/1 @820
+✔ #/chapter4/4-3/learn/1 @820
+✔ instruction visible in first view #/chapter4/4-3/learn/1 @820
+✔ expected screen #/chapter4/4-3/learn/2 @820
+✔ #/chapter4/4-3/learn/2 @820
+✔ instruction visible in first view #/chapter4/4-3/learn/2 @820
+✔ expected screen #/chapter4/4-3/learn/3 @820
+✔ #/chapter4/4-3/learn/3 @820
+✔ instruction visible in first view #/chapter4/4-3/learn/3 @820
+✔ expected screen #/chapter4/4-3/learn/4 @820
+✔ #/chapter4/4-3/learn/4 @820
+✔ instruction visible in first view #/chapter4/4-3/learn/4 @820
+✔ expected screen #/chapter4/4-3/learn/5 @820
+✔ #/chapter4/4-3/learn/5 @820
+✔ expected screen #/chapter4/4-3/practice @820
+✔ #/chapter4/4-3/practice @820
+✔ expected screen #/chapter4/4-3/independent @820
+✔ #/chapter4/4-3/independent @820
+✔ expected screen #/chapter4/4-3/test @820
+✔ #/chapter4/4-3/test @820
+✔ expected screen #/chapter4/4-4 @820
+✔ #/chapter4/4-4 @820
+✔ expected screen #/chapter4/4-4/learn/1 @820
+✔ #/chapter4/4-4/learn/1 @820
+✔ instruction visible in first view #/chapter4/4-4/learn/1 @820
+✔ expected screen #/chapter4/4-4/learn/2 @820
+✔ #/chapter4/4-4/learn/2 @820
+✔ instruction visible in first view #/chapter4/4-4/learn/2 @820
+✔ expected screen #/chapter4/4-4/learn/3 @820
+✔ #/chapter4/4-4/learn/3 @820
+✔ instruction visible in first view #/chapter4/4-4/learn/3 @820
+✔ expected screen #/chapter4/4-4/learn/4 @820
+✔ #/chapter4/4-4/learn/4 @820
+✔ instruction visible in first view #/chapter4/4-4/learn/4 @820
+✔ expected screen #/chapter4/4-4/learn/5 @820
+✔ #/chapter4/4-4/learn/5 @820
+✔ expected screen #/chapter4/4-4/practice @820
+✔ #/chapter4/4-4/practice @820
+✔ expected screen #/chapter4/4-4/independent @820
+✔ #/chapter4/4-4/independent @820
+✔ expected screen #/chapter4/4-4/test @820
+✔ #/chapter4/4-4/test @820
+✔ expected screen #/chapter4/4-5 @820
+✔ #/chapter4/4-5 @820
+✔ expected screen #/chapter4/4-5/learn/1 @820
+✔ #/chapter4/4-5/learn/1 @820
+✔ instruction visible in first view #/chapter4/4-5/learn/1 @820
+✔ expected screen #/chapter4/4-5/learn/2 @820
+✔ #/chapter4/4-5/learn/2 @820
+✔ instruction visible in first view #/chapter4/4-5/learn/2 @820
+✔ expected screen #/chapter4/4-5/learn/3 @820
+✔ #/chapter4/4-5/learn/3 @820
+✔ instruction visible in first view #/chapter4/4-5/learn/3 @820
+✔ expected screen #/chapter4/4-5/learn/4 @820
+✔ #/chapter4/4-5/learn/4 @820
+✔ instruction visible in first view #/chapter4/4-5/learn/4 @820
+✔ expected screen #/chapter4/4-5/learn/5 @820
+✔ #/chapter4/4-5/learn/5 @820
+✔ expected screen #/chapter4/4-5/practice @820
+✔ #/chapter4/4-5/practice @820
+✔ expected screen #/chapter4/4-5/independent @820
+✔ #/chapter4/4-5/independent @820
+✔ expected screen #/chapter4/4-5/test @820
+✔ #/chapter4/4-5/test @820
+✔ expected screen #/chapter4/4-6 @820
+✔ #/chapter4/4-6 @820
+✔ expected screen #/chapter4/4-6/learn/1 @820
+✔ #/chapter4/4-6/learn/1 @820
+✔ instruction visible in first view #/chapter4/4-6/learn/1 @820
+✔ expected screen #/chapter4/4-6/learn/2 @820
+✔ #/chapter4/4-6/learn/2 @820
+✔ instruction visible in first view #/chapter4/4-6/learn/2 @820
+✔ expected screen #/chapter4/4-6/learn/3 @820
+✔ #/chapter4/4-6/learn/3 @820
+✔ instruction visible in first view #/chapter4/4-6/learn/3 @820
+✔ expected screen #/chapter4/4-6/learn/4 @820
+✔ #/chapter4/4-6/learn/4 @820
+✔ instruction visible in first view #/chapter4/4-6/learn/4 @820
+✔ expected screen #/chapter4/4-6/learn/5 @820
+✔ #/chapter4/4-6/learn/5 @820
+✔ expected screen #/chapter4/4-6/practice @820
+✔ #/chapter4/4-6/practice @820
+✔ expected screen #/chapter4/4-6/independent @820
+✔ #/chapter4/4-6/independent @820
+✔ expected screen #/chapter4/4-6/test @820
+✔ #/chapter4/4-6/test @820
+✔ expected screen #/chapter4/4-7 @820
+✔ #/chapter4/4-7 @820
+✔ expected screen #/chapter4/4-7/learn/1 @820
+✔ #/chapter4/4-7/learn/1 @820
+✔ instruction visible in first view #/chapter4/4-7/learn/1 @820
+✔ expected screen #/chapter4/4-7/learn/2 @820
+✔ #/chapter4/4-7/learn/2 @820
+✔ instruction visible in first view #/chapter4/4-7/learn/2 @820
+✔ expected screen #/chapter4/4-7/learn/3 @820
+✔ #/chapter4/4-7/learn/3 @820
+✔ instruction visible in first view #/chapter4/4-7/learn/3 @820
+✔ expected screen #/chapter4/4-7/learn/4 @820
+✔ #/chapter4/4-7/learn/4 @820
+✔ instruction visible in first view #/chapter4/4-7/learn/4 @820
+✔ expected screen #/chapter4/4-7/learn/5 @820
+✔ #/chapter4/4-7/learn/5 @820
+✔ expected screen #/chapter4/4-7/practice @820
+✔ #/chapter4/4-7/practice @820
+✔ expected screen #/chapter4/4-7/independent @820
+✔ #/chapter4/4-7/independent @820
+✔ expected screen #/chapter4/4-7/test @820
+✔ #/chapter4/4-7/test @820
+✔ expected screen #/chapter4/4-8 @820
+✔ #/chapter4/4-8 @820
+✔ expected screen #/chapter4/4-8/learn/1 @820
+✔ #/chapter4/4-8/learn/1 @820
+✔ instruction visible in first view #/chapter4/4-8/learn/1 @820
+✔ expected screen #/chapter4/4-8/learn/2 @820
+✔ #/chapter4/4-8/learn/2 @820
+✔ instruction visible in first view #/chapter4/4-8/learn/2 @820
+✔ expected screen #/chapter4/4-8/learn/3 @820
+✔ #/chapter4/4-8/learn/3 @820
+✔ instruction visible in first view #/chapter4/4-8/learn/3 @820
+✔ expected screen #/chapter4/4-8/learn/4 @820
+✔ #/chapter4/4-8/learn/4 @820
+✔ instruction visible in first view #/chapter4/4-8/learn/4 @820
+✔ expected screen #/chapter4/4-8/learn/5 @820
+✔ #/chapter4/4-8/learn/5 @820
+✔ expected screen #/chapter4/4-8/practice @820
+✔ #/chapter4/4-8/practice @820
+✔ expected screen #/chapter4/4-8/independent @820
+✔ #/chapter4/4-8/independent @820
+✔ expected screen #/chapter4/4-8/test @820
+✔ #/chapter4/4-8/test @820
+✔ expected screen #/chapter4/review/practice @820
+✔ #/chapter4/review/practice @820
+✔ expected screen #/chapter4/final/test @820
+✔ #/chapter4/final/test @820
+✔ active coached question d01 @820
+✔ active d01 @820
+✔ immediate help is assisted d01 @820
+✔ expanded solution d01 @820
+✔ Previous and refresh retain assisted review d01 @820
+✔ forward review retains next question hint d01 @820
+✔ active coached question d02 @820
+✔ active d02 @820
+✔ immediate help is assisted d02 @820
+✔ expanded solution d02 @820
+✔ Previous and refresh retain assisted review d02 @820
+✔ forward review retains next question hint d02 @820
+✔ active coached question d03 @820
+✔ active d03 @820
+✔ immediate help is assisted d03 @820
+✔ expanded solution d03 @820
+✔ Previous and refresh retain assisted review d03 @820
+✔ forward review retains next question hint d03 @820
+✔ active coached question d04 @820
+✔ active d04 @820
+✔ immediate help is assisted d04 @820
+✔ expanded solution d04 @820
+✔ Previous and refresh retain assisted review d04 @820
+✔ forward review retains next question hint d04 @820
+✔ active coached question d05 @820
+✔ active d05 @820
+✔ immediate help is assisted d05 @820
+✔ expanded solution d05 @820
+✔ Previous and refresh retain assisted review d05 @820
+✔ forward review retains next question hint d05 @820
+✔ active coached question d06 @820
+✔ active d06 @820
+✔ immediate help is assisted d06 @820
+✔ expanded solution d06 @820
+✔ Previous and refresh retain assisted review d06 @820
+✔ forward review retains next question hint d06 @820
+✔ active coached question d07 @820
+✔ active d07 @820
+✔ immediate help is assisted d07 @820
+✔ expanded solution d07 @820
+✔ Previous and refresh retain assisted review d07 @820
+✔ forward review retains next question hint d07 @820
+✔ active coached question d08 @820
+✔ active d08 @820
+✔ immediate help is assisted d08 @820
+✔ expanded solution d08 @820
+✔ Previous and refresh retain assisted review d08 @820
+✔ forward review retains next question hint d08 @820
+✔ active coached question d09 @820
+✔ active d09 @820
+✔ immediate help is assisted d09 @820
+✔ expanded solution d09 @820
+✔ Previous and refresh retain assisted review d09 @820
+✔ forward review retains next question hint d09 @820
+✔ active coached question d10 @820
+✔ active d10 @820
+✔ immediate help is assisted d10 @820
+✔ expanded solution d10 @820
+✔ Previous and refresh retain assisted review d10 @820
+✔ forward review retains next question hint d10 @820
+✔ active coached question pc @820
+✔ active pc @820
+✔ immediate help is assisted pc @820
+✔ expanded solution pc @820
+✔ Previous and refresh retain assisted review pc @820
+✔ forward review retains next question hint pc @820
+✔ active coached question 4-1 @820
+✔ active 4-1 @820
+✔ immediate help is assisted 4-1 @820
+✔ expanded solution 4-1 @820
+✔ Previous and refresh retain assisted review 4-1 @820
+✔ forward review retains next question hint 4-1 @820
+✔ active coached question 4-2 @820
+✔ active 4-2 @820
+✔ immediate help is assisted 4-2 @820
+✔ expanded solution 4-2 @820
+✔ Previous and refresh retain assisted review 4-2 @820
+✔ forward review retains next question hint 4-2 @820
+✔ active coached question 4-3 @820
+✔ active 4-3 @820
+✔ immediate help is assisted 4-3 @820
+✔ expanded solution 4-3 @820
+✔ Previous and refresh retain assisted review 4-3 @820
+✔ forward review retains next question hint 4-3 @820
+✔ active coached question 4-4 @820
+✔ active 4-4 @820
+✔ immediate help is assisted 4-4 @820
+✔ expanded solution 4-4 @820
+✔ Previous and refresh retain assisted review 4-4 @820
+✔ forward review retains next question hint 4-4 @820
+✔ active coached question 4-5 @820
+✔ active 4-5 @820
+✔ immediate help is assisted 4-5 @820
+✔ expanded solution 4-5 @820
+✔ Previous and refresh retain assisted review 4-5 @820
+✔ forward review retains next question hint 4-5 @820
+✔ active coached question 4-6 @820
+✔ active 4-6 @820
+✔ immediate help is assisted 4-6 @820
+✔ expanded solution 4-6 @820
+✔ Previous and refresh retain assisted review 4-6 @820
+✔ forward review retains next question hint 4-6 @820
+✔ active coached question 4-7 @820
+✔ active 4-7 @820
+✔ immediate help is assisted 4-7 @820
+✔ expanded solution 4-7 @820
+✔ Previous and refresh retain assisted review 4-7 @820
+✔ forward review retains next question hint 4-7 @820
+✔ active coached question 4-8 @820
+✔ active 4-8 @820
+✔ immediate help is assisted 4-8 @820
+✔ expanded solution 4-8 @820
+✔ Previous and refresh retain assisted review 4-8 @820
+✔ forward review retains next question hint 4-8 @820
+✔ expected screen #/ @1366
+✔ #/ @1366
+✔ expected screen #/decimals @1366
+✔ #/decimals @1366
+✔ expected screen #/learn @1366
+✔ #/learn @1366
+✔ expected screen #/practice @1366
+✔ #/practice @1366
+✔ expected screen #/guides @1366
+✔ #/guides @1366
+✔ expected screen #/parent @1366
+✔ #/parent @1366
+✔ expected screen #/practice/session @1366
+✔ #/practice/session @1366
+✔ expected screen #/practice/results @1366
+✔ #/practice/results @1366
+✔ expected screen #/d01/teach/1 @1366
+✔ #/d01/teach/1 @1366
+✔ expected screen #/d01/teach/2 @1366
+✔ #/d01/teach/2 @1366
+✔ expected screen #/d01/teach/3 @1366
+✔ #/d01/teach/3 @1366
+✔ expected screen #/d01/teach/4 @1366
+✔ #/d01/teach/4 @1366
+✔ expected screen #/d01/teach/5 @1366
+✔ #/d01/teach/5 @1366
+✔ expected screen #/d01/teach/6 @1366
+✔ #/d01/teach/6 @1366
+✔ expected screen #/d01/teach/7 @1366
+✔ #/d01/teach/7 @1366
+✔ expected screen #/d01/teach/8 @1366
+✔ #/d01/teach/8 @1366
+✔ expected screen #/d01/teach/9 @1366
+✔ #/d01/teach/9 @1366
+✔ expected screen #/d01/teach/10 @1366
+✔ #/d01/teach/10 @1366
+✔ expected screen #/d01/teach/11 @1366
+✔ #/d01/teach/11 @1366
+✔ expected screen #/d01/teach/12 @1366
+✔ #/d01/teach/12 @1366
+✔ expected screen #/d01/teach/13 @1366
+✔ #/d01/teach/13 @1366
+✔ expected screen #/d01/teach/14 @1366
+✔ #/d01/teach/14 @1366
+✔ expected screen #/d01/teach/15 @1366
+✔ #/d01/teach/15 @1366
+✔ expected screen #/d01/teach/16 @1366
+✔ #/d01/teach/16 @1366
+✔ expected screen #/d01/teach/17 @1366
+✔ #/d01/teach/17 @1366
+✔ expected screen #/d01/teach/18 @1366
+✔ #/d01/teach/18 @1366
+✔ expected screen #/d01/teach/19 @1366
+✔ #/d01/teach/19 @1366
+✔ expected screen #/d01/teach/20 @1366
+✔ #/d01/teach/20 @1366
+✔ expected screen #/d01/teach/21 @1366
+✔ #/d01/teach/21 @1366
+✔ expected screen #/d01/teach/22 @1366
+✔ #/d01/teach/22 @1366
+✔ expected screen #/d01/teach/23 @1366
+✔ #/d01/teach/23 @1366
+✔ expected screen #/d01/notes @1366
+✔ #/d01/notes @1366
+✔ expected screen #/d01/practice @1366
+✔ #/d01/practice @1366
+✔ expected screen #/d01/test @1366
+✔ #/d01/test @1366
+✔ expected screen #/d02/teach/1 @1366
+✔ #/d02/teach/1 @1366
+✔ expected screen #/d02/teach/2 @1366
+✔ #/d02/teach/2 @1366
+✔ expected screen #/d02/teach/3 @1366
+✔ #/d02/teach/3 @1366
+✔ expected screen #/d02/teach/4 @1366
+✔ #/d02/teach/4 @1366
+✔ expected screen #/d02/teach/5 @1366
+✔ #/d02/teach/5 @1366
+✔ expected screen #/d02/teach/6 @1366
+✔ #/d02/teach/6 @1366
+✔ expected screen #/d02/teach/7 @1366
+✔ #/d02/teach/7 @1366
+✔ expected screen #/d02/teach/8 @1366
+✔ #/d02/teach/8 @1366
+✔ expected screen #/d02/teach/9 @1366
+✔ #/d02/teach/9 @1366
+✔ expected screen #/d02/teach/10 @1366
+✔ #/d02/teach/10 @1366
+✔ expected screen #/d02/teach/11 @1366
+✔ #/d02/teach/11 @1366
+✔ expected screen #/d02/teach/12 @1366
+✔ #/d02/teach/12 @1366
+✔ expected screen #/d02/teach/13 @1366
+✔ #/d02/teach/13 @1366
+✔ expected screen #/d02/teach/14 @1366
+✔ #/d02/teach/14 @1366
+✔ expected screen #/d02/teach/15 @1366
+✔ #/d02/teach/15 @1366
+✔ expected screen #/d02/notes @1366
+✔ #/d02/notes @1366
+✔ expected screen #/d02/practice @1366
+✔ #/d02/practice @1366
+✔ expected screen #/d02/test @1366
+✔ #/d02/test @1366
+✔ expected screen #/d03/teach/1 @1366
+✔ #/d03/teach/1 @1366
+✔ expected screen #/d03/teach/2 @1366
+✔ #/d03/teach/2 @1366
+✔ expected screen #/d03/teach/3 @1366
+✔ #/d03/teach/3 @1366
+✔ expected screen #/d03/teach/4 @1366
+✔ #/d03/teach/4 @1366
+✔ expected screen #/d03/teach/5 @1366
+✔ #/d03/teach/5 @1366
+✔ expected screen #/d03/teach/6 @1366
+✔ #/d03/teach/6 @1366
+✔ expected screen #/d03/teach/7 @1366
+✔ #/d03/teach/7 @1366
+✔ expected screen #/d03/teach/8 @1366
+✔ #/d03/teach/8 @1366
+✔ expected screen #/d03/teach/9 @1366
+✔ #/d03/teach/9 @1366
+✔ expected screen #/d03/teach/10 @1366
+✔ #/d03/teach/10 @1366
+✔ expected screen #/d03/teach/11 @1366
+✔ #/d03/teach/11 @1366
+✔ expected screen #/d03/teach/12 @1366
+✔ #/d03/teach/12 @1366
+✔ expected screen #/d03/teach/13 @1366
+✔ #/d03/teach/13 @1366
+✔ expected screen #/d03/teach/14 @1366
+✔ #/d03/teach/14 @1366
+✔ expected screen #/d03/teach/15 @1366
+✔ #/d03/teach/15 @1366
+✔ expected screen #/d03/teach/16 @1366
+✔ #/d03/teach/16 @1366
+✔ expected screen #/d03/teach/17 @1366
+✔ #/d03/teach/17 @1366
+✔ expected screen #/d03/teach/18 @1366
+✔ #/d03/teach/18 @1366
+✔ expected screen #/d03/notes @1366
+✔ #/d03/notes @1366
+✔ expected screen #/d03/practice @1366
+✔ #/d03/practice @1366
+✔ expected screen #/d03/test @1366
+✔ #/d03/test @1366
+✔ expected screen #/d04/teach/1 @1366
+✔ #/d04/teach/1 @1366
+✔ expected screen #/d04/teach/2 @1366
+✔ #/d04/teach/2 @1366
+✔ expected screen #/d04/teach/3 @1366
+✔ #/d04/teach/3 @1366
+✔ expected screen #/d04/teach/4 @1366
+✔ #/d04/teach/4 @1366
+✔ expected screen #/d04/teach/5 @1366
+✔ #/d04/teach/5 @1366
+✔ expected screen #/d04/teach/6 @1366
+✔ #/d04/teach/6 @1366
+✔ expected screen #/d04/teach/7 @1366
+✔ #/d04/teach/7 @1366
+✔ expected screen #/d04/teach/8 @1366
+✔ #/d04/teach/8 @1366
+✔ expected screen #/d04/teach/9 @1366
+✔ #/d04/teach/9 @1366
+✔ expected screen #/d04/teach/10 @1366
+✔ #/d04/teach/10 @1366
+✔ expected screen #/d04/teach/11 @1366
+✔ #/d04/teach/11 @1366
+✔ expected screen #/d04/teach/12 @1366
+✔ #/d04/teach/12 @1366
+✔ expected screen #/d04/notes @1366
+✔ #/d04/notes @1366
+✔ expected screen #/d04/practice @1366
+✔ #/d04/practice @1366
+✔ expected screen #/d04/test @1366
+✔ #/d04/test @1366
+✔ expected screen #/d05/teach/1 @1366
+✔ #/d05/teach/1 @1366
+✔ expected screen #/d05/teach/2 @1366
+✔ #/d05/teach/2 @1366
+✔ expected screen #/d05/teach/3 @1366
+✔ #/d05/teach/3 @1366
+✔ expected screen #/d05/teach/4 @1366
+✔ #/d05/teach/4 @1366
+✔ expected screen #/d05/teach/5 @1366
+✔ #/d05/teach/5 @1366
+✔ expected screen #/d05/teach/6 @1366
+✔ #/d05/teach/6 @1366
+✔ expected screen #/d05/teach/7 @1366
+✔ #/d05/teach/7 @1366
+✔ expected screen #/d05/teach/8 @1366
+✔ #/d05/teach/8 @1366
+✔ expected screen #/d05/teach/9 @1366
+✔ #/d05/teach/9 @1366
+✔ expected screen #/d05/teach/10 @1366
+✔ #/d05/teach/10 @1366
+✔ expected screen #/d05/teach/11 @1366
+✔ #/d05/teach/11 @1366
+✔ expected screen #/d05/teach/12 @1366
+✔ #/d05/teach/12 @1366
+✔ expected screen #/d05/teach/13 @1366
+✔ #/d05/teach/13 @1366
+✔ expected screen #/d05/teach/14 @1366
+✔ #/d05/teach/14 @1366
+✔ expected screen #/d05/notes @1366
+✔ #/d05/notes @1366
+✔ expected screen #/d05/practice @1366
+✔ #/d05/practice @1366
+✔ expected screen #/d05/test @1366
+✔ #/d05/test @1366
+✔ expected screen #/d06/teach/1 @1366
+✔ #/d06/teach/1 @1366
+✔ expected screen #/d06/teach/2 @1366
+✔ #/d06/teach/2 @1366
+✔ expected screen #/d06/teach/3 @1366
+✔ #/d06/teach/3 @1366
+✔ expected screen #/d06/teach/4 @1366
+✔ #/d06/teach/4 @1366
+✔ expected screen #/d06/teach/5 @1366
+✔ #/d06/teach/5 @1366
+✔ expected screen #/d06/teach/6 @1366
+✔ #/d06/teach/6 @1366
+✔ expected screen #/d06/teach/7 @1366
+✔ #/d06/teach/7 @1366
+✔ expected screen #/d06/teach/8 @1366
+✔ #/d06/teach/8 @1366
+✔ expected screen #/d06/teach/9 @1366
+✔ #/d06/teach/9 @1366
+✔ expected screen #/d06/teach/10 @1366
+✔ #/d06/teach/10 @1366
+✔ expected screen #/d06/teach/11 @1366
+✔ #/d06/teach/11 @1366
+✔ expected screen #/d06/teach/12 @1366
+✔ #/d06/teach/12 @1366
+✔ expected screen #/d06/teach/13 @1366
+✔ #/d06/teach/13 @1366
+✔ expected screen #/d06/notes @1366
+✔ #/d06/notes @1366
+✔ expected screen #/d06/practice @1366
+✔ #/d06/practice @1366
+✔ expected screen #/d06/test @1366
+✔ #/d06/test @1366
+✔ expected screen #/d07/teach/1 @1366
+✔ #/d07/teach/1 @1366
+✔ expected screen #/d07/teach/2 @1366
+✔ #/d07/teach/2 @1366
+✔ expected screen #/d07/teach/3 @1366
+✔ #/d07/teach/3 @1366
+✔ expected screen #/d07/teach/4 @1366
+✔ #/d07/teach/4 @1366
+✔ expected screen #/d07/teach/5 @1366
+✔ #/d07/teach/5 @1366
+✔ expected screen #/d07/teach/6 @1366
+✔ #/d07/teach/6 @1366
+✔ expected screen #/d07/teach/7 @1366
+✔ #/d07/teach/7 @1366
+✔ expected screen #/d07/teach/8 @1366
+✔ #/d07/teach/8 @1366
+✔ expected screen #/d07/teach/9 @1366
+✔ #/d07/teach/9 @1366
+✔ expected screen #/d07/teach/10 @1366
+✔ #/d07/teach/10 @1366
+✔ expected screen #/d07/teach/11 @1366
+✔ #/d07/teach/11 @1366
+✔ expected screen #/d07/teach/12 @1366
+✔ #/d07/teach/12 @1366
+✔ expected screen #/d07/teach/13 @1366
+✔ #/d07/teach/13 @1366
+✔ expected screen #/d07/notes @1366
+✔ #/d07/notes @1366
+✔ expected screen #/d07/practice @1366
+✔ #/d07/practice @1366
+✔ expected screen #/d07/test @1366
+✔ #/d07/test @1366
+✔ expected screen #/d08/teach/1 @1366
+✔ #/d08/teach/1 @1366
+✔ expected screen #/d08/teach/2 @1366
+✔ #/d08/teach/2 @1366
+✔ expected screen #/d08/teach/3 @1366
+✔ #/d08/teach/3 @1366
+✔ expected screen #/d08/teach/4 @1366
+✔ #/d08/teach/4 @1366
+✔ expected screen #/d08/teach/5 @1366
+✔ #/d08/teach/5 @1366
+✔ expected screen #/d08/teach/6 @1366
+✔ #/d08/teach/6 @1366
+✔ expected screen #/d08/teach/7 @1366
+✔ #/d08/teach/7 @1366
+✔ expected screen #/d08/teach/8 @1366
+✔ #/d08/teach/8 @1366
+✔ expected screen #/d08/teach/9 @1366
+✔ #/d08/teach/9 @1366
+✔ expected screen #/d08/teach/10 @1366
+✔ #/d08/teach/10 @1366
+✔ expected screen #/d08/teach/11 @1366
+✔ #/d08/teach/11 @1366
+✔ expected screen #/d08/notes @1366
+✔ #/d08/notes @1366
+✔ expected screen #/d08/practice @1366
+✔ #/d08/practice @1366
+✔ expected screen #/d08/test @1366
+✔ #/d08/test @1366
+✔ expected screen #/d09/teach/1 @1366
+✔ #/d09/teach/1 @1366
+✔ expected screen #/d09/teach/2 @1366
+✔ #/d09/teach/2 @1366
+✔ expected screen #/d09/teach/3 @1366
+✔ #/d09/teach/3 @1366
+✔ expected screen #/d09/teach/4 @1366
+✔ #/d09/teach/4 @1366
+✔ expected screen #/d09/teach/5 @1366
+✔ #/d09/teach/5 @1366
+✔ expected screen #/d09/teach/6 @1366
+✔ #/d09/teach/6 @1366
+✔ expected screen #/d09/teach/7 @1366
+✔ #/d09/teach/7 @1366
+✔ expected screen #/d09/teach/8 @1366
+✔ #/d09/teach/8 @1366
+✔ expected screen #/d09/teach/9 @1366
+✔ #/d09/teach/9 @1366
+✔ expected screen #/d09/teach/10 @1366
+✔ #/d09/teach/10 @1366
+✔ expected screen #/d09/teach/11 @1366
+✔ #/d09/teach/11 @1366
+✔ expected screen #/d09/teach/12 @1366
+✔ #/d09/teach/12 @1366
+✔ expected screen #/d09/teach/13 @1366
+✔ #/d09/teach/13 @1366
+✔ expected screen #/d09/teach/14 @1366
+✔ #/d09/teach/14 @1366
+✔ expected screen #/d09/teach/15 @1366
+✔ #/d09/teach/15 @1366
+✔ expected screen #/d09/notes @1366
+✔ #/d09/notes @1366
+✔ expected screen #/d09/practice @1366
+✔ #/d09/practice @1366
+✔ expected screen #/d09/test @1366
+✔ #/d09/test @1366
+✔ expected screen #/d10/teach/1 @1366
+✔ #/d10/teach/1 @1366
+✔ expected screen #/d10/teach/2 @1366
+✔ #/d10/teach/2 @1366
+✔ expected screen #/d10/teach/3 @1366
+✔ #/d10/teach/3 @1366
+✔ expected screen #/d10/teach/4 @1366
+✔ #/d10/teach/4 @1366
+✔ expected screen #/d10/teach/5 @1366
+✔ #/d10/teach/5 @1366
+✔ expected screen #/d10/teach/6 @1366
+✔ #/d10/teach/6 @1366
+✔ expected screen #/d10/teach/7 @1366
+✔ #/d10/teach/7 @1366
+✔ expected screen #/d10/teach/8 @1366
+✔ #/d10/teach/8 @1366
+✔ expected screen #/d10/teach/9 @1366
+✔ #/d10/teach/9 @1366
+✔ expected screen #/d10/teach/10 @1366
+✔ #/d10/teach/10 @1366
+✔ expected screen #/d10/teach/11 @1366
+✔ #/d10/teach/11 @1366
+✔ expected screen #/d10/teach/12 @1366
+✔ #/d10/teach/12 @1366
+✔ expected screen #/d10/teach/13 @1366
+✔ #/d10/teach/13 @1366
+✔ expected screen #/d10/notes @1366
+✔ #/d10/notes @1366
+✔ expected screen #/d10/practice @1366
+✔ #/d10/practice @1366
+✔ expected screen #/d10/test @1366
+✔ #/d10/test @1366
+✔ expected screen #/chapter4 @1366
+✔ #/chapter4 @1366
+✔ expected screen #/chapter4/4-1 @1366
+✔ #/chapter4/4-1 @1366
+✔ expected screen #/chapter4/4-1/learn/1 @1366
+✔ #/chapter4/4-1/learn/1 @1366
+✔ instruction visible in first view #/chapter4/4-1/learn/1 @1366
+✔ expected screen #/chapter4/4-1/learn/2 @1366
+✔ #/chapter4/4-1/learn/2 @1366
+✔ instruction visible in first view #/chapter4/4-1/learn/2 @1366
+✔ expected screen #/chapter4/4-1/learn/3 @1366
+✔ #/chapter4/4-1/learn/3 @1366
+✔ instruction visible in first view #/chapter4/4-1/learn/3 @1366
+✔ expected screen #/chapter4/4-1/learn/4 @1366
+✔ #/chapter4/4-1/learn/4 @1366
+✔ instruction visible in first view #/chapter4/4-1/learn/4 @1366
+✔ expected screen #/chapter4/4-1/learn/5 @1366
+✔ #/chapter4/4-1/learn/5 @1366
+✔ expected screen #/chapter4/4-1/practice @1366
+✔ #/chapter4/4-1/practice @1366
+✔ expected screen #/chapter4/4-1/independent @1366
+✔ #/chapter4/4-1/independent @1366
+✔ expected screen #/chapter4/4-1/test @1366
+✔ #/chapter4/4-1/test @1366
+✔ expected screen #/chapter4/4-2 @1366
+✔ #/chapter4/4-2 @1366
+✔ expected screen #/chapter4/4-2/learn/1 @1366
+✔ #/chapter4/4-2/learn/1 @1366
+✔ instruction visible in first view #/chapter4/4-2/learn/1 @1366
+✔ expected screen #/chapter4/4-2/learn/2 @1366
+✔ #/chapter4/4-2/learn/2 @1366
+✔ instruction visible in first view #/chapter4/4-2/learn/2 @1366
+✔ expected screen #/chapter4/4-2/learn/3 @1366
+✔ #/chapter4/4-2/learn/3 @1366
+✔ instruction visible in first view #/chapter4/4-2/learn/3 @1366
+✔ expected screen #/chapter4/4-2/learn/4 @1366
+✔ #/chapter4/4-2/learn/4 @1366
+✔ instruction visible in first view #/chapter4/4-2/learn/4 @1366
+✔ expected screen #/chapter4/4-2/learn/5 @1366
+✔ #/chapter4/4-2/learn/5 @1366
+✔ expected screen #/chapter4/4-2/practice @1366
+✔ #/chapter4/4-2/practice @1366
+✔ expected screen #/chapter4/4-2/independent @1366
+✔ #/chapter4/4-2/independent @1366
+✔ expected screen #/chapter4/4-2/test @1366
+✔ #/chapter4/4-2/test @1366
+✔ expected screen #/chapter4/4-3 @1366
+✔ #/chapter4/4-3 @1366
+✔ expected screen #/chapter4/4-3/learn/1 @1366
+✔ #/chapter4/4-3/learn/1 @1366
+✔ instruction visible in first view #/chapter4/4-3/learn/1 @1366
+✔ expected screen #/chapter4/4-3/learn/2 @1366
+✔ #/chapter4/4-3/learn/2 @1366
+✔ instruction visible in first view #/chapter4/4-3/learn/2 @1366
+✔ expected screen #/chapter4/4-3/learn/3 @1366
+✔ #/chapter4/4-3/learn/3 @1366
+✔ instruction visible in first view #/chapter4/4-3/learn/3 @1366
+✔ expected screen #/chapter4/4-3/learn/4 @1366
+✔ #/chapter4/4-3/learn/4 @1366
+✔ instruction visible in first view #/chapter4/4-3/learn/4 @1366
+✔ expected screen #/chapter4/4-3/learn/5 @1366
+✔ #/chapter4/4-3/learn/5 @1366
+✔ expected screen #/chapter4/4-3/practice @1366
+✔ #/chapter4/4-3/practice @1366
+✔ expected screen #/chapter4/4-3/independent @1366
+✔ #/chapter4/4-3/independent @1366
+✔ expected screen #/chapter4/4-3/test @1366
+✔ #/chapter4/4-3/test @1366
+✔ expected screen #/chapter4/4-4 @1366
+✔ #/chapter4/4-4 @1366
+✔ expected screen #/chapter4/4-4/learn/1 @1366
+✔ #/chapter4/4-4/learn/1 @1366
+✔ instruction visible in first view #/chapter4/4-4/learn/1 @1366
+✔ expected screen #/chapter4/4-4/learn/2 @1366
+✔ #/chapter4/4-4/learn/2 @1366
+✔ instruction visible in first view #/chapter4/4-4/learn/2 @1366
+✔ expected screen #/chapter4/4-4/learn/3 @1366
+✔ #/chapter4/4-4/learn/3 @1366
+✔ instruction visible in first view #/chapter4/4-4/learn/3 @1366
+✔ expected screen #/chapter4/4-4/learn/4 @1366
+✔ #/chapter4/4-4/learn/4 @1366
+✔ instruction visible in first view #/chapter4/4-4/learn/4 @1366
+✔ expected screen #/chapter4/4-4/learn/5 @1366
+✔ #/chapter4/4-4/learn/5 @1366
+✔ expected screen #/chapter4/4-4/practice @1366
+✔ #/chapter4/4-4/practice @1366
+✔ expected screen #/chapter4/4-4/independent @1366
+✔ #/chapter4/4-4/independent @1366
+✔ expected screen #/chapter4/4-4/test @1366
+✔ #/chapter4/4-4/test @1366
+✔ expected screen #/chapter4/4-5 @1366
+✔ #/chapter4/4-5 @1366
+✔ expected screen #/chapter4/4-5/learn/1 @1366
+✔ #/chapter4/4-5/learn/1 @1366
+✔ instruction visible in first view #/chapter4/4-5/learn/1 @1366
+✔ expected screen #/chapter4/4-5/learn/2 @1366
+✔ #/chapter4/4-5/learn/2 @1366
+✔ instruction visible in first view #/chapter4/4-5/learn/2 @1366
+✔ expected screen #/chapter4/4-5/learn/3 @1366
+✔ #/chapter4/4-5/learn/3 @1366
+✔ instruction visible in first view #/chapter4/4-5/learn/3 @1366
+✔ expected screen #/chapter4/4-5/learn/4 @1366
+✔ #/chapter4/4-5/learn/4 @1366
+✔ instruction visible in first view #/chapter4/4-5/learn/4 @1366
+✔ expected screen #/chapter4/4-5/learn/5 @1366
+✔ #/chapter4/4-5/learn/5 @1366
+✔ expected screen #/chapter4/4-5/practice @1366
+✔ #/chapter4/4-5/practice @1366
+✔ expected screen #/chapter4/4-5/independent @1366
+✔ #/chapter4/4-5/independent @1366
+✔ expected screen #/chapter4/4-5/test @1366
+✔ #/chapter4/4-5/test @1366
+✔ expected screen #/chapter4/4-6 @1366
+✔ #/chapter4/4-6 @1366
+✔ expected screen #/chapter4/4-6/learn/1 @1366
+✔ #/chapter4/4-6/learn/1 @1366
+✔ instruction visible in first view #/chapter4/4-6/learn/1 @1366
+✔ expected screen #/chapter4/4-6/learn/2 @1366
+✔ #/chapter4/4-6/learn/2 @1366
+✔ instruction visible in first view #/chapter4/4-6/learn/2 @1366
+✔ expected screen #/chapter4/4-6/learn/3 @1366
+✔ #/chapter4/4-6/learn/3 @1366
+✔ instruction visible in first view #/chapter4/4-6/learn/3 @1366
+✔ expected screen #/chapter4/4-6/learn/4 @1366
+✔ #/chapter4/4-6/learn/4 @1366
+✔ instruction visible in first view #/chapter4/4-6/learn/4 @1366
+✔ expected screen #/chapter4/4-6/learn/5 @1366
+✔ #/chapter4/4-6/learn/5 @1366
+✔ expected screen #/chapter4/4-6/practice @1366
+✔ #/chapter4/4-6/practice @1366
+✔ expected screen #/chapter4/4-6/independent @1366
+✔ #/chapter4/4-6/independent @1366
+✔ expected screen #/chapter4/4-6/test @1366
+✔ #/chapter4/4-6/test @1366
+✔ expected screen #/chapter4/4-7 @1366
+✔ #/chapter4/4-7 @1366
+✔ expected screen #/chapter4/4-7/learn/1 @1366
+✔ #/chapter4/4-7/learn/1 @1366
+✔ instruction visible in first view #/chapter4/4-7/learn/1 @1366
+✔ expected screen #/chapter4/4-7/learn/2 @1366
+✔ #/chapter4/4-7/learn/2 @1366
+✔ instruction visible in first view #/chapter4/4-7/learn/2 @1366
+✔ expected screen #/chapter4/4-7/learn/3 @1366
+✔ #/chapter4/4-7/learn/3 @1366
+✔ instruction visible in first view #/chapter4/4-7/learn/3 @1366
+✔ expected screen #/chapter4/4-7/learn/4 @1366
+✔ #/chapter4/4-7/learn/4 @1366
+✔ instruction visible in first view #/chapter4/4-7/learn/4 @1366
+✔ expected screen #/chapter4/4-7/learn/5 @1366
+✔ #/chapter4/4-7/learn/5 @1366
+✔ expected screen #/chapter4/4-7/practice @1366
+✔ #/chapter4/4-7/practice @1366
+✔ expected screen #/chapter4/4-7/independent @1366
+✔ #/chapter4/4-7/independent @1366
+✔ expected screen #/chapter4/4-7/test @1366
+✔ #/chapter4/4-7/test @1366
+✔ expected screen #/chapter4/4-8 @1366
+✔ #/chapter4/4-8 @1366
+✔ expected screen #/chapter4/4-8/learn/1 @1366
+✔ #/chapter4/4-8/learn/1 @1366
+✔ instruction visible in first view #/chapter4/4-8/learn/1 @1366
+✔ expected screen #/chapter4/4-8/learn/2 @1366
+✔ #/chapter4/4-8/learn/2 @1366
+✔ instruction visible in first view #/chapter4/4-8/learn/2 @1366
+✔ expected screen #/chapter4/4-8/learn/3 @1366
+✔ #/chapter4/4-8/learn/3 @1366
+✔ instruction visible in first view #/chapter4/4-8/learn/3 @1366
+✔ expected screen #/chapter4/4-8/learn/4 @1366
+✔ #/chapter4/4-8/learn/4 @1366
+✔ instruction visible in first view #/chapter4/4-8/learn/4 @1366
+✔ expected screen #/chapter4/4-8/learn/5 @1366
+✔ #/chapter4/4-8/learn/5 @1366
+✔ expected screen #/chapter4/4-8/practice @1366
+✔ #/chapter4/4-8/practice @1366
+✔ expected screen #/chapter4/4-8/independent @1366
+✔ #/chapter4/4-8/independent @1366
+✔ expected screen #/chapter4/4-8/test @1366
+✔ #/chapter4/4-8/test @1366
+✔ expected screen #/chapter4/review/practice @1366
+✔ #/chapter4/review/practice @1366
+✔ expected screen #/chapter4/final/test @1366
+✔ #/chapter4/final/test @1366
+✔ active coached question d01 @1366
+✔ active d01 @1366
+✔ immediate help is assisted d01 @1366
+✔ expanded solution d01 @1366
+✔ Previous and refresh retain assisted review d01 @1366
+✔ forward review retains next question hint d01 @1366
+✔ active coached question d02 @1366
+✔ active d02 @1366
+✔ immediate help is assisted d02 @1366
+✔ expanded solution d02 @1366
+✔ Previous and refresh retain assisted review d02 @1366
+✔ forward review retains next question hint d02 @1366
+✔ active coached question d03 @1366
+✔ active d03 @1366
+✔ immediate help is assisted d03 @1366
+✔ expanded solution d03 @1366
+✔ Previous and refresh retain assisted review d03 @1366
+✔ forward review retains next question hint d03 @1366
+✔ active coached question d04 @1366
+✔ active d04 @1366
+✔ immediate help is assisted d04 @1366
+✔ expanded solution d04 @1366
+✔ Previous and refresh retain assisted review d04 @1366
+✔ forward review retains next question hint d04 @1366
+✔ active coached question d05 @1366
+✔ active d05 @1366
+✔ immediate help is assisted d05 @1366
+✔ expanded solution d05 @1366
+✔ Previous and refresh retain assisted review d05 @1366
+✔ forward review retains next question hint d05 @1366
+✔ active coached question d06 @1366
+✔ active d06 @1366
+✔ immediate help is assisted d06 @1366
+✔ expanded solution d06 @1366
+✔ Previous and refresh retain assisted review d06 @1366
+✔ forward review retains next question hint d06 @1366
+✔ active coached question d07 @1366
+✔ active d07 @1366
+✔ immediate help is assisted d07 @1366
+✔ expanded solution d07 @1366
+✔ Previous and refresh retain assisted review d07 @1366
+✔ forward review retains next question hint d07 @1366
+✔ active coached question d08 @1366
+✔ active d08 @1366
+✔ immediate help is assisted d08 @1366
+✔ expanded solution d08 @1366
+✔ Previous and refresh retain assisted review d08 @1366
+✔ forward review retains next question hint d08 @1366
+✔ active coached question d09 @1366
+✔ active d09 @1366
+✔ immediate help is assisted d09 @1366
+✔ expanded solution d09 @1366
+✔ Previous and refresh retain assisted review d09 @1366
+✔ forward review retains next question hint d09 @1366
+✔ active coached question d10 @1366
+✔ active d10 @1366
+✔ immediate help is assisted d10 @1366
+✔ expanded solution d10 @1366
+✔ Previous and refresh retain assisted review d10 @1366
+✔ forward review retains next question hint d10 @1366
+✔ active coached question pc @1366
+✔ active pc @1366
+✔ immediate help is assisted pc @1366
+✔ expanded solution pc @1366
+✔ Previous and refresh retain assisted review pc @1366
+✔ forward review retains next question hint pc @1366
+✔ active coached question 4-1 @1366
+✔ active 4-1 @1366
+✔ immediate help is assisted 4-1 @1366
+✔ expanded solution 4-1 @1366
+✔ Previous and refresh retain assisted review 4-1 @1366
+✔ forward review retains next question hint 4-1 @1366
+✔ active coached question 4-2 @1366
+✔ active 4-2 @1366
+✔ immediate help is assisted 4-2 @1366
+✔ expanded solution 4-2 @1366
+✔ Previous and refresh retain assisted review 4-2 @1366
+✔ forward review retains next question hint 4-2 @1366
+✔ active coached question 4-3 @1366
+✔ active 4-3 @1366
+✔ immediate help is assisted 4-3 @1366
+✔ expanded solution 4-3 @1366
+✔ Previous and refresh retain assisted review 4-3 @1366
+✔ forward review retains next question hint 4-3 @1366
+✔ active coached question 4-4 @1366
+✔ active 4-4 @1366
+✔ immediate help is assisted 4-4 @1366
+✔ expanded solution 4-4 @1366
+✔ Previous and refresh retain assisted review 4-4 @1366
+✔ forward review retains next question hint 4-4 @1366
+✔ active coached question 4-5 @1366
+✔ active 4-5 @1366
+✔ immediate help is assisted 4-5 @1366
+✔ expanded solution 4-5 @1366
+✔ Previous and refresh retain assisted review 4-5 @1366
+✔ forward review retains next question hint 4-5 @1366
+✔ active coached question 4-6 @1366
+✔ active 4-6 @1366
+✔ immediate help is assisted 4-6 @1366
+✔ expanded solution 4-6 @1366
+✔ Previous and refresh retain assisted review 4-6 @1366
+✔ forward review retains next question hint 4-6 @1366
+✔ active coached question 4-7 @1366
+✔ active 4-7 @1366
+✔ immediate help is assisted 4-7 @1366
+✔ expanded solution 4-7 @1366
+✔ Previous and refresh retain assisted review 4-7 @1366
+✔ forward review retains next question hint 4-7 @1366
+✔ active coached question 4-8 @1366
+✔ active 4-8 @1366
+✔ immediate help is assisted 4-8 @1366
+✔ expanded solution 4-8 @1366
+✔ Previous and refresh retain assisted review 4-8 @1366
+✔ forward review retains next question hint 4-8 @1366
+✔ expected screen #/ @1920
+✔ #/ @1920
+✔ expected screen #/decimals @1920
+✔ #/decimals @1920
+✔ expected screen #/learn @1920
+✔ #/learn @1920
+✔ expected screen #/practice @1920
+✔ #/practice @1920
+✔ expected screen #/guides @1920
+✔ #/guides @1920
+✔ expected screen #/parent @1920
+✔ #/parent @1920
+✔ expected screen #/practice/session @1920
+✔ #/practice/session @1920
+✔ expected screen #/practice/results @1920
+✔ #/practice/results @1920
+✔ expected screen #/d01/teach/1 @1920
+✔ #/d01/teach/1 @1920
+✔ expected screen #/d01/teach/2 @1920
+✔ #/d01/teach/2 @1920
+✔ expected screen #/d01/teach/3 @1920
+✔ #/d01/teach/3 @1920
+✔ expected screen #/d01/teach/4 @1920
+✔ #/d01/teach/4 @1920
+✔ expected screen #/d01/teach/5 @1920
+✔ #/d01/teach/5 @1920
+✔ expected screen #/d01/teach/6 @1920
+✔ #/d01/teach/6 @1920
+✔ expected screen #/d01/teach/7 @1920
+✔ #/d01/teach/7 @1920
+✔ expected screen #/d01/teach/8 @1920
+✔ #/d01/teach/8 @1920
+✔ expected screen #/d01/teach/9 @1920
+✔ #/d01/teach/9 @1920
+✔ expected screen #/d01/teach/10 @1920
+✔ #/d01/teach/10 @1920
+✔ expected screen #/d01/teach/11 @1920
+✔ #/d01/teach/11 @1920
+✔ expected screen #/d01/teach/12 @1920
+✔ #/d01/teach/12 @1920
+✔ expected screen #/d01/teach/13 @1920
+✔ #/d01/teach/13 @1920
+✔ expected screen #/d01/teach/14 @1920
+✔ #/d01/teach/14 @1920
+✔ expected screen #/d01/teach/15 @1920
+✔ #/d01/teach/15 @1920
+✔ expected screen #/d01/teach/16 @1920
+✔ #/d01/teach/16 @1920
+✔ expected screen #/d01/teach/17 @1920
+✔ #/d01/teach/17 @1920
+✔ expected screen #/d01/teach/18 @1920
+✔ #/d01/teach/18 @1920
+✔ expected screen #/d01/teach/19 @1920
+✔ #/d01/teach/19 @1920
+✔ expected screen #/d01/teach/20 @1920
+✔ #/d01/teach/20 @1920
+✔ expected screen #/d01/teach/21 @1920
+✔ #/d01/teach/21 @1920
+✔ expected screen #/d01/teach/22 @1920
+✔ #/d01/teach/22 @1920
+✔ expected screen #/d01/teach/23 @1920
+✔ #/d01/teach/23 @1920
+✔ expected screen #/d01/notes @1920
+✔ #/d01/notes @1920
+✔ expected screen #/d01/practice @1920
+✔ #/d01/practice @1920
+✔ expected screen #/d01/test @1920
+✔ #/d01/test @1920
+✔ expected screen #/d02/teach/1 @1920
+✔ #/d02/teach/1 @1920
+✔ expected screen #/d02/teach/2 @1920
+✔ #/d02/teach/2 @1920
+✔ expected screen #/d02/teach/3 @1920
+✔ #/d02/teach/3 @1920
+✔ expected screen #/d02/teach/4 @1920
+✔ #/d02/teach/4 @1920
+✔ expected screen #/d02/teach/5 @1920
+✔ #/d02/teach/5 @1920
+✔ expected screen #/d02/teach/6 @1920
+✔ #/d02/teach/6 @1920
+✔ expected screen #/d02/teach/7 @1920
+✔ #/d02/teach/7 @1920
+✔ expected screen #/d02/teach/8 @1920
+✔ #/d02/teach/8 @1920
+✔ expected screen #/d02/teach/9 @1920
+✔ #/d02/teach/9 @1920
+✔ expected screen #/d02/teach/10 @1920
+✔ #/d02/teach/10 @1920
+✔ expected screen #/d02/teach/11 @1920
+✔ #/d02/teach/11 @1920
+✔ expected screen #/d02/teach/12 @1920
+✔ #/d02/teach/12 @1920
+✔ expected screen #/d02/teach/13 @1920
+✔ #/d02/teach/13 @1920
+✔ expected screen #/d02/teach/14 @1920
+✔ #/d02/teach/14 @1920
+✔ expected screen #/d02/teach/15 @1920
+✔ #/d02/teach/15 @1920
+✔ expected screen #/d02/notes @1920
+✔ #/d02/notes @1920
+✔ expected screen #/d02/practice @1920
+✔ #/d02/practice @1920
+✔ expected screen #/d02/test @1920
+✔ #/d02/test @1920
+✔ expected screen #/d03/teach/1 @1920
+✔ #/d03/teach/1 @1920
+✔ expected screen #/d03/teach/2 @1920
+✔ #/d03/teach/2 @1920
+✔ expected screen #/d03/teach/3 @1920
+✔ #/d03/teach/3 @1920
+✔ expected screen #/d03/teach/4 @1920
+✔ #/d03/teach/4 @1920
+✔ expected screen #/d03/teach/5 @1920
+✔ #/d03/teach/5 @1920
+✔ expected screen #/d03/teach/6 @1920
+✔ #/d03/teach/6 @1920
+✔ expected screen #/d03/teach/7 @1920
+✔ #/d03/teach/7 @1920
+✔ expected screen #/d03/teach/8 @1920
+✔ #/d03/teach/8 @1920
+✔ expected screen #/d03/teach/9 @1920
+✔ #/d03/teach/9 @1920
+✔ expected screen #/d03/teach/10 @1920
+✔ #/d03/teach/10 @1920
+✔ expected screen #/d03/teach/11 @1920
+✔ #/d03/teach/11 @1920
+✔ expected screen #/d03/teach/12 @1920
+✔ #/d03/teach/12 @1920
+✔ expected screen #/d03/teach/13 @1920
+✔ #/d03/teach/13 @1920
+✔ expected screen #/d03/teach/14 @1920
+✔ #/d03/teach/14 @1920
+✔ expected screen #/d03/teach/15 @1920
+✔ #/d03/teach/15 @1920
+✔ expected screen #/d03/teach/16 @1920
+✔ #/d03/teach/16 @1920
+✔ expected screen #/d03/teach/17 @1920
+✔ #/d03/teach/17 @1920
+✔ expected screen #/d03/teach/18 @1920
+✔ #/d03/teach/18 @1920
+✔ expected screen #/d03/notes @1920
+✔ #/d03/notes @1920
+✔ expected screen #/d03/practice @1920
+✔ #/d03/practice @1920
+✔ expected screen #/d03/test @1920
+✔ #/d03/test @1920
+✔ expected screen #/d04/teach/1 @1920
+✔ #/d04/teach/1 @1920
+✔ expected screen #/d04/teach/2 @1920
+✔ #/d04/teach/2 @1920
+✔ expected screen #/d04/teach/3 @1920
+✔ #/d04/teach/3 @1920
+✔ expected screen #/d04/teach/4 @1920
+✔ #/d04/teach/4 @1920
+✔ expected screen #/d04/teach/5 @1920
+✔ #/d04/teach/5 @1920
+✔ expected screen #/d04/teach/6 @1920
+✔ #/d04/teach/6 @1920
+✔ expected screen #/d04/teach/7 @1920
+✔ #/d04/teach/7 @1920
+✔ expected screen #/d04/teach/8 @1920
+✔ #/d04/teach/8 @1920
+✔ expected screen #/d04/teach/9 @1920
+✔ #/d04/teach/9 @1920
+✔ expected screen #/d04/teach/10 @1920
+✔ #/d04/teach/10 @1920
+✔ expected screen #/d04/teach/11 @1920
+✔ #/d04/teach/11 @1920
+✔ expected screen #/d04/teach/12 @1920
+✔ #/d04/teach/12 @1920
+✔ expected screen #/d04/notes @1920
+✔ #/d04/notes @1920
+✔ expected screen #/d04/practice @1920
+✔ #/d04/practice @1920
+✔ expected screen #/d04/test @1920
+✔ #/d04/test @1920
+✔ expected screen #/d05/teach/1 @1920
+✔ #/d05/teach/1 @1920
+✔ expected screen #/d05/teach/2 @1920
+✔ #/d05/teach/2 @1920
+✔ expected screen #/d05/teach/3 @1920
+✔ #/d05/teach/3 @1920
+✔ expected screen #/d05/teach/4 @1920
+✔ #/d05/teach/4 @1920
+✔ expected screen #/d05/teach/5 @1920
+✔ #/d05/teach/5 @1920
+✔ expected screen #/d05/teach/6 @1920
+✔ #/d05/teach/6 @1920
+✔ expected screen #/d05/teach/7 @1920
+✔ #/d05/teach/7 @1920
+✔ expected screen #/d05/teach/8 @1920
+✔ #/d05/teach/8 @1920
+✔ expected screen #/d05/teach/9 @1920
+✔ #/d05/teach/9 @1920
+✔ expected screen #/d05/teach/10 @1920
+✔ #/d05/teach/10 @1920
+✔ expected screen #/d05/teach/11 @1920
+✔ #/d05/teach/11 @1920
+✔ expected screen #/d05/teach/12 @1920
+✔ #/d05/teach/12 @1920
+✔ expected screen #/d05/teach/13 @1920
+✔ #/d05/teach/13 @1920
+✔ expected screen #/d05/teach/14 @1920
+✔ #/d05/teach/14 @1920
+✔ expected screen #/d05/notes @1920
+✔ #/d05/notes @1920
+✔ expected screen #/d05/practice @1920
+✔ #/d05/practice @1920
+✔ expected screen #/d05/test @1920
+✔ #/d05/test @1920
+✔ expected screen #/d06/teach/1 @1920
+✔ #/d06/teach/1 @1920
+✔ expected screen #/d06/teach/2 @1920
+✔ #/d06/teach/2 @1920
+✔ expected screen #/d06/teach/3 @1920
+✔ #/d06/teach/3 @1920
+✔ expected screen #/d06/teach/4 @1920
+✔ #/d06/teach/4 @1920
+✔ expected screen #/d06/teach/5 @1920
+✔ #/d06/teach/5 @1920
+✔ expected screen #/d06/teach/6 @1920
+✔ #/d06/teach/6 @1920
+✔ expected screen #/d06/teach/7 @1920
+✔ #/d06/teach/7 @1920
+✔ expected screen #/d06/teach/8 @1920
+✔ #/d06/teach/8 @1920
+✔ expected screen #/d06/teach/9 @1920
+✔ #/d06/teach/9 @1920
+✔ expected screen #/d06/teach/10 @1920
+✔ #/d06/teach/10 @1920
+✔ expected screen #/d06/teach/11 @1920
+✔ #/d06/teach/11 @1920
+✔ expected screen #/d06/teach/12 @1920
+✔ #/d06/teach/12 @1920
+✔ expected screen #/d06/teach/13 @1920
+✔ #/d06/teach/13 @1920
+✔ expected screen #/d06/notes @1920
+✔ #/d06/notes @1920
+✔ expected screen #/d06/practice @1920
+✔ #/d06/practice @1920
+✔ expected screen #/d06/test @1920
+✔ #/d06/test @1920
+✔ expected screen #/d07/teach/1 @1920
+✔ #/d07/teach/1 @1920
+✔ expected screen #/d07/teach/2 @1920
+✔ #/d07/teach/2 @1920
+✔ expected screen #/d07/teach/3 @1920
+✔ #/d07/teach/3 @1920
+✔ expected screen #/d07/teach/4 @1920
+✔ #/d07/teach/4 @1920
+✔ expected screen #/d07/teach/5 @1920
+✔ #/d07/teach/5 @1920
+✔ expected screen #/d07/teach/6 @1920
+✔ #/d07/teach/6 @1920
+✔ expected screen #/d07/teach/7 @1920
+✔ #/d07/teach/7 @1920
+✔ expected screen #/d07/teach/8 @1920
+✔ #/d07/teach/8 @1920
+✔ expected screen #/d07/teach/9 @1920
+✔ #/d07/teach/9 @1920
+✔ expected screen #/d07/teach/10 @1920
+✔ #/d07/teach/10 @1920
+✔ expected screen #/d07/teach/11 @1920
+✔ #/d07/teach/11 @1920
+✔ expected screen #/d07/teach/12 @1920
+✔ #/d07/teach/12 @1920
+✔ expected screen #/d07/teach/13 @1920
+✔ #/d07/teach/13 @1920
+✔ expected screen #/d07/notes @1920
+✔ #/d07/notes @1920
+✔ expected screen #/d07/practice @1920
+✔ #/d07/practice @1920
+✔ expected screen #/d07/test @1920
+✔ #/d07/test @1920
+✔ expected screen #/d08/teach/1 @1920
+✔ #/d08/teach/1 @1920
+✔ expected screen #/d08/teach/2 @1920
+✔ #/d08/teach/2 @1920
+✔ expected screen #/d08/teach/3 @1920
+✔ #/d08/teach/3 @1920
+✔ expected screen #/d08/teach/4 @1920
+✔ #/d08/teach/4 @1920
+✔ expected screen #/d08/teach/5 @1920
+✔ #/d08/teach/5 @1920
+✔ expected screen #/d08/teach/6 @1920
+✔ #/d08/teach/6 @1920
+✔ expected screen #/d08/teach/7 @1920
+✔ #/d08/teach/7 @1920
+✔ expected screen #/d08/teach/8 @1920
+✔ #/d08/teach/8 @1920
+✔ expected screen #/d08/teach/9 @1920
+✔ #/d08/teach/9 @1920
+✔ expected screen #/d08/teach/10 @1920
+✔ #/d08/teach/10 @1920
+✔ expected screen #/d08/teach/11 @1920
+✔ #/d08/teach/11 @1920
+✔ expected screen #/d08/notes @1920
+✔ #/d08/notes @1920
+✔ expected screen #/d08/practice @1920
+✔ #/d08/practice @1920
+✔ expected screen #/d08/test @1920
+✔ #/d08/test @1920
+✔ expected screen #/d09/teach/1 @1920
+✔ #/d09/teach/1 @1920
+✔ expected screen #/d09/teach/2 @1920
+✔ #/d09/teach/2 @1920
+✔ expected screen #/d09/teach/3 @1920
+✔ #/d09/teach/3 @1920
+✔ expected screen #/d09/teach/4 @1920
+✔ #/d09/teach/4 @1920
+✔ expected screen #/d09/teach/5 @1920
+✔ #/d09/teach/5 @1920
+✔ expected screen #/d09/teach/6 @1920
+✔ #/d09/teach/6 @1920
+✔ expected screen #/d09/teach/7 @1920
+✔ #/d09/teach/7 @1920
+✔ expected screen #/d09/teach/8 @1920
+✔ #/d09/teach/8 @1920
+✔ expected screen #/d09/teach/9 @1920
+✔ #/d09/teach/9 @1920
+✔ expected screen #/d09/teach/10 @1920
+✔ #/d09/teach/10 @1920
+✔ expected screen #/d09/teach/11 @1920
+✔ #/d09/teach/11 @1920
+✔ expected screen #/d09/teach/12 @1920
+✔ #/d09/teach/12 @1920
+✔ expected screen #/d09/teach/13 @1920
+✔ #/d09/teach/13 @1920
+✔ expected screen #/d09/teach/14 @1920
+✔ #/d09/teach/14 @1920
+✔ expected screen #/d09/teach/15 @1920
+✔ #/d09/teach/15 @1920
+✔ expected screen #/d09/notes @1920
+✔ #/d09/notes @1920
+✔ expected screen #/d09/practice @1920
+✔ #/d09/practice @1920
+✔ expected screen #/d09/test @1920
+✔ #/d09/test @1920
+✔ expected screen #/d10/teach/1 @1920
+✔ #/d10/teach/1 @1920
+✔ expected screen #/d10/teach/2 @1920
+✔ #/d10/teach/2 @1920
+✔ expected screen #/d10/teach/3 @1920
+✔ #/d10/teach/3 @1920
+✔ expected screen #/d10/teach/4 @1920
+✔ #/d10/teach/4 @1920
+✔ expected screen #/d10/teach/5 @1920
+✔ #/d10/teach/5 @1920
+✔ expected screen #/d10/teach/6 @1920
+✔ #/d10/teach/6 @1920
+✔ expected screen #/d10/teach/7 @1920
+✔ #/d10/teach/7 @1920
+✔ expected screen #/d10/teach/8 @1920
+✔ #/d10/teach/8 @1920
+✔ expected screen #/d10/teach/9 @1920
+✔ #/d10/teach/9 @1920
+✔ expected screen #/d10/teach/10 @1920
+✔ #/d10/teach/10 @1920
+✔ expected screen #/d10/teach/11 @1920
+✔ #/d10/teach/11 @1920
+✔ expected screen #/d10/teach/12 @1920
+✔ #/d10/teach/12 @1920
+✔ expected screen #/d10/teach/13 @1920
+✔ #/d10/teach/13 @1920
+✔ expected screen #/d10/notes @1920
+✔ #/d10/notes @1920
+✔ expected screen #/d10/practice @1920
+✔ #/d10/practice @1920
+✔ expected screen #/d10/test @1920
+✔ #/d10/test @1920
+✔ expected screen #/chapter4 @1920
+✔ #/chapter4 @1920
+✔ expected screen #/chapter4/4-1 @1920
+✔ #/chapter4/4-1 @1920
+✔ expected screen #/chapter4/4-1/learn/1 @1920
+✔ #/chapter4/4-1/learn/1 @1920
+✔ instruction visible in first view #/chapter4/4-1/learn/1 @1920
+✔ expected screen #/chapter4/4-1/learn/2 @1920
+✔ #/chapter4/4-1/learn/2 @1920
+✔ instruction visible in first view #/chapter4/4-1/learn/2 @1920
+✔ expected screen #/chapter4/4-1/learn/3 @1920
+✔ #/chapter4/4-1/learn/3 @1920
+✔ instruction visible in first view #/chapter4/4-1/learn/3 @1920
+✔ expected screen #/chapter4/4-1/learn/4 @1920
+✔ #/chapter4/4-1/learn/4 @1920
+✔ instruction visible in first view #/chapter4/4-1/learn/4 @1920
+✔ expected screen #/chapter4/4-1/learn/5 @1920
+✔ #/chapter4/4-1/learn/5 @1920
+✔ expected screen #/chapter4/4-1/practice @1920
+✔ #/chapter4/4-1/practice @1920
+✔ expected screen #/chapter4/4-1/independent @1920
+✔ #/chapter4/4-1/independent @1920
+✔ expected screen #/chapter4/4-1/test @1920
+✔ #/chapter4/4-1/test @1920
+✔ expected screen #/chapter4/4-2 @1920
+✔ #/chapter4/4-2 @1920
+✔ expected screen #/chapter4/4-2/learn/1 @1920
+✔ #/chapter4/4-2/learn/1 @1920
+✔ instruction visible in first view #/chapter4/4-2/learn/1 @1920
+✔ expected screen #/chapter4/4-2/learn/2 @1920
+✔ #/chapter4/4-2/learn/2 @1920
+✔ instruction visible in first view #/chapter4/4-2/learn/2 @1920
+✔ expected screen #/chapter4/4-2/learn/3 @1920
+✔ #/chapter4/4-2/learn/3 @1920
+✔ instruction visible in first view #/chapter4/4-2/learn/3 @1920
+✔ expected screen #/chapter4/4-2/learn/4 @1920
+✔ #/chapter4/4-2/learn/4 @1920
+✔ instruction visible in first view #/chapter4/4-2/learn/4 @1920
+✔ expected screen #/chapter4/4-2/learn/5 @1920
+✔ #/chapter4/4-2/learn/5 @1920
+✔ expected screen #/chapter4/4-2/practice @1920
+✔ #/chapter4/4-2/practice @1920
+✔ expected screen #/chapter4/4-2/independent @1920
+✔ #/chapter4/4-2/independent @1920
+✔ expected screen #/chapter4/4-2/test @1920
+✔ #/chapter4/4-2/test @1920
+✔ expected screen #/chapter4/4-3 @1920
+✔ #/chapter4/4-3 @1920
+✔ expected screen #/chapter4/4-3/learn/1 @1920
+✔ #/chapter4/4-3/learn/1 @1920
+✔ instruction visible in first view #/chapter4/4-3/learn/1 @1920
+✔ expected screen #/chapter4/4-3/learn/2 @1920
+✔ #/chapter4/4-3/learn/2 @1920
+✔ instruction visible in first view #/chapter4/4-3/learn/2 @1920
+✔ expected screen #/chapter4/4-3/learn/3 @1920
+✔ #/chapter4/4-3/learn/3 @1920
+✔ instruction visible in first view #/chapter4/4-3/learn/3 @1920
+✔ expected screen #/chapter4/4-3/learn/4 @1920
+✔ #/chapter4/4-3/learn/4 @1920
+✔ instruction visible in first view #/chapter4/4-3/learn/4 @1920
+✔ expected screen #/chapter4/4-3/learn/5 @1920
+✔ #/chapter4/4-3/learn/5 @1920
+✔ expected screen #/chapter4/4-3/practice @1920
+✔ #/chapter4/4-3/practice @1920
+✔ expected screen #/chapter4/4-3/independent @1920
+✔ #/chapter4/4-3/independent @1920
+✔ expected screen #/chapter4/4-3/test @1920
+✔ #/chapter4/4-3/test @1920
+✔ expected screen #/chapter4/4-4 @1920
+✔ #/chapter4/4-4 @1920
+✔ expected screen #/chapter4/4-4/learn/1 @1920
+✔ #/chapter4/4-4/learn/1 @1920
+✔ instruction visible in first view #/chapter4/4-4/learn/1 @1920
+✔ expected screen #/chapter4/4-4/learn/2 @1920
+✔ #/chapter4/4-4/learn/2 @1920
+✔ instruction visible in first view #/chapter4/4-4/learn/2 @1920
+✔ expected screen #/chapter4/4-4/learn/3 @1920
+✔ #/chapter4/4-4/learn/3 @1920
+✔ instruction visible in first view #/chapter4/4-4/learn/3 @1920
+✔ expected screen #/chapter4/4-4/learn/4 @1920
+✔ #/chapter4/4-4/learn/4 @1920
+✔ instruction visible in first view #/chapter4/4-4/learn/4 @1920
+✔ expected screen #/chapter4/4-4/learn/5 @1920
+✔ #/chapter4/4-4/learn/5 @1920
+✔ expected screen #/chapter4/4-4/practice @1920
+✔ #/chapter4/4-4/practice @1920
+✔ expected screen #/chapter4/4-4/independent @1920
+✔ #/chapter4/4-4/independent @1920
+✔ expected screen #/chapter4/4-4/test @1920
+✔ #/chapter4/4-4/test @1920
+✔ expected screen #/chapter4/4-5 @1920
+✔ #/chapter4/4-5 @1920
+✔ expected screen #/chapter4/4-5/learn/1 @1920
+✔ #/chapter4/4-5/learn/1 @1920
+✔ instruction visible in first view #/chapter4/4-5/learn/1 @1920
+✔ expected screen #/chapter4/4-5/learn/2 @1920
+✔ #/chapter4/4-5/learn/2 @1920
+✔ instruction visible in first view #/chapter4/4-5/learn/2 @1920
+✔ expected screen #/chapter4/4-5/learn/3 @1920
+✔ #/chapter4/4-5/learn/3 @1920
+✔ instruction visible in first view #/chapter4/4-5/learn/3 @1920
+✔ expected screen #/chapter4/4-5/learn/4 @1920
+✔ #/chapter4/4-5/learn/4 @1920
+✔ instruction visible in first view #/chapter4/4-5/learn/4 @1920
+✔ expected screen #/chapter4/4-5/learn/5 @1920
+✔ #/chapter4/4-5/learn/5 @1920
+✔ expected screen #/chapter4/4-5/practice @1920
+✔ #/chapter4/4-5/practice @1920
+✔ expected screen #/chapter4/4-5/independent @1920
+✔ #/chapter4/4-5/independent @1920
+✔ expected screen #/chapter4/4-5/test @1920
+✔ #/chapter4/4-5/test @1920
+✔ expected screen #/chapter4/4-6 @1920
+✔ #/chapter4/4-6 @1920
+✔ expected screen #/chapter4/4-6/learn/1 @1920
+✔ #/chapter4/4-6/learn/1 @1920
+✔ instruction visible in first view #/chapter4/4-6/learn/1 @1920
+✔ expected screen #/chapter4/4-6/learn/2 @1920
+✔ #/chapter4/4-6/learn/2 @1920
+✔ instruction visible in first view #/chapter4/4-6/learn/2 @1920
+✔ expected screen #/chapter4/4-6/learn/3 @1920
+✔ #/chapter4/4-6/learn/3 @1920
+✔ instruction visible in first view #/chapter4/4-6/learn/3 @1920
+✔ expected screen #/chapter4/4-6/learn/4 @1920
+✔ #/chapter4/4-6/learn/4 @1920
+✔ instruction visible in first view #/chapter4/4-6/learn/4 @1920
+✔ expected screen #/chapter4/4-6/learn/5 @1920
+✔ #/chapter4/4-6/learn/5 @1920
+✔ expected screen #/chapter4/4-6/practice @1920
+✔ #/chapter4/4-6/practice @1920
+✔ expected screen #/chapter4/4-6/independent @1920
+✔ #/chapter4/4-6/independent @1920
+✔ expected screen #/chapter4/4-6/test @1920
+✔ #/chapter4/4-6/test @1920
+✔ expected screen #/chapter4/4-7 @1920
+✔ #/chapter4/4-7 @1920
+✔ expected screen #/chapter4/4-7/learn/1 @1920
+✔ #/chapter4/4-7/learn/1 @1920
+✔ instruction visible in first view #/chapter4/4-7/learn/1 @1920
+✔ expected screen #/chapter4/4-7/learn/2 @1920
+✔ #/chapter4/4-7/learn/2 @1920
+✔ instruction visible in first view #/chapter4/4-7/learn/2 @1920
+✔ expected screen #/chapter4/4-7/learn/3 @1920
+✔ #/chapter4/4-7/learn/3 @1920
+✔ instruction visible in first view #/chapter4/4-7/learn/3 @1920
+✔ expected screen #/chapter4/4-7/learn/4 @1920
+✔ #/chapter4/4-7/learn/4 @1920
+✔ instruction visible in first view #/chapter4/4-7/learn/4 @1920
+✔ expected screen #/chapter4/4-7/learn/5 @1920
+✔ #/chapter4/4-7/learn/5 @1920
+✔ expected screen #/chapter4/4-7/practice @1920
+✔ #/chapter4/4-7/practice @1920
+✔ expected screen #/chapter4/4-7/independent @1920
+✔ #/chapter4/4-7/independent @1920
+✔ expected screen #/chapter4/4-7/test @1920
+✔ #/chapter4/4-7/test @1920
+✔ expected screen #/chapter4/4-8 @1920
+✔ #/chapter4/4-8 @1920
+✔ expected screen #/chapter4/4-8/learn/1 @1920
+✔ #/chapter4/4-8/learn/1 @1920
+✔ instruction visible in first view #/chapter4/4-8/learn/1 @1920
+✔ expected screen #/chapter4/4-8/learn/2 @1920
+✔ #/chapter4/4-8/learn/2 @1920
+✔ instruction visible in first view #/chapter4/4-8/learn/2 @1920
+✔ expected screen #/chapter4/4-8/learn/3 @1920
+✔ #/chapter4/4-8/learn/3 @1920
+✔ instruction visible in first view #/chapter4/4-8/learn/3 @1920
+✔ expected screen #/chapter4/4-8/learn/4 @1920
+✔ #/chapter4/4-8/learn/4 @1920
+✔ instruction visible in first view #/chapter4/4-8/learn/4 @1920
+✔ expected screen #/chapter4/4-8/learn/5 @1920
+✔ #/chapter4/4-8/learn/5 @1920
+✔ expected screen #/chapter4/4-8/practice @1920
+✔ #/chapter4/4-8/practice @1920
+✔ expected screen #/chapter4/4-8/independent @1920
+✔ #/chapter4/4-8/independent @1920
+✔ expected screen #/chapter4/4-8/test @1920
+✔ #/chapter4/4-8/test @1920
+✔ expected screen #/chapter4/review/practice @1920
+✔ #/chapter4/review/practice @1920
+✔ expected screen #/chapter4/final/test @1920
+✔ #/chapter4/final/test @1920
+✔ active coached question d01 @1920
+✔ active d01 @1920
+✔ immediate help is assisted d01 @1920
+✔ expanded solution d01 @1920
+✔ Previous and refresh retain assisted review d01 @1920
+✔ forward review retains next question hint d01 @1920
+✔ active coached question d02 @1920
+✔ active d02 @1920
+✔ immediate help is assisted d02 @1920
+✔ expanded solution d02 @1920
+✔ Previous and refresh retain assisted review d02 @1920
+✔ forward review retains next question hint d02 @1920
+✔ active coached question d03 @1920
+✔ active d03 @1920
+✔ immediate help is assisted d03 @1920
+✔ expanded solution d03 @1920
+✔ Previous and refresh retain assisted review d03 @1920
+✔ forward review retains next question hint d03 @1920
+✔ active coached question d04 @1920
+✔ active d04 @1920
+✔ immediate help is assisted d04 @1920
+✔ expanded solution d04 @1920
+✔ Previous and refresh retain assisted review d04 @1920
+✔ forward review retains next question hint d04 @1920
+✔ active coached question d05 @1920
+✔ active d05 @1920
+✔ immediate help is assisted d05 @1920
+✔ expanded solution d05 @1920
+✔ Previous and refresh retain assisted review d05 @1920
+✔ forward review retains next question hint d05 @1920
+✔ active coached question d06 @1920
+✔ active d06 @1920
+✔ immediate help is assisted d06 @1920
+✔ expanded solution d06 @1920
+✔ Previous and refresh retain assisted review d06 @1920
+✔ forward review retains next question hint d06 @1920
+✔ active coached question d07 @1920
+✔ active d07 @1920
+✔ immediate help is assisted d07 @1920
+✔ expanded solution d07 @1920
+✔ Previous and refresh retain assisted review d07 @1920
+✔ forward review retains next question hint d07 @1920
+✔ active coached question d08 @1920
+✔ active d08 @1920
+✔ immediate help is assisted d08 @1920
+✔ expanded solution d08 @1920
+✔ Previous and refresh retain assisted review d08 @1920
+✔ forward review retains next question hint d08 @1920
+✔ active coached question d09 @1920
+✔ active d09 @1920
+✔ immediate help is assisted d09 @1920
+✔ expanded solution d09 @1920
+✔ Previous and refresh retain assisted review d09 @1920
+✔ forward review retains next question hint d09 @1920
+✔ active coached question d10 @1920
+✔ active d10 @1920
+✔ immediate help is assisted d10 @1920
+✔ expanded solution d10 @1920
+✔ Previous and refresh retain assisted review d10 @1920
+✔ forward review retains next question hint d10 @1920
+✔ active coached question pc @1920
+✔ active pc @1920
+✔ immediate help is assisted pc @1920
+✔ expanded solution pc @1920
+✔ Previous and refresh retain assisted review pc @1920
+✔ forward review retains next question hint pc @1920
+✔ active coached question 4-1 @1920
+✔ active 4-1 @1920
+✔ immediate help is assisted 4-1 @1920
+✔ expanded solution 4-1 @1920
+✔ Previous and refresh retain assisted review 4-1 @1920
+✔ forward review retains next question hint 4-1 @1920
+✔ active coached question 4-2 @1920
+✔ active 4-2 @1920
+✔ immediate help is assisted 4-2 @1920
+✔ expanded solution 4-2 @1920
+✔ Previous and refresh retain assisted review 4-2 @1920
+✔ forward review retains next question hint 4-2 @1920
+✔ active coached question 4-3 @1920
+✔ active 4-3 @1920
+✔ immediate help is assisted 4-3 @1920
+✔ expanded solution 4-3 @1920
+✔ Previous and refresh retain assisted review 4-3 @1920
+✔ forward review retains next question hint 4-3 @1920
+✔ active coached question 4-4 @1920
+✔ active 4-4 @1920
+✔ immediate help is assisted 4-4 @1920
+✔ expanded solution 4-4 @1920
+✔ Previous and refresh retain assisted review 4-4 @1920
+✔ forward review retains next question hint 4-4 @1920
+✔ active coached question 4-5 @1920
+✔ active 4-5 @1920
+✔ immediate help is assisted 4-5 @1920
+✔ expanded solution 4-5 @1920
+✔ Previous and refresh retain assisted review 4-5 @1920
+✔ forward review retains next question hint 4-5 @1920
+✔ active coached question 4-6 @1920
+✔ active 4-6 @1920
+✔ immediate help is assisted 4-6 @1920
+✔ expanded solution 4-6 @1920
+✔ Previous and refresh retain assisted review 4-6 @1920
+✔ forward review retains next question hint 4-6 @1920
+✔ active coached question 4-7 @1920
+✔ active 4-7 @1920
+✔ immediate help is assisted 4-7 @1920
+✔ expanded solution 4-7 @1920
+✔ Previous and refresh retain assisted review 4-7 @1920
+✔ forward review retains next question hint 4-7 @1920
+✔ active coached question 4-8 @1920
+✔ active 4-8 @1920
+✔ immediate help is assisted 4-8 @1920
+✔ expanded solution 4-8 @1920
+✔ Previous and refresh retain assisted review 4-8 @1920
+✔ forward review retains next question hint 4-8 @1920
+✔ No console errors
+✔ No missing files
+{"passed":4665,"failed":0}
 npm notice
 npm notice New major version of npm available! 11.9.0 -> 12.2.2
 npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.2

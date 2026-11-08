@@ -30,4 +30,4 @@ Undo/redo covers ink additions, erasing, typed editing sessions and selected cle
 - `python tools/audit-lesson51-source.py` (requires PyMuPDF; reads only)
 - Existing browser suites: `test:browser`, `test:chapter4:browser`, `test:responsive:browser`
 
-See `docs/gml-005/REPORT.md` for results, known baseline failures, and review limits. The original asset hashes must not be updated as a side effect of UI changes. For another lesson, reuse the viewer/controller, SVG writing model, print renderer and backup workflow, supplying separately audited page/question metadata and a distinct storage namespace. Lesson 5-2 has not been implemented here.
+See `docs/gml-005/REPORT.md` for results, the resolved responsive issue, and remaining owner/hardware review limits. The original asset hashes must not be updated as a side effect of UI changes. For another lesson, reuse the viewer/controller, SVG writing model, print renderer and backup workflow, supplying separately audited page/question metadata and a distinct storage namespace. Lesson 5-2 has not been implemented here.

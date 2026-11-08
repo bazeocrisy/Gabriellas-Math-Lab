@@ -8,3 +8,8 @@
 body[data-mode=pan] #viewer{touch-action:none}
 [hidden]{display:none!important}
 @media(min-width:1100px){body.help-open #viewer{width:calc(100% - 440px)}#drawer{top:205px;height:calc(100dvh - 213px);max-height:calc(100dvh - 213px)}}
+/* Reading/writing controls and the Questions list provide full-size touch targets.
+   Page margin annotations stay compact; Questions offers the same help at 44px. */
+button:not(.marker),select,summary,.file{min-width:44px;min-height:44px}
+@media(max-width:650px){nav>label{flex-basis:calc(100% - 98px)}nav #prev,nav #next{width:44px}}
+header select{min-height:44px}

@@ -1,0 +1,10 @@
+{
+  "project_id": "appgprj_6af07282cb648191a8301a13c1a507a3",
+  "deployment_id": "appgdep_6af0751960d48191961388aed46c02ab",
+  "version_id": "appgprj_6af07282cb648191a8301a13c1a507a3~appgver_fa99cf0f31808191b1943e306eb67759",
+  "status": "succeeded",
+  "url": "https://gabriellas-math-lab-lesson-51-review.bazeocrisy.chatgpt.site/lesson-5-1/",
+  "source_commit": "c702f7f7ea1ebaa90d0f7142fb4272c2c5c6352d",
+  "audience": "owner-only",
+  "verification": "Deployment succeeded. Chrome opened the exact lesson URL and verified the owner sign-in gate. Authenticated remote viewer interaction remains unverified; identical static viewer files passed local browser checks."
+}

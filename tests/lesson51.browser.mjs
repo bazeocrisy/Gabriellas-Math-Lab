@@ -15,15 +15,17 @@ try{
  check('lesson loads original first page and navigation boundary',await value(`document.querySelector('.source').naturalWidth===1836 && document.getElementById('prev').disabled && !document.getElementById('next').disabled`));
  await shot('desktop');
  for(const p of ['143','144','145','146']){
-  await b.hash('page='+p);
+  await b.js(`document.getElementById('pages').value='${p}';document.getElementById('pages').dispatchEvent(new Event('change'));`);await b.wait(100);
   check('page '+p+' identity and preserved aspect ratio',await value(`(()=>{const s=document.querySelector('.sheet'),r=s.getBoundingClientRect();return s.dataset.page==='${p}'&&Math.abs(r.width/r.height-612/792)<.001;})()`));
   check('page '+p+' exact image loaded',await value(`document.querySelector('.source').src.endsWith('page-${p}.png')`));
   await click('questions');
   const n=await value(`document.querySelectorAll('#questionList button').length`);check('page '+p+' question count',n===({'143':2,'144':3,'145':14,'146':6}[p]));
   for(let i=0;i<n;i++){
+   await b.js(`document.querySelectorAll('.marker')[${i}].click()`);
+   check(`page ${p} margin help ${i+1} maps to its own question without covering source`,await value(`(()=>{const m=document.querySelectorAll('.marker')[${i}],r=m.getBoundingClientRect(),s=document.querySelector('.source').getBoundingClientRect();return m.title===document.getElementById('drawerTitle').textContent && (r.right<=s.left||r.left>=s.right) && document.getElementById('answer').hidden;})()`));
    await click('questions');await b.js(`document.querySelectorAll('#questionList button')[${i}].click()`);
    check(`page ${p} question ${i+1} hint first`,await value(`!document.getElementById('steps').hidden===false && document.getElementById('answer').hidden && document.getElementById('hint').textContent.length>0 && getComputedStyle(document.getElementById('questionList')).display==='none' && document.querySelector('#sourceQuestion image').getAttribute('href').endsWith('page-${p}.png')`));
-   await click('showSteps');await click('reveal');if(p==='145'&&i===12)await shot('assistance');check('solution can be revealed',await value(`!document.getElementById('steps').hidden&&!document.getElementById('answer').hidden`));
+   await click('showSteps');check('Show Me How leaves final answer hidden',await value(`document.getElementById('answer').hidden`));await click('reveal');if(p==='145'&&i===12)await shot('assistance');check('solution can be revealed',await value(`!document.getElementById('steps').hidden&&!document.getElementById('answer').hidden`));
   }
   await click('closeDrawer');
   await b.js(`document.getElementById('original').checked=true;document.getElementById('original').dispatchEvent(new Event('change'));document.getElementById('fit').value='page';document.getElementById('fit').dispatchEvent(new Event('change'));document.getElementById('viewer').scrollTo(0,0);`);
@@ -33,6 +35,7 @@ try{
  await b.hash('page=145');
  await b.js(`const e=document.querySelector('[data-id="1"]');e.focus();e.value='10 × 10 × 10 × 10';e.dispatchEvent(new Event('input',{bubbles:true}));e.blur();`);
  await click('save');await b.reload();check('typed answer restores after refresh',await value(`document.querySelector('[data-id="1"]').value==='10 × 10 × 10 × 10'`));
+ await b.js(`document.querySelector('.marker').click();`);await click('showSteps');await click('reveal');await click('closeDrawer');check('typed answer survives assistance open and close',await value(`document.querySelector('[data-id="1"]').value==='10 × 10 × 10 × 10'`));
  await b.js(`document.querySelector('[data-mode="pen"]').click();`);
  const r=await value(`(()=>{const r=document.querySelector('.ink').getBoundingClientRect();return{x:r.x,y:r.y,w:r.width,h:r.height}})()`);
  for(const y of [.08,.5,.90]){
@@ -50,9 +53,11 @@ try{
  check('eraser removes selected stroke',await value(`document.querySelectorAll('.ink path').length===2`));await click('undo');check('erasing is undoable',await value(`document.querySelectorAll('.ink path').length===3`));
  const original=await value(`localStorage.getItem('gml:lesson-5-1:v2')`);
  await click('next');await click('prev');await b.reload();check('handwriting persists across pages and refresh',await value(`document.querySelectorAll('.ink path').length===3`));
+ const inkBefore=await value(`document.querySelector('.ink path').getAttribute('d')`);
  const before=await value(`(()=>{const r=document.querySelector('.sheet').getBoundingClientRect(),f=document.querySelector('[data-id="1"]').getBoundingClientRect();return[(f.x-r.x)/r.width,(f.y-r.y)/r.height]})()`);
  await click('zoomIn');await b.viewport(820,1180,true);
  const after=await value(`(()=>{const r=document.querySelector('.sheet').getBoundingClientRect(),f=document.querySelector('[data-id="1"]').getBoundingClientRect();return[(f.x-r.x)/r.width,(f.y-r.y)/r.height]})()`);
+ check('handwriting geometry remains unchanged on zoom and resize',await value(`document.querySelector('.ink path').getAttribute('d')`)===inkBefore);
  check('typed overlay remains aligned on zoom and resize',before.every((n,i)=>Math.abs(n-after[i])<.0001));
  await click('resetZoom');await b.js(`document.getElementById('viewer').scrollTo(0,0)`);await shot('tablet');
  await click('questions');await b.js(`document.querySelector('#questionList button').click();document.getElementById('done').click();`);await click('closeDrawer');await b.reload();check('completion state restores',await value(`JSON.parse(localStorage.getItem('gml:lesson-5-1:v2')).completed['145_1']===true`));
@@ -85,8 +90,13 @@ try{
  const pdf=await b.send('Page.printToPDF',{printBackground:true,preferCSSPageSize:true});assert.ok(pdf.result?.data);fs.writeFileSync(path.join(ROOT,'docs/gml-005/completed-test.pdf'),Buffer.from(pdf.result.data,'base64'));
  check('four original print pages, no controls in print content',await value(`document.querySelectorAll('#printRoot .sheet').length===4&&document.querySelectorAll('#printRoot button').length===0&&document.querySelector('#printRoot [data-page="145"] [data-id="1"]').textContent.length>0`));
  await b.send('Emulation.setEmulatedMedia',{media:''});
- b.close();await new Promise(r=>setTimeout(r,1000));b=await startBrowser({profile});await b.load(url);
+ for(const width of [320,390,768,820,1440]){
+  await b.viewport(width,1000,width<1024);await click('resetZoom');
+  check(`lesson navigation and toolbar touch targets at least 44px with no overflow at ${width}`,await value(`document.documentElement.scrollWidth<=innerWidth&&[...document.querySelectorAll('header select,nav button,nav select,.toolbar button,.toolbar select,.toolbar summary')].filter(e=>e.getClientRects().length).every(e=>{const r=e.getBoundingClientRect();return r.width>=43.5&&r.height>=43.5;})`));
+ }
+
+ await b.close();b=await startBrowser({profile});await b.load(url);
  check('saved page and work survive full browser process restart',await value(`document.querySelector('.sheet').dataset.page==='146'&&document.querySelector('[data-id="16"]').value==='$1,000'&&JSON.parse(localStorage.getItem('gml:lesson-5-1:v2')).ink['145'].length===4`));
  check('no runtime exceptions',b.errors.length===0);check('no missing assets',server.missing.length===0);
  console.log('All Lesson 5-1 browser checks passed.');
-}finally{b.close();server.close();}
+}finally{await b.close();server.close();}

@@ -29,7 +29,7 @@
         "Think about something you have learned in math.",
         "Write one thing you want classmates to know."
       ],
-      "answer": "Personal answer; review her explanation together.",
+      "answer": "Sample: I want my classmates to know that I use drawings to explain my thinking. Your own math story may be different.",
       "anchor": 0.891871,
       "side": "right",
       "hint": "This is a reflection, not a one-answer problem.",
@@ -456,7 +456,7 @@
       "answer": "10 × 10 × 10 × 10",
       "anchor": 0.235991,
       "side": "right",
-      "hint": "Convert the goal to repeated multiplication.",
+      "hint": "Think about how many factors of 10 make the tracker’s goal.",
       "verified": true,
       "verification": "Original source visually checked; independently evaluated; no official answer key in supplied PDF.",
       "openEnded": false,
@@ -537,13 +537,13 @@
       "id": "mind146",
       "title": "Math is… Mindset",
       "steps": [
-        "Recall a moment she explained math to somebody.",
-        "Write how she shared what she learned."
+        "Remember a math idea you shared with your classmates.",
+        "Describe how you helped them understand it."
       ],
-      "answer": "A personal reflection; there is no single correct response.",
+      "answer": "Sample: I showed my classmates a drawing and explained each step. Your own experience may be different.",
       "anchor": 0.84925,
       "side": "right",
-      "hint": "Discuss Gabriella’s math story.",
+      "hint": "Think of a time you explained a math idea to someone.",
       "verified": true,
       "verification": "Original source visually checked; independently evaluated; no official answer key in supplied PDF.",
       "openEnded": true,

@@ -643,7 +643,7 @@ h1, h2, h3, .pillar-title, .brand { font-family: ui-rounded, "SF Pro Rounded", "
 .lc-next-review { background: #fff; color: var(--learn); }
 .lc-next-review:hover { background: var(--learn-soft); color: var(--teach-dark); }
 .lc-links { display: flex; flex-wrap: wrap; gap: 2px 4px; margin-top: auto; padding-top: 4px; }
-.lc-link { display: inline-flex; align-items: center; gap: 4px; min-height: 44px; padding: 0 8px; border-radius: 8px; font-weight: 700; font-size: .95rem; }
+.lc-link { min-width: 44px; justify-content: center; display: inline-flex; align-items: center; gap: 4px; min-height: 44px; padding: 0 8px; border-radius: 8px; font-weight: 700; font-size: .95rem; }
 .lc-link:hover { background: var(--brand-soft); }
 .lc-teach { color: var(--teach); } .lc-practice { color: var(--practice); } .lc-test { color: var(--test); }
 .lc-link.btn-notes { align-self: auto; margin-top: 0; border: none; background: none; color: var(--notes); gap: 4px; }

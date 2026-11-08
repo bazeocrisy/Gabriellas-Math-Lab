@@ -109,15 +109,23 @@ export async function startBrowser({ profile: savedProfile } = {}) {
       await send('Input.dispatchKeyEvent', { type: 'keyDown', key, code, windowsVirtualKeyCode: vk, modifiers: mods });
       await send('Input.dispatchKeyEvent', { type: 'keyUp', key, code, windowsVirtualKeyCode: vk, modifiers: mods });
     },
-    // Ask Chrome to quit, then make sure the whole process tree is gone (on Windows, proc.kill() alone can leave
-    // headless Chrome running; hundreds of leftovers eventually stop new browsers from starting).
-    close() {
-      try { ws.send(JSON.stringify({ id: ++nextId, method: 'Browser.close' })); } catch { /* ignore */ }
-      try { ws.close(); } catch { /* ignore */ }
-      try {
-        if (process.platform === 'win32') spawnSync('taskkill', ['/PID', String(proc.pid), '/T', '/F'], { stdio: 'ignore' });
-        else proc.kill();
-      } catch { /* ignore */ }
+    // Let the browser flush its profile before a restart. Force termination only
+    // if graceful shutdown stalls; immediately killing it can lose saved work.
+    async close() {
+      const exited = new Promise((resolve) => {
+        if (proc.exitCode !== null) { resolve(); return; }
+        const timeout = setTimeout(() => {
+          try {
+            if (process.platform === 'win32') spawnSync('taskkill', ['/PID', String(proc.pid), '/T', '/F'], { stdio: 'ignore' });
+            else proc.kill();
+          } catch { /* already stopped */ }
+          resolve();
+        }, 3000);
+        proc.once('exit', () => { clearTimeout(timeout); resolve(); });
+      });
+      try { ws.send(JSON.stringify({ id: ++nextId, method: 'Browser.close' })); } catch { /* already closed */ }
+      await exited;
+      try { ws.close(); } catch { /* already closed */ }
     }
   };
   return b;
