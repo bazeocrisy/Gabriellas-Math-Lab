@@ -841,7 +841,7 @@
      ],
      "answer": "1,400 honey bees (location B has 1,400 more).",
      "openEnded": false,
-     "anchor": 0.3,
+     "anchor": 0.2,
      "side": "right",
      "crop": [
       0.0647,
@@ -863,7 +863,7 @@
      ],
      "answer": "About 24,180 ounces of honey each year.",
      "openEnded": false,
-     "anchor": 0.5,
+     "anchor": 0.425,
      "side": "right",
      "crop": [
       0.0647,
@@ -1028,14 +1028,14 @@
     },
     {
      "id": "3",
-     "title": "3 · 4,279 + 2,398",
+     "title": "3 · 4,279 + 2,368",
      "hint": "Watch for regrouping in the ones and tens.",
      "steps": [
       "Ones: 9 + 8 = 17, write 7 and regroup 1.",
-      "Tens: 7 + 9 + 1 = 17, write 7 and regroup 1.",
+      "Tens: 7 + 6 + 1 = 14, write 4 and regroup 1.",
       "Hundreds: 2 + 3 + 1 = 6. Thousands: 4 + 2 = 6."
      ],
-     "answer": "6,677",
+     "answer": "6,647",
      "openEnded": false,
      "anchor": 0.8725,
      "side": "left",
@@ -1046,7 +1046,7 @@
       0.125
      ],
      "verified": true,
-     "verification": "Computed 4,279 + 2,398 = 6,677 in Python; inverse check 6,677 − 2,398 = 4,279."
+     "verification": "Read 2,368 from the page (an earlier draft misread it as 2,398). Computed 4,279 + 2,368 = 6,647 in Python; inverse check 6,647 − 2,368 = 4,279."
     }
    ]
   },
