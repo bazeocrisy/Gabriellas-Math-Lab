@@ -34,9 +34,9 @@ async function answerAll(id, mode, miss = 0) {
 try {
   await load("#/");
   check(
-    "Three learning paths on home, including Chapter 5",
+    "Four learning paths on home, including Chapter 5 and its review quiz",
     await js(
-      `return document.querySelectorAll('.c4-home .pillar').length===3&&document.querySelector('.c4-home .pillar-chapter5').getAttribute('href')==='chapter-5/';`,
+      `return document.querySelectorAll('.c4-home .pillar').length===4&&document.querySelector('.c4-home .pillar-chapter5').getAttribute('href')==='chapter-5/'&&document.querySelector('.c4-home .pillar-quiz').getAttribute('href')==='chapter-5/review/';`,
     ),
   );
   await js(

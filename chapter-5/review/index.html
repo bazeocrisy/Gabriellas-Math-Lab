@@ -1,0 +1,295 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
+<title>Unit 5 Review Quiz · Gabriella's Math Lab</title>
+<meta name="theme-color" content="#ffffff">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Unit 5 Quiz">
+<link rel="apple-touch-icon" href="../../assets/brand/apple-touch-icon.png">
+<link rel="icon" href="../../assets/brand/favicon-32.png">
+<style>
+:root {
+  --bg: #f2f5fa; --surface: #fff; --surface-2: #f7f9fc; --ink: #1d2433; --ink-2: #566074; --border: #e1e6ee; --border-strong: #c9d1de;
+  --primary: #1f3f8f; --primary-600: #2456c9; --primary-soft: #e9effd; --accent: #0e8a8a;
+  --ok: #17703a; --ok-soft: #e6f5ec; --ok-line: #b7e0c5; --bad: #b0281d; --bad-soft: #fdecea; --bad-line: #f3c4be;
+  --hint: #9a6200; --hint-soft: #fff6e2; --hint-line: #f5d999; --focus: #f2a900;
+  --r: 16px; --tap: 48px; --shadow: 0 1px 2px rgb(16 24 40 / .05), 0 4px 14px rgb(16 24 40 / .06);
+  --font: "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
+  color-scheme: light; font-family: var(--font); color: var(--ink); background: var(--bg); -webkit-text-size-adjust: 100%;
+}
+* { box-sizing: border-box; }
+body { margin: 0; min-height: 100vh; min-height: 100dvh; background: var(--bg); line-height: 1.45; padding-bottom: env(safe-area-inset-bottom, 0px); }
+button, input { font: inherit; color: inherit; }
+[hidden] { display: none !important; }
+:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+.icon { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; flex: none; }
+
+header { display: flex; align-items: center; gap: 12px; padding: calc(8px + env(safe-area-inset-top, 0px)) max(16px, env(safe-area-inset-right, 0px)) 8px max(16px, env(safe-area-inset-left, 0px)); background: var(--surface); border-bottom: 1px solid var(--border); }
+.brand { display: flex; align-items: center; gap: 10px; text-decoration: none; min-height: 44px; min-width: 44px; }
+.mark { display: grid; place-items: center; width: 32px; height: 32px; border-radius: 9px; background: linear-gradient(135deg, var(--primary), var(--primary-600)); color: #fff; font-weight: 800; }
+.brand b { color: var(--primary); font-size: 15px; display: block; line-height: 1.15; }
+.brand .sub { font-size: 12px; color: var(--ink-2); }
+.head-links { margin-left: auto; display: flex; gap: 6px; }
+.link-btn { display: inline-flex; align-items: center; gap: 6px; min-height: 44px; padding: 0 12px; border-radius: 10px; color: var(--primary); text-decoration: none; font-weight: 600; font-size: 14px; }
+.link-btn:hover { background: var(--surface-2); }
+
+main { max-width: 760px; margin: 0 auto; padding: 20px max(16px, env(safe-area-inset-right, 0px)) 32px max(16px, env(safe-area-inset-left, 0px)); display: grid; gap: 16px; }
+.card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r); box-shadow: var(--shadow); padding: 22px; }
+h1 { font-size: 28px; margin: 0 0 6px; letter-spacing: -.01em; text-wrap: balance; }
+h2 { font-size: 22px; margin: 0; }
+.muted { color: var(--ink-2); }
+.eyebrow { font-size: 12px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--accent); }
+
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: var(--tap); padding: 0 20px; border-radius: 12px; border: 1px solid var(--border-strong); background: var(--surface); font-weight: 650; cursor: pointer; }
+.btn:hover:not(:disabled) { background: var(--surface-2); }
+.btn:disabled { opacity: .45; cursor: default; }
+.btn-primary { background: var(--primary-600); border-color: var(--primary-600); color: #fff; }
+.btn-primary:hover:not(:disabled) { background: var(--primary); }
+.btn-ghost { border-color: transparent; background: transparent; color: var(--primary); }
+.actions { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+.actions .spacer { flex: 1; }
+
+.intro-list { display: grid; gap: 10px; margin: 18px 0; padding: 0; list-style: none; }
+.intro-list li { display: flex; gap: 12px; align-items: center; padding: 12px 14px; border-radius: 12px; background: var(--surface-2); border: 1px solid var(--border); }
+.intro-list .num { display: grid; place-items: center; width: 36px; height: 36px; border-radius: 10px; background: var(--primary-soft); color: var(--primary); font-weight: 800; flex: none; }
+
+.progress { display: grid; gap: 8px; }
+.progress-top { display: flex; justify-content: space-between; align-items: center; gap: 8px; font-size: 14px; color: var(--ink-2); font-weight: 600; }
+.chip { display: inline-flex; align-items: center; padding: 3px 10px; border-radius: 999px; background: var(--primary-soft); color: var(--primary); font-size: 12px; font-weight: 700; }
+.bar { height: 8px; border-radius: 999px; background: var(--border); overflow: hidden; }
+.bar span { display: block; height: 100%; width: 0; background: var(--primary-600); border-radius: inherit; transition: width .3s; }
+
+.question { font-size: 24px; font-weight: 650; line-height: 1.35; margin: 4px 0 18px; overflow-wrap: anywhere; }
+.choices { display: grid; gap: 10px; }
+.choices.tf { grid-template-columns: 1fr 1fr; }
+.choice { display: flex; align-items: center; gap: 14px; width: 100%; min-height: 56px; padding: 10px 16px; border-radius: 14px; border: 2px solid var(--border-strong); background: var(--surface); text-align: left; font-size: 19px; cursor: pointer; }
+.choice .letter { display: grid; place-items: center; width: 34px; height: 34px; flex: none; border-radius: 50%; background: var(--surface-2); border: 1px solid var(--border); font-weight: 800; font-size: 15px; color: var(--ink-2); }
+.choice:hover:not(:disabled) { border-color: var(--primary-600); background: var(--primary-soft); }
+.choice:disabled { cursor: default; }
+.choice.correct { border-color: var(--ok); background: var(--ok-soft); color: #0f4f29; }
+.choice.correct .letter { background: var(--ok); color: #fff; border-color: var(--ok); }
+.choice.wrong { border-color: var(--bad); background: var(--bad-soft); color: #7d1d15; }
+.choice.wrong .letter { background: var(--bad); color: #fff; border-color: var(--bad); }
+.choices.tf .choice { justify-content: center; font-weight: 700; font-size: 21px; }
+.fill { display: flex; flex-wrap: wrap; gap: 10px; }
+.fill input { flex: 1 1 200px; min-height: 56px; padding: 0 16px; border-radius: 14px; border: 2px solid var(--border-strong); font-size: 22px; font-weight: 650; background: var(--surface); }
+.fill input:focus { border-color: var(--primary-600); outline: none; box-shadow: 0 0 0 4px rgb(36 86 201 / .15); }
+.fill input.correct { border-color: var(--ok); background: var(--ok-soft); }
+.fill input.wrong { border-color: var(--bad); background: var(--bad-soft); }
+
+.hint, .feedback { border-radius: 14px; padding: 14px 16px; border: 1px solid; margin-top: 16px; }
+.hint { background: var(--hint-soft); border-color: var(--hint-line); color: #5c3b00; }
+.feedback.ok { background: var(--ok-soft); border-color: var(--ok-line); }
+.feedback.bad { background: var(--bad-soft); border-color: var(--bad-line); }
+.feedback strong { display: block; font-size: 19px; margin-bottom: 2px; }
+.feedback.ok strong { color: var(--ok); }
+.feedback.bad strong { color: var(--bad); }
+.lesson { font-size: 13px; color: var(--ink-2); margin-top: 6px; }
+.lesson a { color: var(--primary); }
+
+.score { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; }
+.score-ring { width: 108px; height: 108px; border-radius: 50%; display: grid; place-items: center; background: conic-gradient(var(--ok) calc(var(--p) * 1%), var(--border) 0); flex: none; }
+.score-ring div { width: 86px; height: 86px; border-radius: 50%; background: var(--surface); display: grid; place-items: center; font-size: 26px; font-weight: 800; }
+.parts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin-top: 16px; }
+.part { padding: 12px; border-radius: 12px; background: var(--surface-2); border: 1px solid var(--border); text-align: center; }
+.part b { display: block; font-size: 22px; }
+.part span { font-size: 13px; color: var(--ink-2); }
+.missed { list-style: none; margin: 12px 0 0; padding: 0; display: grid; gap: 10px; }
+.missed li { padding: 12px 14px; border-radius: 12px; border: 1px solid var(--border); background: var(--surface-2); }
+.missed .ans { color: var(--ok); font-weight: 700; }
+.missed .yours { color: var(--bad); }
+
+@media (max-width: 560px) {
+  .card { padding: 16px; }
+  .question { font-size: 21px; }
+  .parts { grid-template-columns: 1fr; }
+  .brand .sub { display: none; }
+  .link-btn .txt { display: none; }
+}
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-book" viewBox="0 0 24 24"><path d="M2 4h6a4 4 0 0 1 4 4v13a3 3 0 0 0-3-3H2Z"/><path d="M22 4h-6a4 4 0 0 0-4 4v13a3 3 0 0 1 3-3h7Z"/></symbol>
+  <symbol id="i-home" viewBox="0 0 24 24"><path d="M3 10.5 12 3l9 7.5"/><path d="M5.5 9v12h13V9"/><path d="M10 21v-6h4v6"/></symbol>
+  <symbol id="i-bulb" viewBox="0 0 24 24"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M12 2a7 7 0 0 0-4 12.7c.6.5 1 1.3 1 2.1V17h6v-.2c0-.8.4-1.6 1-2.1A7 7 0 0 0 12 2Z"/></symbol>
+  <symbol id="i-right" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></symbol>
+</svg>
+<header>
+  <a class="brand" href="../../index.html" aria-label="Gabriella's Math Lab, home"><span class="mark" aria-hidden="true">G</span><span><b>Unit 5 Review Quiz</b><span class="sub">Chapter 5 · Multiply Multi-Digit Whole Numbers</span></span></a>
+  <nav class="head-links" aria-label="Links">
+    <a class="link-btn" href="../#page=173"><svg class="icon" aria-hidden="true"><use href="#i-book"/></svg><span class="txt">Textbook</span></a>
+    <a class="link-btn" href="../../index.html" aria-label="Home"><svg class="icon" aria-hidden="true"><use href="#i-home"/></svg><span class="txt">Home</span></a>
+  </nav>
+</header>
+
+<main id="app" aria-live="polite">
+  <section class="card" id="loading"><p class="muted">Loading the quiz…</p></section>
+
+  <!-- Start -->
+  <section class="card" id="intro" hidden>
+    <p class="eyebrow">Practice for the Unit Review · textbook pages 173–176</p>
+    <h1>Unit 5 Review Quiz</h1>
+    <p class="muted">Powers of 10 and exponents, estimating products, area models, partial products and multiplying multi-digit numbers. New numbers, same skills as the Unit Review.</p>
+    <ul class="intro-list">
+      <li><span class="num">8</span><span><b>Multiple choice</b> · tap the best answer</span></li>
+      <li><span class="num">8</span><span><b>Fill in the blank</b> · type the number, then tap Check</span></li>
+      <li><span class="num">8</span><span><b>True or false</b> · decide if the math statement is right</span></li>
+    </ul>
+    <p class="muted">Stuck? Tap <b>Hint</b>. Your first answer counts for the score, and every question shows how to solve it. Your place is saved, so you can stop and come back.</p>
+    <div class="actions"><button class="btn btn-primary" id="start">Start the quiz</button><button class="btn btn-ghost" id="resume" hidden>Continue where I left off</button></div>
+  </section>
+
+  <!-- One question -->
+  <section id="quiz" hidden>
+    <div class="progress card" style="padding:14px 18px">
+      <div class="progress-top"><span id="count">Question 1 of 24</span><span class="chip" id="kind">Multiple choice</span></div>
+      <div class="bar" aria-hidden="true"><span id="barFill"></span></div>
+    </div>
+    <article class="card" style="margin-top:16px">
+      <p class="question" id="qText"></p>
+      <div id="answerArea"></div>
+      <div class="hint" id="hintBox" hidden></div>
+      <div class="feedback" id="feedback" hidden></div>
+      <div class="actions" style="margin-top:18px">
+        <button class="btn" id="hintBtn"><svg class="icon" aria-hidden="true"><use href="#i-bulb"/></svg>Hint</button>
+        <span class="spacer"></span>
+        <button class="btn btn-primary" id="nextBtn" hidden>Next<svg class="icon" aria-hidden="true"><use href="#i-right"/></svg></button>
+      </div>
+    </article>
+  </section>
+
+  <!-- Results -->
+  <section class="card" id="results" hidden>
+    <p class="eyebrow">Quiz complete</p>
+    <div class="score">
+      <div class="score-ring" id="ring" style="--p:0"><div id="pct">0%</div></div>
+      <div><h1 id="scoreText">You got 0 of 24</h1><p class="muted" id="cheer"></p></div>
+    </div>
+    <div class="parts" id="parts"></div>
+    <div id="missedWrap"><h2 style="margin-top:22px">Questions to look at again</h2><ul class="missed" id="missed"></ul></div>
+    <div class="actions" style="margin-top:20px"><button class="btn btn-primary" id="retryMissed">Practice the ones I missed</button><button class="btn" id="restart">Start over</button><a class="btn btn-ghost" href="../#page=173">Open the Unit Review in the textbook</a></div>
+  </section>
+</main>
+
+<script>
+(async () => {
+  const $ = (id) => document.getElementById(id);
+  const KEY = 'gml:unit5-review-quiz:v1';
+  const KIND = { mc: 'Multiple choice', fill: 'Fill in the blank', tf: 'True or false' };
+  const LESSON = { '5-1': 'Lesson 5-1 · page 143', '5-2': 'Lesson 5-2 · page 147', '5-3': 'Lesson 5-3 · page 151', '5-4': 'Lesson 5-4 · page 155', '5-5': 'Lesson 5-5 · page 159', '5-6': 'Lesson 5-6 · page 163', '5-7': 'Lesson 5-7 · page 169' };
+  const PAGE = { '5-1': 143, '5-2': 147, '5-3': 151, '5-4': 155, '5-5': 159, '5-6': 163, '5-7': 169 };
+  let quiz;
+  try { quiz = await (await fetch('quiz.json', { cache: 'no-cache' })).json(); }
+  catch { $('loading').innerHTML = '<p>The quiz could not load. Check the internet connection and reload.</p>'; return; }
+  const Q = quiz.questions;
+
+  // Saved progress: { order: [ids], i: index in order, results: { id: { given, correct } }, done }
+  const load = () => { try { return JSON.parse(localStorage.getItem(KEY)) || null; } catch { return null; } };
+  const store = (s) => { try { localStorage.setItem(KEY, JSON.stringify(s)); } catch { /* still works this session */ } };
+  let s = load();
+  const fresh = (ids) => ({ order: ids, i: 0, results: {}, done: false, round: ids.length === Q.length ? 'full' : 'missed' });
+
+  const show = (id) => { for (const sec of ['loading', 'intro', 'quiz', 'results']) $(sec).hidden = sec !== id; window.scrollTo(0, 0); };
+  const norm = (t) => String(t).toLowerCase().replace(/[\s,]/g, '').replace(/[⁰¹²³⁴⁵⁶⁷⁸⁹]/g, (c) => '⁰¹²³⁴⁵⁶⁷⁸⁹'.indexOf(c));
+  // Fill-in answers: commas and spaces don't matter ("9,640", "9640", "9 640" all count).
+  const isRight = (q, given) => q.type === 'fill' ? [q.answer, ...(q.accept || [])].map(norm).includes(norm(given)) : given === q.answer;
+  const answerText = (q) => q.type === 'mc' ? `${'ABCD'[q.answer]}. ${q.options[q.answer]}` : q.type === 'tf' ? (q.answer ? 'True' : 'False') : q.answer;
+  const givenText = (q, g) => q.type === 'mc' ? `${'ABCD'[g]}. ${q.options[g]}` : q.type === 'tf' ? (g ? 'True' : 'False') : g;
+
+  function render() {
+    const id = s.order[s.i], q = Q.find((x) => x.id === id), r = s.results[id];
+    $('count').textContent = `Question ${s.i + 1} of ${s.order.length}`;
+    $('kind').textContent = KIND[q.type];
+    $('barFill').style.width = (s.i / s.order.length * 100) + '%';
+    $('qText').textContent = q.q;
+    $('hintBox').hidden = true; $('hintBox').textContent = q.hint; $('hintBtn').disabled = false;
+    const area = $('answerArea'); area.replaceChildren();
+    if (q.type === 'mc' || q.type === 'tf') {
+      const list = document.createElement('div'); list.className = 'choices' + (q.type === 'tf' ? ' tf' : '');
+      const opts = q.type === 'mc' ? q.options.map((o, k) => [k, o]) : [[true, 'True'], [false, 'False']];
+      for (const [val, label] of opts) {
+        const b = document.createElement('button'); b.className = 'choice'; b.dataset.value = String(val);
+        if (q.type === 'mc') { const l = document.createElement('span'); l.className = 'letter'; l.textContent = 'ABCD'[val]; b.append(l); }
+        b.append(document.createTextNode(label));
+        b.onclick = () => answer(q, val);
+        list.append(b);
+      }
+      area.append(list);
+    } else {
+      const wrap = document.createElement('form'); wrap.className = 'fill';
+      const inp = document.createElement('input'); inp.id = 'fillInput'; inp.inputMode = 'numeric'; inp.autocomplete = 'off'; inp.setAttribute('aria-label', 'Your answer'); inp.placeholder = 'Type your answer';
+      const go = document.createElement('button'); go.className = 'btn btn-primary'; go.type = 'submit'; go.id = 'checkBtn'; go.textContent = 'Check';
+      wrap.append(inp, go); wrap.onsubmit = (e) => { e.preventDefault(); if (inp.value.trim()) answer(q, inp.value.trim()); else inp.focus(); };
+      area.append(wrap);
+    }
+    if (r) showFeedback(q, r.given, r.correct); else { $('feedback').hidden = true; $('nextBtn').hidden = true; }
+  }
+  function answer(q, given) {
+    if (s.results[q.id]) return;  // first answer counts
+    const correct = isRight(q, given);
+    s.results[q.id] = { given, correct }; store(s);
+    showFeedback(q, given, correct);
+  }
+  function showFeedback(q, given, correct) {
+    for (const b of document.querySelectorAll('.choice')) {
+      b.disabled = true;
+      const v = q.type === 'mc' ? Number(b.dataset.value) : b.dataset.value === 'true';
+      if (v === q.answer) b.classList.add('correct'); else if (v === given) b.classList.add('wrong');
+    }
+    const inp = $('fillInput');
+    if (inp) { inp.value = given; inp.disabled = true; inp.classList.add(correct ? 'correct' : 'wrong'); $('checkBtn').disabled = true; }
+    const fb = $('feedback'); fb.hidden = false; fb.className = 'feedback ' + (correct ? 'ok' : 'bad');
+    fb.innerHTML = '';
+    const head = document.createElement('strong'); head.textContent = correct ? '✓ Correct!' : `Not quite. The answer is ${answerText(q)}.`;
+    const why = document.createElement('div'); why.textContent = q.why;
+    const lesson = document.createElement('div'); lesson.className = 'lesson';
+    lesson.innerHTML = `Review: <a href="../#page=${PAGE[q.lesson]}">${LESSON[q.lesson]}</a>`;
+    fb.append(head, why, lesson);
+    $('hintBtn').disabled = true;
+    const next = $('nextBtn'); next.hidden = false;
+    next.firstChild.textContent = s.i === s.order.length - 1 ? 'See my score' : 'Next';
+    next.focus();
+  }
+  function finish() {
+    s.done = true; store(s);
+    const ids = s.order, got = ids.filter((id) => s.results[id]?.correct).length, pct = Math.round(got / ids.length * 100);
+    $('ring').style.setProperty('--p', pct); $('pct').textContent = pct + '%';
+    $('scoreText').textContent = `You got ${got} of ${ids.length}`;
+    $('cheer').textContent = pct === 100 ? 'Perfect score! You are ready for the Unit Review.' : pct >= 80 ? 'Great work! Look again at the ones you missed.' : pct >= 60 ? 'Good effort. Practise the ones you missed, then try again.' : 'Keep going: review the lessons linked below, then practise the ones you missed.';
+    $('parts').replaceChildren(...['mc', 'fill', 'tf'].map((t) => {
+      const these = ids.map((id) => Q.find((x) => x.id === id)).filter((q) => q.type === t);
+      const d = document.createElement('div'); d.className = 'part';
+      d.innerHTML = `<b>${these.filter((q) => s.results[q.id]?.correct).length} / ${these.length}</b><span>${KIND[t]}</span>`;
+      return these.length ? d : '';
+    }).filter(Boolean));
+    const missed = ids.map((id) => Q.find((x) => x.id === id)).filter((q) => !s.results[q.id]?.correct);
+    $('missedWrap').hidden = !missed.length; $('retryMissed').hidden = !missed.length;
+    $('missed').replaceChildren(...missed.map((q) => {
+      const li = document.createElement('li');
+      const t = document.createElement('div'); t.textContent = q.q;
+      const a = document.createElement('div'); a.className = 'ans'; a.textContent = 'Answer: ' + answerText(q);
+      const y = document.createElement('div'); y.className = 'yours'; y.textContent = s.results[q.id] ? 'You answered: ' + givenText(q, s.results[q.id].given) : '';
+      const w = document.createElement('div'); w.className = 'lesson'; w.textContent = q.why;
+      li.append(t, a, y, w); return li;
+    }));
+    show('results');
+  }
+
+  $('start').onclick = () => { s = fresh(Q.map((q) => q.id)); store(s); show('quiz'); render(); };
+  $('resume').onclick = () => { show('quiz'); render(); };
+  $('hintBtn').onclick = () => { $('hintBox').hidden = false; $('hintBox').textContent = '💡 ' + Q.find((x) => x.id === s.order[s.i]).hint; };
+  $('nextBtn').onclick = () => { if (s.i < s.order.length - 1) { s.i++; store(s); render(); window.scrollTo(0, 0); } else finish(); };
+  $('retryMissed').onclick = () => { const m = s.order.filter((id) => !s.results[id]?.correct); s = fresh(m); store(s); show('quiz'); render(); };
+  $('restart').onclick = () => { s = fresh(Q.map((q) => q.id)); store(s); show('quiz'); render(); };
+
+  if (s && s.order?.every((id) => Q.some((q) => q.id === id))) {
+    if (s.done) finish(); else { show('intro'); $('resume').hidden = false; $('start').textContent = 'Start over'; }
+  } else show('intro');
+})();
+</script>
+</body>
+</html>
