@@ -44,3 +44,14 @@ The latest input placement uses `lesson-5-1/data/fields.json` as the source of c
 Before claiming the workbook is fully audited, use a browser to compare the original source and interactive overlays on **all four** Lesson 5-1 pages at zoom values 75%, 100%, 125%, and 150%; inspect all 25 items; type, refresh, navigate away and back; and verify that help panels open/close without losing answers. Then complete the same process for every later page, after its question map and solution audit are available.
 
 This report intentionally separates completed deterministic checks from unperformed visual tests.
+
+## 2026-11-08 update: line-based alignment controls
+
+- Added provisional, screenshot-guided answer-line placements for problems 1–12 on PDF page 5 (printed page 145).
+- Added optional **Adjust boxes** mode in the toolbar: a reviewer may drag individual answer fields and help buttons, or focus a handle and use arrow keys (Shift+arrow for larger adjustments).
+- Saved positions use the existing browser-local workbook state, under `placementOverrides`. Answers remain in the same `answers` records.
+- The default study experience still presents typing inputs and question help without exposing adjustment handles.
+- Static coordinate checks for the 12 adjustments: **0 overlapping answer input regions**, **0 out-of-bounds positions**, **0 help markers colliding with their associated input rectangles**.
+- JavaScript syntax and referenced DOM IDs checked.
+
+**Important:** The initial positions were estimated from the owner's screen image, not verified by automated pixel analysis of every original blue answer line. A completed visual certification still requires live screenshot inspection, particularly after zoom and on small devices. Other Lesson 5-1 pages and remaining Chapter 5 pages still require line-by-line placement work.
