@@ -259,8 +259,10 @@ try {
     $('pages').append(g);
   }
   $('pages').onchange = () => goto($('pages').value);
-  $('prev').onclick = () => goto(numbers[numbers.indexOf(page) - 1]);
-  $('next').onclick = () => goto(numbers[numbers.indexOf(page) + 1]);
+  // At the first/last page the button disables itself: keep keyboard focus on the page picker instead of losing it.
+  const keepFocus = (b) => { if (b.disabled && document.activeElement === document.body) $('pages').focus(); };
+  $('prev').onclick = () => { goto(numbers[numbers.indexOf(page) - 1]); keepFocus($('prev')); };
+  $('next').onclick = () => { goto(numbers[numbers.indexOf(page) + 1]); keepFocus($('next')); };
   window.addEventListener('hashchange', () => { const p = new URLSearchParams(location.hash.slice(1)).get('page'); if (p !== page) goto(p, false); });
 
   document.querySelectorAll('button[data-mode]').forEach((b) => { b.onclick = () => setMode(b.dataset.mode); });
@@ -313,7 +315,7 @@ try {
   }, { passive: true });
   viewer.addEventListener('touchmove', (e) => {
     if (!pinch || e.touches.length !== 2) return;
-    e.preventDefault();
+    if (e.cancelable) e.preventDefault();
     const m = mid(e.touches), target = Math.max(160, Math.min(3264, pinch.w * m.d / pinch.d));
     viewer.scrollLeft -= m.x - pinch.x; viewer.scrollTop -= m.y - pinch.y; pinch.x = m.x; pinch.y = m.y;  // two-finger pan
     if (Math.abs(target - width) > 0.5) zoomAround(target, m.x, m.y);
