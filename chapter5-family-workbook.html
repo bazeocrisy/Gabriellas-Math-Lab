@@ -69,6 +69,36 @@
 #session-status{font-size:12px;color:#3d6955}
 @media(max-width:700px){.shell{padding:5px!important}.viewer{padding:5px}.paper-outer{padding:3px;max-height:77vh}.toolbar{padding-bottom:6px}.top{padding:8px}.answer-item input{font-size:9px;height:19px;min-height:19px;padding:0 2px}.help-dot{width:20px;min-width:20px;height:20px;font-size:12px}.dialog-body{padding:14px}}
 @media print{#help-dialog,#add-question-panel{display:none!important}.answer-item input{background:transparent;border:0;box-shadow:none}.help-dot{display:none!important}}
+
+/* GML-007 audit fix: unobstructed source page with working right-side answer/help panel */
+.shell{display:grid!important;grid-template-columns:minmax(0,1fr) 355px!important;max-width:1650px!important;align-items:start;gap:12px}
+.main{min-width:0}
+.side{display:none!important}
+.assist{display:block!important;grid-column:2!important;position:sticky!important;top:12px!important;max-height:calc(100vh - 24px)!important;overflow:auto!important;padding:14px!important}
+.assist>.eyebrow,.assist>h2:first-of-type,.assist>#problem-status,.assist>#question-list,.assist>#help-box{display:block!important}
+.assist>.add-on-page,.assist>.chapter-progress,.assist>h2[style],.assist>.tips,.assist>p.muted,.assist>label,.assist>textarea,.assist>#note-status,.assist>hr,.assist>.notice,.assist>.navlink{display:none!important}
+.paper-outer{padding:12px 34px!important;max-height:calc(100vh - 175px)!important}
+.page{overflow:visible!important}
+.answer-item{display:block!important;width:0!important;height:0!important;min-height:0!important;max-width:none!important;filter:none!important;z-index:6}
+.answer-item input{display:none!important}
+.help-dot{position:absolute;left:-32px;top:0;transform:translateY(-25%);width:24px!important;height:24px!important;min-width:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px}
+.answer-item.right-side .help-dot{left:8px}
+.answer-layer{overflow:visible!important}
+.q-list{display:block!important;max-height:42vh;overflow:auto!important;scrollbar-width:thin}
+.q-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px;padding:10px;margin:7px 0;background:#fff;border:1px solid #e0e7f1;border-radius:12px}
+.q-row strong{font-size:13px}
+.q-row input{display:block;grid-column:1/-1;width:100%;min-height:39px;background:#fff;border:1px solid #b8cbea;border-radius:8px;padding:7px 9px;font-size:14px}
+.q-row.selected{background:#f2f6ff;border-color:#7396e3}
+.q-row .btn{min-height:36px}
+#help-box{display:block!important}
+#help-box:empty:before{content:"Tap ? next to a textbook question to see every step here. The printed problem stays visible.";display:block;background:#f2f5fc;color:#556781;padding:14px;border-radius:12px;font-size:13px;line-height:1.55}
+.help-card{background:#f9fbff;border:1px solid #cad9f1;box-shadow:none;padding:15px;border-radius:14px;margin-top:12px}
+.help-card h3{font-size:16px}
+.help-card .help-stage{background:white;border:1px solid #e0e9f5;border-radius:10px;padding:11px;margin:9px 0}
+.help-steps{padding-left:20px;line-height:1.55}
+#session-status{color:#52785a}
+@media(max-width:950px){.shell{grid-template-columns:minmax(0,1fr)!important}.assist{position:static!important;grid-column:1!important;max-height:none!important}.q-list{max-height:340px}.paper-outer{max-height:67vh!important}}
+@media print{.assist{display:none!important}.shell{display:block!important}.help-dot{display:none!important}}
 </style></head><body>
 <div class="shell"><aside class="card side"><div class="eyebrow">Family study edition</div><h1>Gabriella's Math Lab</h1><p class="muted mini">Chapter 5 · Exact textbook pages</p><a class="navlink" href="./unit5-lessons-5-1-to-5-4.html">↗ Open original interactive lessons 5-1 to 5-4</a><a class="navlink" href="./">↗ Math Lab home</a><div class="smallcard"><strong>Progress is saved here</strong><p class="mini muted">This companion workbook stores your writing and notes in this browser. Export a backup if using another device.</p></div><div class="smallcard"><strong>Textbook protection</strong><p class="mini muted">The source pages are rendered unchanged. Ink and notes are saved separately.</p></div></aside>
 <main class="main"><section class="card top"><div><div class="eyebrow">Original Chapter 5 book</div><strong id="page-title">Loading textbook…</strong><div class="mini muted" id="page-subtitle">Use the arrows or select any source PDF page</div></div><div class="buttons"><button class="btn" id="prev">← Previous</button><select id="page-select" aria-label="Choose textbook page"></select><button class="btn primary" id="next">Next →</button></div></section>
@@ -95,26 +125,31 @@ function listedQuestions(){const fixed=(VERIFIED[current]||[]).map(q=>({...q,sou
 function nameOf(q){return q.title||("Problem "+q.id);}
 function updateProgress(){let num=0,den=0;for(const [pdfPage,items] of Object.entries(VERIFIED)){den+=items.length;const answers=(doc.pages[pdfPage]||{}).answers||{};for(const q of items)if(String(answers[q.id]||"").trim())num++;}for(const [pdfPage,p] of Object.entries(doc.pages)){for(const q of p.customQuestions||[]){den++;if(String((p.answers||{})[q.id]||"").trim())num++;}}by("chapter-progress").value=den?Math.round(100*num/den):0;by("progress-caption").textContent=num+" of "+den+" mapped answer boxes completed";} 
 
-function showQuestion(id){chosenHelp=id;const q=listedQuestions().find(x=>x.id===id);if(!q)return;
-let inner='<p class="mini muted">'+safe(nameOf(q))+' · Original PDF page '+current+'</p>';
-if(q.source!=="verified"){inner+='<div class="dialog-answer">This question has not yet been independently verified. Use the textbook problem to work it out together; an answer will not be invented.</div>';}
-else{inner+='<h3>Helpful hint</h3><p>'+safe(q.hint||"Read the question carefully.")+'</p><h3>Follow these steps</h3><ol>'+(q.steps||[]).map(x=>'<li>'+safe(x)+'</li>').join("")+'</ol><h3>'+(q.openEnded?"Example answer":"Answer")+'</h3><div class="dialog-answer">'+safe(q.answer)+'</div>';}
-by("modal-title").textContent=nameOf(q);by("modal-content").innerHTML=inner;const d=by("help-dialog");if(!d.open)d.showModal();}
-function renderHelp(){/* Help is displayed only when the question-mark button is selected. */}
-by("close-dialog").onclick=()=>by("help-dialog").close();
 
-function renderQuestionList(){updateProgress();}
-function renderBoxes(){const layer=by("answer-layer");layer.innerHTML="";for(const q of listedQuestions()){
-const r=q.rect||[.12,.3,.25,.04];const wrap=document.createElement("div");wrap.className="answer-item"+(r[3]>.05?" long":"");
-wrap.style.left=(100*r[0]).toFixed(3)+"%";wrap.style.top=(100*r[1]).toFixed(3)+"%";
-const boundedWidth=Math.min(.36,Math.max(.10,r[2]*.55));
-wrap.style.width=(100*boundedWidth).toFixed(3)+"%";wrap.dataset.id=q.id;
-const input=document.createElement("input");input.type="text";input.value=state().answers[q.id]||"";input.placeholder="";input.setAttribute("aria-label","Answer for "+nameOf(q));
-input.addEventListener("input",e=>{state().answers[q.id]=e.target.value;persist();updateProgress()});
-const help=document.createElement("button");help.type="button";help.className="help-dot";help.textContent="?";help.title="Show all steps for "+nameOf(q);help.setAttribute("aria-label","Show how to solve "+nameOf(q));help.onclick=()=>showQuestion(q.id);
-wrap.append(input,help);layer.appendChild(wrap);}
+function showQuestion(id){chosenHelp=id;renderQuestionList();renderHelp();}
+function renderHelp(){const target=by("help-box");const q=listedQuestions().find(x=>x.id===chosenHelp);
+if(!q){target.innerHTML="";return;}
+let html='<section class="help-card"><div class="eyebrow">PDF page '+current+'</div><h3>'+safe(nameOf(q))+'</h3>';
+if(q.source!=="verified"){html+='<div class="help-stage"><strong>Solution not yet verified</strong><p class="mini muted">This problem is visible in the textbook on the left, but its mathematical explanation has not been independently checked yet.</p></div>';}
+else{html+='<div class="help-stage"><strong>Hint</strong><p>'+safe(q.hint||"Read the printed question carefully.")+'</p></div><div class="help-stage"><strong>Step-by-step solution</strong><ol class="help-steps">'+(q.steps||[]).map(x=>'<li>'+safe(x)+'</li>').join("")+'</ol></div><div class="help-stage"><strong>'+(q.openEnded?"Example answer":"Answer")+'</strong><p>'+safe(q.answer)+'</p></div>';}
+html+='<button class="btn" id="close-help">Close explanation</button></section>';
+target.innerHTML=html;
+by("close-help").onclick=()=>{chosenHelp=null;renderHelp();renderQuestionList();};}
+function renderQuestionList(){const list=by("question-list"),qs=listedQuestions();
+by("problem-status").textContent=(VERIFIED[current]?"Choose a problem; type your answer here or tap ? for help.":"Question controls for this page have not been mapped yet.");
+list.innerHTML=qs.length?qs.map(q=>'<section class="q-row '+(chosenHelp===q.id?"selected":"")+'"><div><strong>'+safe(nameOf(q))+'</strong><div class="chapter-question-label">'+(String(state().answers[q.id]||"").trim()?"✓ Saved":"Not answered")+'</div></div><button type="button" class="btn" data-help="'+safe(q.id)+'">? Steps</button><input type="text" data-answer="'+safe(q.id)+'" value="'+safe(state().answers[q.id]||"")+'" aria-label="Answer for '+safe(nameOf(q))+'" placeholder="Write your answer"></section>').join(""):'<p class="mini muted">No verified question locations on this page yet.</p>';
+list.querySelectorAll("[data-help]").forEach(btn=>btn.onclick=()=>showQuestion(btn.dataset.help));
+list.querySelectorAll("[data-answer]").forEach(input=>input.addEventListener("input",e=>{state().answers[input.dataset.answer]=e.target.value;persist();const label=input.parentElement.querySelector(".chapter-question-label");if(label)label.textContent=e.target.value.trim()?"✓ Saved":"Not answered";updateProgress();}));
 updateProgress();}
-
+function renderBoxes(){const layer=by("answer-layer");layer.innerHTML="";
+const qs=listedQuestions();const positions={left:[],right:[]};
+qs.forEach(q=>{const r=q.rect||[.12,.3,.25,.04];const side=r[0]>.47?"right":"left";
+const top=Math.min(.95,Math.max(.04,r[1]));positions[side].push({q,top,side});});
+for(const side of ["left","right"]){const rows=positions[side].sort((a,b)=>a.top-b.top);let last=-1;
+for(const item of rows){const q=item.q;let top=Math.max(item.top,last+.027);last=top;top=Math.min(.965,top);const marker=document.createElement("div");marker.className="answer-item"+(side==="right"?" right-side":"");
+marker.style.left=side==="right"?"calc(100% + 4px)":"0px";marker.style.top=(top*100).toFixed(2)+"%";
+const btn=document.createElement("button");btn.type="button";btn.className="help-dot";btn.textContent="?";btn.setAttribute("aria-label","Show all solution steps for "+nameOf(q));btn.title="Help: "+nameOf(q);btn.onclick=()=>showQuestion(q.id);marker.appendChild(btn);layer.appendChild(marker);}}
+renderQuestionList();renderHelp();}
 let pendingAdd=null;
 function togglePlacement(){placing=!placing;by("page").classList.toggle("placing",placing);by("place-box-top").textContent=placing?"Cancel adding":"＋ Add question";choose("pen")}
 by("place-box-top").onclick=togglePlacement;
