@@ -4,6 +4,14 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
 <title>Chapter 5 · Gabriella's Math Lab</title>
+<meta name="theme-color" content="#ffffff">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Chapter 5">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="../assets/brand/apple-touch-icon.png">
+<link rel="icon" href="../assets/brand/favicon-32.png">
 <link rel="stylesheet" href="style.css">
 </head>
 <body data-mode="type">
@@ -112,6 +120,16 @@
   <p id="helpDetail" hidden></p>
 </section>
 </div>
+
+<!-- Phones: one problem at a time (the original page, framed on one problem) -->
+<nav id="probBar" class="prob-bar" aria-label="Problem by problem" hidden>
+  <button id="probPrev" class="btn btn-icon btn-ghost" aria-label="Previous problem"><svg class="icon" aria-hidden="true"><use href="#i-left"/></svg></button>
+  <div class="prob-label" aria-live="polite"><strong id="probTitle">Problem</strong><span id="probCount"></span></div>
+  <button id="probHelp" class="prob-help" aria-label="Show the answer and steps for this problem">?</button>
+  <button id="probPage" class="btn btn-icon btn-ghost" aria-label="Show the whole page" title="Whole page"><svg class="icon" aria-hidden="true"><use href="#i-fit"/></svg></button>
+  <button id="probNext" class="btn btn-icon btn-ghost" aria-label="Next problem"><svg class="icon" aria-hidden="true"><use href="#i-right"/></svg></button>
+</nav>
+<button id="toProblems" class="to-problems" hidden><svg class="icon" aria-hidden="true"><use href="#i-list"/></svg>One problem at a time</button>
 
 <dialog id="clearDialog" class="card confirm" aria-labelledby="clearTitle">
   <h2 id="clearTitle">Clear this page?</h2>

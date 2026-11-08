@@ -54,6 +54,8 @@
 
   /* Type */
   --font: "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
+  /* Handwriting-style answers, from fonts already on the device (iPad/iPhone/Mac, Windows, then fallbacks). */
+  --hand: "Noteworthy", "Chalkboard SE", "Segoe Print", "Ink Free", "Comic Sans MS", "Comic Neue", cursive;
   --fs-xs: 12px; --fs-sm: 14px; --fs-md: 16px; --fs-lg: 18px; --fs-xl: 21px;
 
   /* Layout */
@@ -179,10 +181,13 @@ body[data-error="true"] .save-chip .icon { display: none; }
 .layer { position: absolute; inset: 0; }
 .ink { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; overflow: visible; }
 .responses { position: absolute; inset: 0; pointer-events: none; }
-.response { position: absolute; pointer-events: auto; resize: none; overflow: auto; min-width: 0; margin: 0; padding: 1px; background: rgb(36 86 201 / .05); border: 1px dashed rgb(36 86 201 / .35); border-radius: 3px; color: var(--c-ink-layer); line-height: 1.2; font-family: var(--font); }
-.response:hover { background: rgb(36 86 201 / .09); }
-.response:focus { background: #fffdf4; outline: 2px solid var(--c-focus); z-index: 2; }
-
+.response { position: absolute; pointer-events: auto; resize: none; overflow: auto; min-width: 0; margin: 0; padding: 1px 2px; background: transparent; border: 0; border-bottom: 1.5px solid rgb(36 86 201 / .32); border-radius: 0; color: var(--c-ink-layer); line-height: 1.15; font-family: var(--hand); font-weight: 600; }
+/* Work areas: a barely-there tint instead of a frame. */
+.response[data-multi] { border-bottom: 0; background: rgb(36 86 201 / .04); border-radius: 4px; }
+/* Once something is written, only the writing shows. */
+.response:not(:placeholder-shown) { border-bottom-color: transparent; background: transparent; }
+.response:hover { background: rgb(36 86 201 / .07); }
+.response:focus { background: rgb(255 249 225 / .9); outline: 2px solid var(--c-focus); outline-offset: 1px; border-radius: 4px; border-bottom-color: transparent; z-index: 2; }
 /* Question markers live in the gutter beside the page, never on the artwork. */
 .marker { position: absolute; transform: translateY(-50%); isolation: isolate; display: grid; place-items: center; width: var(--tap); height: var(--tap); padding: 0; border: 0; background: none; color: var(--c-primary-600); font-size: 18px; font-weight: 800; line-height: 1; cursor: pointer; }
 .marker::before { content: ""; position: absolute; z-index: -1; width: 34px; height: 34px; border-radius: 50%; border: 2px solid var(--c-primary-600); background: var(--c-surface); box-shadow: var(--shadow-md); transition: transform .15s, background-color .15s; }
@@ -257,6 +262,19 @@ dialog::backdrop { background: rgb(15 23 42 / .38); }
   .phone-only { display: flex !important; }
   .menu-item[aria-pressed="true"] { background: var(--c-accent-soft); color: var(--c-accent); }
 }
+
+/* Phone problem view: the page framed on one problem, with a bottom bar. */
+.prob-bar { position: fixed; z-index: 25; left: 0; right: 0; bottom: 0; display: flex; align-items: center; gap: 4px; padding: 6px max(var(--s-2), env(safe-area-inset-right, 0px)) calc(6px + env(safe-area-inset-bottom, 0px)) max(var(--s-2), env(safe-area-inset-left, 0px)); background: var(--c-surface); border-top: 1px solid var(--c-border); box-shadow: 0 -4px 14px rgb(16 24 40 / .06); }
+.prob-label { flex: 1; min-width: 0; display: grid; text-align: center; line-height: 1.2; }
+.prob-label strong { font-size: var(--fs-md); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.prob-label span { font-size: var(--fs-xs); color: var(--c-ink-2); }
+.prob-help { flex: none; width: 48px; height: 48px; border-radius: 50%; border: 0; background: var(--c-primary-600); color: #fff; font-size: 22px; font-weight: 800; box-shadow: var(--shadow-md); cursor: pointer; }
+.prob-help[aria-pressed="true"] { background: var(--c-primary); }
+.to-problems { position: fixed; z-index: 25; left: 50%; transform: translateX(-50%); bottom: calc(14px + env(safe-area-inset-bottom, 0px)); display: inline-flex; align-items: center; gap: var(--s-2); min-height: var(--tap); padding: 0 var(--s-4); border: 0; border-radius: var(--r-pill); background: var(--c-primary); color: #fff; font-weight: 650; box-shadow: var(--shadow-lg); cursor: pointer; white-space: nowrap; }
+body.problem-view .marker { display: none; }
+body.problem-view #viewer { padding: var(--s-3) 0 calc(80px + var(--help-h)); overflow-x: hidden; }
+body.problem-view.free-zoom #viewer { overflow-x: auto; }
+body.problem-view .help { z-index: 35; }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { transition: none !important; animation: none !important; }
