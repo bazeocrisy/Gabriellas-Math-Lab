@@ -35,11 +35,45 @@
 #page-title{font-size:17px}
 @media(max-width:1050px){.shell{grid-template-columns:minmax(0,1fr) 270px}.assist{position:sticky;grid-column:auto}}
 @media(max-width:700px){.shell{display:block}.assist{position:static;max-height:none;margin-top:12px}.q-list{max-height:320px}.paper-outer{max-height:72vh}}
+
+/* GML family workbook: textbook-first, inline answer fields, one-step help modal */
+.shell{display:block!important;max-width:1280px!important;margin:auto;padding:10px!important}
+.side,.assist{display:none!important}
+.main{width:100%;min-width:0}
+.top{position:relative;padding:12px 18px;margin-bottom:8px}
+.top strong{font-size:18px}
+.viewer{padding:10px}
+.paper-outer{padding:10px 24px;max-height:calc(100vh - 164px);min-height:430px;background:#e9edf6}
+.toolbar{gap:8px}
+.answer-item{display:flex!important;align-items:center;min-height:0;max-width:90%;filter:none}
+.answer-item input{min-width:26px;min-height:23px;height:25px;font-size:12px;line-height:1.2;padding:2px 4px;background:rgba(255,255,255,.92);border:1px solid #83a4e6;box-shadow:0 1px 2px #14376d15;border-radius:4px}
+.answer-item input::placeholder{color:#96a4bf}
+.answer-item.long input{min-height:26px;height:27px}
+.help-dot{height:23px;width:23px;min-width:23px;font-size:14px;box-shadow:0 1px 3px #22416e50}
+.answer-layer{z-index:4}
+.answer-item{transform:translateY(-2px)}
+#help-dialog{border:0;border-radius:19px;padding:0;width:min(580px,calc(100vw - 28px));max-height:88vh;box-shadow:0 25px 80px #0a224e80;overflow:auto;color:#17223b}
+#help-dialog::backdrop{background:#0e234885;backdrop-filter:blur(3px)}
+.dialog-head{position:sticky;top:0;background:#f6f8fe;border-bottom:1px solid #e2e8f4;padding:18px 20px;display:flex;justify-content:space-between;align-items:center;gap:12px;z-index:2}
+.dialog-head h2{font-size:19px;margin:0}
+.dialog-body{padding:20px}
+.dialog-body h3{font-size:14px;color:#2450a6;margin:15px 0 6px}
+.dialog-body p,.dialog-body li{font-size:15px;line-height:1.6}
+.dialog-body ol{padding-left:22px}
+.dialog-answer{background:#edf5ff;padding:12px;border-radius:12px;border:1px solid #caddff;font-weight:600}
+.dialog-close{background:#fff;border:1px solid #d5deeb;border-radius:9px;padding:7px 11px;font-size:16px;cursor:pointer}
+#add-question-panel{display:none;position:fixed;bottom:16px;right:16px;max-width:330px;background:#fff;border:1px solid #b8c9e9;box-shadow:0 12px 28px #19335e39;border-radius:14px;padding:14px;z-index:20}
+#add-question-panel.visible{display:block}
+#add-question-panel input{border:1px solid #aabbda;border-radius:7px;padding:9px;width:100%;margin:8px 0}
+#add-question-panel .buttons{justify-content:flex-end}
+#session-status{font-size:12px;color:#3d6955}
+@media(max-width:700px){.shell{padding:5px!important}.viewer{padding:5px}.paper-outer{padding:3px;max-height:77vh}.toolbar{padding-bottom:6px}.top{padding:8px}.answer-item input{font-size:9px;height:19px;min-height:19px;padding:0 2px}.help-dot{width:20px;min-width:20px;height:20px;font-size:12px}.dialog-body{padding:14px}}
+@media print{#help-dialog,#add-question-panel{display:none!important}.answer-item input{background:transparent;border:0;box-shadow:none}.help-dot{display:none!important}}
 </style></head><body>
 <div class="shell"><aside class="card side"><div class="eyebrow">Family study edition</div><h1>Gabriella's Math Lab</h1><p class="muted mini">Chapter 5 · Exact textbook pages</p><a class="navlink" href="./unit5-lessons-5-1-to-5-4.html">↗ Open original interactive lessons 5-1 to 5-4</a><a class="navlink" href="./">↗ Math Lab home</a><div class="smallcard"><strong>Progress is saved here</strong><p class="mini muted">This companion workbook stores your writing and notes in this browser. Export a backup if using another device.</p></div><div class="smallcard"><strong>Textbook protection</strong><p class="mini muted">The source pages are rendered unchanged. Ink and notes are saved separately.</p></div></aside>
 <main class="main"><section class="card top"><div><div class="eyebrow">Original Chapter 5 book</div><strong id="page-title">Loading textbook…</strong><div class="mini muted" id="page-subtitle">Use the arrows or select any source PDF page</div></div><div class="buttons"><button class="btn" id="prev">← Previous</button><select id="page-select" aria-label="Choose textbook page"></select><button class="btn primary" id="next">Next →</button></div></section>
-<section class="card viewer"><div class="toolbar"><div class="buttons" role="toolbar" aria-label="Writing tools"><button class="btn active" id="pen">✎ Write</button><button class="btn" id="type">T Type</button><button class="btn" id="eraser">⌫ Erase</button><button class="btn" id="undo">↶ Undo</button><button class="btn" id="clear">Clear page</button></div><div class="buttons"><button class="btn" id="minus">−</button><button class="btn" id="fit">Fit</button><button class="btn" id="plus">＋</button><button class="btn" id="print">Print page</button></div></div>
-<div class="paper-outer" id="scroll"><div class="page" id="page"><canvas id="pdf-canvas" aria-label="Original textbook page"></canvas><svg id="ink" viewBox="0 0 1000 1294" preserveAspectRatio="none" aria-label="Student annotation overlay"></svg><div id="answer-layer" class="answer-layer" aria-label="Problem answer boxes"></div></div></div><div class="status" id="status" aria-live="polite"></div><div id="error"></div></section><div class="foot">Source PDF: unchanged textbook · Answers and annotations stored locally · This companion does not modify the original workbook</div></main>
+<section class="card viewer"><div class="toolbar"><div class="buttons" role="toolbar" aria-label="Writing tools"><button class="btn active" id="pen">✎ Write</button><button class="btn" id="type">T Type</button><button class="btn" id="eraser">⌫ Erase</button><button class="btn" id="undo">↶ Undo</button><button class="btn" id="clear">Clear page</button></div><div class="buttons"><button class="btn" id="minus">−</button><button class="btn" id="fit">Fit</button><button class="btn" id="plus">＋</button><button class="btn" id="print">Print page</button><button class="btn" id="place-box-top">＋ Add question</button></div></div>
+<div class="paper-outer" id="scroll"><div class="page" id="page"><canvas id="pdf-canvas" aria-label="Original textbook page"></canvas><svg id="ink" viewBox="0 0 1000 1294" preserveAspectRatio="none" aria-label="Student annotation overlay"></svg><div id="answer-layer" class="answer-layer" aria-label="Problem answer boxes"></div></div></div><div class="status" id="status" aria-live="polite"></div><div id="session-status">Tap any ? for all solution steps.</div><div id="error"></div></section><div class="foot">Source PDF: unchanged textbook · Answers and annotations stored locally · This companion does not modify the original workbook</div><dialog id="help-dialog" aria-labelledby="modal-title"><div class="dialog-head"><h2 id="modal-title">How to solve this problem</h2><button type="button" class="dialog-close" id="close-dialog" aria-label="Close explanation">✕</button></div><div class="dialog-body" id="modal-content"></div></dialog><div id="add-question-panel"><strong>Add a problem</strong><p class="mini muted">Give this question the number printed in the book.</p><input id="new-question-label" aria-label="Problem number" placeholder="e.g. 18 or 18a"><div class="buttons"><button class="btn" id="cancel-add">Cancel</button><button class="btn primary" id="confirm-add">Add</button></div></div></main>
 <aside class="card assist"><div class="eyebrow">Study companion</div><h2>Problems &amp; Solutions</h2><p class="answer-note" id="problem-status">Loading question controls…</p><div class="q-list" id="question-list"></div><div id="help-box" aria-live="polite"></div><div class="add-on-page"><strong>Add a problem</strong><p>For later pages, select Add and click the answer space. A new question card will be created without popups.</p><button class="btn" id="place-box">＋ Add problem</button></div><div class="chapter-progress"><strong>Chapter progress</strong><progress id="chapter-progress" max="100" value="0"></progress><div id="progress-caption">Stored on this device</div></div><h2 style="margin-top:20px">Page notes</h2><p class="muted">Type directly in a blue answer box. Select ? for hints and explanations.</p><div class="tips"><strong>Working together</strong><div>1. Read the printed question.</div><div>2. Choose <b>Write</b> or <b>Type</b> to answer on the page.</div><div>3. Use <b>Page notes</b> for your thinking or questions.</div><div>4. Your work saves automatically on this device.</div></div><label for="question-note"><strong>Page notes</strong></label><textarea id="question-note" placeholder="Example: Let's review question 8 together…"></textarea><div class="status" id="note-status"></div><hr style="border:0;border-top:1px solid #e6eaf2;margin:18px 0"><h2>Protect your work</h2><div class="buttons"><button class="btn" id="backup">Export backup</button><button class="btn" id="restore">Import backup</button><input class="hidden" type="file" id="restore-file" accept=".json,application/json"></div><p class="mini muted">Backups contain student annotations and notes, not the PDF itself.</p><p class="notice"><strong>Accuracy:</strong> Lesson 5-1 includes independently reviewed step-by-step solutions. On later pages, you can add an answer box for each problem; those entries deliberately show “solution not yet verified” until checked against the textbook. The original book itself remains unchanged.</p><a class="navlink" id="source-link" href="https://github.com/bazeocrisy/Gabriellas-Math-Lab/blob/90510e9/lesson-5-1/assets/source.pdf" target="_blank" rel="noopener">View preserved source textbook</a></aside></div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 <script>
@@ -60,25 +94,38 @@ function safe(t){return String(t).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;"
 function listedQuestions(){const fixed=(VERIFIED[current]||[]).map(q=>({...q,source:"verified"}));const custom=(state().customQuestions||[]).map(q=>({...q,source:"custom"}));return [...fixed,...custom];}
 function nameOf(q){return q.title||("Problem "+q.id);}
 function updateProgress(){let num=0,den=0;for(const [pdfPage,items] of Object.entries(VERIFIED)){den+=items.length;const answers=(doc.pages[pdfPage]||{}).answers||{};for(const q of items)if(String(answers[q.id]||"").trim())num++;}for(const [pdfPage,p] of Object.entries(doc.pages)){for(const q of p.customQuestions||[]){den++;if(String((p.answers||{})[q.id]||"").trim())num++;}}by("chapter-progress").value=den?Math.round(100*num/den):0;by("progress-caption").textContent=num+" of "+den+" mapped answer boxes completed";} 
-function showQuestion(id){chosenHelp=id;showSteps=false;showAnswer=false;renderHelp();renderQuestionList();}
-function renderHelp(){const box=by("help-box");const q=listedQuestions().find(q=>q.id===chosenHelp);if(!q){box.innerHTML="";return;}
-let html='<section class="help-card"><div class="eyebrow">Page '+current+' · '+(q.source==="verified"?"Audited explanation":"Personal question")+'</div><h3>'+safe(nameOf(q))+'</h3>';
-if(q.source!=="verified"){html+='<div class="help-stage"><strong>Solution not yet verified</strong><p class="mini muted">This problem has not been independently mapped and solved. Work through the printed question together; do not rely on guessed answers.</p></div>';}
-else{html+='<div class="help-stage"><strong>Hint</strong><p>'+safe(q.hint||"Look carefully at the printed question.")+'</p></div><button class="btn" id="show-steps">'+(showSteps?"Hide steps":"Show me how")+'</button>';
-if(showSteps){html+='<div class="help-stage"><strong>Steps</strong><ol class="help-steps">'+(q.steps||[]).map(x=>'<li>'+safe(x)+'</li>').join("")+'</ol></div><button class="btn" id="show-answer">'+(showAnswer?"Hide answer":"Reveal answer")+'</button>';}
-if(showAnswer&&showSteps){html+='<div class="help-stage"><strong>'+(q.openEnded?"Sample response":"Verified answer")+'</strong><p>'+safe(q.answer)+'</p></div>';}}
-html+='<button class="btn" id="close-help">Close explanation</button></section>';box.innerHTML=html;
-const steps=by("show-steps");if(steps)steps.onclick=()=>{showSteps=!showSteps;showAnswer=false;renderHelp()};const answer=by("show-answer");if(answer)answer.onclick=()=>{showAnswer=!showAnswer;renderHelp()};by("close-help").onclick=()=>{chosenHelp=null;renderHelp();renderQuestionList()};}
 
-function renderQuestionList(){const list=by("question-list"),items=listedQuestions();
-by("problem-status").textContent=(VERIFIED[current]?"Select a question below to answer or get help.":"Use Add answer box to map each printed problem.")+" Answers save as you type.";
-list.innerHTML=items.length?items.map(q=>'<div class="q-row '+(chosenHelp===q.id?"selected":"")+'" data-question="'+safe(q.id)+'"><div><strong>'+safe(nameOf(q))+'</strong><div class="chapter-question-label">'+(String(state().answers[q.id]||"").trim()?"✓ Answer saved":"Enter an answer below")+'</div></div><button class="btn" data-help="'+safe(q.id)+'" aria-label="Show help for '+safe(nameOf(q))+'">? Help</button><input type="text" data-answer="'+safe(q.id)+'" value="'+safe(state().answers[q.id]||"")+'" placeholder="Type your answer here" aria-label="Answer for '+safe(nameOf(q))+'"></div>').join(""):'<div class="mini muted">No mapped questions on this page yet. Add one to start.</div>';
-list.querySelectorAll("[data-help]").forEach(b=>b.addEventListener("click",()=>showQuestion(b.dataset.help)));
-list.querySelectorAll("[data-answer]").forEach(input=>input.addEventListener("input",e=>{state().answers[input.dataset.answer]=e.target.value;persist();const label=input.parentElement.querySelector(".chapter-question-label");if(label)label.textContent=e.target.value.trim()?"✓ Answer saved":"Enter an answer below";updateProgress()}));
+function showQuestion(id){chosenHelp=id;const q=listedQuestions().find(x=>x.id===id);if(!q)return;
+let inner='<p class="mini muted">'+safe(nameOf(q))+' · Original PDF page '+current+'</p>';
+if(q.source!=="verified"){inner+='<div class="dialog-answer">This question has not yet been independently verified. Use the textbook problem to work it out together; an answer will not be invented.</div>';}
+else{inner+='<h3>Helpful hint</h3><p>'+safe(q.hint||"Read the question carefully.")+'</p><h3>Follow these steps</h3><ol>'+(q.steps||[]).map(x=>'<li>'+safe(x)+'</li>').join("")+'</ol><h3>'+(q.openEnded?"Example answer":"Answer")+'</h3><div class="dialog-answer">'+safe(q.answer)+'</div>';}
+by("modal-title").textContent=nameOf(q);by("modal-content").innerHTML=inner;const d=by("help-dialog");if(!d.open)d.showModal();}
+function renderHelp(){/* Help is displayed only when the question-mark button is selected. */}
+by("close-dialog").onclick=()=>by("help-dialog").close();
+
+function renderQuestionList(){updateProgress();}
+function renderBoxes(){const layer=by("answer-layer");layer.innerHTML="";for(const q of listedQuestions()){
+const r=q.rect||[.12,.3,.25,.04];const wrap=document.createElement("div");wrap.className="answer-item"+(r[3]>.05?" long":"");
+wrap.style.left=(100*r[0]).toFixed(3)+"%";wrap.style.top=(100*r[1]).toFixed(3)+"%";
+const boundedWidth=Math.min(.36,Math.max(.10,r[2]*.55));
+wrap.style.width=(100*boundedWidth).toFixed(3)+"%";wrap.dataset.id=q.id;
+const input=document.createElement("input");input.type="text";input.value=state().answers[q.id]||"";input.placeholder="";input.setAttribute("aria-label","Answer for "+nameOf(q));
+input.addEventListener("input",e=>{state().answers[q.id]=e.target.value;persist();updateProgress()});
+const help=document.createElement("button");help.type="button";help.className="help-dot";help.textContent="?";help.title="Show all steps for "+nameOf(q);help.setAttribute("aria-label","Show how to solve "+nameOf(q));help.onclick=()=>showQuestion(q.id);
+wrap.append(input,help);layer.appendChild(wrap);}
 updateProgress();}
-function renderBoxes(){const layer=by("answer-layer");layer.innerHTML="";renderQuestionList();renderHelp();}
-by("place-box").onclick=()=>{placing=!placing;by("page").classList.toggle("placing",placing);by("place-box").textContent=placing?"Cancel placement":"＋ Add answer box to page";choose("pen")};
-by("answer-layer").addEventListener("click",e=>{if(!placing||e.target!==by("answer-layer"))return;const r=by("answer-layer").getBoundingClientRect();const x=(e.clientX-r.left)/r.width,y=(e.clientY-r.top)/r.height;const nextNumber=state().customQuestions.length+1;const label="Added question "+nextNumber;const id="custom-"+Date.now().toString(36)+"-"+Math.floor(Math.random()*1e5);state().customQuestions.push({id,title:label,rect:[Math.max(.015,Math.min(.82,x)),Math.max(.01,Math.min(.93,y)),.18,.04]});placing=false;by("page").classList.remove("placing");by("place-box").textContent="＋ Add answer box to page";persist();renderBoxes();});
+
+let pendingAdd=null;
+function togglePlacement(){placing=!placing;by("page").classList.toggle("placing",placing);by("place-box-top").textContent=placing?"Cancel adding":"＋ Add question";choose("pen")}
+by("place-box-top").onclick=togglePlacement;
+by("cancel-add").onclick=()=>{pendingAdd=null;by("add-question-panel").classList.remove("visible")};
+by("confirm-add").onclick=()=>{if(!pendingAdd)return;const label=by("new-question-label").value.trim();if(!label){by("new-question-label").focus();return;}
+const id="custom-"+Date.now().toString(36);state().customQuestions.push({id,title:"Problem "+label.slice(0,40),rect:[pendingAdd.x,pendingAdd.y,.23,.04]});pendingAdd=null;by("add-question-panel").classList.remove("visible");persist();renderBoxes();};
+by("answer-layer").addEventListener("click",e=>{if(!placing||e.target!==by("answer-layer"))return;
+const r=by("answer-layer").getBoundingClientRect();const x=(e.clientX-r.left)/r.width,y=(e.clientY-r.top)/r.height;
+pendingAdd={x:Math.max(.015,Math.min(.78,x)),y:Math.max(.01,Math.min(.96,y))};
+placing=false;by("page").classList.remove("placing");by("place-box-top").textContent="＋ Add question";
+by("new-question-label").value="";by("add-question-panel").classList.add("visible");by("new-question-label").focus();});
 
 function paint(){const s=state();let out="";for(let i=0;i<s.strokes.length;i++){const st=s.strokes[i];out+='<path d="'+safe(st.d)+'" stroke="'+(st.color||"#2258b0")+'" stroke-width="'+(st.width||3)+'" stroke-linejoin="round" stroke-linecap="round" fill="none"/>';}for(const t of s.texts){out+='<text x="'+t.x+'" y="'+t.y+'" font-size="24" font-weight="600" fill="#2452aa">'+safe(t.text)+'</text>';}svg.innerHTML=out;}
 function choose(m){mode=m;for(const id of ["pen","type","eraser"])by(id).classList.toggle("active",id===m);svg.classList.toggle("inking",m==="pen"||m==="eraser");svg.classList.toggle("typing",m==="type");}
