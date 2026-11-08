@@ -236,7 +236,8 @@ dialog::backdrop { background: rgb(15 23 42 / .38); }
 @media (min-width: 1000px) {
   .app-header { flex-wrap: nowrap; }
   .app-header > *, .toolbar, .toolbar > * { flex-shrink: 0; }
-  .brand, .header-actions, .save-chip { flex-shrink: 1; min-width: 0; }
+  .header-actions, .save-chip { flex-shrink: 1; min-width: 0; }
+  .brand { flex-shrink: 1; min-width: var(--tap); }  /* the logo stays a full tap target; only the title text trims */
   .brand-text, .brand-name, .brand-sub { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
   .save-chip #saveStatus { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   .toolbar { flex-wrap: nowrap; }
