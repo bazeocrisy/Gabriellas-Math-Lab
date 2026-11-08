@@ -170,7 +170,7 @@ try {
     $('answer').textContent = q.answer;
     $('answerBadge').textContent = q.openEnded ? 'Sample answer' : 'Verified';
     $('answerBadge').title = q.openEnded ? 'Other answers can also be correct when well explained.' : q.verification || '';
-    $('help').querySelector('.help-grid').scrollTop = 0;
+    $('help').scrollTop = 0;
     $('help').hidden = false;
     document.body.classList.add('help-open');
     document.body.style.setProperty('--help-h', ($('help').offsetHeight + 12) + 'px');

@@ -195,32 +195,19 @@ body[data-mode=pen] .response, body[data-mode=eraser] .response, body[data-mode=
 body[data-mode=pan] #viewer { cursor: grab; touch-action: none; }
 body.original .layer { visibility: hidden; }
 
-/* 6. Solution card ------------------------------------------------------ */
-.help { position: fixed; z-index: 30; left: 50%; transform: translateX(-50%); bottom: var(--s-3); width: min(880px, calc(100vw - 24px)); max-height: 46dvh; display: flex; flex-direction: column; overflow: hidden; box-shadow: var(--shadow-lg); }
-.help-head { flex: none; display: flex; align-items: flex-start; justify-content: space-between; gap: var(--s-3); padding: var(--s-3) var(--s-2) var(--s-2) var(--s-4); }
-.help-head h2 { font-size: var(--fs-xl); font-weight: 740; letter-spacing: -.01em; outline: none; }
-.help-detail { color: var(--c-ink-2); font-size: var(--fs-sm); }
-.help-detail:empty { display: none; }
-.help-grid { flex: 1; min-height: 0; overflow: auto; overscroll-behavior: contain; display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: var(--s-3); padding: 0 var(--s-4) var(--s-4); align-items: start; }
-.help-card { border-radius: var(--r-md); padding: var(--s-3) var(--s-4) var(--s-4); border: 1px solid; display: grid; gap: var(--s-2); }
-.help-card h3 { display: flex; align-items: center; gap: var(--s-2); font-size: var(--fs-md); font-weight: 700; }
-.help-icon { display: grid; place-items: center; width: 30px; height: 30px; border-radius: 9px; flex: none; }
-.help-icon .icon { width: 17px; height: 17px; }
-.hint-card { background: var(--c-hint-soft); border-color: var(--c-hint-line); }
-.hint-card h3 { color: var(--c-hint); }
-.hint-card .help-icon { background: #ffe9b3; }
-.steps-card { background: var(--c-steps-soft); border-color: var(--c-steps-line); }
-.steps-card h3 { color: var(--c-steps); }
-.steps-card .help-icon { background: #d6e2fd; }
-.answer-card { background: var(--c-ok-soft); border-color: var(--c-ok-line); }
-.answer-card h3 { color: var(--c-ok); }
-.answer-card .help-icon { background: #c9ead5; }
-.badge { margin-left: auto; font-size: 11px; font-weight: 650; padding: 3px 8px; border-radius: var(--r-pill); background: #fff; color: var(--c-ok); border: 1px solid var(--c-ok-line); }
+/* 6. Solution card (one plain card) -------------------------------------- */
+.help { position: fixed; z-index: 30; left: 50%; transform: translateX(-50%); bottom: var(--s-3); width: min(600px, calc(100vw - 24px)); max-height: 40dvh; overflow: auto; overscroll-behavior: contain; padding: var(--s-2) var(--s-4) var(--s-4); box-shadow: var(--shadow-lg); display: grid; gap: var(--s-3); }
+.help-head { display: flex; align-items: center; justify-content: space-between; gap: var(--s-3); }
+.help-head h2 { font-size: var(--fs-lg); font-weight: 740; outline: none; }
+.help-label { display: block; font-size: var(--fs-xs); font-weight: 700; letter-spacing: .05em; text-transform: uppercase; color: var(--c-ink-2); }
+.help-answer { display: grid; gap: 2px; padding: var(--s-3) var(--s-4); border-radius: var(--r-md); background: var(--c-ok-soft); }
+.help-answer strong { font-size: var(--fs-xl); color: #0f4f29; overflow-wrap: anywhere; }
+.badge { display: inline-block; margin-left: var(--s-2); font-size: 11px; padding: 1px 8px; border-radius: var(--r-pill); background: #fff; color: var(--c-ok); border: 1px solid var(--c-ok-line); text-transform: none; letter-spacing: 0; }
 .badge:empty { display: none; }
-.step-list { list-style: none; margin: 0; padding: 0; counter-reset: step; display: grid; gap: var(--s-2); }
-.step-list li { counter-increment: step; position: relative; padding: var(--s-2) var(--s-3) var(--s-2) 44px; background: #fff; border-radius: var(--r-sm); border: 1px solid #dbe5fc; }
-.step-list li::before { content: counter(step); position: absolute; left: 10px; top: 8px; width: 24px; height: 24px; border-radius: 50%; background: var(--c-steps); color: #fff; font-size: 12px; font-weight: 700; display: grid; place-items: center; }
-.answer-text { background: #fff; border-radius: var(--r-sm); border: 1px solid var(--c-ok-line); padding: var(--s-3); font-size: var(--fs-lg); font-weight: 650; color: #0f4f29; }
+.help-how { display: grid; gap: var(--s-1); }
+.help-how ol { margin: 0; padding-left: 22px; display: grid; gap: 4px; }
+.help-hint { color: var(--c-ink-2); font-size: var(--fs-sm); }
+.help-hint .help-label { display: inline; margin-right: 4px; }
 
 /* 7. Dialogs ------------------------------------------------------------- */
 dialog::backdrop { background: rgb(15 23 42 / .38); }
@@ -264,8 +251,7 @@ dialog::backdrop { background: rgb(15 23 42 / .38); }
   .tool-end { margin-left: 0; }
   .menu-card { position: fixed; right: var(--s-2); left: var(--s-2); top: auto; width: auto; bottom: var(--s-2); max-height: 70dvh; overflow: auto; }
   #viewer { padding: var(--s-3) var(--gutter) calc(var(--s-3) + var(--help-h)); }
-  .help { bottom: 0; width: 100vw; border-radius: var(--r-lg) var(--r-lg) 0 0; max-height: 52dvh; }
-  .help-grid { padding: 0 var(--s-3) var(--s-3); grid-template-columns: minmax(0, 1fr); }
+  .help { bottom: 0; width: 100vw; border-radius: var(--r-lg) var(--r-lg) 0 0; max-height: 46dvh; padding-bottom: calc(var(--s-4) + env(safe-area-inset-bottom, 0px)); }
 }
 @media (max-width: 380px) { .brand-text { display: none; } }
 
