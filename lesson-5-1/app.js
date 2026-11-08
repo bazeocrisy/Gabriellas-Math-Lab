@@ -134,7 +134,7 @@ try {
   // Keep neighbouring ? buttons from overlapping when the page is small: push apart from the top down.
   function spaceMarkers() {
     const sheetEl = $('stage').querySelector('.sheet'); if (!sheetEl) return;
-    const H = sheetEl.clientHeight, size = 44, gap = 40;
+    const H = sheetEl.clientHeight, size = 44, gap = 48;
     for (const side of ['left', 'right']) {
       const ms = [...sheetEl.querySelectorAll('.marker.' + side)].sort((a, b) => a.dataset.y - b.dataset.y);
       let prev = -Infinity;

@@ -196,7 +196,7 @@ body[data-mode=pan] #viewer { cursor: grab; touch-action: none; }
 body.original .layer { visibility: hidden; }
 
 /* 6. Solution card (one plain card) -------------------------------------- */
-.help { position: fixed; z-index: 30; left: 50%; transform: translateX(-50%); bottom: var(--s-3); width: min(600px, calc(100vw - 24px)); max-height: 40dvh; overflow: auto; overscroll-behavior: contain; padding: var(--s-2) var(--s-4) var(--s-4); box-shadow: var(--shadow-lg); display: grid; gap: var(--s-3); }
+.help { position: fixed; z-index: 30; left: 50%; transform: translateX(-50%); bottom: var(--s-3); width: min(600px, calc(100vw - 24px)); max-height: 36dvh; overflow: auto; overscroll-behavior: contain; padding: var(--s-2) var(--s-4) var(--s-4); box-shadow: var(--shadow-lg); display: grid; gap: var(--s-3); }
 .help-head { display: flex; align-items: center; justify-content: space-between; gap: var(--s-3); }
 .help-head h2 { font-size: var(--fs-lg); font-weight: 740; outline: none; }
 .help-label { display: block; font-size: var(--fs-xs); font-weight: 700; letter-spacing: .05em; text-transform: uppercase; color: var(--c-ink-2); }
@@ -251,7 +251,7 @@ dialog::backdrop { background: rgb(15 23 42 / .38); }
   .tool-end { margin-left: 0; }
   .menu-card { position: fixed; right: var(--s-2); left: var(--s-2); top: auto; width: auto; bottom: var(--s-2); max-height: 70dvh; overflow: auto; }
   #viewer { padding: var(--s-3) var(--gutter) calc(var(--s-3) + var(--help-h)); }
-  .help { bottom: 0; width: 100vw; border-radius: var(--r-lg) var(--r-lg) 0 0; max-height: 46dvh; padding-bottom: calc(var(--s-4) + env(safe-area-inset-bottom, 0px)); }
+  .help { bottom: 0; width: 100vw; border-radius: var(--r-lg) var(--r-lg) 0 0; max-height: 52dvh; padding-bottom: calc(var(--s-4) + env(safe-area-inset-bottom, 0px)); }
 }
 @media (max-width: 380px) { .brand-text { display: none; } }
 
