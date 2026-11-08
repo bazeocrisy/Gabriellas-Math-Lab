@@ -103,7 +103,7 @@ try{
  await b.send('Emulation.setEmulatedMedia',{media:''});
  for(const width of [320,390,768,820,1440]){
   await b.viewport(width,1000,width<1024);await click('resetZoom');
-  check(`lesson navigation and toolbar touch targets at least 44px with no overflow at ${width}`,await value(`document.documentElement.scrollWidth<=innerWidth&&[...document.querySelectorAll('header a,header select,nav button,nav select,.toolbar button,.toolbar select,.toolbar summary,.toolbar .toggle-chip,.marker')].filter(e=>e.getClientRects().length).every(e=>{const r=e.getBoundingClientRect();return r.width>=43.5&&r.height>=43.5;})`));
+  check(`controls at least 44px on touch screens (36px with a mouse) with no overflow at ${width}`,await value(`document.documentElement.scrollWidth<=innerWidth&&[...document.querySelectorAll('header a,header select,nav button,nav select,.toolbar button,.toolbar select,.toolbar summary,.toolbar .toggle-chip,.marker')].filter(e=>e.getClientRects().length).every(e=>{const r=e.getBoundingClientRect(),min=matchMedia('(pointer: coarse)').matches?43.5:35.5;return r.width>=min&&r.height>=min;})`));
  }
 
  await b.close();b=await startBrowser({profile});await b.load(url);

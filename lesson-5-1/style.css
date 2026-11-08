@@ -112,30 +112,32 @@ select { appearance: none; -webkit-appearance: none; justify-content: flex-start
 summary { list-style: none; }
 summary::-webkit-details-marker { display: none; }
 
-/* 4. App layout ---------------------------------------------------------- */
+/* 4. App layout: one slim bar on top, then the page (and the solution pane) */
 @media screen {
-  body { height: 100dvh; display: flex; flex-direction: column; gap: var(--s-3); padding: var(--s-3); overflow: hidden; }
+  body { height: 100dvh; display: flex; flex-direction: column; overflow: hidden; }
 }
-.app-header { flex: none; display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: center; gap: var(--s-3); padding: var(--s-2) var(--s-3); }
-.brand { display: flex; align-items: center; gap: var(--s-3); min-width: 0; min-height: var(--tap); text-decoration: none; border-radius: var(--r-sm); }
-.brand-mark { display: grid; place-items: center; width: 38px; height: 38px; flex: none; border-radius: 11px; background: linear-gradient(135deg, var(--c-primary), var(--c-primary-600)); color: #fff; font-weight: 800; font-size: 18px; }
-.brand-text { display: grid; min-width: 0; line-height: 1.2; }
-.brand-name { font-weight: 720; color: var(--c-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.app-header { flex: none; display: flex; align-items: center; flex-wrap: wrap; gap: var(--s-2) var(--s-4); padding: 6px var(--s-3); background: var(--c-surface); border-bottom: 1px solid var(--c-border); }
+.brand { display: flex; align-items: center; justify-content: center; gap: var(--s-2); min-width: var(--tap); min-height: var(--tap); text-decoration: none; border-radius: var(--r-sm); }
+.brand-mark { display: grid; place-items: center; width: 30px; height: 30px; flex: none; border-radius: 9px; background: linear-gradient(135deg, var(--c-primary), var(--c-primary-600)); color: #fff; font-weight: 800; font-size: 15px; }
+.brand-text { display: grid; min-width: 0; line-height: 1.15; }
+.brand-name { font-weight: 720; font-size: var(--fs-sm); color: var(--c-primary); white-space: nowrap; }
 .brand-sub { font-size: var(--fs-xs); color: var(--c-ink-2); white-space: nowrap; }
-.pager { display: flex; align-items: center; gap: var(--s-2); }
-.page-select select { min-width: 140px; font-weight: 650; }
-.header-actions { display: flex; align-items: center; justify-content: flex-end; gap: var(--s-2); min-width: 0; }
-.save-chip { display: inline-flex; align-items: center; gap: 6px; height: 32px; padding: 0 var(--s-3); border-radius: var(--r-pill); background: var(--c-ok-soft); color: var(--c-ok); font-size: var(--fs-xs); font-weight: 600; white-space: nowrap; }
+.pager { display: flex; align-items: center; gap: 4px; }
+.page-select select { min-width: 120px; font-weight: 650; }
+.header-actions { display: flex; align-items: center; gap: 4px; margin-left: auto; }
+.save-chip { display: inline-flex; align-items: center; gap: 4px; color: var(--c-ok); font-size: var(--fs-xs); font-weight: 600; white-space: nowrap; padding: 0 var(--s-2); }
 .save-chip .icon { width: 15px; height: 15px; stroke-width: 2.6; }
-body[data-error="true"] .save-chip { background: var(--c-danger-soft); color: var(--c-danger); }
+body[data-error="true"] .save-chip { color: var(--c-danger); }
 body[data-error="true"] .save-chip .icon { display: none; }
 
 /* 5. Textbook card + toolbar --------------------------------------------- */
-.book-card { flex: 1; min-width: 0; min-height: 0; display: flex; flex-direction: column; overflow: hidden; container: book / inline-size; }
-.toolbar { flex: none; display: flex; align-items: center; flex-wrap: wrap; gap: var(--s-2) var(--s-3); padding: var(--s-2) var(--s-3); border-bottom: 1px solid var(--c-border); background: var(--c-surface); position: relative; z-index: 5; }
+.book-card { flex: 1; min-width: 0; min-height: 0; display: flex; flex-direction: column; overflow: hidden; border-radius: 0; border: 0; box-shadow: none; }
+.toolbar { display: flex; align-items: center; flex-wrap: wrap; gap: 4px var(--s-3); position: relative; z-index: 5; }
 .tool-group { display: flex; align-items: center; gap: 4px; }
 .tool-group + .tool-group { padding-left: var(--s-3); border-left: 1px solid var(--c-border); }
-.tool-end { margin-left: auto; }
+.toolbar .label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.segmented button, .toggle-chip, .menu summary { padding: 0; width: var(--tap); justify-content: center; }
+.tool-end { }
 .toolbar button { border-color: transparent; background: transparent; }
 .toolbar button:hover:not(:disabled) { background: var(--c-surface-2); border-color: var(--c-border); }
 .segmented { background: var(--c-surface-2); border: 1px solid var(--c-border); border-radius: calc(var(--r-sm) + 3px); padding: 2px; gap: 2px; }
@@ -167,7 +169,7 @@ body[data-error="true"] .save-chip .icon { display: none; }
 .menu-note { padding: var(--s-2) var(--s-3); font-size: var(--fs-xs); color: var(--c-ink-2); }
 
 /* Viewer: the page sits on a calm canvas, centred, with gutters for markers. */
-#viewer { flex: 1; min-height: 0; overflow: auto; overscroll-behavior: contain; position: relative; background: var(--c-canvas); padding: var(--s-5) var(--gutter) calc(var(--s-5) + var(--help-h)); touch-action: pan-x pan-y pinch-zoom; outline: none; }
+#viewer { flex: 1; min-height: 0; overflow: auto; overscroll-behavior: contain; position: relative; background: var(--c-canvas); padding: var(--s-4) var(--gutter) calc(var(--s-4) + var(--help-h)); touch-action: pan-x pan-y pinch-zoom; outline: none; }
 #stage { position: relative; margin: 0 auto; }
 .sheet { position: relative; background: #fff; box-shadow: var(--shadow-page); aspect-ratio: 612 / 792; }
 .source { display: block; width: 100%; height: 100%; user-select: none; pointer-events: none; }
@@ -196,8 +198,8 @@ body[data-mode=pan] #viewer { cursor: grab; touch-action: none; }
 body.original .layer { visibility: hidden; }
 
 /* 6. Solution pane (right side) ------------------------------------------- */
-.workspace { flex: 1; min-height: 0; display: flex; gap: var(--s-3); }
-.help { flex: none; width: 360px; min-height: 0; overflow: auto; overscroll-behavior: contain; padding: var(--s-3) var(--s-4) var(--s-4); display: flex; flex-direction: column; gap: var(--s-4); }
+.workspace { flex: 1; min-height: 0; display: flex; }
+.help { flex: none; width: 340px; border-radius: 0; border-width: 0 0 0 1px; box-shadow: none; min-height: 0; overflow: auto; overscroll-behavior: contain; padding: var(--s-3) var(--s-4) var(--s-4); display: flex; flex-direction: column; gap: var(--s-4); }
 .help-head { display: flex; align-items: center; justify-content: space-between; gap: var(--s-3); }
 .help-head h2 { font-size: var(--fs-xl); font-weight: 740; outline: none; }
 .help-label { display: block; font-size: var(--fs-xs); font-weight: 700; letter-spacing: .05em; text-transform: uppercase; color: var(--c-ink-2); margin-bottom: 4px; }
@@ -220,44 +222,23 @@ dialog::backdrop { background: rgb(15 23 42 / .38); }
 #printRoot { display: none; }
 
 /* 8. Responsive ---------------------------------------------------------- */
-/* The toolbar adapts to the textbook card's own width. */
-@container book (max-width: 1000px) {
-  .tool-end .label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
-  .toggle-chip, .menu summary { padding: 0; width: var(--tap); justify-content: center; }
+/* Mouse and trackpad: compact 36px controls. Touch screens keep 44px targets. */
+@media (pointer: fine) {
+  :root { --tap: 36px; }
+  .menu-item { min-height: 36px; }
 }
-@container book (max-width: 860px) {
-  .toolbar .label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
-  .segmented button { padding: 0; width: var(--tap); }
-}
-@container book (max-width: 780px) { .zoom .fit-select { display: none; } }
-
-@media (max-width: 860px) {
-  .app-header { grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: "brand actions" "pager pager"; row-gap: var(--s-2); }
-  .brand { grid-area: brand; } .header-actions { grid-area: actions; } .pager { grid-area: pager; }
-  .pager .page-select { flex: 1; } .page-select select { width: 100%; }
-}
-@media (max-width: 680px) {
+@media (max-width: 1100px) { .help { width: 300px; } .brand-text { display: none; } }
+@media (max-width: 760px) {
   :root { --gutter: 46px; }
-  body { padding: var(--s-2); gap: var(--s-2); }
-  .brand-mark { width: 34px; height: 34px; font-size: 16px; }
-  .brand-sub { display: none; }
-  .brand-name { white-space: normal; font-size: var(--fs-sm); line-height: 1.15; }
-  .home-link .label { display: none; }
-  .home-link { width: var(--tap); padding: 0; }
-  .save-chip { width: 32px; padding: 0; justify-content: center; }
-  .save-chip #saveStatus { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
-  .toolbar { padding: 6px; gap: 6px; justify-content: space-between; }
+  .app-header { gap: 6px; padding: 6px var(--s-2); }
+  .toolbar { order: 3; width: 100%; justify-content: space-between; }
   .tool-group + .tool-group { padding-left: 0; border-left: 0; }
-  .tool-end { margin-left: 0; }
+  .save-chip #saveStatus { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
   .menu-card { position: fixed; right: var(--s-2); left: var(--s-2); top: auto; width: auto; bottom: var(--s-2); max-height: 70dvh; overflow: auto; }
   #viewer { padding: var(--s-3) var(--gutter) calc(var(--s-3) + var(--help-h)); }
+  .help { position: fixed; z-index: 30; left: 0; right: 0; bottom: 0; width: auto; max-height: 52dvh; border-radius: var(--r-lg) var(--r-lg) 0 0; border-width: 1px 0 0; box-shadow: var(--shadow-lg); padding-bottom: calc(var(--s-4) + env(safe-area-inset-bottom, 0px)); }
 }
-@media (max-width: 380px) { .brand-text { display: none; } }
-/* Tablets: narrower pane. Phones: the pane becomes a bottom sheet. */
-@media (max-width: 1100px) { .help { width: 300px; } }
-@media (max-width: 760px) {
-  .help { position: fixed; z-index: 30; left: 0; right: 0; bottom: 0; width: auto; max-height: 52dvh; border-radius: var(--r-lg) var(--r-lg) 0 0; box-shadow: var(--shadow-lg); padding-bottom: calc(var(--s-4) + env(safe-area-inset-bottom, 0px)); }
-}
+@media (max-width: 380px) { .zoom #zoomLabel { display: none; } }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { transition: none !important; animation: none !important; }

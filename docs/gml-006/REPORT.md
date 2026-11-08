@@ -5,8 +5,9 @@
 ## Design (revised after owner feedback)
 The owner asked for it to be simple: no left pane, no right pane, and a question mark beside each problem that shows the solution when tapped.
 
-- **Top bar:** title, Previous / page selector / Next, save status, Home.
-- **Textbook card:** the full width of the screen. One toolbar: Type, Pencil, Eraser, Pan, Undo, Redo, Zoom, Original only, and a More menu (save, print, backup, restore, reset zoom, clear page).
+- **One slim top bar** (about 54px): title, Previous / page selector / Next, the writing tools as icons (Type, Pencil, Eraser, Pan), Undo, Redo, Zoom, Original only, a More menu (save, print, backup, restore, reset zoom, clear page), save status and Home.
+- **The textbook** fills the rest of the screen.
+- With a mouse, controls are 36px; on touch screens they stay 44px.
 - **A "?" beside each problem** (in the margin, never on the artwork). Tapping it outlines the problem on the page and opens the solution in a pane on the right of the page: the answer, the numbered steps, then a one-line hint. Tapping another "?" swaps the content. Close with the X or Escape; focus returns to that "?".
 - **Original only** hides every "?" and the outline.
 - On phones (760px and narrower) there is no room for a right-hand pane, so the solution opens as a bottom sheet. The "?" buttons are spaced so they never overlap.
