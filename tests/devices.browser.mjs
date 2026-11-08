@@ -58,6 +58,7 @@ try {
       check(`${name}: Whole page shows the full page with a way back`, await value(`!document.body.classList.contains('problem-view')&&!document.getElementById('toProblems').hidden&&document.querySelectorAll('.marker').length===14&&document.querySelector('.marker').getClientRects().length===1`));
     }
     check(`${name}: app fits the screen exactly (no page scroll either way)`, await value(`document.documentElement.scrollWidth<=innerWidth&&document.documentElement.scrollHeight<=innerHeight+1`));
+    if (w >= 1000) check(`${name}: top bar is a single row`, await value(`document.querySelector('.app-header').getBoundingClientRect().height<80`), await value(`document.querySelector('.app-header').getBoundingClientRect().height`));
     check(`${name}: top bar uses at most 20% of the height`, await value(`document.querySelector('.app-header').getBoundingClientRect().bottom<=innerHeight*.2`), await value(`document.querySelector('.app-header').getBoundingClientRect().bottom`));
     check(`${name}: whole page width visible at start, page fills most of the width`, await value(`(()=>{const v=document.getElementById('viewer').getBoundingClientRect(),s=document.querySelector('.sheet').getBoundingClientRect();return s.left>=v.left-1&&s.right<=v.right+1&&s.width>=Math.min(v.width*.7,1000*.95);})()`));
     check(`${name}: every control big enough to ${touch ? 'tap (44px)' : 'click (36px)'}`, await value(`[...document.querySelectorAll('header a,header select,nav button,.toolbar button,.toolbar summary,.toolbar .toggle-chip,.marker')].filter(e=>e.getClientRects().length).every(e=>{const r=e.getBoundingClientRect(),m=${touch ? 43.5 : 35.5};return r.width>=m&&r.height>=m&&r.right<=innerWidth+.5&&r.left>=-.5;})`));
@@ -88,7 +89,7 @@ try {
       for (let s = 1; s <= 6; s++) await b.send('Input.dispatchTouchEvent', { type: 'touchMove', touchPoints: [{ x: v.x - 30 - s * 12, y: v.y, id: 1 }, { x: v.x + 30 + s * 12, y: v.y, id: 2 }] });
       await b.send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] });
     } else {
-      for (let s = 0; s < 5; s++) await b.send('Input.dispatchMouseEvent', { type: 'mouseWheel', x: v.x, y: v.y, deltaX: 0, deltaY: -20, modifiers: 2 });
+      for (let s = 0; s < 10; s++) await b.send('Input.dispatchMouseEvent', { type: 'mouseWheel', x: v.x, y: v.y, deltaX: 0, deltaY: -20, modifiers: 2 });
     }
     await b.wait(150);
     const after = await value(`({w:document.getElementById('stage').getBoundingClientRect().width,hh:document.querySelector('.app-header').getBoundingClientRect().height,scale:window.visualViewport?window.visualViewport.scale:1,sw:document.documentElement.scrollWidth})`);

@@ -726,9 +726,9 @@
    "side": "right",
    "crop": [
     0.123,
-    0.345,
-    0.8091,
-    0.375
+    0.21,
+    0.81,
+    0.59
    ],
    "verified": true,
    "verification": "Computed in Python; 15 × 10,000 = 15 × 10⁴ = 150,000."
@@ -1253,7 +1253,7 @@
     "Count the zeros in each product: 5, 7, 9."
    ],
    "answer": "Sample answer: Each exponent is 2 more than the one before, so each product has 2 more zeros and is 100 times as great. The number of zeros in each product equals the exponent.",
-   "openEnded": false,
+   "openEnded": true,
    "anchor": 0.78,
    "side": "left",
    "crop": [
@@ -1393,10 +1393,10 @@
    "anchor": 0.515,
    "side": "right",
    "crop": [
-    0.1683,
-    0.4,
-    0.699,
-    0.21
+    0.168,
+    0.215,
+    0.7,
+    0.555
    ],
    "verified": true,
    "verification": "Computed 15×12=180, 20×10=200, 15×10=150, 20×12=240 in Python; compared with the drawn rectangles."
@@ -1707,9 +1707,9 @@
    "anchor": 0.115,
    "side": "right",
    "crop": [
-    0.0971,
+    0.06,
     0.035,
-    0.6796,
+    0.79,
     0.145
    ],
    "verified": true,
@@ -1865,10 +1865,10 @@
    "anchor": 0.36,
    "side": "left",
    "crop": [
-    0.0841,
-    0.21,
-    0.7832,
-    0.3575
+    0.06,
+    0.06,
+    0.82,
+    0.505
    ],
    "verified": true,
    "verification": "Computed in Python; 72 × 114 = 8,208; sum of six partial products also 8,208; matches the page."
@@ -2173,7 +2173,7 @@
     "Add all nine partial products to get 123,396."
    ],
    "answer": "Sample answer: Break 452 into 400 + 50 + 2 and 273 into 200 + 70 + 3. Make a 3-by-3 area model and multiply to get 9 partial products: 80,000 + 28,000 + 1,200 + 10,000 + 3,500 + 150 + 400 + 140 + 6 = 123,396. So 452 × 273 = 123,396.",
-   "openEnded": false,
+   "openEnded": true,
    "anchor": 0.4875,
    "side": "left",
    "crop": [
@@ -2472,7 +2472,7 @@
     0.5372,
     0.56,
     0.4013,
-    0.115
+    0.078
    ],
    "verified": true,
    "verification": "Computed 222 × 58 = 12,876 in Python; partial-product sum checked; estimate 200 × 60 = 12,000."
@@ -3506,7 +3506,7 @@
     0.1294,
     0.69,
     0.6796,
-    0.07
+    0.075
    ],
    "verified": true,
    "verification": "Computed 3,408×25 = 85,200 in Python; check: 3,408 × 100 ÷ 4 = 85,200."
@@ -3596,7 +3596,7 @@
     0.0712,
     0.235,
     0.5696,
-    0.065
+    0.072
    ],
    "verified": true,
    "verification": "Computed 42×65 = 2,730 in Python; estimate 40×65 = 2,600 is close."

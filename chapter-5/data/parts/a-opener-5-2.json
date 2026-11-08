@@ -292,9 +292,9 @@
      "side": "right",
      "crop": [
       0.123,
-      0.345,
-      0.8091,
-      0.375
+      0.21,
+      0.81,
+      0.59
      ],
      "verified": true,
      "verification": "Computed in Python; 15 × 10,000 = 15 × 10⁴ = 150,000."
@@ -1069,7 +1069,7 @@
       "Count the zeros in each product: 5, 7, 9."
      ],
      "answer": "Sample answer: Each exponent is 2 more than the one before, so each product has 2 more zeros and is 100 times as great. The number of zeros in each product equals the exponent.",
-     "openEnded": false,
+     "openEnded": true,
      "anchor": 0.78,
      "side": "left",
      "crop": [

@@ -9,7 +9,9 @@ export function paint(svg, strokes) {
     p.setAttribute('d',d); p.setAttribute('fill','none');p.setAttribute('stroke','#154eb2');p.setAttribute('stroke-width','1.9');p.setAttribute('stroke-linecap','round');p.setAttribute('stroke-linejoin','round');svg.append(p);
   }
 }
-export function point(e, el) { const r=el.getBoundingClientRect();return [Math.max(0,Math.min(1,(e.clientX-r.left)/r.width)),Math.max(0,Math.min(1,(e.clientY-r.top)/r.height))]; }
+// Fractions of the page, rounded to 4 decimals (0.03 px on a 816 px page) to keep saved handwriting small.
+const r4 = (n) => Math.round(Math.max(0, Math.min(1, n)) * 1e4) / 1e4;
+export function point(e, el) { const r=el.getBoundingClientRect();return [r4((e.clientX-r.left)/r.width),r4((e.clientY-r.top)/r.height)]; }
 export function hit(stroke, [x,y], radius=.014) {
   // Segment distance also erases sparsely sampled strokes.
   for(let i=0;i<stroke.length;i++) {

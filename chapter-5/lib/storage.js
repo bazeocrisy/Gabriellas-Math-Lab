@@ -17,8 +17,9 @@ export function valid(s, pages) {
 export function load(storage, pages, fieldKeys = []) {
   const raw = storage.getItem(KEY);
   if (raw) {
-    const state = JSON.parse(raw);
-    if (!valid(state, pages)) throw new Error('Saved work has an unrecognized format. Export it before changing it.');
+    let state;
+    try { state = JSON.parse(raw); } catch { throw new Error('Saved work could not be read. Use More → Export backup to keep a copy.'); }
+    if (!valid(state, pages)) throw new Error('Saved work could not be read. Use More → Export backup to keep a copy.');
     return state;
   }
   const state = blank(pages[0]);
@@ -27,9 +28,10 @@ export function load(storage, pages, fieldKeys = []) {
     try {
       const old = JSON.parse(l51raw);
       if (old && old.version === 2 && old.lesson === '5-1') {
-        for (const [k, v] of Object.entries(old.answers || {})) if (typeof v === 'string') state.answers[k] = v;
+        for (const [k, v] of Object.entries(old.answers || {})) if (typeof v === 'string' && v.length < 100000) state.answers[k] = v;
         for (const [p, strokes] of Object.entries(old.ink || {})) if (pages.includes(p) && validInk(strokes)) state.ink[p] = strokes;
         for (const [k, v] of Object.entries(old.completed || {})) if (typeof v === 'boolean') state.completed[k] = v;
+        for (const [p, strokes] of Object.entries(state.ink)) state.ink[p] = strokes.filter((st) => validInk([st]));
         if (pages.includes(old.page)) state.page = old.page;
       }
     } catch { /* unreadable Lesson 5-1 data is left in place and skipped */ }
@@ -38,8 +40,13 @@ export function load(storage, pages, fieldKeys = []) {
   if (legacyRaw) {
     try {
       const old = JSON.parse(legacyRaw), keys = new Set(fieldKeys);
-      for (const [k, v] of Object.entries(old.answers || {})) if (keys.has(k) && typeof v === 'string' && !(k in state.answers)) state.answers[k] = v;
-      for (const p of pages) if (!state.ink[p] && Array.isArray(old.ink?.[p])) state.ink[p] = old.ink[p].map((st) => st.map((pt) => [Math.max(0, Math.min(1, pt.x / 980)), Math.max(0, Math.min(1, pt.y / 1267))]));
+      for (const [k, v] of Object.entries(old.answers || {})) if (keys.has(k) && typeof v === 'string' && v.length < 100000 && !(k in state.answers)) state.answers[k] = v;
+      // Workbook strokes were {x, y} points on a 980 x 1267 canvas; skip any stroke with a bad point.
+      const okPt = (pt) => pt && Number.isFinite(pt.x) && Number.isFinite(pt.y);
+      for (const p of pages) if (!state.ink[p] && Array.isArray(old.ink?.[p])) {
+        const strokes = old.ink[p].filter((st) => Array.isArray(st) && st.length && st.every(okPt));
+        if (strokes.length) state.ink[p] = strokes.map((st) => st.map((pt) => [Math.max(0, Math.min(1, pt.x / 980)), Math.max(0, Math.min(1, pt.y / 1267))]));
+      }
     } catch { /* unreadable workbook data is left in place and skipped */ }
   }
   if (!valid(state, pages)) throw new Error('Existing work could not be imported safely. The original data has been retained.');

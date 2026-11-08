@@ -125,10 +125,10 @@
      "anchor": 0.36,
      "side": "left",
      "crop": [
-      0.0841,
-      0.21,
-      0.7832,
-      0.3575
+      0.06,
+      0.06,
+      0.82,
+      0.505
      ],
      "verified": true,
      "verification": "Computed in Python; 72 × 114 = 8,208; sum of six partial products also 8,208; matches the page."
@@ -843,7 +843,7 @@
       "Add all nine partial products to get 123,396."
      ],
      "answer": "Sample answer: Break 452 into 400 + 50 + 2 and 273 into 200 + 70 + 3. Make a 3-by-3 area model and multiply to get 9 partial products: 80,000 + 28,000 + 1,200 + 10,000 + 3,500 + 150 + 400 + 140 + 6 = 123,396. So 452 × 273 = 123,396.",
-     "openEnded": false,
+     "openEnded": true,
      "anchor": 0.4875,
      "side": "left",
      "crop": [

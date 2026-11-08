@@ -61,7 +61,8 @@
   /* Layout */
   --tap: 44px;
   --gutter: 52px;                /* room beside the page for the ? buttons */
-  --help-h: 0px;                 /* set by app.js while the solution card is open */
+  --help-h: 0px;
+  --min-box: 0px;                /* smallest answer-box height (raised on touch screens) */                 /* set by app.js while the solution card is open */
 
   color-scheme: light;
   font-family: var(--font);
@@ -118,7 +119,7 @@ summary::-webkit-details-marker { display: none; }
 @media screen {
   /* A fixed, app-like frame: the page never scrolls or rubber-bands; only the textbook viewer does. */
   html { height: 100%; overflow: hidden; overscroll-behavior: none; }
-  body { height: 100dvh; display: flex; flex-direction: column; overflow: hidden; overscroll-behavior: none; }
+  body { height: 100vh; height: 100dvh; display: flex; flex-direction: column; overflow: hidden; overscroll-behavior: none; }
 }
 .app-header { flex: none; display: flex; align-items: center; flex-wrap: wrap; gap: var(--s-2) var(--s-4); padding: calc(6px + env(safe-area-inset-top, 0px)) max(var(--s-3), env(safe-area-inset-right, 0px)) 6px max(var(--s-3), env(safe-area-inset-left, 0px)); background: var(--c-surface); border-bottom: 1px solid var(--c-border); }
 .brand { display: flex; align-items: center; justify-content: center; gap: var(--s-2); min-width: var(--tap); min-height: var(--tap); text-decoration: none; border-radius: var(--r-sm); }
@@ -181,15 +182,15 @@ body[data-error="true"] .save-chip .icon { display: none; }
 .layer { position: absolute; inset: 0; }
 .ink { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; overflow: visible; }
 .responses { position: absolute; inset: 0; pointer-events: none; }
-.response { position: absolute; pointer-events: auto; resize: none; overflow: auto; min-width: 0; margin: 0; padding: 1px 2px; background: transparent; border: 0; border-bottom: 1.5px solid rgb(36 86 201 / .32); border-radius: 0; color: var(--c-ink-layer); line-height: 1.15; font-family: var(--hand); font-weight: 600; }
+.response { position: absolute; pointer-events: auto; resize: none; overflow: auto; min-width: 0; margin: 0; padding: 1px 2px; background: rgb(36 86 201 / .045); border: 0; border-radius: 3px;  /* a light tint marks where to write; the book already prints the blank line */ color: var(--c-ink-layer); line-height: 1.15; font-family: var(--hand); font-weight: 600; }
 /* Work areas: a barely-there tint instead of a frame. */
-.response[data-multi] { border-bottom: 0; background: rgb(36 86 201 / .04); border-radius: 4px; }
+.response[data-multi] { border-radius: 4px; }
 /* Once something is written, only the writing shows. */
-.response:not(:placeholder-shown) { border-bottom-color: transparent; background: transparent; }
+.response:not(:placeholder-shown) { background: transparent; }
 .response:hover { background: rgb(36 86 201 / .07); }
-.response:focus { background: rgb(255 249 225 / .9); outline: 2px solid var(--c-focus); outline-offset: 1px; border-radius: 4px; border-bottom-color: transparent; z-index: 2; }
+.response:focus { background: rgb(255 249 225 / .55); outline: 2px solid var(--c-focus); outline-offset: 1px; border-radius: 4px; border-bottom-color: transparent; z-index: 2; }
 /* Question markers live in the gutter beside the page, never on the artwork. */
-.marker { position: absolute; transform: translateY(-50%); isolation: isolate; display: grid; place-items: center; width: var(--tap); height: var(--tap); padding: 0; border: 0; background: none; color: var(--c-primary-600); font-size: 18px; font-weight: 800; line-height: 1; cursor: pointer; }
+.marker { position: absolute; pointer-events: auto; transform: translateY(-50%); isolation: isolate; display: grid; place-items: center; width: var(--tap); height: var(--tap); padding: 0; border: 0; background: none; color: var(--c-primary-600); font-size: 18px; font-weight: 800; line-height: 1; cursor: pointer; }
 .marker::before { content: ""; position: absolute; z-index: -1; width: 34px; height: 34px; border-radius: 50%; border: 2px solid var(--c-primary-600); background: var(--c-surface); box-shadow: var(--shadow-md); transition: transform .15s, background-color .15s; }
 .marker:hover::before { transform: scale(1.1); background: var(--c-primary-soft); }
 .marker.left { right: calc(100% + 2px); }
@@ -231,11 +232,24 @@ dialog::backdrop { background: rgb(15 23 42 / .38); }
 
 /* 8. Responsive ---------------------------------------------------------- */
 /* Mouse and trackpad: compact 36px controls. Touch screens keep 44px targets. */
+/* 1000px and wider: the bar never wraps; the title and "Saved" text give way (trimmed) instead. */
+@media (min-width: 1000px) {
+  .app-header { flex-wrap: nowrap; }
+  .app-header > *, .toolbar, .toolbar > * { flex-shrink: 0; }
+  .header-actions, .save-chip { flex-shrink: 1; min-width: 0; }
+  .brand { flex-shrink: 1; min-width: var(--tap); }  /* the logo stays a full tap target; only the title text trims */
+  .brand-text, .brand-name, .brand-sub { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+  .save-chip #saveStatus { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .toolbar { flex-wrap: nowrap; }
+}
+@media (pointer: coarse) { :root { --min-box: 26px; } }
+/* Touch tablets up to iPad Pro landscape: 44px controls need the compact bar (logo only, tick for "Saved"). */
+@media (pointer: coarse) and (max-width: 1366px) { .brand-text { display: none; } .save-chip #saveStatus { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); } }
 @media (pointer: fine) {
   :root { --tap: 36px; }
   .menu-item { min-height: 36px; }
 }
-@media (max-width: 1180px) { .help { width: 300px; } .brand-text { display: none; } }
+@media (max-width: 1180px) { .help { width: 300px; } .brand-text { display: none; } .save-chip #saveStatus { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); } }
 /* Below 1000px (phones, tablets held upright) a side pane would squeeze the page: use a bottom sheet. */
 @media (max-width: 999px) {
   .help { position: fixed; z-index: 30; left: 0; right: 0; bottom: 0; width: auto; max-height: 50dvh; border-radius: var(--r-lg) var(--r-lg) 0 0; border-width: 1px 0 0; box-shadow: var(--shadow-lg); padding-bottom: calc(var(--s-4) + env(safe-area-inset-bottom, 0px)); }

@@ -5,7 +5,7 @@ import { paint, point, hit } from './lib/ink.js';
 
 const $ = (id) => document.getElementById(id);
 const SVG_NS = 'http://www.w3.org/2000/svg';
-const fetchJSON = async (p) => { const r = await fetch(p); if (!r.ok) throw new Error(`Could not load ${p}`); return r.json(); };
+const fetchJSON = async (p) => { const r = await fetch(p, { cache: 'no-cache' }); if (!r.ok) throw new Error(`Could not load ${p}`); return r.json(); };
 
 function icon(name, cls = 'icon') {
   const svg = document.createElementNS(SVG_NS, 'svg'), use = document.createElementNS(SVG_NS, 'use');
@@ -28,13 +28,15 @@ try {
   catch (e) { state = blank(numbers[0]); blocked = true; setStatus(e.message, true); }
   let page = state.page, mode = 'type', width = 700, scaleMode = 'width';
   let selected = null, current = null, gesture = null, pan = null, lastFocus = null;
+  let drawPointer = null, penSeen = false, curPath = null;  // the one pointer drawing now; palm rejection once a stylus is used
   const undo = {}, redo = {};
 
   function setStatus(text, error = false) { $('saveStatus').textContent = text; document.body.dataset.error = String(error); }
   function save() {
     if (blocked) return false;
-    try { localStorage.setItem(KEY, backup(state)); setStatus('Saved in this browser'); return true; }
-    catch { setStatus('Could not save. Export a backup now.', true); return false; }
+    // Compact JSON (backups stay readable); a pretty-printed store fills browser storage twice as fast.
+    try { localStorage.setItem(KEY, JSON.stringify(state)); setStatus('Saved in this browser'); return true; }
+    catch { setStatus('Could not save. Use More → Export backup now.', true); return false; }
   }
 
   /* ---------- Undo / redo (per page, session-local) ---------- */
@@ -77,7 +79,9 @@ try {
     for (const f of fields[p] || []) {
       const r = el(printing ? 'div' : 'textarea', 'response'); r.dataset.id = f.id;
       const [x, y, w, h] = f.rect;
-      Object.assign(r.style, { left: x * 100 + '%', top: y * 100 + '%', width: w * 100 + '%', height: h * 100 + '%', fontSize: 'calc(var(--page-width) * .015)' });
+      Object.assign(r.style, { left: x * 100 + '%', width: w * 100 + '%', fontSize: 'max(12px, calc(var(--page-width) * .016))',
+        // Touch screens: tiny boxes grow upward to --min-box so a finger can hit them; the bottom stays on the printed blank.
+        height: printing ? h * 100 + '%' : `max(${h * 100}%, var(--min-box))`, top: printing ? y * 100 + '%' : `calc(${(y + h) * 100}% - max(${h * 100}%, var(--min-box)))` });
       const key = p + '_' + f.id;
       if (printing) r.textContent = state.answers[key] || '';
       else {
@@ -95,31 +99,44 @@ try {
       for (const q of questions[p] || []) {
         const { heading, detail } = label(q);
         const b = el('button', 'marker ' + q.side);
-        b.style.top = q.anchor * 100 + '%'; b.dataset.y = q.anchor;
+        b.style.top = q.anchor * 100 + '%'; b.dataset.y = q.anchor; b.dataset.side = q.side;
         b.textContent = '?';
         b.title = `Help with ${heading}`; b.dataset.question = q.id;
         b.setAttribute('aria-label', `Help with ${heading}${detail ? ', ' + detail : ''}`);
         b.onclick = () => openQuestion(q, b);
-        layer.append(b);
+        // Tab order: each ? comes just before its own answer box (the markers share the boxes' container).
+        const box = [...responses.children].find((r) => r.dataset.id === q.id);
+        responses.insertBefore(b, box || null);
       }
       svg.addEventListener('pointerdown', (e) => {
-        if (!['pen', 'eraser'].includes(mode) || !e.isPrimary) return;  // a second finger means pinch, not a stroke
-        e.preventDefault(); svg.setPointerCapture(e.pointerId); gesture = snapshot();
+        if (!['pen', 'eraser'].includes(mode)) return;
+        if (e.pointerType === 'pen') penSeen = true;
+        // One stroke at a time; once an Apple Pencil/stylus has been used, a resting palm or finger never draws.
+        if (drawPointer !== null || (penSeen && e.pointerType === 'touch')) return;
+        e.preventDefault(); svg.setPointerCapture(e.pointerId); drawPointer = e.pointerId; gesture = snapshot();
         const pt = point(e, svg);
         if (mode === 'pen') { current = [pt]; (state.ink[page] ??= []).push(current); } else erase(pt);
         paint(svg, state.ink[page] || []);
+        curPath = mode === 'pen' ? svg.lastElementChild : null;
       });
       svg.addEventListener('pointermove', (e) => {
-        if (gesture === null || !e.isPrimary) return;
-        if (mode === 'pen' && current) current.push(point(e, svg)); else if (mode === 'eraser') erase(point(e, svg));
-        paint(svg, state.ink[page] || []);
+        if (gesture === null || e.pointerId !== drawPointer) return;
+        const pt = point(e, svg);
+        if (mode === 'pen' && current) {
+          const last = current.at(-1);
+          if (Math.hypot(pt[0] - last[0], pt[1] - last[1]) < 0.0015) return;  // skip near-duplicate points (saves storage)
+          current.push(pt);
+          // Extend only the stroke being drawn instead of repainting the whole page.
+          if (curPath) curPath.setAttribute('d', current.map(([x, y], i) => `${i ? 'L' : 'M'}${x * 612} ${y * 792}`).join(' '));
+          else paint(svg, state.ink[page] || []);
+        } else if (mode === 'eraser') { erase(pt); paint(svg, state.ink[page] || []); }
       });
-      for (const ev of ['pointerup', 'pointercancel', 'lostpointercapture']) svg.addEventListener(ev, finish);
+      for (const ev of ['pointerup', 'pointercancel', 'lostpointercapture']) svg.addEventListener(ev, (e) => { if (e.pointerId === drawPointer) finish(); });
     }
     host.append(layer); return host;
   }
   function erase(pt) { state.ink[page] = (state.ink[page] || []).filter((st) => !hit(st, pt)); }
-  function finish() { if (gesture === null) return; const before = gesture; gesture = null; current = null; if (before !== snapshot()) checkpoint(before); save(); }
+  function finish() { drawPointer = null; curPath = null; if (gesture === null) return; const before = gesture; gesture = null; current = null; if (before !== snapshot()) checkpoint(before); save(); }
 
   function render() {
     finish();
@@ -145,11 +162,20 @@ try {
   // Keep neighbouring ? buttons from overlapping when the page is small: push apart from the top down.
   function spaceMarkers() {
     const sheetEl = $('stage').querySelector('.sheet'); if (!sheetEl) return;
-    const H = sheetEl.clientHeight, size = 44, gap = 48;
-    for (const side of ['left', 'right']) {
-      const ms = [...sheetEl.querySelectorAll('.marker.' + side)].sort((a, b) => a.dataset.y - b.dataset.y);
-      let prev = -Infinity;
-      for (const m of ms) { const y = Math.max(m.dataset.y * H, prev + gap, size / 2); m.style.top = y + 'px'; prev = y; }
+    const H = sheetEl.clientHeight, size = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--tap')) || 44, gap = size + 4;
+    // Top to bottom: each ? goes on its preferred side unless that would push it well below its problem
+    // and the other margin has room on that line.
+    const all = [...sheetEl.querySelectorAll('.marker')].sort((a, b) => a.dataset.y - b.dataset.y);
+    const last = { left: -Infinity, right: -Infinity };
+    for (const m of all) {
+      const want = Math.max(m.dataset.y * H, size / 2), own = m.dataset.side, other = own === 'left' ? 'right' : 'left';
+      const yOwn = Math.max(want, last[own] + gap), yOther = Math.max(want, last[other] + gap);
+      const side = yOwn - want > 12 && yOther < yOwn - 8 ? other : own, y = side === own ? yOwn : yOther;
+      m.classList.toggle('left', side === 'left'); m.classList.toggle('right', side === 'right');
+      m.style.top = y + 'px'; last[side] = y;
+    }
+    for (const side of ['left', 'right']) {  // keep the last buttons on the page
+      const ms = all.filter((m) => m.classList.contains(side));
       for (let i = ms.length - 1, next = Infinity; i >= 0; i--) { const y = Math.min(parseFloat(ms[i].style.top), next - gap, H - size / 2); ms[i].style.top = y + 'px'; next = y; }
     }
   }
@@ -158,7 +184,7 @@ try {
   /* ---------- Page navigation ---------- */
   function goto(p, pushHistory = true, landing = 'first') {
     if (!numbers.includes(p)) p = numbers[0];
-    finish(); document.activeElement?.blur?.();
+    finish(); if ($('stage').contains(document.activeElement)) document.activeElement.blur();
     page = p; state.page = p; save();
     if (pushHistory && location.hash !== `#page=${p}`) location.hash = `page=${p}`;
     if (!$('help').hidden) hideHelp(false);
@@ -168,7 +194,7 @@ try {
   }
   function setMode(m) {
     finish(); mode = m; document.body.dataset.mode = m;
-    document.querySelectorAll('[data-mode]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.mode === m)));
+    document.querySelectorAll('button[data-mode]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.mode === m)));
   }
 
   /* ---------- Solution card ---------- */
@@ -186,9 +212,14 @@ try {
     $('help').hidden = false;
     document.body.classList.add('help-open');
     // Only the phone bottom sheet overlaps the page; reserve room under the page for it.
-    if (getComputedStyle($('help')).position === 'fixed') document.body.style.setProperty('--help-h', ($('help').offsetHeight + 12) + 'px');
+    syncHelpSpace();
     applyZoom(); highlight(q, true);
     $('helpTitle').focus({ preventScroll: true });
+  }
+  // Reserve room under the page only when the answer is a bottom sheet (phones, upright tablets); recheck on rotate.
+  function syncHelpSpace() {
+    if (!$('help').hidden && getComputedStyle($('help')).position === 'fixed') document.body.style.setProperty('--help-h', ($('help').offsetHeight + 12) + 'px');
+    else document.body.style.removeProperty('--help-h');
   }
   function hideHelp(restoreFocus = true) {
     const q = selected; selected = null;
@@ -204,7 +235,7 @@ try {
   function highlight(q, scroll) {
     clearHighlight();
     const layer = $('stage').querySelector('.layer'); if (!layer) return;
-    const [x, y, w, h] = q.crop, ring = el('div', 'q-focus');
+    const [x, y, w, h] = frameOf(q, .006, true), ring = el('div', 'q-focus');  // the problem and its own answer boxes
     Object.assign(ring.style, { left: x * 100 + '%', top: y * 100 + '%', width: w * 100 + '%', height: h * 100 + '%' });
     ring.setAttribute('aria-hidden', 'true'); layer.append(ring);
     layer.querySelector(`.marker[data-question="${q.id}"]`)?.classList.add('active');
@@ -228,11 +259,13 @@ try {
     $('pages').append(g);
   }
   $('pages').onchange = () => goto($('pages').value);
-  $('prev').onclick = () => goto(numbers[numbers.indexOf(page) - 1]);
-  $('next').onclick = () => goto(numbers[numbers.indexOf(page) + 1]);
+  // At the first/last page the button disables itself: keep keyboard focus on the page picker instead of losing it.
+  const keepFocus = (b) => { if (b.disabled && document.activeElement === document.body) $('pages').focus(); };
+  $('prev').onclick = () => { goto(numbers[numbers.indexOf(page) - 1]); keepFocus($('prev')); };
+  $('next').onclick = () => { goto(numbers[numbers.indexOf(page) + 1]); keepFocus($('next')); };
   window.addEventListener('hashchange', () => { const p = new URLSearchParams(location.hash.slice(1)).get('page'); if (p !== page) goto(p, false); });
 
-  document.querySelectorAll('[data-mode]').forEach((b) => { b.onclick = () => setMode(b.dataset.mode); });
+  document.querySelectorAll('button[data-mode]').forEach((b) => { b.onclick = () => setMode(b.dataset.mode); });
   $('undo').onclick = () => historyStep(undo, redo);
   $('redo').onclick = () => historyStep(redo, undo);
   document.addEventListener('keydown', (e) => {
@@ -245,7 +278,10 @@ try {
   $('zoomIn').onclick = () => zoom(1.25);
   $('zoomOut').onclick = () => zoom(0.8);
   $('resetZoom').onclick = () => { scaleMode = 'width'; $('fit').value = 'width'; applyZoom(); };
-  window.addEventListener('resize', () => { if (problemView) focusProblem(qi); else applyZoom(); });
+  window.addEventListener('resize', () => {
+    syncHelpSpace();
+    if (problemView) focusProblem(qi); else { applyZoom(); if (selected) highlight(selected, true); }  // after rotating, bring the explained problem back into view
+  });
   const viewer = $('viewer');
   viewer.addEventListener('pointerdown', (e) => {
     if (mode !== 'pan' || e.target.closest('button')) return;
@@ -273,13 +309,13 @@ try {
   let pinch = null;
   const mid = (t) => ({ x: (t[0].clientX + t[1].clientX) / 2, y: (t[0].clientY + t[1].clientY) / 2, d: Math.hypot(t[0].clientX - t[1].clientX, t[0].clientY - t[1].clientY) });
   viewer.addEventListener('touchstart', (e) => {
-    if (e.touches.length !== 2) return;
+    if (e.touches.length !== 2 || [...e.touches].some((t) => t.touchType === 'stylus')) return;  // Pencil + palm is not a pinch
     cancelStroke(); pan = null;
     const m = mid(e.touches); pinch = { d: m.d, w: width, x: m.x, y: m.y };
   }, { passive: true });
   viewer.addEventListener('touchmove', (e) => {
     if (!pinch || e.touches.length !== 2) return;
-    e.preventDefault();
+    if (e.cancelable) e.preventDefault();
     const m = mid(e.touches), target = Math.max(160, Math.min(3264, pinch.w * m.d / pinch.d));
     viewer.scrollLeft -= m.x - pinch.x; viewer.scrollTop -= m.y - pinch.y; pinch.x = m.x; pinch.y = m.y;  // two-finger pan
     if (Math.abs(target - width) > 0.5) zoomAround(target, m.x, m.y);
@@ -290,7 +326,8 @@ try {
   viewer.addEventListener('wheel', (e) => {
     if (!e.ctrlKey) return;
     e.preventDefault();
-    zoomAround(Math.max(160, Math.min(3264, width * Math.exp(-e.deltaY * 0.01))), e.clientX, e.clientY);
+    const d = Math.max(-10, Math.min(10, e.deltaY * (e.deltaMode === 1 ? 16 : 1)));  // trackpad pinch is small steps; a mouse notch is ~100
+    zoomAround(Math.max(160, Math.min(3264, width * Math.exp(-d * 0.004))), e.clientX, e.clientY);
   }, { passive: false });
 
   function setOriginal(on) { $('original').checked = on; document.body.classList.toggle('original', on); $('originalMenu').setAttribute('aria-pressed', String(on)); }
@@ -301,6 +338,7 @@ try {
   const menu = document.querySelector('.menu');
   menu.querySelectorAll('button.menu-item').forEach((b) => b.addEventListener('click', () => menu.removeAttribute('open')));
   document.addEventListener('pointerdown', (e) => { if (menu.open && !menu.contains(e.target)) menu.removeAttribute('open'); });
+  menu.addEventListener('focusout', (e) => { if (menu.open && !menu.contains(e.relatedTarget)) menu.removeAttribute('open'); });
   menu.addEventListener('keydown', (e) => { if (e.key === 'Escape' && menu.open) { e.stopPropagation(); menu.removeAttribute('open'); menu.querySelector('summary').focus(); } });
 
   $('save').onclick = save;
@@ -320,7 +358,9 @@ try {
   }
   $('export').onclick = () => {
     if (blocked) {
-      try { download(JSON.stringify({ saved: localStorage.getItem(KEY), lesson51: localStorage.getItem(LESSON51), legacy: localStorage.getItem(LEGACY) }), 'gabriella-chapter-5-recovery.json'); }
+      // Include today's work too: the stored copy could not be updated while saving was blocked.
+      let stored = {}; try { stored = { saved: localStorage.getItem(KEY), lesson51: localStorage.getItem(LESSON51), legacy: localStorage.getItem(LEGACY) }; } catch { /* storage switched off */ }
+      try { download(JSON.stringify({ current: state, ...stored }), 'gabriella-chapter-5-recovery.json'); }
       catch { setStatus('Browser storage is inaccessible.', true); }
       return;
     }
@@ -335,7 +375,7 @@ try {
       if (!valid(imported, numbers)) throw new Error('This is not a valid Chapter 5 backup.');
       if (!confirm('Replace Chapter 5 work with this backup? A recovery copy of current work will be retained.')) return;
       localStorage.setItem(KEY + ':before-restore', blocked ? (localStorage.getItem(KEY) || '') : backup(state));
-      state = imported; blocked = false; goto(state.page);
+      state = imported; blocked = false; for (const k of Object.keys(undo)) delete undo[k]; for (const k of Object.keys(redo)) delete redo[k]; goto(state.page);
     } catch (e) { alert('Restore failed: ' + e.message); }
     finally { $('import').value = ''; }
   };
@@ -344,6 +384,10 @@ try {
   window.addEventListener('beforeprint', buildPrint);
   $('print').onclick = async () => { finish(); buildPrint(); await Promise.all([...$('printRoot').querySelectorAll('img')].map((im) => im.decode())); window.print(); };
   window.addEventListener('pagehide', () => { finish(); save(); });
+  window.addEventListener('storage', (e) => {
+    if (e.key !== KEY || !e.newValue || blocked) return;
+    try { const s = JSON.parse(e.newValue); if (!valid(s, numbers)) return; finish(); s.page = page; state = s; render(); setStatus('Updated from another tab'); } catch { /* ignore */ }
+  });
 
   /* ---------- Phone problem view: the original page framed on one problem at a time ---------- */
   const PHONE = matchMedia('(max-width: 760px)');
@@ -351,12 +395,12 @@ try {
   const prefersPage = () => { try { return localStorage.getItem(VIEW_KEY) === 'page'; } catch { return false; } };
   const rememberView = (v) => { try { localStorage.setItem(VIEW_KEY, v); } catch { /* convenience only */ } };
   // The answer boxes that belong to a question: its own id, ids that extend it (3b, 1total, 1-r1c2), or boxes inside its crop.
-  function frameOf(q) {
-    const [cx, cy, cw, ch] = q.crop, inside = (r) => { const mx = r[0] + r[2] / 2, my = r[1] + r[3] / 2; return mx > cx - .03 && mx < cx + cw + .03 && my > cy - .03 && my < cy + ch + .06; };
+  function frameOf(q, pad = .02, strict = false) {
+    const [cx, cy, cw, ch] = q.crop, m = strict ? 0 : .03, inside = (r) => { const mx = r[0] + r[2] / 2, my = r[1] + r[3] / 2; return mx > cx - m && mx < cx + cw + m && my > cy - m && my < cy + ch + (strict ? 0 : .06); };
     const own = (fields[page] || []).filter((f) => f.id === q.id || (f.id.startsWith(q.id) && !/^\d/.test(f.id.slice(q.id.length))) || inside(f.rect));
     let x0 = cx, y0 = cy, x1 = cx + cw, y1 = cy + ch;
     for (const f of own) { const [x, y, w, h] = f.rect; x0 = Math.min(x0, x); y0 = Math.min(y0, y); x1 = Math.max(x1, x + w); y1 = Math.max(y1, y + h); }
-    const pad = .02; x0 = Math.max(0, x0 - pad); y0 = Math.max(0, y0 - pad); x1 = Math.min(1, x1 + pad); y1 = Math.min(1, y1 + pad);
+    x0 = Math.max(0, x0 - pad); y0 = Math.max(0, y0 - pad); x1 = Math.min(1, x1 + pad); y1 = Math.min(1, y1 + pad);
     return [x0, y0, x1 - x0, y1 - y0];
   }
   function syncHelpButton() { $('probHelp').setAttribute('aria-pressed', String(!$('help').hidden)); }
