@@ -138,6 +138,10 @@ body.solution-open .assist{display:block!important;grid-column:2!important;posit
 @media(max-width:900px){body.solution-open .shell{display:block!important}body.solution-open .assist{position:fixed!important;right:6px!important;bottom:6px!important;top:auto!important;width:min(430px,calc(100vw - 12px))!important;max-height:65vh!important;z-index:30!important;box-shadow:0 15px 50px #243a6070!important}.paper-outer{max-height:73vh!important}}
 @media(max-width:600px){.answer-item input{font-size:10px!important;height:21px!important;min-height:21px!important;padding:1px 3px!important}.answer-item .help-dot{width:18px!important;height:18px!important;min-width:18px!important;font-size:11px!important}}
 @media print{body.solution-open .assist,.assist{display:none!important}.answer-item .help-dot{display:none!important}.answer-item input{border:0!important;background:transparent!important;box-shadow:none!important}}
+
+/* Overlay coordinate fix: every per-question wrapper spans the full original page. */
+.answer-layer .answer-item{left:0!important;top:0!important;width:100%!important;height:100%!important;min-height:0!important;position:absolute!important;max-width:none!important;pointer-events:none!important}
+.answer-layer .answer-item input,.answer-layer .answer-item .help-dot{pointer-events:auto!important}
 </style></head><body>
 <div class="shell"><aside class="card side"><div class="eyebrow">Family study edition</div><h1>Gabriella's Math Lab</h1><p class="muted mini">Chapter 5 · Exact textbook pages</p><a class="navlink" href="./unit5-lessons-5-1-to-5-4.html">↗ Open original interactive lessons 5-1 to 5-4</a><a class="navlink" href="./">↗ Math Lab home</a><div class="smallcard"><strong>Progress is saved here</strong><p class="mini muted">This companion workbook stores your writing and notes in this browser. Export a backup if using another device.</p></div><div class="smallcard"><strong>Textbook protection</strong><p class="mini muted">The source pages are rendered unchanged. Ink and notes are saved separately.</p></div></aside>
 <main class="main"><section class="card top"><div><div class="eyebrow">Original Chapter 5 book</div><strong id="page-title">Loading textbook…</strong><div class="mini muted" id="page-subtitle">Use the arrows or select any source PDF page</div></div><div class="buttons"><button class="btn" id="prev">← Previous</button><select id="page-select" aria-label="Choose textbook page"></select><button class="btn primary" id="next">Next →</button></div></section>
@@ -180,7 +184,7 @@ function renderQuestionList(){updateProgress();}
 function renderBoxes(){const layer=by("answer-layer");layer.innerHTML="";const qs=listedQuestions();
 for(const q of qs){const r=q.rect||[.15,.3,.25,.04];const isRight=r[0]>.46;
 const n=Number(q.id);const short=Number.isInteger(n)&&n>=1&&n<=12&&current===5;
-let markerX=isRight?.455:.105;let markerY=Math.min(.97,Math.max(.03,r[1]+.002));
+let markerX=isRight?.455:.085;let markerY=Math.min(.97,Math.max(.03,r[1]+.002));
 if(current!==5){markerX=isRight?Math.max(.46,r[0]-.05):Math.max(.03,r[0]-.055);markerY=Math.min(.97,r[1]);}
 let x=r[0],y=r[1]+.002,width=Math.max(.085,Math.min(.19,r[2]||.15));
 if(short){if(n<=4){x=(n%2===1)?.275:.675;width=.155;}
