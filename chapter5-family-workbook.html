@@ -248,17 +248,60 @@ el.addEventListener("pointerup",e=>{if(!activeDrag)return;savePlacement(id,kind,
 el.addEventListener("pointercancel",()=>{activeDrag=null;renderBoxes()});
 el.addEventListener("keydown",e=>{const dirs={ArrowLeft:[-1,0],ArrowRight:[1,0],ArrowUp:[0,-1],ArrowDown:[0,1]};if(!dirs[e.key])return;e.preventDefault();const step=e.shiftKey?.01:.002;const [dx,dy]=dirs[e.key];const x=clamp(Number.parseFloat(el.style.left)/100+dx*step,.008,.975),y=clamp(Number.parseFloat(el.style.top)/100+dy*step,.008,.965);el.style.left=(x*100).toFixed(3)+"%";el.style.top=(y*100).toFixed(3)+"%";savePlacement(id,kind,x,y);});
 }
+
+function buildInkAnalysis(){
+const source=by("pdf-canvas");if(!source.width||!source.height)return null;
+const tiny=document.createElement("canvas");tiny.width=270;tiny.height=Math.max(20,Math.round(270*source.height/source.width));
+const ctx=tiny.getContext("2d",{willReadFrequently:true});ctx.drawImage(source,0,0,tiny.width,tiny.height);
+const {data}=ctx.getImageData(0,0,tiny.width,tiny.height),width=tiny.width,height=tiny.height;
+const stride=width+1,ink=new Uint32Array(stride*(height+1));
+for(let y=1;y<=height;y++){let row=0;for(let x=1;x<=width;x++){
+const t=((y-1)*width+(x-1))*4,r=data[t],g=data[t+1],b=data[t+2];
+const dark=(r+g+b)/3<176?1:0;row+=dark;ink[y*stride+x]=ink[(y-1)*stride+x]+row;
+}}
+function density(x,y,w,h){let x1=Math.max(0,Math.min(width,Math.floor(x*width))),x2=Math.max(0,Math.min(width,Math.ceil((x+w)*width)));
+let y1=Math.max(0,Math.min(height,Math.floor(y*height))),y2=Math.max(0,Math.min(height,Math.ceil((y+h)*height)));
+const count=ink[y2*stride+x2]-ink[y1*stride+x2]-ink[y2*stride+x1]+ink[y1*stride+x1];
+return count/Math.max(1,(x2-x1)*(y2-y1));}
+return {density};
+}
+function automaticallyPosition(q,base,analysis,existing,all){
+if(!analysis||current<=6||state().placementOverrides[q.id])return base;
+const sameSide=z=>(z.help?.[0]||z.rect?.[0]||0)>.4===(q.help?.[0]||q.rect?.[0]||0)>.4;
+const next=all.filter(z=>z.id!==q.id&&sameSide(z)&&z.help&&q.help&&z.help[1]>q.help[1]+.028).map(z=>z.help[1]);
+const upper=next.length?Math.min(...next):.97;
+const left=(q.help?.[0]||0)>.4?.53:.12,right=(q.help?.[0]||0)>.4?.94:.45;
+const spread=base.inputW>.29?{left:.12,right:.91,width:Math.min(.31,base.inputW)}:{left,right,width:Math.min(.20,Math.max(.085,base.inputW))};
+let best=null;
+for(let dx=-.13;dx<=.131;dx+=.025)for(let dy=-.07;dy<=.101;dy+=.01){
+let x=Math.max(spread.left,Math.min(spread.right-spread.width,base.inputX+dx));
+let y=Math.max(.095,Math.min(.94,base.inputY+dy));
+if(q.help&&y<q.help[1]-.055)continue;
+if(y>upper-.015)continue;
+if(y<base.inputY-.022)continue;
+const opacity=analysis.density(x,y,spread.width,.027);
+const overlap=existing.some(e=>Math.abs(e.y-y)<.03&&Math.max(e.x,x)<Math.min(e.x+e.w,x+spread.width));
+const score=opacity*125+Math.abs(dx)*2.4+Math.abs(dy)*3+(overlap?35:0);
+if(!best||score<best.score)best={score,inputX:x,inputY:y,inputW:spread.width};
+}
+if(!best)return base;
+return {...base,inputX:best.inputX,inputY:best.inputY,inputW:best.inputW};
+}
 function renderBoxes(){const layer=by("answer-layer");layer.innerHTML="";
-for(const q of listedQuestions()){
-const pos=placementFor(q);const wrap=document.createElement("div");wrap.className="answer-item";
+const all=listedQuestions(),analysis=buildInkAnalysis(),existing=[];
+for(const q of all){
+let pos=placementFor(q);if(!calibrating)pos=automaticallyPosition(q,pos,analysis,existing,all);
+existing.push({x:pos.inputX,y:pos.inputY,w:pos.inputW});
+const wrap=document.createElement("div");wrap.className="answer-item";
 const input=document.createElement("input");input.type="text";input.value=state().answers[q.id]||"";
 input.style.left=(pos.inputX*100).toFixed(3)+"%";input.style.top=(pos.inputY*100).toFixed(3)+"%";
 input.style.setProperty("--field-width",(pos.inputW*100).toFixed(3)+"%");
 input.setAttribute("data-problem",q.id);input.setAttribute("aria-label","Answer for "+nameOf(q));input.placeholder=" ";input.autocomplete="off";
-input.oninput=e=>{state().answers[q.id]=e.target.value;persist();updateProgress()};
+input.oninput=e=>{state().answers[q.id]=e.target.value;persist();updateProgress();};
 const button=document.createElement("button");button.type="button";button.className="help-dot";button.textContent="?";
 button.style.left=(pos.helpX*100).toFixed(3)+"%";button.style.top=(pos.helpY*100).toFixed(3)+"%";
-button.title="Show all steps for "+nameOf(q);button.setAttribute("aria-label","Show steps for "+nameOf(q));button.onclick=()=>{if(!calibrating)showQuestion(q.id)};
+button.title="Show all steps for "+nameOf(q);button.setAttribute("aria-label","Show steps for "+nameOf(q));
+button.onclick=()=>{if(!calibrating)showQuestion(q.id)};
 if(calibrating){input.readOnly=true;adjustHandle(input,q.id,"input");adjustHandle(button,q.id,"help");}
 wrap.append(input,button);layer.appendChild(wrap);
 }updateProgress();if(chosenHelp)renderHelp();}
