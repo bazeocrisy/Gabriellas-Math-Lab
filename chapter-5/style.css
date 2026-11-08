@@ -232,6 +232,15 @@ dialog::backdrop { background: rgb(15 23 42 / .38); }
 
 /* 8. Responsive ---------------------------------------------------------- */
 /* Mouse and trackpad: compact 36px controls. Touch screens keep 44px targets. */
+/* 1000px and wider: the bar never wraps; the title and "Saved" text give way (trimmed) instead. */
+@media (min-width: 1000px) {
+  .app-header { flex-wrap: nowrap; }
+  .app-header > *, .toolbar, .toolbar > * { flex-shrink: 0; }
+  .brand, .header-actions, .save-chip { flex-shrink: 1; min-width: 0; }
+  .brand-text, .brand-name, .brand-sub { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+  .save-chip #saveStatus { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .toolbar { flex-wrap: nowrap; }
+}
 @media (pointer: coarse) { :root { --min-box: 26px; } }
 /* Touch tablets up to iPad Pro landscape: 44px controls need the compact bar (logo only, tick for "Saved"). */
 @media (pointer: coarse) and (max-width: 1366px) { .brand-text { display: none; } .save-chip #saveStatus { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); } }
