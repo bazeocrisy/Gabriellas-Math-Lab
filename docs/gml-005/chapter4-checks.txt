@@ -1,0 +1,172 @@
+
+> test:chapter4:browser
+> node tests/chapter4.browser.mjs
+
+✔ Two learning paths on home
+✔ All eight lessons open with four modes
+✔ 4-1 Learn screen 1 renders
+✔ 4-1 Learn screen 2 renders
+✔ 4-1 Learn screen 3 renders
+✔ 4-1 Learn screen 4 renders
+✔ 4-1 Learn screen 5 renders
+✔ 4-1 Learn completion retained
+✔ 4-1 Test has no hints or solutions
+✔ 4-1 score and mastery
+✔ 4-1 saved results survive reload
+✔ 4-2 Learn screen 1 renders
+✔ 4-2 Learn screen 2 renders
+✔ 4-2 Learn screen 3 renders
+✔ 4-2 Learn screen 4 renders
+✔ 4-2 Learn screen 5 renders
+✔ 4-2 Learn completion retained
+✔ 4-2 Test has no hints or solutions
+✔ 4-2 score and mastery
+✔ 4-2 saved results survive reload
+✔ 4-3 Learn screen 1 renders
+✔ 4-3 Learn screen 2 renders
+✔ 4-3 Learn screen 3 renders
+✔ 4-3 Learn screen 4 renders
+✔ 4-3 Learn screen 5 renders
+✔ 4-3 Learn completion retained
+✔ 4-3 Test has no hints or solutions
+✔ 4-3 score and mastery
+✔ 4-3 saved results survive reload
+✔ 4-4 Learn screen 1 renders
+✔ 4-4 Learn screen 2 renders
+✔ 4-4 Learn screen 3 renders
+✔ 4-4 Learn screen 4 renders
+✔ 4-4 Learn screen 5 renders
+✔ 4-4 Learn completion retained
+✔ 4-4 Test has no hints or solutions
+✔ 4-4 score and mastery
+✔ 4-4 saved results survive reload
+✔ 4-5 Learn screen 1 renders
+✔ 4-5 Learn screen 2 renders
+✔ 4-5 Learn screen 3 renders
+✔ 4-5 Learn screen 4 renders
+✔ 4-5 Learn screen 5 renders
+✔ 4-5 Learn completion retained
+✔ 4-5 Test has no hints or solutions
+✔ 4-5 score and mastery
+✔ 4-5 saved results survive reload
+✔ 4-6 Learn screen 1 renders
+✔ 4-6 Learn screen 2 renders
+✔ 4-6 Learn screen 3 renders
+✔ 4-6 Learn screen 4 renders
+✔ 4-6 Learn screen 5 renders
+✔ 4-6 Learn completion retained
+✔ 4-6 Test has no hints or solutions
+✔ 4-6 score and mastery
+✔ 4-6 saved results survive reload
+✔ 4-7 Learn screen 1 renders
+✔ 4-7 Learn screen 2 renders
+✔ 4-7 Learn screen 3 renders
+✔ 4-7 Learn screen 4 renders
+✔ 4-7 Learn screen 5 renders
+✔ 4-7 Learn completion retained
+✔ 4-7 Test has no hints or solutions
+✔ 4-7 score and mastery
+✔ 4-7 saved results survive reload
+✔ 4-8 Learn screen 1 renders
+✔ 4-8 Learn screen 2 renders
+✔ 4-8 Learn screen 3 renders
+✔ 4-8 Learn screen 4 renders
+✔ 4-8 Learn screen 5 renders
+✔ 4-8 Learn completion retained
+✔ 4-8 Test has no hints or solutions
+✔ 4-8 score and mastery
+✔ 4-8 saved results survive reload
+✔ Original progress remains byte-for-byte unchanged
+✔ Unsubmitted test response survives refresh without feedback
+✔ Assisted perfect test retains score but no mastery award
+✔ Retake has fresh question signatures
+✔ Cross-tab assistance is merged on save
+✔ Completed session rejects stale same-ID writes
+✔ Old result review marks both assessment systems assisted
+✔ Independent results report weak skills without mastery
+✔ Practice has three progressive hints
+✔ Correct answer via keyboard creates Next
+✔ Practice advances and focuses an answer or heading
+✔ Three distinct unsuccessful attempts offer worked solution
+✔ Finished practice records one coached session without changing tests
+✔ Final assessment scores 25 with all lesson results
+✔ Parent has Chapter history alongside existing decimal progress
+✔ Damaged Chapter history cannot break existing Parent Progress
+✔ 4-1 has visible back navigation and immediate worked help
+✔ 4-1 can finish Learn after a supported walkthrough
+✔ 4-2 has visible back navigation and immediate worked help
+✔ 4-2 can finish Learn after a supported walkthrough
+✔ 4-3 has visible back navigation and immediate worked help
+✔ 4-3 can finish Learn after a supported walkthrough
+✔ 4-4 has visible back navigation and immediate worked help
+✔ 4-4 can finish Learn after a supported walkthrough
+✔ 4-5 has visible back navigation and immediate worked help
+✔ 4-5 can finish Learn after a supported walkthrough
+✔ 4-6 has visible back navigation and immediate worked help
+✔ 4-6 can finish Learn after a supported walkthrough
+✔ 4-7 has visible back navigation and immediate worked help
+✔ 4-7 can finish Learn after a supported walkthrough
+✔ 4-8 has visible back navigation and immediate worked help
+✔ 4-8 can finish Learn after a supported walkthrough
+✔ Last-page deep link returns to missing instruction without awarding completion
+✔ Reviewing all earlier screens then finishing awards Learn completion
+✔ Restart clears current Learn completion and retains assessment history
+✔ Practice can ask for help before any wrong answer
+✔ Previous question and refresh preserve the supported answer without first-try credit
+✔ Back to lesson opens an activity menu without discarding work
+✔ Returning from the lesson menu resumes the same question
+✔ Lesson menu resumes the last Learn screen
+✔ Chapter cards use three compact columns with aligned activity links
+✔ #/ at 320px: fits, touch targets ≥44px
+✔ #/decimals at 320px: fits, touch targets ≥44px
+✔ #/chapter4 at 320px: fits, touch targets ≥44px
+✔ #/chapter4/4-3/learn/3 at 320px: fits, touch targets ≥44px
+✔ #/chapter4/4-5/learn/2 at 320px: fits, touch targets ≥44px
+✔ Responsive Practice is an active question at 320px
+✔ #/chapter4/4-4/practice at 320px: fits, touch targets ≥44px
+✔ #/chapter4/4-8/test at 320px: fits, touch targets ≥44px
+✔ #/parent at 320px: fits, touch targets ≥44px
+✔ #/ at 375px: fits, touch targets ≥44px
+✔ #/decimals at 375px: fits, touch targets ≥44px
+✔ #/chapter4 at 375px: fits, touch targets ≥44px
+✔ #/chapter4/4-3/learn/3 at 375px: fits, touch targets ≥44px
+✔ #/chapter4/4-5/learn/2 at 375px: fits, touch targets ≥44px
+✔ Responsive Practice is an active question at 375px
+✔ #/chapter4/4-4/practice at 375px: fits, touch targets ≥44px
+✔ #/chapter4/4-8/test at 375px: fits, touch targets ≥44px
+✔ #/parent at 375px: fits, touch targets ≥44px
+✔ #/ at 768px: fits, touch targets ≥44px
+✔ #/decimals at 768px: fits, touch targets ≥44px
+✔ #/chapter4 at 768px: fits, touch targets ≥44px
+✔ #/chapter4/4-3/learn/3 at 768px: fits, touch targets ≥44px
+✔ #/chapter4/4-5/learn/2 at 768px: fits, touch targets ≥44px
+✔ Responsive Practice is an active question at 768px
+✔ #/chapter4/4-4/practice at 768px: fits, touch targets ≥44px
+✔ #/chapter4/4-8/test at 768px: fits, touch targets ≥44px
+✔ #/parent at 768px: fits, touch targets ≥44px
+✔ #/ at 1024px: fits, touch targets ≥44px
+✔ #/decimals at 1024px: fits, touch targets ≥44px
+✔ #/chapter4 at 1024px: fits, touch targets ≥44px
+✔ #/chapter4/4-3/learn/3 at 1024px: fits, touch targets ≥44px
+✔ #/chapter4/4-5/learn/2 at 1024px: fits, touch targets ≥44px
+✔ Responsive Practice is an active question at 1024px
+✔ #/chapter4/4-4/practice at 1024px: fits, touch targets ≥44px
+✔ #/chapter4/4-8/test at 1024px: fits, touch targets ≥44px
+✔ #/parent at 1024px: fits, touch targets ≥44px
+✔ #/ at 1440px: fits, touch targets ≥44px
+✔ #/decimals at 1440px: fits, touch targets ≥44px
+✔ #/chapter4 at 1440px: fits, touch targets ≥44px
+✔ #/chapter4/4-3/learn/3 at 1440px: fits, touch targets ≥44px
+✔ #/chapter4/4-5/learn/2 at 1440px: fits, touch targets ≥44px
+✔ Responsive Practice is an active question at 1440px
+✔ #/chapter4/4-4/practice at 1440px: fits, touch targets ≥44px
+✔ #/chapter4/4-8/test at 1440px: fits, touch targets ≥44px
+✔ #/parent at 1440px: fits, touch targets ≥44px
+✔ No browser console errors
+✔ No missing files
+162 passed, 0 failed
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.2
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.2
+npm notice To update run: npm install -g npm@12.2.2
+npm notice

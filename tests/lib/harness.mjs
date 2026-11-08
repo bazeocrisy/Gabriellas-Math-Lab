@@ -27,13 +27,14 @@ export async function startServer() {
   return { origin: `http://127.0.0.1:${server.address().port}`, missing, close: () => server.close() };
 }
 
-export async function startBrowser() {
+export async function startBrowser({ profile: savedProfile } = {}) {
   const candidates = [process.env.CHROME_PATH,
     'C:/Program Files/Google/Chrome/Application/chrome.exe', 'C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe',
     '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome', '/usr/bin/google-chrome', '/usr/bin/chromium', '/usr/bin/chromium-browser'].filter(Boolean);
   const exe = candidates.find((p) => fs.existsSync(p));
   if (!exe) throw new Error('No Chrome/Edge found. Set CHROME_PATH.');
-  const profile = fs.mkdtempSync(path.join(os.tmpdir(), 'gml-chrome-'));
+  const profile = savedProfile || fs.mkdtempSync(path.join(os.tmpdir(), 'gml-chrome-'));
+  if (savedProfile) fs.rmSync(path.join(profile, 'DevToolsActivePort'), { force: true });
   const proc = spawn(exe, ['--headless=new', '--remote-debugging-port=0', `--user-data-dir=${profile}`, '--no-first-run', '--no-default-browser-check', '--hide-scrollbars', 'about:blank'], { stdio: 'ignore' });
   let port;
   for (let i = 0; i < 150 && !port; i++) {

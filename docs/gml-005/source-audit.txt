@@ -1,0 +1,4 @@
+PASS PDF 3 → printed 143: zero differing raster samples, full 1836 × 2376 page
+PASS PDF 4 → printed 144: zero differing raster samples, full 1836 × 2376 page
+PASS PDF 5 → printed 145: zero differing raster samples, full 1836 × 2376 page
+PASS PDF 6 → printed 146: zero differing raster samples, full 1836 × 2376 page

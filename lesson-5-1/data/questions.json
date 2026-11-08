@@ -1,0 +1,558 @@
+{
+  "143": [
+    {
+      "id": "curious",
+      "title": "Be Curious · Which Doesn’t Belong?",
+      "steps": [
+        "Notice which expressions repeat the same number.",
+        "Choose one expression that is different.",
+        "Explain your reason; another person may have a different valid reason."
+      ],
+      "answer": "One possible answer: 6 × 8, because it is not a square fact. Other choices are possible with a defensible explanation.",
+      "anchor": 0.704025,
+      "side": "right",
+      "hint": "Look at all four multiplication expressions.",
+      "verified": true,
+      "verification": "Original source visually checked; independently evaluated; no official answer key in supplied PDF.",
+      "openEnded": true,
+      "crop": [
+        0.1,
+        0.24,
+        0.84,
+        0.45
+      ]
+    },
+    {
+      "id": "mind143",
+      "title": "Math is… Mindset",
+      "steps": [
+        "Think about something you have learned in math.",
+        "Write one thing you want classmates to know."
+      ],
+      "answer": "Personal answer; review her explanation together.",
+      "anchor": 0.891871,
+      "side": "right",
+      "hint": "This is a reflection, not a one-answer problem.",
+      "verified": true,
+      "verification": "Original source visually checked; independently evaluated; no official answer key in supplied PDF.",
+      "openEnded": true,
+      "crop": [
+        0.18,
+        0.82,
+        0.4,
+        0.09
+      ]
+    }
+  ],
+  "144": [
+    {
+      "id": "learn",
+      "title": "Learn · Dean’s pennies",
+      "steps": [
+        "Start with 10 pennies in Week 1.",
+        "Multiply by 10 for each new week: 100, 1,000, 10,000, 100,000, 1,000,000.",
+        "Match the target number to its week in the table."
+      ],
+      "answer": "Week 6. Six factors of 10 give 1,000,000.",
+      "anchor": 0.149961,
+      "side": "left",
+      "hint": "Think about how the number of pennies changes each week.",
+      "verified": true,
+      "verification": "Original source visually checked; independently evaluated; no official answer key in supplied PDF.",
+      "openEnded": false,
+      "crop": [
+        0.06,
+        0.06,
+        0.82,
+        0.11
+      ]
+    },
+    {
+      "id": "patterns",
+      "title": "Patterns in the table",
+      "steps": [
+        "Compare 10 and 100, then 100 and 1,000.",
+        "What do you multiply by each week?",
+        "Relate the number of factors of 10 to the week number."
+      ],
+      "answer": "Sample response: each new week has ten times as many pennies; each row adds one factor of 10 and one zero to the product.",
+      "anchor": 0.25809,
+      "side": "right",
+      "hint": "Follow the number of pennies from one week to the next.",
+      "verified": true,
+      "verification": "Original source visually checked; independently evaluated; no official answer key in supplied PDF.",
+      "openEnded": true,
+      "crop": [
+        0.63,
+        0.16,
+        0.25,
+        0.085
+      ]
+    },
+    {
+      "id": "together",
+      "title": "Work Together · 10⁸",
+      "steps": [
+        "The base is 10.",
+        "Write eight 10s as factors.",
+        "Multiply by using the powers-of-ten pattern."
+      ],
+      "answer": "10 × 10 × 10 × 10 × 10 × 10 × 10 × 10 = 100,000,000.",
+      "anchor": 0.760063,
+      "side": "right",
+      "hint": "The raised 8 is the exponent.",
+      "verified": true,
+      "verification": "Original source visually checked; independently evaluated; no official answer key in supplied PDF.",
+      "openEnded": false,
+      "crop": [
+        0.07,
+        0.7,
+        0.8,
+        0.1
+      ]
+    }
+  ],
+  "145": [
+    {
+      "id": "1",
+      "title": "Problem 1 · 10⁴",
+      "steps": [
+        "Write the exponent as four factors of 10.",
+        "Say aloud what the base 10 and the exponent mean.",
+        "Write your answer in the highlighted space on the original page."
+      ],
+      "answer": "10 × 10 × 10 × 10",
+      "anchor": 0.187056,
+      "side": "left",
+      "hint": "The exponent tells how many equal factors to use.",
+      "verified": true,
+      "verification": "Original source visually checked; independently evaluated; no official answer key in supplied PDF.",
+      "openEnded": false,
+      "crop": [
+        0.12,
+        0.167056,
+        0.36,
+        0.05
+      ]
+    },
+    {
+      "id": "2",
+      "title": "Problem 2 · 10²",
+      "steps": [
+        "Write two factors of 10.",
+        "Say aloud what the base 10 and the exponent mean.",
+        "Write your answer in the highlighted space on the original page."
+      ],
+      "answer": "10 × 10",
+      "anchor": 0.187056,
+      "side": "right",
+      "hint": "The exponent tells how many equal factors to use.",
+      "verified": true,
+      "verification": "Original source visually checked; independently evaluated; no official answer key in supplied PDF.",
+      "openEnded": false,
+      "crop": [
+        0.49,
+        0.167056,
+        0.4,
+        0.05
+      ]
+    },
+    {
+      "id": "3",
+      "title": "Problem 3 · 10³",
+      "steps": [
+        "Write three factors of 10.",
+        "Say aloud what the base 10 and the exponent mean.",
+        "Write your answer in the highlighted space on the original page."
+      ],
+      "answer": "10 × 10 × 10",
+      "anchor": 0.239937,
+      "side": "left",
+      "hint": "The exponent tells how many equal factors to use.",
+      "verified": true,
+      "verification": "Original source visually checked; independently evaluated; no official answer key in supplied PDF.",
+      "openEnded": false,
+      "crop": [
+        0.12,
+        0.21993700000000002,
+        0.36,
+        0.05
+      ]
+    },
+    {
+      "id": "4",
+      "title": "Problem 4 · 10⁶",
+      "steps": [
+        "Write six factors of 10.",
+        "Say aloud what the base 10 and the exponent mean.",
+        "Write your answer in the highlighted space on the original page."
+      ],
+      "answer": "10 × 10 × 10 × 10 × 10 × 10",
+      "anchor": 0.239937,
+      "side": "right",
+      "hint": "The exponent tells how many equal factors to use.",
+      "verified": true,
+      "verification": "Original source visually checked; independently evaluated; no official answer key in supplied PDF.",
+      "openEnded": false,
+      "crop": [
+        0.49,
+        0.21993700000000002,
+        0.4,
+        0.05
+      ]
+    },
+    {
+      "id": "5",
+      "title": "Problem 5 · 10 × 10 × 10",
+      "steps": [
+        "Count the number of factors. That number is the exponent.",
+        "Say aloud what the base 10 and the exponent mean.",
+        "Write your answer in the highlighted space on the original page."
+      ],
+      "answer": "10³",
+      "anchor": 0.344909,
+      "side": "left",
+      "hint": "Count the equal factors rather than adding them.",
+      "verified": true,
+      "verification": "Original source visually checked; independently evaluated; no official answer key in supplied PDF.",
+      "openEnded": false,
+      "crop": [
+        0.12,
+        0.324909,
+        0.36,
+        0.05
+      ]
+    },
+    {
+      "id": "6",
+      "title": "Problem 6 · 10 × 10 × 10 × 10 × 10",
+      "steps": [
+        "Count all five factors, then use the number as the exponent.",
+        "Say aloud what the base 10 and the exponent mean.",
+        "Write your answer in the highlighted space on the original page."
+      ],
+      "answer": "10⁵",
+      "anchor": 0.339384,
+      "side": "right",
+      "hint": "Count the equal factors rather than adding them.",
+      "verified": true,
+      "verification": "Original source visually checked; independently evaluated; no official answer key in supplied PDF.",
+      "openEnded": false,
+      "crop": [
+        0.49,
+        0.319384,
+        0.4,
+        0.05
+      ]
+    },
+    {
+      "id": "7",
+      "title": "Problem 7 · 10 × 10 × 10 × 10",
+      "steps": [
+        "There are four factors of ten.",
+        "Say aloud what the base 10 and the exponent mean.",
+        "Write your answer in the highlighted space on the original page."
+      ],
+      "answer": "10⁴",
+      "anchor": 0.397001,
+      "side": "left",
+      "hint": "Count the equal factors rather than adding them.",
+      "verified": true,
+      "verification": "Original source visually checked; independently evaluated; no official answer key in supplied PDF.",
+      "openEnded": false,
+      "crop": [
+        0.12,
+        0.377001,
+        0.36,
+        0.05
+      ]
+    },
+    {
+      "id": "8",
+      "title": "Problem 8 · 10 × 10",
+      "steps": [
+        "Count two factors.",
+        "Say aloud what the base 10 and the exponent mean.",
+        "Write your answer in the highlighted space on the original page."
+      ],
+      "answer": "10²",
+      "anchor": 0.397001,
+      "side": "right",
+      "hint": "Count the equal factors rather than adding them.",
+      "verified": true,
+      "verification": "Original source visually checked; independently evaluated; no official answer key in supplied PDF.",
+      "openEnded": false,
+      "crop": [
+        0.49,
+        0.377001,
+        0.4,
+        0.05
+      ]
+    },
+    {
+      "id": "9",
+      "title": "Problem 9 · 10",
+      "steps": [
+        "One factor of 10 corresponds to exponent 1.",
+        "Say aloud what the base 10 and the exponent mean.",
+        "Write your answer in the highlighted space on the original page."
+      ],
+      "answer": "10¹",
+      "anchor": 0.503552,
+      "side": "left",
+      "hint": "Use the number of zeros to count the factors of 10.",
+      "verified": true,
+      "verification": "Original source visually checked; independently evaluated; no official answer key in supplied PDF.",
+      "openEnded": false,
+      "crop": [
+        0.12,
+        0.483552,
+        0.36,
+        0.05
+      ]
+    },
+    {
+      "id": "10",
+      "title": "Problem 10 · 1,000",
+      "steps": [
+        "Think: 10 × 10 × 10.",
+        "Say aloud what the base 10 and the exponent mean.",
+        "Write your answer in the highlighted space on the original page."
+      ],
+      "answer": "10³",
+      "anchor": 0.503552,
+      "side": "right",
+      "hint": "Use the number of zeros to count the factors of 10.",
+      "verified": true,
+      "verification": "Original source visually checked; independently evaluated; no official answer key in supplied PDF.",
+      "openEnded": false,
+      "crop": [
+        0.49,
+        0.483552,
+        0.4,
+        0.05
+      ]
+    },
+    {
+      "id": "11",
+      "title": "Problem 11 · 100",
+      "steps": [
+        "Think: 10 × 10.",
+        "Say aloud what the base 10 and the exponent mean.",
+        "Write your answer in the highlighted space on the original page."
+      ],
+      "answer": "10²",
+      "anchor": 0.554854,
+      "side": "left",
+      "hint": "Use the number of zeros to count the factors of 10.",
+      "verified": true,
+      "verification": "Original source visually checked; independently evaluated; no official answer key in supplied PDF.",
+      "openEnded": false,
+      "crop": [
+        0.12,
+        0.5348539999999999,
+        0.36,
+        0.05
+      ]
+    },
+    {
+      "id": "12",
+      "title": "Problem 12 · 10,000",
+      "steps": [
+        "Think: 10 × 10 × 10 × 10.",
+        "Say aloud what the base 10 and the exponent mean.",
+        "Write your answer in the highlighted space on the original page."
+      ],
+      "answer": "10⁴",
+      "anchor": 0.554854,
+      "side": "right",
+      "hint": "Use the number of zeros to count the factors of 10.",
+      "verified": true,
+      "verification": "Original source visually checked; independently evaluated; no official answer key in supplied PDF.",
+      "openEnded": false,
+      "crop": [
+        0.49,
+        0.5348539999999999,
+        0.4,
+        0.05
+      ]
+    },
+    {
+      "id": "13",
+      "title": "13 · Rachel’s error",
+      "steps": [
+        "Five is the exponent; it is not a multiplier of the base.",
+        "Write 10 five times as factors.",
+        "Explain why 10 × 5 is not the same expression."
+      ],
+      "answer": "No. 10⁵ = 10 × 10 × 10 × 10 × 10 = 100,000, not 50.",
+      "anchor": 0.62352,
+      "side": "right",
+      "hint": "Check what 10⁵ actually means.",
+      "verified": true,
+      "verification": "Original source visually checked; independently evaluated; no official answer key in supplied PDF.",
+      "openEnded": false,
+      "crop": [
+        0.12,
+        0.62,
+        0.77,
+        0.085
+      ]
+    },
+    {
+      "id": "14",
+      "title": "14 · STEM Connection",
+      "steps": [
+        "The base is 10 and the exponent is 6.",
+        "A power of 10 has as many zeros as its exponent.",
+        "Write the product with commas."
+      ],
+      "answer": "1,000,000 lines.",
+      "anchor": 0.794002,
+      "side": "right",
+      "hint": "Grace reviewed 10⁶ lines of code.",
+      "verified": true,
+      "verification": "Original source visually checked; independently evaluated; no official answer key in supplied PDF.",
+      "openEnded": false,
+      "crop": [
+        0.13,
+        0.77,
+        0.6,
+        0.08
+      ]
+    }
+  ],
+  "146": [
+    {
+      "id": "15a",
+      "title": "15A · Walking goal",
+      "steps": [
+        "Write 10,000 as repeated factors of 10.",
+        "Count the factors.",
+        "Use 10 as the base and the count as the exponent."
+      ],
+      "answer": "10⁴",
+      "anchor": 0.102605,
+      "side": "right",
+      "hint": "The watch shows 10,000 steps.",
+      "verified": true,
+      "verification": "Original source visually checked; independently evaluated; no official answer key in supplied PDF.",
+      "openEnded": false,
+      "crop": [
+        0.07,
+        0.03,
+        0.81,
+        0.19
+      ]
+    },
+    {
+      "id": "15b",
+      "title": "15B · Product of 10s",
+      "steps": [
+        "Read the goal shown on the tracker: 10,000.",
+        "Count how many times you multiply by 10 to reach that goal.",
+        "Write that many factors, separated by multiplication signs."
+      ],
+      "answer": "10 × 10 × 10 × 10",
+      "anchor": 0.235991,
+      "side": "right",
+      "hint": "Convert the goal to repeated multiplication.",
+      "verified": true,
+      "verification": "Original source visually checked; independently evaluated; no official answer key in supplied PDF.",
+      "openEnded": false,
+      "crop": [
+        0.11,
+        0.22,
+        0.7,
+        0.04
+      ]
+    },
+    {
+      "id": "16",
+      "title": "16 · Jenny’s choice",
+      "steps": [
+        "Her father gives $10.",
+        "Grandfather offers 10 times that amount.",
+        "Compare 10 times the grandfather’s offer with $500."
+      ],
+      "answer": "Grandfather: $100. Ten times $100 is $1,000, which is greater than $500. Choose the $1,000 offer.",
+      "anchor": 0.319653,
+      "side": "right",
+      "hint": "Work out the offers one person at a time.",
+      "verified": true,
+      "verification": "Original source visually checked; independently evaluated; no official answer key in supplied PDF.",
+      "openEnded": false,
+      "crop": [
+        0.07,
+        0.31,
+        0.72,
+        0.12
+      ]
+    },
+    {
+      "id": "17",
+      "title": "17 · Inequality",
+      "steps": [
+        "Evaluate four factors of 10.",
+        "Evaluate 10⁶.",
+        "Choose a number strictly between those values."
+      ],
+      "answer": "Any number strictly between 10,000 and 1,000,000 works, such as 100,000. The textbook inequality does not specify a unique b.",
+      "anchor": 0.555643,
+      "side": "right",
+      "hint": "Find the lower and upper bounds.",
+      "verified": true,
+      "verification": "Original source visually checked; independently evaluated; no official answer key in supplied PDF.",
+      "openEnded": true,
+      "crop": [
+        0.07,
+        0.54,
+        0.72,
+        0.085
+      ]
+    },
+    {
+      "id": "reflect",
+      "title": "Reflect · Patterns",
+      "steps": [
+        "Write 10², 10³, and 10⁴.",
+        "Count the zeros after the 1.",
+        "Describe the connection."
+      ],
+      "answer": "For a whole-number exponent n greater than zero, 10ⁿ is 1 followed by n zeros.",
+      "anchor": 0.684294,
+      "side": "right",
+      "hint": "Think about the number of zeros in powers of 10.",
+      "verified": true,
+      "verification": "Original source visually checked; independently evaluated; no official answer key in supplied PDF.",
+      "openEnded": true,
+      "crop": [
+        0.07,
+        0.69,
+        0.77,
+        0.06
+      ]
+    },
+    {
+      "id": "mind146",
+      "title": "Math is… Mindset",
+      "steps": [
+        "Recall a moment she explained math to somebody.",
+        "Write how she shared what she learned."
+      ],
+      "answer": "A personal reflection; there is no single correct response.",
+      "anchor": 0.84925,
+      "side": "right",
+      "hint": "Discuss Gabriella’s math story.",
+      "verified": true,
+      "verification": "Original source visually checked; independently evaluated; no official answer key in supplied PDF.",
+      "openEnded": true,
+      "crop": [
+        0.57,
+        0.82,
+        0.28,
+        0.11
+      ]
+    }
+  ]
+}

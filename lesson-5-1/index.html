@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Lesson 5-1 · Gabriella's Math Lab</title><link rel="stylesheet" href="style.css"></head>
+<body>
+<header><a href="../index.html" aria-label="Return to application home">Gabriella's Math Lab</a><span>Chapter 5</span><label>Lessons <select aria-label="Lessons"><option>Lesson 5-1</option></select></label></header>
+<nav aria-label="Page navigation"><button id="prev" aria-label="Previous page">←</button><label>Pages <select id="pages" aria-label="Textbook page"></select></label><button id="next" aria-label="Next page">→</button><span id="pageProgress"></span><button id="begin">Start over at page 143</button><button id="questions">Questions</button></nav>
+<div class="toolbar" role="toolbar" aria-label="Writing and reading tools">
+<button data-mode="type" aria-pressed="true">Type</button><button data-mode="pen" aria-pressed="false">Pencil</button><button data-mode="eraser" aria-pressed="false">Eraser</button><button data-mode="pan" aria-pressed="false">Pan</button>
+<button id="undo">Undo</button><button id="redo">Redo</button><button id="clear">Clear…</button>
+<select id="fit" aria-label="Page zoom"><option value="width">Fit width</option><option value="page">Fit page</option><option value="actual">100%</option></select><button id="zoomOut" aria-label="Zoom out">−</button><output id="zoomLabel"></output><button id="zoomIn" aria-label="Zoom in">+</button><button id="resetZoom">Reset zoom</button>
+<details><summary>Work & backup</summary><div><button id="save">Save</button><button id="export">Export backup</button><label class="file">Restore backup<input id="import" type="file" accept="application/json"></label><button id="print">Print lesson / Save PDF</button><label><input id="original" type="checkbox"> Original pages only</label><p>Work is saved in this browser. Export a backup to keep a separate copy.</p></div></details>
+</div>
+<div class="status"><span id="saveStatus" role="status">Loading…</span><span id="completion"></span></div>
+<main id="viewer" aria-label="Textbook workspace"><div id="stage"></div></main>
+<dialog id="drawer" aria-labelledby="drawerTitle"><button id="closeDrawer" class="close" aria-label="Close assistance">Close ×</button><p id="identity"></p><h1 id="drawerTitle">Questions</h1><div id="questionList"></div><section id="assistance" hidden><div id="sourceQuestion" aria-label="Selected original textbook question"></div><h2>Hint</h2><p id="hint"></p><button id="showSteps">Show Me How</button><ol id="steps" hidden></ol><button id="reveal">Reveal Answer</button><p id="answer" hidden></p><label class="done"><input id="done" type="checkbox"> I have completed this question</label></section></dialog>
+<dialog id="clearDialog"><h2>Clear selected work</h2><p>Only the current page is affected. Undo can restore cleared work.</p><label><input type="checkbox" id="clearTyped"> Typed answers</label><label><input type="checkbox" id="clearInk" checked> Handwriting</label><button id="confirmClear">Clear selected</button><button id="cancelClear">Cancel</button></dialog>
+<div id="printRoot" aria-hidden="true"></div><script type="module" src="app.js"></script>
+</body></html>
