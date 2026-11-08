@@ -42,7 +42,7 @@ These files are **unchanged**: `assets/` (source PDF and the four page renders),
 | `test:lesson51:browser` | 153 / 153 passed (the 144 inherited checks plus 9 new card-layout checks) |
 | `test:browser` (legacy app) | 829 / 829 passed |
 | `test:chapter4:browser` | 162 / 162 passed |
-| `test:responsive:browser` | see PR description |
+| `test:responsive:browser` | 4665 / 4665 passed (the three failures GML-005 reported do not recur) |
 
 The inherited GML-005 claims were re-verified on the Codex branch before any change: 272 unit and 144 Lesson 5-1 browser checks passed.
 
