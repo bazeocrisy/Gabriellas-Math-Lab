@@ -1,0 +1,17 @@
+{
+  "name": "Gabriella's Math Lab · Chapter 5",
+  "short_name": "Chapter 5",
+  "description": "The original Chapter 5 textbook with saved writing and help for every problem.",
+  "id": "./",
+  "start_url": "./",
+  "scope": "../",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#f2f5fa",
+  "theme_color": "#ffffff",
+  "icons": [
+    { "src": "../assets/brand/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "../assets/brand/icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "../assets/brand/numbernova-icon.svg", "sizes": "any", "type": "image/svg+xml" }
+  ]
+}

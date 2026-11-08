@@ -31,8 +31,32 @@ try {
   await b.viewport(1280, 800, false); await b.load(url);
   check('viewport meta stops iPhone Safari zooming the app when an answer box is tapped', await value(`/maximum-scale=1/.test(document.querySelector('meta[name=viewport]').content)`));
   for (const [name, w, h, touch] of DEVICES) {
-    await b.viewport(w, h, touch); await b.hash('page=145'); await b.reload(); await b.wait(250);
+    await b.viewport(w, h, touch); await b.hash('page=145'); await b.js(`localStorage.removeItem('gml:chapter-5:view')`); await b.reload(); await b.wait(250);
     const press = touch ? tap : click;
+    if (w <= 760) {
+      // Phones open one problem at a time: the original page framed on that problem, with a bottom bar.
+      check(`${name}: opens in problem view with the bottom bar`, await value(`document.body.classList.contains('problem-view')&&!document.getElementById('probBar').hidden&&document.getElementById('probCount').textContent.startsWith('1 of 14')`));
+      const framed = `(()=>{const q=document.querySelector('.q-focus').getBoundingClientRect(),v=document.getElementById('viewer').getBoundingClientRect(),bar=document.getElementById('probBar').getBoundingClientRect();return q.top>=v.top-1&&q.bottom<=bar.top+1&&q.left>=v.left-1&&q.right<=v.right+1&&q.width>=v.width*.6;})()`;
+      check(`${name}: problem 1 is framed large, fully on screen above the bar`, await value(framed));
+      check(`${name}: bottom bar buttons big enough to tap`, await value(`[...document.querySelectorAll('#probBar button')].every(e=>{const r=e.getBoundingClientRect();return r.width>=43.5&&r.height>=43.5&&r.right<=innerWidth+.5;})`));
+      let nb = await center('#probNext'); await press(nb.x, nb.y); await b.wait(250);
+      check(`${name}: Next moves to problem 2, framed on screen`, await value(`document.getElementById('probCount').textContent.startsWith('2 of 14')`) && await value(framed));
+      const vc = await center('#viewer');
+      await b.send('Input.dispatchTouchEvent', { type: 'touchStart', touchPoints: [{ x: vc.x + 80, y: vc.y }] });
+      for (let s = 1; s <= 4; s++) await b.send('Input.dispatchTouchEvent', { type: 'touchMove', touchPoints: [{ x: vc.x + 80 - s * 40, y: vc.y + 2 }] });
+      await b.send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] }); await b.wait(250);
+      check(`${name}: swiping left moves to the next problem`, await value(`document.getElementById('probCount').textContent.startsWith('3 of 14')`));
+      const hb = await center('#probHelp'); await press(hb.x, hb.y); await b.wait(400);
+      check(`${name}: ? in the bar shows this problem's answer, problem still visible above it`, await value(`(()=>{const h=document.getElementById('help'),r=h.getBoundingClientRect(),q=document.querySelector('.q-focus').getBoundingClientRect();return !h.hidden&&h.dataset.question==='3'&&document.getElementById('answer').textContent.length>0&&r.bottom<=innerHeight+.5&&q.top<r.top-20&&q.top>=document.getElementById('viewer').getBoundingClientRect().top-2;})()`));
+      const xb = await center('#closeHelp'); await press(xb.x, xb.y); await b.wait(200);
+      const fb = await center('[data-id="3"]'); await press(fb.x, fb.y); await b.wait(100);
+      await b.send('Input.insertText', { text: '10 × 10 × 10' }); await b.wait(100);
+      check(`${name}: typing in the framed problem saves`, await value(`JSON.parse(localStorage.getItem('gml:chapter-5:v1')).answers['145_3']==='10 × 10 × 10'`));
+      await b.js(`document.activeElement.blur();const e=document.querySelector('[data-id="3"]');e.value='';e.dispatchEvent(new Event('input'))`);
+      await b.shot(path.join(out, slug(name) + '-problem.png'), false);
+      const pb = await center('#probPage'); await press(pb.x, pb.y); await b.wait(300);
+      check(`${name}: Whole page shows the full page with a way back`, await value(`!document.body.classList.contains('problem-view')&&!document.getElementById('toProblems').hidden&&document.querySelectorAll('.marker').length===14&&document.querySelector('.marker').getClientRects().length===1`));
+    }
     check(`${name}: app fits the screen exactly (no page scroll either way)`, await value(`document.documentElement.scrollWidth<=innerWidth&&document.documentElement.scrollHeight<=innerHeight+1`));
     check(`${name}: top bar uses at most 20% of the height`, await value(`document.querySelector('.app-header').getBoundingClientRect().bottom<=innerHeight*.2`), await value(`document.querySelector('.app-header').getBoundingClientRect().bottom`));
     check(`${name}: whole page width visible at start, page fills most of the width`, await value(`(()=>{const v=document.getElementById('viewer').getBoundingClientRect(),s=document.querySelector('.sheet').getBoundingClientRect();return s.left>=v.left-1&&s.right<=v.right+1&&s.width>=Math.min(v.width*.7,1000*.95);})()`));

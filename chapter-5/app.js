@@ -53,7 +53,10 @@ try {
   const isNumbered = (q) => /^\d/.test(q.id);
   function label(q) {
     const [first, ...rest] = q.title.split(' · ');
-    return isNumbered(q) ? { heading: `Question ${q.id.toUpperCase()}`, detail: rest.join(' · ') } : { heading: first, detail: rest.join(' · ') };
+    // Number as printed: "Problem 7 · …" / "13 · …" / "15A · …" give 7 / 13 / 15A (ids like "1total" are internal).
+    const printed = q.title.match(/^(?:Problem\s+)?(\d+[A-Za-z]?)\b/);
+    if (isNumbered(q) || printed) return { heading: `Question ${(printed ? printed[1] : q.id).toUpperCase()}`, detail: rest.join(' · ') };
+    return { heading: first, detail: rest.join(' · ') };
   }
 
   /* ---------- Page label ---------- */
@@ -79,6 +82,7 @@ try {
       if (printing) r.textContent = state.answers[key] || '';
       else {
         r.setAttribute('aria-label', `Page ${p}, answer ${f.id}`); r.spellcheck = false; r.value = state.answers[key] || '';
+        r.placeholder = ' '; if (f.multi) r.dataset.multi = '';
         let before;
         r.addEventListener('focus', () => { before = snapshot(); });
         r.addEventListener('input', () => { state.answers[key] = r.value; save(); });
@@ -121,6 +125,7 @@ try {
     finish();
     $('stage').replaceChildren(sheet(page));
     updateNav(); updateHistory(); applyZoom();
+    setTimeout(prefetchSection, 1500);
     if (selected) highlight(selected, false);
   }
 
@@ -151,7 +156,7 @@ try {
   function zoom(f) { scaleMode = 'manual'; width *= f; applyZoom(); }
 
   /* ---------- Page navigation ---------- */
-  function goto(p, pushHistory = true) {
+  function goto(p, pushHistory = true, landing = 'first') {
     if (!numbers.includes(p)) p = numbers[0];
     finish(); document.activeElement?.blur?.();
     page = p; state.page = p; save();
@@ -159,6 +164,7 @@ try {
     if (!$('help').hidden) hideHelp(false);
     selected = null;
     render(); $('viewer').scrollTo(0, 0);
+    if (problemView) focusProblem(landing === 'last' ? (questions[page] || []).length - 1 : 0);
   }
   function setMode(m) {
     finish(); mode = m; document.body.dataset.mode = m;
@@ -188,6 +194,7 @@ try {
     const q = selected; selected = null;
     $('help').hidden = true; document.body.classList.remove('help-open'); document.body.style.removeProperty('--help-h');
     clearHighlight(); applyZoom();
+    if (problemView) { const cq = (questions[page] || [])[qi]; if (cq) highlight(cq, false); if (restoreFocus) $('probHelp').focus(); syncHelpButton(); return; }
     if (!restoreFocus) return;
     // Return focus to the textbook: the question's ? button, else the page.
     const marker = q && $('stage').querySelector(`.marker[data-question="${q.id}"]`);
@@ -238,7 +245,7 @@ try {
   $('zoomIn').onclick = () => zoom(1.25);
   $('zoomOut').onclick = () => zoom(0.8);
   $('resetZoom').onclick = () => { scaleMode = 'width'; $('fit').value = 'width'; applyZoom(); };
-  window.addEventListener('resize', applyZoom);
+  window.addEventListener('resize', () => { if (problemView) focusProblem(qi); else applyZoom(); });
   const viewer = $('viewer');
   viewer.addEventListener('pointerdown', (e) => {
     if (mode !== 'pan' || e.target.closest('button')) return;
@@ -338,9 +345,88 @@ try {
   $('print').onclick = async () => { finish(); buildPrint(); await Promise.all([...$('printRoot').querySelectorAll('img')].map((im) => im.decode())); window.print(); };
   window.addEventListener('pagehide', () => { finish(); save(); });
 
+  /* ---------- Phone problem view: the original page framed on one problem at a time ---------- */
+  const PHONE = matchMedia('(max-width: 760px)');
+  let problemView = false, qi = 0, VIEW_KEY = 'gml:chapter-5:view';
+  const prefersPage = () => { try { return localStorage.getItem(VIEW_KEY) === 'page'; } catch { return false; } };
+  const rememberView = (v) => { try { localStorage.setItem(VIEW_KEY, v); } catch { /* convenience only */ } };
+  // The answer boxes that belong to a question: its own id, ids that extend it (3b, 1total, 1-r1c2), or boxes inside its crop.
+  function frameOf(q) {
+    const [cx, cy, cw, ch] = q.crop, inside = (r) => { const mx = r[0] + r[2] / 2, my = r[1] + r[3] / 2; return mx > cx - .03 && mx < cx + cw + .03 && my > cy - .03 && my < cy + ch + .06; };
+    const own = (fields[page] || []).filter((f) => f.id === q.id || (f.id.startsWith(q.id) && !/^\d/.test(f.id.slice(q.id.length))) || inside(f.rect));
+    let x0 = cx, y0 = cy, x1 = cx + cw, y1 = cy + ch;
+    for (const f of own) { const [x, y, w, h] = f.rect; x0 = Math.min(x0, x); y0 = Math.min(y0, y); x1 = Math.max(x1, x + w); y1 = Math.max(y1, y + h); }
+    const pad = .02; x0 = Math.max(0, x0 - pad); y0 = Math.max(0, y0 - pad); x1 = Math.min(1, x1 + pad); y1 = Math.min(1, y1 + pad);
+    return [x0, y0, x1 - x0, y1 - y0];
+  }
+  function syncHelpButton() { $('probHelp').setAttribute('aria-pressed', String(!$('help').hidden)); }
+  function focusProblem(i) {
+    const list = questions[page] || [], n = list.length;
+    document.body.classList.remove('free-zoom');
+    if (!n) {  // nothing to answer on this page: show it whole
+      qi = 0; scaleMode = 'width'; applyZoom(); clearHighlight();
+      $('probTitle').textContent = sectionOf(page).label; $('probCount').textContent = `Page ${page} · nothing to answer here`;
+      $('probHelp').disabled = true; $('probPrev').disabled = page === numbers[0]; $('probNext').disabled = page === numbers.at(-1);
+      return;
+    }
+    qi = Math.max(0, Math.min(n - 1, i)); const q = list[qi], [fx, fy, fw] = frameOf(q);
+    const v = $('viewer'), cs = getComputedStyle(v), avail = v.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
+    scaleMode = 'manual'; width = Math.min(3264, avail * 4, avail / fw); applyZoom();
+    const sr = $('stage').getBoundingClientRect(), vr = v.getBoundingClientRect();
+    v.scrollLeft += sr.left + fx * sr.width - vr.left - Math.max(0, (avail - fw * sr.width) / 2);
+    v.scrollTop += sr.top + fy * sr.height - vr.top - 12;
+    highlight(q, false);
+    const { heading, detail } = label(q);
+    $('probTitle').textContent = detail && heading.startsWith('Question') ? `${heading} · ${detail}` : heading;
+    $('probCount').textContent = `${qi + 1} of ${n} · Page ${page}`;
+    $('probHelp').disabled = false;
+    $('probPrev').disabled = qi === 0 && page === numbers[0]; $('probNext').disabled = qi === n - 1 && page === numbers.at(-1);
+    if (!$('help').hidden) openQuestion(q, null);
+    syncHelpButton();
+  }
+  function stepProblem(d) {
+    const n = (questions[page] || []).length;
+    if (qi + d >= 0 && qi + d < n) { if (!$('help').hidden) hideHelp(false); focusProblem(qi + d); return; }
+    const i = numbers.indexOf(page) + d;
+    if (i >= 0 && i < numbers.length) goto(numbers[i], true, d < 0 ? 'last' : 'first');
+  }
+  function setProblemView(on, remember = true) {
+    on = on && PHONE.matches; problemView = on;
+    document.body.classList.toggle('problem-view', on);
+    $('probBar').hidden = !on; $('toProblems').hidden = on || !PHONE.matches;
+    if (remember && PHONE.matches) rememberView(on ? 'problem' : 'page');
+    if (!$('help').hidden) hideHelp(false);
+    if (on) focusProblem(qi); else { clearHighlight(); scaleMode = 'width'; applyZoom(); }
+  }
+  $('probPrev').onclick = () => stepProblem(-1);
+  $('probNext').onclick = () => stepProblem(1);
+  $('probPage').onclick = () => setProblemView(false);
+  $('toProblems').onclick = () => setProblemView(true);
+  $('probHelp').onclick = () => { const q = (questions[page] || [])[qi]; if (!q) return; if ($('help').hidden) openQuestion(q, $('probHelp')); else hideHelp(); syncHelpButton(); };
+  PHONE.addEventListener('change', () => setProblemView(PHONE.matches && !prefersPage(), false));
+  // Swipe left/right between problems (not while drawing, and not after a pinch-zoom).
+  let swipe = null;
+  viewer.addEventListener('touchstart', (e) => { swipe = problemView && e.touches.length === 1 && !['pen', 'eraser'].includes(mode) ? { x: e.touches[0].clientX, y: e.touches[0].clientY, t: Date.now() } : null; }, { passive: true });
+  viewer.addEventListener('touchmove', (e) => { if (e.touches.length > 1) { swipe = null; if (problemView) document.body.classList.add('free-zoom'); } }, { passive: true });
+  viewer.addEventListener('touchend', (e) => {
+    if (!swipe || e.touches.length) return;
+    const t = e.changedTouches[0], dx = t.clientX - swipe.x, dy = t.clientY - swipe.y; swipe = null;
+    if (Math.abs(dx) > 60 && Math.abs(dx) > 2 * Math.abs(dy) && !document.body.classList.contains('free-zoom')) stepProblem(dx < 0 ? 1 : -1);
+  });
+
+  /* ---------- Offline + app install ---------- */
+  if ('serviceWorker' in navigator && location.protocol.startsWith('http')) navigator.serviceWorker.register('sw.js').catch(() => {});
+  // Keep the open lesson's pages for offline use (the service worker saves each image once).
+  function prefetchSection() {
+    if (!('serviceWorker' in navigator) || !navigator.serviceWorker.controller) return;
+    for (const p of sectionOf(page).pages) if (p !== page) fetch(asset(p)).catch(() => {});
+  }
+
   /* ---------- Start ---------- */
   setMode('type');
   const initial = new URLSearchParams(location.hash.slice(1)).get('page');
+  if (PHONE.matches && !prefersPage()) { problemView = true; document.body.classList.add('problem-view'); $('probBar').hidden = false; }
+  else $('toProblems').hidden = !PHONE.matches;
   goto(numbers.includes(initial) ? initial : state.page, false);
   history.replaceState(null, '', `#page=${page}`);
 } catch (e) {
