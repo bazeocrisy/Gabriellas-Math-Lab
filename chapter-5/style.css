@@ -233,6 +233,8 @@ dialog::backdrop { background: rgb(15 23 42 / .38); }
 /* 8. Responsive ---------------------------------------------------------- */
 /* Mouse and trackpad: compact 36px controls. Touch screens keep 44px targets. */
 @media (pointer: coarse) { :root { --min-box: 26px; } }
+/* Touch tablets up to iPad Pro landscape: 44px controls need the compact bar (logo only, tick for "Saved"). */
+@media (pointer: coarse) and (max-width: 1366px) { .brand-text { display: none; } .save-chip #saveStatus { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); } }
 @media (pointer: fine) {
   :root { --tap: 36px; }
   .menu-item { min-height: 36px; }
