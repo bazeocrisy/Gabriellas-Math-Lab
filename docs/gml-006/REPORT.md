@@ -7,11 +7,11 @@ The owner asked for it to be simple: no left pane, no right pane, and a question
 
 - **Top bar:** title, Previous / page selector / Next, save status, Home.
 - **Textbook card:** the full width of the screen. One toolbar: Type, Pencil, Eraser, Pan, Undo, Redo, Zoom, Original only, and a More menu (save, print, backup, restore, reset zoom, clear page).
-- **A "?" beside each problem** (in the margin, never on the artwork). Tapping it outlines the problem on the page and opens a card at the bottom with Hint, Show Me How and Answer, all visible. Close with the X or Escape; focus returns to that "?".
+- **A "?" beside each problem** (in the margin, never on the artwork). Tapping it outlines the problem on the page and opens the solution in a pane on the right of the page: the answer, the numbered steps, then a one-line hint. Tapping another "?" swaps the content. Close with the X or Escape; focus returns to that "?".
 - **Original only** hides every "?" and the outline.
-- On phones the "?" buttons are spaced so they never overlap, and the card is a bottom sheet.
+- On phones (760px and narrower) there is no room for a right-hand pane, so the solution opens as a bottom sheet. The "?" buttons are spaced so they never overlap.
 
-Removed from the earlier version: the left navigation card, the questions list, the right-hand panel, "I finished this question" ticks, and the lesson selector. Saved "finished" data in existing browsers is left untouched.
+Removed from the earlier version: the left navigation card, the questions list, "I finished this question" ticks, and the lesson selector. Saved "finished" data in existing browsers is left untouched.
 
 ## Unchanged
 Source PDF and page renders, all 25 question entries, storage format `gml:lesson-5-1:v2`, ink, backup/restore and printing (four original pages with the student's work, no app UI).
@@ -20,7 +20,7 @@ Source PDF and page renders, all 25 question entries, storage format `gml:lesson
 | Suite | Result |
 |---|---|
 | `npm test` | 272 / 272 |
-| `test:lesson51:browser` | 76 / 76 |
+| `test:lesson51:browser` | 77 / 77 |
 
 The Lesson 5-1 suite has fewer checks than before because the question-list, completion and side-panel checks no longer apply. It still covers all four pages, all 25 "?" buttons, handwriting, typing, undo/redo, zoom and pan alignment, backup/restore, printing, browser history and resume, and 44px touch targets at 320-1440px with no overflow.
 

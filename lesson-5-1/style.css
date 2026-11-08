@@ -195,18 +195,18 @@ body[data-mode=pen] .response, body[data-mode=eraser] .response, body[data-mode=
 body[data-mode=pan] #viewer { cursor: grab; touch-action: none; }
 body.original .layer { visibility: hidden; }
 
-/* 6. Solution card (one plain card) -------------------------------------- */
-.help { position: fixed; z-index: 30; left: 50%; transform: translateX(-50%); bottom: var(--s-3); width: min(600px, calc(100vw - 24px)); max-height: 36dvh; overflow: auto; overscroll-behavior: contain; padding: var(--s-2) var(--s-4) var(--s-4); box-shadow: var(--shadow-lg); display: grid; gap: var(--s-3); }
+/* 6. Solution pane (right side) ------------------------------------------- */
+.workspace { flex: 1; min-height: 0; display: flex; gap: var(--s-3); }
+.help { flex: none; width: 360px; min-height: 0; overflow: auto; overscroll-behavior: contain; padding: var(--s-3) var(--s-4) var(--s-4); display: flex; flex-direction: column; gap: var(--s-4); }
 .help-head { display: flex; align-items: center; justify-content: space-between; gap: var(--s-3); }
-.help-head h2 { font-size: var(--fs-lg); font-weight: 740; outline: none; }
-.help-label { display: block; font-size: var(--fs-xs); font-weight: 700; letter-spacing: .05em; text-transform: uppercase; color: var(--c-ink-2); }
-.help-answer { display: grid; gap: 2px; padding: var(--s-3) var(--s-4); border-radius: var(--r-md); background: var(--c-ok-soft); }
-.help-answer strong { font-size: var(--fs-xl); color: #0f4f29; overflow-wrap: anywhere; }
+.help-head h2 { font-size: var(--fs-xl); font-weight: 740; outline: none; }
+.help-label { display: block; font-size: var(--fs-xs); font-weight: 700; letter-spacing: .05em; text-transform: uppercase; color: var(--c-ink-2); margin-bottom: 4px; }
+.help-answer { padding: var(--s-3) var(--s-4); border-radius: var(--r-md); background: var(--c-ok-soft); }
+.help-answer strong { display: block; font-size: var(--fs-lg); line-height: 1.35; color: #0f4f29; overflow-wrap: anywhere; }
 .badge { display: inline-block; margin-left: var(--s-2); font-size: 11px; padding: 1px 8px; border-radius: var(--r-pill); background: #fff; color: var(--c-ok); border: 1px solid var(--c-ok-line); text-transform: none; letter-spacing: 0; }
 .badge:empty { display: none; }
-.help-how { display: grid; gap: var(--s-1); }
-.help-how ol { margin: 0; padding-left: 22px; display: grid; gap: 4px; }
-.help-hint { color: var(--c-ink-2); font-size: var(--fs-sm); }
+.help-how ol { margin: 0; padding-left: 22px; display: grid; gap: 6px; }
+.help-hint { color: var(--c-ink-2); font-size: var(--fs-sm); padding-top: var(--s-3); border-top: 1px solid var(--c-border); }
 .help-hint .help-label { display: inline; margin-right: 4px; }
 
 /* 7. Dialogs ------------------------------------------------------------- */
@@ -251,9 +251,13 @@ dialog::backdrop { background: rgb(15 23 42 / .38); }
   .tool-end { margin-left: 0; }
   .menu-card { position: fixed; right: var(--s-2); left: var(--s-2); top: auto; width: auto; bottom: var(--s-2); max-height: 70dvh; overflow: auto; }
   #viewer { padding: var(--s-3) var(--gutter) calc(var(--s-3) + var(--help-h)); }
-  .help { bottom: 0; width: 100vw; border-radius: var(--r-lg) var(--r-lg) 0 0; max-height: 52dvh; padding-bottom: calc(var(--s-4) + env(safe-area-inset-bottom, 0px)); }
 }
 @media (max-width: 380px) { .brand-text { display: none; } }
+/* Tablets: narrower pane. Phones: the pane becomes a bottom sheet. */
+@media (max-width: 1100px) { .help { width: 300px; } }
+@media (max-width: 760px) {
+  .help { position: fixed; z-index: 30; left: 0; right: 0; bottom: 0; width: auto; max-height: 52dvh; border-radius: var(--r-lg) var(--r-lg) 0 0; box-shadow: var(--shadow-lg); padding-bottom: calc(var(--s-4) + env(safe-area-inset-bottom, 0px)); }
+}
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { transition: none !important; animation: none !important; }

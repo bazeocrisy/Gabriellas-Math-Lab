@@ -13,7 +13,7 @@ Open `lesson-5-1/index.html` through any static HTTP server. No build step or ru
 - `lib/storage.js`: versioned persistence, nondestructive import of legacy Lesson 5-1 work, backup validation.
 - `app.js`, `index.html`, `style.css`: controller and card-based responsive UI (GML-006). Design tokens live at the top of `style.css`.
 
-Layout (GML-006): a top bar (title, page navigation, save status) and the textbook card with one compact toolbar. A "?" button in the page margin, outside the artwork, sits beside each problem. Tapping it outlines the problem with a non-destructive overlay and opens a bottom card with the Hint, Show Me How steps and Answer. Original only hides every overlay. See `docs/gml-006/REPORT.md`.
+Layout (GML-006): a top bar (title, page navigation, save status) and the textbook card with one compact toolbar. A "?" button in the page margin, outside the artwork, sits beside each problem. Tapping it outlines the problem with a non-destructive overlay and opens the answer, steps and hint in a pane on the right of the page (a bottom sheet on phones). Original only hides every overlay. See `docs/gml-006/REPORT.md`.
 
 ## Work and recovery
 

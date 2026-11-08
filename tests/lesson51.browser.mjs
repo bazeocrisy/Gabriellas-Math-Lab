@@ -22,6 +22,7 @@ try{
  check('every problem has a ? button',await value(`[...document.querySelectorAll('.marker')].length===2&&[...document.querySelectorAll('.marker')].every(m=>m.textContent==='?')`));
  await b.js(`document.querySelector('.marker').click()`);
  check('tapping ? shows hint, steps and answer in the solution card',await value(`(()=>{const h=document.getElementById('help');return !h.hidden&&document.getElementById('hint').textContent.length>0&&document.querySelectorAll('#steps li').length>0&&document.getElementById('answer').textContent.length>0&&document.querySelectorAll('.layer .q-focus').length===1;})()`));
+ check('desktop solution opens in a right-hand pane beside the page, not over it',await value(`(()=>{const h=document.getElementById('help').getBoundingClientRect(),k=document.querySelector('.book-card').getBoundingClientRect();return h.left>=k.right&&h.right<=innerWidth&&h.top<innerHeight*.3&&h.height>innerHeight*.6;})()`));
  await b.js(`document.getElementById('original').checked=true;document.getElementById('original').dispatchEvent(new Event('change'))`);
  check('original-only view hides every overlay including ? buttons and highlight',await value(`getComputedStyle(document.querySelector('.layer')).visibility==='hidden'&&getComputedStyle(document.querySelector('.q-focus')).visibility==='hidden'`));
  await b.js(`document.getElementById('original').checked=false;document.getElementById('original').dispatchEvent(new Event('change'))`);

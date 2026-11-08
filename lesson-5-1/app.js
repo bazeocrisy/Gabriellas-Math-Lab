@@ -173,7 +173,8 @@ try {
     $('help').scrollTop = 0;
     $('help').hidden = false;
     document.body.classList.add('help-open');
-    document.body.style.setProperty('--help-h', ($('help').offsetHeight + 12) + 'px');
+    // Only the phone bottom sheet overlaps the page; reserve room under the page for it.
+    if (getComputedStyle($('help')).position === 'fixed') document.body.style.setProperty('--help-h', ($('help').offsetHeight + 12) + 'px');
     applyZoom(); highlight(q, true);
     $('helpTitle').focus({ preventScroll: true });
   }
