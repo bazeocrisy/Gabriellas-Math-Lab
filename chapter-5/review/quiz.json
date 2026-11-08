@@ -1,0 +1,294 @@
+{
+ "title": "Unit 5 Review Quiz",
+ "source": "Practice for the Chapter 5 Unit Review (textbook pages 173-176): new numbers, same skills.",
+ "questions": [
+  {
+   "type": "mc",
+   "q": "Which is equal to 10⁵?",
+   "options": [
+    "10 × 5",
+    "10 × 10 × 10 × 10 × 10",
+    "5 × 5 × 5 × 5 × 5 × 5 × 5 × 5 × 5 × 5",
+    "1,000,000"
+   ],
+   "answer": 1,
+   "hint": "The exponent tells how many 10s to multiply.",
+   "why": "10⁵ means 10 used as a factor 5 times: 10 × 10 × 10 × 10 × 10 = 100,000.",
+   "lesson": "5-1",
+   "check": "10**5",
+   "id": "q1"
+  },
+  {
+   "type": "mc",
+   "q": "What is 7 × 10³?",
+   "options": [
+    "70",
+    "700",
+    "7,000",
+    "70,000"
+   ],
+   "answer": 2,
+   "hint": "10³ is 1,000.",
+   "why": "10³ = 1,000, so 7 × 1,000 = 7,000.",
+   "lesson": "5-2",
+   "check": "7*10**3",
+   "id": "q2"
+  },
+  {
+   "type": "mc",
+   "q": "Which is the best estimate for 412 × 38?",
+   "options": [
+    "400 × 30 = 12,000",
+    "400 × 40 = 16,000",
+    "500 × 40 = 20,000",
+    "410 × 30 = 12,300"
+   ],
+   "answer": 1,
+   "hint": "Round each factor to its greatest place.",
+   "why": "412 rounds to 400 and 38 rounds to 40, so 400 × 40 = 16,000. (Exact: 15,656.)",
+   "lesson": "5-3",
+   "check": "400*40",
+   "id": "q3"
+  },
+  {
+   "type": "mc",
+   "q": "Which shows the partial products for 26 × 14?",
+   "options": [
+    "200 + 80 + 60 + 24",
+    "20 + 6 + 10 + 4",
+    "200 + 24",
+    "2,000 + 800 + 600 + 24"
+   ],
+   "answer": 0,
+   "hint": "Break 26 into 20 + 6 and 14 into 10 + 4, then multiply each part.",
+   "why": "20 × 10 = 200, 20 × 4 = 80, 6 × 10 = 60, 6 × 4 = 24. They add to 364, and 26 × 14 = 364.",
+   "lesson": "5-5",
+   "check": "200+80+60+24",
+   "id": "q4"
+  },
+  {
+   "type": "mc",
+   "q": "What is 53 × 100?",
+   "options": [
+    "530",
+    "5,300",
+    "53,000",
+    "5,030"
+   ],
+   "answer": 1,
+   "hint": "Multiplying by 100 moves each digit two places to the left.",
+   "why": "53 × 100 = 5,300.",
+   "lesson": "5-2",
+   "check": "53*100",
+   "id": "q5"
+  },
+  {
+   "type": "mc",
+   "q": "A farmer plants 24 rows with 135 plants in each row. How many plants is that?",
+   "options": [
+    "3,140",
+    "3,240",
+    "3,250",
+    "2,430"
+   ],
+   "answer": 1,
+   "hint": "Multiply 135 × 24.",
+   "why": "135 × 24 = 3,240 (2,700 + 540).",
+   "lesson": "5-7",
+   "check": "135*24",
+   "id": "q6"
+  },
+  {
+   "type": "mc",
+   "q": "Which word names the number that tells how many times the base is used as a factor?",
+   "options": [
+    "base",
+    "product",
+    "exponent",
+    "estimate"
+   ],
+   "answer": 2,
+   "hint": "In 10³, it is the small raised number.",
+   "why": "The exponent tells how many times the base is used as a factor.",
+   "lesson": "5-1",
+   "id": "q7"
+  },
+  {
+   "type": "mc",
+   "q": "What is the value of 10²?",
+   "options": [
+    "20",
+    "12",
+    "100",
+    "1,000"
+   ],
+   "answer": 2,
+   "hint": "The exponent tells how many 10s to multiply.",
+   "why": "10 × 10 = 100.",
+   "lesson": "5-1",
+   "check": "10**2",
+   "id": "q8"
+  },
+  {
+   "type": "fill",
+   "q": "10 × 10 × 10 × 10 = 10 to the power of ____",
+   "answer": "4",
+   "hint": "Count the 10s.",
+   "why": "There are four factors of 10, so it is 10⁴.",
+   "lesson": "5-1",
+   "check": "4",
+   "id": "q9",
+   "accept": [
+    "10^4",
+    "10⁴"
+   ]
+  },
+  {
+   "type": "fill",
+   "q": "6 × 10⁴ = ____",
+   "answer": "60,000",
+   "hint": "10⁴ is 10,000.",
+   "why": "6 × 10,000 = 60,000.",
+   "lesson": "5-2",
+   "check": "6*10**4",
+   "id": "q10"
+  },
+  {
+   "type": "fill",
+   "q": "48 × 100 = ____",
+   "answer": "4,800",
+   "hint": "Multiplying by 100 moves each digit two places to the left.",
+   "why": "48 × 100 = 4,800.",
+   "lesson": "5-2",
+   "check": "48*100",
+   "id": "q11"
+  },
+  {
+   "type": "fill",
+   "q": "312 × 23 = ____",
+   "answer": "7,176",
+   "hint": "Multiply 312 × 3 and 312 × 20, then add.",
+   "why": "312 × 3 = 936 and 312 × 20 = 6,240. 936 + 6,240 = 7,176.",
+   "lesson": "5-7",
+   "check": "312*23",
+   "id": "q12"
+  },
+  {
+   "type": "fill",
+   "q": "Area model for 34 × 27: 600 + 80 + 210 + 28 = ____",
+   "answer": "918",
+   "hint": "Add the four partial products.",
+   "why": "600 + 80 + 210 + 28 = 918, so 34 × 27 = 918.",
+   "lesson": "5-4",
+   "check": "600+80+210+28",
+   "id": "q13"
+  },
+  {
+   "type": "fill",
+   "q": "Estimate 589 × 21 by rounding: 600 × 20 = ____",
+   "answer": "12,000",
+   "hint": "Multiply the leading digits, then count the zeros.",
+   "why": "600 × 20 = 12,000.",
+   "lesson": "5-3",
+   "check": "600*20",
+   "id": "q14"
+  },
+  {
+   "type": "fill",
+   "q": "A pack has 144 stickers. 15 packs have ____ stickers.",
+   "answer": "2,160",
+   "hint": "Multiply 144 × 15.",
+   "why": "144 × 10 = 1,440 and 144 × 5 = 720. 1,440 + 720 = 2,160.",
+   "lesson": "5-6",
+   "check": "144*15",
+   "id": "q15"
+  },
+  {
+   "type": "fill",
+   "q": "1,205 × 8 = ____",
+   "answer": "9,640",
+   "hint": "Multiply each place by 8.",
+   "why": "8 × 1,000 = 8,000, 8 × 200 = 1,600, 8 × 5 = 40. Total 9,640.",
+   "lesson": "5-6",
+   "check": "1205*8",
+   "id": "q16"
+  },
+  {
+   "type": "tf",
+   "q": "10³ = 30",
+   "answer": false,
+   "hint": "What does the exponent tell you to do with 10?",
+   "why": "False. 10³ = 10 × 10 × 10 = 1,000, not 10 × 3.",
+   "lesson": "5-1",
+   "check": "10**3==30",
+   "id": "q17"
+  },
+  {
+   "type": "tf",
+   "q": "25 × 10² = 2,500",
+   "answer": true,
+   "hint": "10² is 100.",
+   "why": "True. 25 × 100 = 2,500.",
+   "lesson": "5-2",
+   "check": "25*10**2==2500",
+   "id": "q18"
+  },
+  {
+   "type": "tf",
+   "q": "To estimate 497 × 32, you can use 500 × 30.",
+   "answer": true,
+   "hint": "Round each factor.",
+   "why": "True. 497 rounds to 500 and 32 rounds to 30, so about 15,000.",
+   "lesson": "5-3",
+   "id": "q19"
+  },
+  {
+   "type": "tf",
+   "q": "46 × 12 = 552",
+   "answer": true,
+   "hint": "46 × 10 = 460 and 46 × 2 = 92.",
+   "why": "True. 460 + 92 = 552.",
+   "lesson": "5-5",
+   "check": "46*12==552",
+   "id": "q20"
+  },
+  {
+   "type": "tf",
+   "q": "In 10⁵, the 5 is called the base.",
+   "answer": false,
+   "hint": "Which number is multiplied, and which tells how many times?",
+   "why": "False. 10 is the base; 5 is the exponent.",
+   "lesson": "5-1",
+   "id": "q21"
+  },
+  {
+   "type": "tf",
+   "q": "300 × 40 = 1,200",
+   "answer": false,
+   "hint": "3 × 4 = 12, then count all the zeros.",
+   "why": "False. 300 × 40 = 12,000 (three zeros).",
+   "lesson": "5-3",
+   "check": "300*40==1200",
+   "id": "q22"
+  },
+  {
+   "type": "tf",
+   "q": "The partial products for 18 × 15 are 100, 50, 80 and 40.",
+   "answer": true,
+   "hint": "18 = 10 + 8 and 15 = 10 + 5.",
+   "why": "True. 10 × 10, 10 × 5, 8 × 10 and 8 × 5 give 100, 50, 80 and 40, which add to 270 = 18 × 15.",
+   "lesson": "5-5",
+   "check": "100+50+80+40==18*15",
+   "id": "q23"
+  },
+  {
+   "type": "tf",
+   "q": "Multiplying a whole number by 10⁴ moves each digit 4 places to the left.",
+   "answer": true,
+   "hint": "10⁴ = 10,000. Try 3 × 10,000.",
+   "why": "True. For example, 3 × 10⁴ = 30,000: the 3 moves from the ones place to the ten-thousands place.",
+   "lesson": "5-2",
+   "id": "q24"
+  }
+ ]
+}

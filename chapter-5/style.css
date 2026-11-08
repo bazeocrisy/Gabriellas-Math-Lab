@@ -306,3 +306,4 @@ body.problem-view .help { z-index: 35; }
   #printRoot .marker, #printRoot .q-focus { display: none; }
   #printRoot .ink { display: block; }
 }
+a.menu-item { text-decoration: none; color: inherit; }

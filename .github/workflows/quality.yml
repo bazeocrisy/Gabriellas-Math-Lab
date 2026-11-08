@@ -32,6 +32,8 @@ jobs:
             script: test:chapter5:browser
           - label: devices
             script: test:devices:browser
+          - label: quiz
+            script: test:quiz:browser
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
