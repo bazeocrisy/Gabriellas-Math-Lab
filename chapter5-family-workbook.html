@@ -148,6 +148,10 @@ body.solution-open .assist{display:block!important;grid-column:2!important;posit
 .answer-layer .answer-item input{height:22px!important;min-height:22px!important;line-height:18px!important;box-sizing:border-box!important;background:#ffffffde!important;min-width:0!important;max-width:none!important;pointer-events:auto!important}
 .answer-layer .answer-item .help-dot{pointer-events:auto!important;top:auto;left:auto}
 @media(max-width:600px){.answer-layer .answer-item input{height:18px!important;min-height:18px!important;line-height:14px!important}}
+
+/* Audit: align answers to source-PDF answer-field rectangles rather than estimated offsets. */
+.answer-layer .answer-item input{background:rgba(255,255,255,.90)!important}
+.answer-layer .answer-item input:focus{background:white!important}
 </style></head><body>
 <div class="shell"><aside class="card side"><div class="eyebrow">Family study edition</div><h1>Gabriella's Math Lab</h1><p class="muted mini">Chapter 5 · Exact textbook pages</p><a class="navlink" href="./unit5-lessons-5-1-to-5-4.html">↗ Open original interactive lessons 5-1 to 5-4</a><a class="navlink" href="./">↗ Math Lab home</a><div class="smallcard"><strong>Progress is saved here</strong><p class="mini muted">This companion workbook stores your writing and notes in this browser. Export a backup if using another device.</p></div><div class="smallcard"><strong>Textbook protection</strong><p class="mini muted">The source pages are rendered unchanged. Ink and notes are saved separately.</p></div></aside>
 <main class="main"><section class="card top"><div><div class="eyebrow">Original Chapter 5 book</div><strong id="page-title">Loading textbook…</strong><div class="mini muted" id="page-subtitle">Use the arrows or select any source PDF page</div></div><div class="buttons"><button class="btn" id="prev">← Previous</button><select id="page-select" aria-label="Choose textbook page"></select><button class="btn primary" id="next">Next →</button></div></section>
@@ -200,13 +204,13 @@ for(const q of listedQuestions()){
    position.helpX=right?.445:.090;
    position.helpY=Math.max(.025,r[1]-.004);
    position.inputX=r[0];
-   position.inputY=r[1]+(n<=4?0:n===6?.018:.012);
+   position.inputY=r[1];
    position.inputW=Math.min(n<=4?.155:.09,Math.max(.065,r[2]));
  }else{
    position.helpX=Math.max(.018,Math.min(.94,r[0]-.038));
    position.helpY=Math.max(.025,r[1]-.003);
    position.inputX=r[0];
-   position.inputY=r[1]+(field?.multi?.005:0);
+   position.inputY=r[1];
    position.inputW=Math.max(.08,Math.min(.42,r[2]*.82));
  }
  position.inputX=Math.max(.015,Math.min(.965-position.inputW,position.inputX));
