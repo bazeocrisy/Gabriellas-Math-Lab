@@ -99,14 +99,14 @@ try {
         layer.append(b);
       }
       svg.addEventListener('pointerdown', (e) => {
-        if (!['pen', 'eraser'].includes(mode)) return;
+        if (!['pen', 'eraser'].includes(mode) || !e.isPrimary) return;  // a second finger means pinch, not a stroke
         e.preventDefault(); svg.setPointerCapture(e.pointerId); gesture = snapshot();
         const pt = point(e, svg);
         if (mode === 'pen') { current = [pt]; (state.ink[page] ??= []).push(current); } else erase(pt);
         paint(svg, state.ink[page] || []);
       });
       svg.addEventListener('pointermove', (e) => {
-        if (gesture === null) return;
+        if (gesture === null || !e.isPrimary) return;
         if (mode === 'pen' && current) current.push(point(e, svg)); else if (mode === 'eraser') erase(point(e, svg));
         paint(svg, state.ink[page] || []);
       });
@@ -248,7 +248,47 @@ try {
   viewer.addEventListener('pointermove', (e) => { if (!pan) return; viewer.scrollLeft = pan.left - e.clientX + pan.x; viewer.scrollTop = pan.top - e.clientY + pan.y; });
   for (const ev of ['pointerup', 'pointercancel']) viewer.addEventListener(ev, () => { pan = null; });
 
-  $('original').onchange = () => document.body.classList.toggle('original', $('original').checked);
+  // Pinch to zoom the PAGE only (touchscreens), keeping the spot under the fingers in place.
+  // The browser's own pinch is switched off for the viewer (CSS touch-action), so the bars never zoom.
+  function zoomAround(newWidth, cx, cy, from) {
+    const st = $('stage'), r0 = from || st.getBoundingClientRect(), k = newWidth / r0.width;
+    const px = cx - r0.left, py = cy - r0.top;
+    scaleMode = 'manual'; width = newWidth; applyZoom();
+    const r1 = st.getBoundingClientRect(), kk = r1.width / r0.width;
+    viewer.scrollLeft += r1.left + px * kk - cx; viewer.scrollTop += r1.top + py * kk - cy;
+    return k;
+  }
+  function cancelStroke() {
+    if (gesture === null) return;
+    const s0 = JSON.parse(gesture); state.ink[page] = s0.ink; gesture = null; current = null;
+    const svg = $('stage').querySelector('.ink'); if (svg) paint(svg, state.ink[page] || []);
+  }
+  let pinch = null;
+  const mid = (t) => ({ x: (t[0].clientX + t[1].clientX) / 2, y: (t[0].clientY + t[1].clientY) / 2, d: Math.hypot(t[0].clientX - t[1].clientX, t[0].clientY - t[1].clientY) });
+  viewer.addEventListener('touchstart', (e) => {
+    if (e.touches.length !== 2) return;
+    cancelStroke(); pan = null;
+    const m = mid(e.touches); pinch = { d: m.d, w: width, x: m.x, y: m.y };
+  }, { passive: true });
+  viewer.addEventListener('touchmove', (e) => {
+    if (!pinch || e.touches.length !== 2) return;
+    e.preventDefault();
+    const m = mid(e.touches), target = Math.max(160, Math.min(3264, pinch.w * m.d / pinch.d));
+    viewer.scrollLeft -= m.x - pinch.x; viewer.scrollTop -= m.y - pinch.y; pinch.x = m.x; pinch.y = m.y;  // two-finger pan
+    if (Math.abs(target - width) > 0.5) zoomAround(target, m.x, m.y);
+  }, { passive: false });
+  viewer.addEventListener('touchend', (e) => { if (e.touches.length < 2) pinch = null; });
+  viewer.addEventListener('touchcancel', () => { pinch = null; });
+  // Trackpad pinch on laptops arrives as ctrl + wheel: zoom the page around the cursor, not the browser.
+  viewer.addEventListener('wheel', (e) => {
+    if (!e.ctrlKey) return;
+    e.preventDefault();
+    zoomAround(Math.max(160, Math.min(3264, width * Math.exp(-e.deltaY * 0.01))), e.clientX, e.clientY);
+  }, { passive: false });
+
+  function setOriginal(on) { $('original').checked = on; document.body.classList.toggle('original', on); $('originalMenu').setAttribute('aria-pressed', String(on)); }
+  $('original').onchange = () => setOriginal($('original').checked);
+  $('originalMenu').onclick = () => setOriginal(!$('original').checked);
 
   // "More" menu: close after an action, on outside click and on Escape.
   const menu = document.querySelector('.menu');
