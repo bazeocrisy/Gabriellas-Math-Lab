@@ -27,13 +27,14 @@ export async function startServer() {
   return { origin: `http://127.0.0.1:${server.address().port}`, missing, close: () => server.close() };
 }
 
-export async function startBrowser() {
+export async function startBrowser({ profile: savedProfile } = {}) {
   const candidates = [process.env.CHROME_PATH,
     'C:/Program Files/Google/Chrome/Application/chrome.exe', 'C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe',
     '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome', '/usr/bin/google-chrome', '/usr/bin/chromium', '/usr/bin/chromium-browser'].filter(Boolean);
   const exe = candidates.find((p) => fs.existsSync(p));
   if (!exe) throw new Error('No Chrome/Edge found. Set CHROME_PATH.');
-  const profile = fs.mkdtempSync(path.join(os.tmpdir(), 'gml-chrome-'));
+  const profile = savedProfile || fs.mkdtempSync(path.join(os.tmpdir(), 'gml-chrome-'));
+  if (savedProfile) fs.rmSync(path.join(profile, 'DevToolsActivePort'), { force: true });
   const proc = spawn(exe, ['--headless=new', '--remote-debugging-port=0', `--user-data-dir=${profile}`, '--no-first-run', '--no-default-browser-check', '--hide-scrollbars', 'about:blank'], { stdio: 'ignore' });
   let port;
   for (let i = 0; i < 150 && !port; i++) {
@@ -108,15 +109,23 @@ export async function startBrowser() {
       await send('Input.dispatchKeyEvent', { type: 'keyDown', key, code, windowsVirtualKeyCode: vk, modifiers: mods });
       await send('Input.dispatchKeyEvent', { type: 'keyUp', key, code, windowsVirtualKeyCode: vk, modifiers: mods });
     },
-    // Ask Chrome to quit, then make sure the whole process tree is gone (on Windows, proc.kill() alone can leave
-    // headless Chrome running; hundreds of leftovers eventually stop new browsers from starting).
-    close() {
-      try { ws.send(JSON.stringify({ id: ++nextId, method: 'Browser.close' })); } catch { /* ignore */ }
-      try { ws.close(); } catch { /* ignore */ }
-      try {
-        if (process.platform === 'win32') spawnSync('taskkill', ['/PID', String(proc.pid), '/T', '/F'], { stdio: 'ignore' });
-        else proc.kill();
-      } catch { /* ignore */ }
+    // Let the browser flush its profile before a restart. Force termination only
+    // if graceful shutdown stalls; immediately killing it can lose saved work.
+    async close() {
+      const exited = new Promise((resolve) => {
+        if (proc.exitCode !== null) { resolve(); return; }
+        const timeout = setTimeout(() => {
+          try {
+            if (process.platform === 'win32') spawnSync('taskkill', ['/PID', String(proc.pid), '/T', '/F'], { stdio: 'ignore' });
+            else proc.kill();
+          } catch { /* already stopped */ }
+          resolve();
+        }, 3000);
+        proc.once('exit', () => { clearTimeout(timeout); resolve(); });
+      });
+      try { ws.send(JSON.stringify({ id: ++nextId, method: 'Browser.close' })); } catch { /* already closed */ }
+      await exited;
+      try { ws.close(); } catch { /* already closed */ }
     }
   };
   return b;

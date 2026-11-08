@@ -24,6 +24,8 @@ jobs:
             script: test:browser
           - label: chapter4
             script: test:chapter4:browser
+          - label: lesson51
+            script: test:lesson51:browser
           - label: responsive
             script: test:responsive:browser
     steps:
@@ -38,4 +40,6 @@ jobs:
         if: always()
         with:
           name: browser-screenshots-${{ matrix.label }}
-          path: tests/screenshots/
+          path: |
+            tests/screenshots/
+            docs/gml-005/

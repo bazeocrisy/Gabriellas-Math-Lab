@@ -1,0 +1,154 @@
+
+> test:lesson51:browser
+> node tests/lesson51.browser.mjs
+
+PASS lesson loads original first page and navigation boundary
+PASS page 143 identity and preserved aspect ratio
+PASS page 143 exact image loaded
+PASS page 143 question count
+PASS page 143 margin help 1 maps to its own question without covering source
+PASS page 143 question 1 hint first
+PASS Show Me How leaves final answer hidden
+PASS solution can be revealed
+PASS page 143 margin help 2 maps to its own question without covering source
+PASS page 143 question 2 hint first
+PASS Show Me How leaves final answer hidden
+PASS solution can be revealed
+PASS page 144 identity and preserved aspect ratio
+PASS page 144 exact image loaded
+PASS page 144 question count
+PASS page 144 margin help 1 maps to its own question without covering source
+PASS page 144 question 1 hint first
+PASS Show Me How leaves final answer hidden
+PASS solution can be revealed
+PASS page 144 margin help 2 maps to its own question without covering source
+PASS page 144 question 2 hint first
+PASS Show Me How leaves final answer hidden
+PASS solution can be revealed
+PASS page 144 margin help 3 maps to its own question without covering source
+PASS page 144 question 3 hint first
+PASS Show Me How leaves final answer hidden
+PASS solution can be revealed
+PASS page 145 identity and preserved aspect ratio
+PASS page 145 exact image loaded
+PASS page 145 question count
+PASS page 145 margin help 1 maps to its own question without covering source
+PASS page 145 question 1 hint first
+PASS Show Me How leaves final answer hidden
+PASS solution can be revealed
+PASS page 145 margin help 2 maps to its own question without covering source
+PASS page 145 question 2 hint first
+PASS Show Me How leaves final answer hidden
+PASS solution can be revealed
+PASS page 145 margin help 3 maps to its own question without covering source
+PASS page 145 question 3 hint first
+PASS Show Me How leaves final answer hidden
+PASS solution can be revealed
+PASS page 145 margin help 4 maps to its own question without covering source
+PASS page 145 question 4 hint first
+PASS Show Me How leaves final answer hidden
+PASS solution can be revealed
+PASS page 145 margin help 5 maps to its own question without covering source
+PASS page 145 question 5 hint first
+PASS Show Me How leaves final answer hidden
+PASS solution can be revealed
+PASS page 145 margin help 6 maps to its own question without covering source
+PASS page 145 question 6 hint first
+PASS Show Me How leaves final answer hidden
+PASS solution can be revealed
+PASS page 145 margin help 7 maps to its own question without covering source
+PASS page 145 question 7 hint first
+PASS Show Me How leaves final answer hidden
+PASS solution can be revealed
+PASS page 145 margin help 8 maps to its own question without covering source
+PASS page 145 question 8 hint first
+PASS Show Me How leaves final answer hidden
+PASS solution can be revealed
+PASS page 145 margin help 9 maps to its own question without covering source
+PASS page 145 question 9 hint first
+PASS Show Me How leaves final answer hidden
+PASS solution can be revealed
+PASS page 145 margin help 10 maps to its own question without covering source
+PASS page 145 question 10 hint first
+PASS Show Me How leaves final answer hidden
+PASS solution can be revealed
+PASS page 145 margin help 11 maps to its own question without covering source
+PASS page 145 question 11 hint first
+PASS Show Me How leaves final answer hidden
+PASS solution can be revealed
+PASS page 145 margin help 12 maps to its own question without covering source
+PASS page 145 question 12 hint first
+PASS Show Me How leaves final answer hidden
+PASS solution can be revealed
+PASS page 145 margin help 13 maps to its own question without covering source
+PASS page 145 question 13 hint first
+PASS Show Me How leaves final answer hidden
+PASS solution can be revealed
+PASS page 145 margin help 14 maps to its own question without covering source
+PASS page 145 question 14 hint first
+PASS Show Me How leaves final answer hidden
+PASS solution can be revealed
+PASS page 146 identity and preserved aspect ratio
+PASS page 146 exact image loaded
+PASS page 146 question count
+PASS page 146 margin help 1 maps to its own question without covering source
+PASS page 146 question 1 hint first
+PASS Show Me How leaves final answer hidden
+PASS solution can be revealed
+PASS page 146 margin help 2 maps to its own question without covering source
+PASS page 146 question 2 hint first
+PASS Show Me How leaves final answer hidden
+PASS solution can be revealed
+PASS page 146 margin help 3 maps to its own question without covering source
+PASS page 146 question 3 hint first
+PASS Show Me How leaves final answer hidden
+PASS solution can be revealed
+PASS page 146 margin help 4 maps to its own question without covering source
+PASS page 146 question 4 hint first
+PASS Show Me How leaves final answer hidden
+PASS solution can be revealed
+PASS page 146 margin help 5 maps to its own question without covering source
+PASS page 146 question 5 hint first
+PASS Show Me How leaves final answer hidden
+PASS solution can be revealed
+PASS page 146 margin help 6 maps to its own question without covering source
+PASS page 146 question 6 hint first
+PASS Show Me How leaves final answer hidden
+PASS solution can be revealed
+PASS typed answer restores after refresh
+PASS typed answer survives assistance open and close
+PASS real mouse drawing top, center and bottom
+PASS undo ink
+PASS redo ink
+PASS eraser removes selected stroke
+PASS erasing is undoable
+PASS handwriting persists across pages and refresh
+PASS handwriting geometry remains unchanged on zoom and resize
+PASS typed overlay remains aligned on zoom and resize
+PASS completion state restores
+PASS mobile chrome has no horizontal overflow
+PASS backup exports a valid file
+PASS backup restores typed work and retains prior recovery copy
+PASS zoomed page pans with a mouse
+PASS touch handwriting
+PASS clear selected handwriting preserves typing
+PASS clear is undoable
+PASS last page navigation boundary
+PASS browser Back restores prior page
+PASS browser Forward restores page
+PASS resume after closing and reopening application
+PASS four original print pages, no controls in print content
+PASS lesson navigation and toolbar touch targets at least 44px with no overflow at 320
+PASS lesson navigation and toolbar touch targets at least 44px with no overflow at 390
+PASS lesson navigation and toolbar touch targets at least 44px with no overflow at 768
+PASS lesson navigation and toolbar touch targets at least 44px with no overflow at 820
+PASS lesson navigation and toolbar touch targets at least 44px with no overflow at 1440
+PASS saved page and work survive full browser process restart
+PASS no runtime exceptions
+PASS no missing assets
+All Lesson 5-1 browser checks passed.
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.2
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.2
+npm notice To update run: npm install -g npm@12.2.2
+npm notice

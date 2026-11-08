@@ -1,10 +1,10 @@
-// All base screens at six sizes, plus active learning, immediate help and saved question review.
+// All base screens at seven sizes, plus active learning, immediate help and saved question review.
 import path from 'node:path';
 import { ROOT, BASE, startServer, startBrowser } from './lib/harness.mjs';
 const server=await startServer();
 let b,passed=0,failed=0;
 function check(name,ok,detail){ok?passed++:failed++;console.log((ok?'✔ ':'✖ ')+name+(!ok?' '+JSON.stringify(detail):''));}
-const viewports=[[320,568],[375,667],[390,844],[768,1024],[1366,768],[1920,1080]];
+const viewports=[[320,568],[375,667],[390,844],[768,1024],[820,1180],[1366,768],[1920,1080]];
 try {
  b=await startBrowser();const url=process.env.LIVE_URL||server.origin+BASE;
  const load=async route=>b.load(url+'index.html'+route);

@@ -1,0 +1,840 @@
+
+> test:browser
+> node tests/browser.test.mjs
+
+✔ NumberNova: brand name, tagline and welcome on the landing page
+✔ NumberNova: logo, header icon and favicon load
+✔ NumberNova: the four main sections are on the landing page
+✔ NumberNova: every brand asset loads
+✔ learn: Decimal lessons page with grade and Milestones subtitles
+✔ learn: every available lesson has TEACH | PRACTICE | TEST
+✔ learn: a fresh start recommends one step per lesson: Start (Teach screen 1)
+✔ learn: all 10 lessons listed; the rest say Coming later with no buttons
+✔ learn: Lesson Notes button for each available lesson
+✔ teach: walked all 23 screens in order
+✔ teach: Next waits until worked-example steps are shown
+✔ teach: guided checks coach wrong answers with a reteach example
+✔ teach: guided checks unlock Next only after a correct answer
+✔ teach: last screen offers Practice and Notes, progress marked done
+✔ teach: Back goes to the previous screen
+✔ practice: 10 questions per session
+✔ practice: hints appear one at a time, in order, max 3
+✔ practice: hints do not reveal the answer screen
+✔ practice: blank answer asks for an answer and is not counted
+✔ practice: wrong answer says not correct, explains, stays on the question
+✔ practice: checking the same wrong answer again is not counted
+✔ practice: worked help remains available without guessing
+✔ practice: refresh keeps the session, hints and feedback
+✔ practice: correct answer explains why and offers Next
+✔ practice: all 10 answered (Enter key works for typed answers)
+✔ practice: summary shows first-try score and saves the session
+✔ practice: a new session uses different questions
+✔ test: exactly 10 questions
+✔ test: fresh questions (none from the open or last practice session, none from Teach)
+✔ test: no hints, feedback or answers shown before submitting
+✔ test: refresh mid-test keeps answers; review lists the unanswered question
+✔ test: submitting with a blank asks for confirmation first
+✔ test: score 8 of 10 (80%), not mastered
+✔ test: missed skills listed with links to Teach
+✔ test: results explain every question (right ones folded away)
+✔ test: results survive a refresh
+✔ test: retake gives fresh questions
+✔ test: 10 of 10 scores 100% and counts as mastered
+✔ test: 9 of 10 scores 90% and counts as mastered
+✔ test: equivalent decimals with extra zeros are scored correct
+✔ parent: shows lesson completed, recent score, skills, next step and device notice
+✔ parent: practice sessions and tests counted
+✔ parent: progress survives a refresh
+✔ learn: lesson card shows mastered status
+✔ saved Lesson 1 progress from the earlier version still shows on the Learn page
+✔ saved Lesson 1 progress shows on Parent Progress, other lessons start empty
+✔ d02 teach: walked all 15 screens in order
+✔ d02 teach: every skill screen says what you will learn and explains why after the steps
+✔ d02 teach: 7 guided checks coach wrong answers and unlock Next only after a right answer
+✔ d02 teach: marked finished
+✔ d02 practice: exactly 3 hints, in order, no answer shown
+✔ d02 practice: 10 questions; wrong answers get an explanation and do not advance; right answers explain why
+✔ d02 practice: summary and saved session
+✔ d02 test: no hints, feedback or explanations before submitting
+✔ d02 test: 8 of 10 scores 80%, not mastered, missed skills link to this lesson's Teach
+✔ d02 test: retake is fresh; 10 of 10 is mastered
+✔ d02 notes: printable notes with vocabulary and worked examples
+✔ d02 parent: shows the lesson as completed with the latest score
+✔ d03 teach: walked all 18 screens in order
+✔ d03 teach: every skill screen says what you will learn and explains why after the steps
+✔ d03 teach: 8 guided checks coach wrong answers and unlock Next only after a right answer
+✔ d03 teach: marked finished
+✔ d03 practice: exactly 3 hints, in order, no answer shown
+✔ d03 practice: 10 questions; wrong answers get an explanation and do not advance; right answers explain why
+✔ d03 practice: summary and saved session
+✔ d03 test: no hints, feedback or explanations before submitting
+✔ d03 test: 8 of 10 scores 80%, not mastered, missed skills link to this lesson's Teach
+✔ d03 test: retake is fresh; 10 of 10 is mastered
+✔ d03 notes: printable notes with vocabulary and worked examples
+✔ d03 parent: shows the lesson as completed with the latest score
+✔ d04 teach: walked all 12 screens in order
+✔ d04 teach: every skill screen says what you will learn and explains why after the steps
+✔ d04 teach: 5 guided checks coach wrong answers and unlock Next only after a right answer
+✔ d04 teach: marked finished
+✔ d04 practice: exactly 3 hints, in order, no answer shown
+✔ d04 practice: 10 questions; wrong answers get an explanation and do not advance; right answers explain why
+✔ d04 practice: summary and saved session
+✔ d04 test: no hints, feedback or explanations before submitting
+✔ d04 test: 8 of 10 scores 80%, not mastered, missed skills link to this lesson's Teach
+✔ d04 test: retake is fresh; 10 of 10 is mastered
+✔ d04 notes: printable notes with vocabulary and worked examples
+✔ d04 parent: shows the lesson as completed with the latest score
+✔ d05 teach: walked all 14 screens in order
+✔ d05 teach: every skill screen says what you will learn and explains why after the steps
+✔ d05 teach: 6 guided checks coach wrong answers and unlock Next only after a right answer
+✔ d05 teach: marked finished
+✔ d05 practice: exactly 3 hints, in order, no answer shown
+✔ d05 practice: 10 questions; wrong answers get an explanation and do not advance; right answers explain why
+✔ d05 practice: summary and saved session
+✔ d05 test: no hints, feedback or explanations before submitting
+✔ d05 test: 8 of 10 scores 80%, not mastered, missed skills link to this lesson's Teach
+✔ d05 test: retake is fresh; 10 of 10 is mastered
+✔ d05 notes: printable notes with vocabulary and worked examples
+✔ d05 parent: shows the lesson as completed with the latest score
+✔ d06 teach: walked all 13 screens in order
+✔ d06 teach: every skill screen says what you will learn and explains why after the steps
+✔ d06 teach: 6 guided checks coach wrong answers and unlock Next only after a right answer
+✔ d06 teach: marked finished
+✔ d06 practice: exactly 3 hints, in order, no answer shown
+✔ d06 practice: 10 questions; wrong answers get an explanation and do not advance; right answers explain why
+✔ d06 practice: summary and saved session
+✔ d06 test: no hints, feedback or explanations before submitting
+✔ d06 test: 8 of 10 scores 80%, not mastered, missed skills link to this lesson's Teach
+✔ d06 test: retake is fresh; 10 of 10 is mastered
+✔ d06 notes: printable notes with vocabulary and worked examples
+✔ d06 parent: shows the lesson as completed with the latest score
+✔ d07 teach: walked all 13 screens in order
+✔ d07 teach: every skill screen says what you will learn and explains why after the steps
+✔ d07 teach: 6 guided checks coach wrong answers and unlock Next only after a right answer
+✔ d07 teach: marked finished
+✔ d07 practice: exactly 3 hints, in order, no answer shown
+✔ d07 practice: 10 questions; wrong answers get an explanation and do not advance; right answers explain why
+✔ d07 practice: summary and saved session
+✔ d07 test: no hints, feedback or explanations before submitting
+✔ d07 test: 8 of 10 scores 80%, not mastered, missed skills link to this lesson's Teach
+✔ d07 test: retake is fresh; 10 of 10 is mastered
+✔ d07 notes: printable notes with vocabulary and worked examples
+✔ d07 parent: shows the lesson as completed with the latest score
+✔ d08 teach: walked all 11 screens in order
+✔ d08 teach: every skill screen says what you will learn and explains why after the steps
+✔ d08 teach: 5 guided checks coach wrong answers and unlock Next only after a right answer
+✔ d08 teach: marked finished
+✔ d08 practice: exactly 3 hints, in order, no answer shown
+✔ d08 practice: 10 questions; wrong answers get an explanation and do not advance; right answers explain why
+✔ d08 practice: summary and saved session
+✔ d08 test: no hints, feedback or explanations before submitting
+✔ d08 test: 8 of 10 scores 80%, not mastered, missed skills link to this lesson's Teach
+✔ d08 test: retake is fresh; 10 of 10 is mastered
+✔ d08 notes: printable notes with vocabulary and worked examples
+✔ d08 parent: shows the lesson as completed with the latest score
+✔ d09 teach: walked all 15 screens in order
+✔ d09 teach: every skill screen says what you will learn and explains why after the steps
+✔ d09 teach: 7 guided checks coach wrong answers and unlock Next only after a right answer
+✔ d09 teach: marked finished
+✔ d09 practice: exactly 3 hints, in order, no answer shown
+✔ d09 practice: 10 questions; wrong answers get an explanation and do not advance; right answers explain why
+✔ d09 practice: summary and saved session
+✔ d09 test: no hints, feedback or explanations before submitting
+✔ d09 test: 8 of 10 scores 80%, not mastered, missed skills link to this lesson's Teach
+✔ d09 test: retake is fresh; 10 of 10 is mastered
+✔ d09 notes: printable notes with vocabulary and worked examples
+✔ d09 parent: shows the lesson as completed with the latest score
+✔ d10 teach: walked all 13 screens in order
+✔ d10 teach: every skill screen says what you will learn and explains why after the steps
+✔ d10 teach: 5 guided checks coach wrong answers and unlock Next only after a right answer
+✔ d10 teach: marked finished
+✔ d10 practice: exactly 3 hints, in order, no answer shown
+✔ d10 practice: 10 questions; wrong answers get an explanation and do not advance; right answers explain why
+✔ d10 practice: summary and saved session
+✔ d10 test: no hints, feedback or explanations before submitting
+✔ d10 test: 8 of 10 scores 80%, not mastered, missed skills link to this lesson's Teach
+✔ d10 test: retake is fresh; 10 of 10 is mastered
+✔ d10 notes: printable notes with vocabulary and worked examples
+✔ d10 parent: shows the lesson as completed with the latest score
+✔ no horizontal overflow: iPhone SE #/
+✔ tap targets at least 44px: iPhone SE #/
+✔ no horizontal overflow: iPhone SE #/d01/teach/5
+✔ tap targets at least 44px: iPhone SE #/d01/teach/5
+✔ no horizontal overflow: iPhone SE #/d01/teach/7
+✔ tap targets at least 44px: iPhone SE #/d01/teach/7
+✔ no horizontal overflow: iPhone SE #/d01/teach/10
+✔ tap targets at least 44px: iPhone SE #/d01/teach/10
+✔ no horizontal overflow: iPhone SE #/d01/practice
+✔ tap targets at least 44px: iPhone SE #/d01/practice
+✔ no horizontal overflow: iPhone SE #/d01/test
+✔ tap targets at least 44px: iPhone SE #/d01/test
+✔ no horizontal overflow: iPhone SE #/d01/notes
+✔ tap targets at least 44px: iPhone SE #/d01/notes
+✔ no horizontal overflow: iPhone SE #/parent
+✔ tap targets at least 44px: iPhone SE #/parent
+✔ no horizontal overflow: iPhone SE #/d02/teach/3
+✔ tap targets at least 44px: iPhone SE #/d02/teach/3
+✔ no horizontal overflow: iPhone SE #/d02/teach/5
+✔ tap targets at least 44px: iPhone SE #/d02/teach/5
+✔ no horizontal overflow: iPhone SE #/d02/practice
+✔ tap targets at least 44px: iPhone SE #/d02/practice
+✔ no horizontal overflow: iPhone SE #/d02/test
+✔ tap targets at least 44px: iPhone SE #/d02/test
+✔ no horizontal overflow: iPhone SE #/d02/notes
+✔ tap targets at least 44px: iPhone SE #/d02/notes
+✔ no horizontal overflow: iPhone SE #/d03/teach/3
+✔ tap targets at least 44px: iPhone SE #/d03/teach/3
+✔ no horizontal overflow: iPhone SE #/d03/teach/5
+✔ tap targets at least 44px: iPhone SE #/d03/teach/5
+✔ no horizontal overflow: iPhone SE #/d03/practice
+✔ tap targets at least 44px: iPhone SE #/d03/practice
+✔ no horizontal overflow: iPhone SE #/d03/test
+✔ tap targets at least 44px: iPhone SE #/d03/test
+✔ no horizontal overflow: iPhone SE #/d03/notes
+✔ tap targets at least 44px: iPhone SE #/d03/notes
+✔ no horizontal overflow: iPhone SE #/d04/teach/3
+✔ tap targets at least 44px: iPhone SE #/d04/teach/3
+✔ no horizontal overflow: iPhone SE #/d04/teach/5
+✔ tap targets at least 44px: iPhone SE #/d04/teach/5
+✔ no horizontal overflow: iPhone SE #/d04/practice
+✔ tap targets at least 44px: iPhone SE #/d04/practice
+✔ no horizontal overflow: iPhone SE #/d04/test
+✔ tap targets at least 44px: iPhone SE #/d04/test
+✔ no horizontal overflow: iPhone SE #/d04/notes
+✔ tap targets at least 44px: iPhone SE #/d04/notes
+✔ no horizontal overflow: iPhone SE #/d05/teach/3
+✔ tap targets at least 44px: iPhone SE #/d05/teach/3
+✔ no horizontal overflow: iPhone SE #/d05/teach/5
+✔ tap targets at least 44px: iPhone SE #/d05/teach/5
+✔ no horizontal overflow: iPhone SE #/d05/practice
+✔ tap targets at least 44px: iPhone SE #/d05/practice
+✔ no horizontal overflow: iPhone SE #/d05/test
+✔ tap targets at least 44px: iPhone SE #/d05/test
+✔ no horizontal overflow: iPhone SE #/d05/notes
+✔ tap targets at least 44px: iPhone SE #/d05/notes
+✔ no horizontal overflow: iPhone SE #/d06/teach/3
+✔ tap targets at least 44px: iPhone SE #/d06/teach/3
+✔ no horizontal overflow: iPhone SE #/d06/teach/5
+✔ tap targets at least 44px: iPhone SE #/d06/teach/5
+✔ no horizontal overflow: iPhone SE #/d06/practice
+✔ tap targets at least 44px: iPhone SE #/d06/practice
+✔ no horizontal overflow: iPhone SE #/d06/test
+✔ tap targets at least 44px: iPhone SE #/d06/test
+✔ no horizontal overflow: iPhone SE #/d06/notes
+✔ tap targets at least 44px: iPhone SE #/d06/notes
+✔ no horizontal overflow: iPhone SE #/d07/teach/3
+✔ tap targets at least 44px: iPhone SE #/d07/teach/3
+✔ no horizontal overflow: iPhone SE #/d07/teach/5
+✔ tap targets at least 44px: iPhone SE #/d07/teach/5
+✔ no horizontal overflow: iPhone SE #/d07/practice
+✔ tap targets at least 44px: iPhone SE #/d07/practice
+✔ no horizontal overflow: iPhone SE #/d07/test
+✔ tap targets at least 44px: iPhone SE #/d07/test
+✔ no horizontal overflow: iPhone SE #/d07/notes
+✔ tap targets at least 44px: iPhone SE #/d07/notes
+✔ no horizontal overflow: iPhone SE #/d08/teach/3
+✔ tap targets at least 44px: iPhone SE #/d08/teach/3
+✔ no horizontal overflow: iPhone SE #/d08/teach/5
+✔ tap targets at least 44px: iPhone SE #/d08/teach/5
+✔ no horizontal overflow: iPhone SE #/d08/practice
+✔ tap targets at least 44px: iPhone SE #/d08/practice
+✔ no horizontal overflow: iPhone SE #/d08/test
+✔ tap targets at least 44px: iPhone SE #/d08/test
+✔ no horizontal overflow: iPhone SE #/d08/notes
+✔ tap targets at least 44px: iPhone SE #/d08/notes
+✔ no horizontal overflow: iPhone SE #/d09/teach/3
+✔ tap targets at least 44px: iPhone SE #/d09/teach/3
+✔ no horizontal overflow: iPhone SE #/d09/teach/5
+✔ tap targets at least 44px: iPhone SE #/d09/teach/5
+✔ no horizontal overflow: iPhone SE #/d09/practice
+✔ tap targets at least 44px: iPhone SE #/d09/practice
+✔ no horizontal overflow: iPhone SE #/d09/test
+✔ tap targets at least 44px: iPhone SE #/d09/test
+✔ no horizontal overflow: iPhone SE #/d09/notes
+✔ tap targets at least 44px: iPhone SE #/d09/notes
+✔ no horizontal overflow: iPhone SE #/d10/teach/3
+✔ tap targets at least 44px: iPhone SE #/d10/teach/3
+✔ no horizontal overflow: iPhone SE #/d10/teach/5
+✔ tap targets at least 44px: iPhone SE #/d10/teach/5
+✔ no horizontal overflow: iPhone SE #/d10/practice
+✔ tap targets at least 44px: iPhone SE #/d10/practice
+✔ no horizontal overflow: iPhone SE #/d10/test
+✔ tap targets at least 44px: iPhone SE #/d10/test
+✔ no horizontal overflow: iPhone SE #/d10/notes
+✔ tap targets at least 44px: iPhone SE #/d10/notes
+✔ no horizontal overflow: iPhone SE test results
+✔ no horizontal overflow: iPhone 14 #/
+✔ tap targets at least 44px: iPhone 14 #/
+✔ no horizontal overflow: iPhone 14 #/d01/teach/5
+✔ tap targets at least 44px: iPhone 14 #/d01/teach/5
+✔ no horizontal overflow: iPhone 14 #/d01/teach/7
+✔ tap targets at least 44px: iPhone 14 #/d01/teach/7
+✔ no horizontal overflow: iPhone 14 #/d01/teach/10
+✔ tap targets at least 44px: iPhone 14 #/d01/teach/10
+✔ no horizontal overflow: iPhone 14 #/d01/practice
+✔ tap targets at least 44px: iPhone 14 #/d01/practice
+✔ no horizontal overflow: iPhone 14 #/d01/test
+✔ tap targets at least 44px: iPhone 14 #/d01/test
+✔ no horizontal overflow: iPhone 14 #/d01/notes
+✔ tap targets at least 44px: iPhone 14 #/d01/notes
+✔ no horizontal overflow: iPhone 14 #/parent
+✔ tap targets at least 44px: iPhone 14 #/parent
+✔ no horizontal overflow: iPhone 14 #/d02/teach/3
+✔ tap targets at least 44px: iPhone 14 #/d02/teach/3
+✔ no horizontal overflow: iPhone 14 #/d02/teach/5
+✔ tap targets at least 44px: iPhone 14 #/d02/teach/5
+✔ no horizontal overflow: iPhone 14 #/d02/practice
+✔ tap targets at least 44px: iPhone 14 #/d02/practice
+✔ no horizontal overflow: iPhone 14 #/d02/test
+✔ tap targets at least 44px: iPhone 14 #/d02/test
+✔ no horizontal overflow: iPhone 14 #/d02/notes
+✔ tap targets at least 44px: iPhone 14 #/d02/notes
+✔ no horizontal overflow: iPhone 14 #/d03/teach/3
+✔ tap targets at least 44px: iPhone 14 #/d03/teach/3
+✔ no horizontal overflow: iPhone 14 #/d03/teach/5
+✔ tap targets at least 44px: iPhone 14 #/d03/teach/5
+✔ no horizontal overflow: iPhone 14 #/d03/practice
+✔ tap targets at least 44px: iPhone 14 #/d03/practice
+✔ no horizontal overflow: iPhone 14 #/d03/test
+✔ tap targets at least 44px: iPhone 14 #/d03/test
+✔ no horizontal overflow: iPhone 14 #/d03/notes
+✔ tap targets at least 44px: iPhone 14 #/d03/notes
+✔ no horizontal overflow: iPhone 14 #/d04/teach/3
+✔ tap targets at least 44px: iPhone 14 #/d04/teach/3
+✔ no horizontal overflow: iPhone 14 #/d04/teach/5
+✔ tap targets at least 44px: iPhone 14 #/d04/teach/5
+✔ no horizontal overflow: iPhone 14 #/d04/practice
+✔ tap targets at least 44px: iPhone 14 #/d04/practice
+✔ no horizontal overflow: iPhone 14 #/d04/test
+✔ tap targets at least 44px: iPhone 14 #/d04/test
+✔ no horizontal overflow: iPhone 14 #/d04/notes
+✔ tap targets at least 44px: iPhone 14 #/d04/notes
+✔ no horizontal overflow: iPhone 14 #/d05/teach/3
+✔ tap targets at least 44px: iPhone 14 #/d05/teach/3
+✔ no horizontal overflow: iPhone 14 #/d05/teach/5
+✔ tap targets at least 44px: iPhone 14 #/d05/teach/5
+✔ no horizontal overflow: iPhone 14 #/d05/practice
+✔ tap targets at least 44px: iPhone 14 #/d05/practice
+✔ no horizontal overflow: iPhone 14 #/d05/test
+✔ tap targets at least 44px: iPhone 14 #/d05/test
+✔ no horizontal overflow: iPhone 14 #/d05/notes
+✔ tap targets at least 44px: iPhone 14 #/d05/notes
+✔ no horizontal overflow: iPhone 14 #/d06/teach/3
+✔ tap targets at least 44px: iPhone 14 #/d06/teach/3
+✔ no horizontal overflow: iPhone 14 #/d06/teach/5
+✔ tap targets at least 44px: iPhone 14 #/d06/teach/5
+✔ no horizontal overflow: iPhone 14 #/d06/practice
+✔ tap targets at least 44px: iPhone 14 #/d06/practice
+✔ no horizontal overflow: iPhone 14 #/d06/test
+✔ tap targets at least 44px: iPhone 14 #/d06/test
+✔ no horizontal overflow: iPhone 14 #/d06/notes
+✔ tap targets at least 44px: iPhone 14 #/d06/notes
+✔ no horizontal overflow: iPhone 14 #/d07/teach/3
+✔ tap targets at least 44px: iPhone 14 #/d07/teach/3
+✔ no horizontal overflow: iPhone 14 #/d07/teach/5
+✔ tap targets at least 44px: iPhone 14 #/d07/teach/5
+✔ no horizontal overflow: iPhone 14 #/d07/practice
+✔ tap targets at least 44px: iPhone 14 #/d07/practice
+✔ no horizontal overflow: iPhone 14 #/d07/test
+✔ tap targets at least 44px: iPhone 14 #/d07/test
+✔ no horizontal overflow: iPhone 14 #/d07/notes
+✔ tap targets at least 44px: iPhone 14 #/d07/notes
+✔ no horizontal overflow: iPhone 14 #/d08/teach/3
+✔ tap targets at least 44px: iPhone 14 #/d08/teach/3
+✔ no horizontal overflow: iPhone 14 #/d08/teach/5
+✔ tap targets at least 44px: iPhone 14 #/d08/teach/5
+✔ no horizontal overflow: iPhone 14 #/d08/practice
+✔ tap targets at least 44px: iPhone 14 #/d08/practice
+✔ no horizontal overflow: iPhone 14 #/d08/test
+✔ tap targets at least 44px: iPhone 14 #/d08/test
+✔ no horizontal overflow: iPhone 14 #/d08/notes
+✔ tap targets at least 44px: iPhone 14 #/d08/notes
+✔ no horizontal overflow: iPhone 14 #/d09/teach/3
+✔ tap targets at least 44px: iPhone 14 #/d09/teach/3
+✔ no horizontal overflow: iPhone 14 #/d09/teach/5
+✔ tap targets at least 44px: iPhone 14 #/d09/teach/5
+✔ no horizontal overflow: iPhone 14 #/d09/practice
+✔ tap targets at least 44px: iPhone 14 #/d09/practice
+✔ no horizontal overflow: iPhone 14 #/d09/test
+✔ tap targets at least 44px: iPhone 14 #/d09/test
+✔ no horizontal overflow: iPhone 14 #/d09/notes
+✔ tap targets at least 44px: iPhone 14 #/d09/notes
+✔ no horizontal overflow: iPhone 14 #/d10/teach/3
+✔ tap targets at least 44px: iPhone 14 #/d10/teach/3
+✔ no horizontal overflow: iPhone 14 #/d10/teach/5
+✔ tap targets at least 44px: iPhone 14 #/d10/teach/5
+✔ no horizontal overflow: iPhone 14 #/d10/practice
+✔ tap targets at least 44px: iPhone 14 #/d10/practice
+✔ no horizontal overflow: iPhone 14 #/d10/test
+✔ tap targets at least 44px: iPhone 14 #/d10/test
+✔ no horizontal overflow: iPhone 14 #/d10/notes
+✔ tap targets at least 44px: iPhone 14 #/d10/notes
+✔ no horizontal overflow: iPhone 14 test results
+✔ no horizontal overflow: tablet #/
+✔ tap targets at least 44px: tablet #/
+✔ no horizontal overflow: tablet #/d01/teach/5
+✔ tap targets at least 44px: tablet #/d01/teach/5
+✔ no horizontal overflow: tablet #/d01/teach/7
+✔ tap targets at least 44px: tablet #/d01/teach/7
+✔ no horizontal overflow: tablet #/d01/teach/10
+✔ tap targets at least 44px: tablet #/d01/teach/10
+✔ no horizontal overflow: tablet #/d01/practice
+✔ tap targets at least 44px: tablet #/d01/practice
+✔ no horizontal overflow: tablet #/d01/test
+✔ tap targets at least 44px: tablet #/d01/test
+✔ no horizontal overflow: tablet #/d01/notes
+✔ tap targets at least 44px: tablet #/d01/notes
+✔ no horizontal overflow: tablet #/parent
+✔ tap targets at least 44px: tablet #/parent
+✔ no horizontal overflow: tablet #/d02/teach/3
+✔ tap targets at least 44px: tablet #/d02/teach/3
+✔ no horizontal overflow: tablet #/d02/teach/5
+✔ tap targets at least 44px: tablet #/d02/teach/5
+✔ no horizontal overflow: tablet #/d02/practice
+✔ tap targets at least 44px: tablet #/d02/practice
+✔ no horizontal overflow: tablet #/d02/test
+✔ tap targets at least 44px: tablet #/d02/test
+✔ no horizontal overflow: tablet #/d02/notes
+✔ tap targets at least 44px: tablet #/d02/notes
+✔ no horizontal overflow: tablet #/d03/teach/3
+✔ tap targets at least 44px: tablet #/d03/teach/3
+✔ no horizontal overflow: tablet #/d03/teach/5
+✔ tap targets at least 44px: tablet #/d03/teach/5
+✔ no horizontal overflow: tablet #/d03/practice
+✔ tap targets at least 44px: tablet #/d03/practice
+✔ no horizontal overflow: tablet #/d03/test
+✔ tap targets at least 44px: tablet #/d03/test
+✔ no horizontal overflow: tablet #/d03/notes
+✔ tap targets at least 44px: tablet #/d03/notes
+✔ no horizontal overflow: tablet #/d04/teach/3
+✔ tap targets at least 44px: tablet #/d04/teach/3
+✔ no horizontal overflow: tablet #/d04/teach/5
+✔ tap targets at least 44px: tablet #/d04/teach/5
+✔ no horizontal overflow: tablet #/d04/practice
+✔ tap targets at least 44px: tablet #/d04/practice
+✔ no horizontal overflow: tablet #/d04/test
+✔ tap targets at least 44px: tablet #/d04/test
+✔ no horizontal overflow: tablet #/d04/notes
+✔ tap targets at least 44px: tablet #/d04/notes
+✔ no horizontal overflow: tablet #/d05/teach/3
+✔ tap targets at least 44px: tablet #/d05/teach/3
+✔ no horizontal overflow: tablet #/d05/teach/5
+✔ tap targets at least 44px: tablet #/d05/teach/5
+✔ no horizontal overflow: tablet #/d05/practice
+✔ tap targets at least 44px: tablet #/d05/practice
+✔ no horizontal overflow: tablet #/d05/test
+✔ tap targets at least 44px: tablet #/d05/test
+✔ no horizontal overflow: tablet #/d05/notes
+✔ tap targets at least 44px: tablet #/d05/notes
+✔ no horizontal overflow: tablet #/d06/teach/3
+✔ tap targets at least 44px: tablet #/d06/teach/3
+✔ no horizontal overflow: tablet #/d06/teach/5
+✔ tap targets at least 44px: tablet #/d06/teach/5
+✔ no horizontal overflow: tablet #/d06/practice
+✔ tap targets at least 44px: tablet #/d06/practice
+✔ no horizontal overflow: tablet #/d06/test
+✔ tap targets at least 44px: tablet #/d06/test
+✔ no horizontal overflow: tablet #/d06/notes
+✔ tap targets at least 44px: tablet #/d06/notes
+✔ no horizontal overflow: tablet #/d07/teach/3
+✔ tap targets at least 44px: tablet #/d07/teach/3
+✔ no horizontal overflow: tablet #/d07/teach/5
+✔ tap targets at least 44px: tablet #/d07/teach/5
+✔ no horizontal overflow: tablet #/d07/practice
+✔ tap targets at least 44px: tablet #/d07/practice
+✔ no horizontal overflow: tablet #/d07/test
+✔ tap targets at least 44px: tablet #/d07/test
+✔ no horizontal overflow: tablet #/d07/notes
+✔ tap targets at least 44px: tablet #/d07/notes
+✔ no horizontal overflow: tablet #/d08/teach/3
+✔ tap targets at least 44px: tablet #/d08/teach/3
+✔ no horizontal overflow: tablet #/d08/teach/5
+✔ tap targets at least 44px: tablet #/d08/teach/5
+✔ no horizontal overflow: tablet #/d08/practice
+✔ tap targets at least 44px: tablet #/d08/practice
+✔ no horizontal overflow: tablet #/d08/test
+✔ tap targets at least 44px: tablet #/d08/test
+✔ no horizontal overflow: tablet #/d08/notes
+✔ tap targets at least 44px: tablet #/d08/notes
+✔ no horizontal overflow: tablet #/d09/teach/3
+✔ tap targets at least 44px: tablet #/d09/teach/3
+✔ no horizontal overflow: tablet #/d09/teach/5
+✔ tap targets at least 44px: tablet #/d09/teach/5
+✔ no horizontal overflow: tablet #/d09/practice
+✔ tap targets at least 44px: tablet #/d09/practice
+✔ no horizontal overflow: tablet #/d09/test
+✔ tap targets at least 44px: tablet #/d09/test
+✔ no horizontal overflow: tablet #/d09/notes
+✔ tap targets at least 44px: tablet #/d09/notes
+✔ no horizontal overflow: tablet #/d10/teach/3
+✔ tap targets at least 44px: tablet #/d10/teach/3
+✔ no horizontal overflow: tablet #/d10/teach/5
+✔ tap targets at least 44px: tablet #/d10/teach/5
+✔ no horizontal overflow: tablet #/d10/practice
+✔ tap targets at least 44px: tablet #/d10/practice
+✔ no horizontal overflow: tablet #/d10/test
+✔ tap targets at least 44px: tablet #/d10/test
+✔ no horizontal overflow: tablet #/d10/notes
+✔ tap targets at least 44px: tablet #/d10/notes
+✔ no horizontal overflow: tablet test results
+✔ no horizontal overflow: laptop #/
+✔ no horizontal overflow: laptop #/d01/teach/5
+✔ no horizontal overflow: laptop #/d01/teach/7
+✔ no horizontal overflow: laptop #/d01/teach/10
+✔ no horizontal overflow: laptop #/d01/practice
+✔ no horizontal overflow: laptop #/d01/test
+✔ no horizontal overflow: laptop #/d01/notes
+✔ no horizontal overflow: laptop #/parent
+✔ no horizontal overflow: laptop #/d02/teach/3
+✔ no horizontal overflow: laptop #/d02/teach/5
+✔ no horizontal overflow: laptop #/d02/practice
+✔ no horizontal overflow: laptop #/d02/test
+✔ no horizontal overflow: laptop #/d02/notes
+✔ no horizontal overflow: laptop #/d03/teach/3
+✔ no horizontal overflow: laptop #/d03/teach/5
+✔ no horizontal overflow: laptop #/d03/practice
+✔ no horizontal overflow: laptop #/d03/test
+✔ no horizontal overflow: laptop #/d03/notes
+✔ no horizontal overflow: laptop #/d04/teach/3
+✔ no horizontal overflow: laptop #/d04/teach/5
+✔ no horizontal overflow: laptop #/d04/practice
+✔ no horizontal overflow: laptop #/d04/test
+✔ no horizontal overflow: laptop #/d04/notes
+✔ no horizontal overflow: laptop #/d05/teach/3
+✔ no horizontal overflow: laptop #/d05/teach/5
+✔ no horizontal overflow: laptop #/d05/practice
+✔ no horizontal overflow: laptop #/d05/test
+✔ no horizontal overflow: laptop #/d05/notes
+✔ no horizontal overflow: laptop #/d06/teach/3
+✔ no horizontal overflow: laptop #/d06/teach/5
+✔ no horizontal overflow: laptop #/d06/practice
+✔ no horizontal overflow: laptop #/d06/test
+✔ no horizontal overflow: laptop #/d06/notes
+✔ no horizontal overflow: laptop #/d07/teach/3
+✔ no horizontal overflow: laptop #/d07/teach/5
+✔ no horizontal overflow: laptop #/d07/practice
+✔ no horizontal overflow: laptop #/d07/test
+✔ no horizontal overflow: laptop #/d07/notes
+✔ no horizontal overflow: laptop #/d08/teach/3
+✔ no horizontal overflow: laptop #/d08/teach/5
+✔ no horizontal overflow: laptop #/d08/practice
+✔ no horizontal overflow: laptop #/d08/test
+✔ no horizontal overflow: laptop #/d08/notes
+✔ no horizontal overflow: laptop #/d09/teach/3
+✔ no horizontal overflow: laptop #/d09/teach/5
+✔ no horizontal overflow: laptop #/d09/practice
+✔ no horizontal overflow: laptop #/d09/test
+✔ no horizontal overflow: laptop #/d09/notes
+✔ no horizontal overflow: laptop #/d10/teach/3
+✔ no horizontal overflow: laptop #/d10/teach/5
+✔ no horizontal overflow: laptop #/d10/practice
+✔ no horizontal overflow: laptop #/d10/test
+✔ no horizontal overflow: laptop #/d10/notes
+✔ no horizontal overflow: laptop test results
+✔ no horizontal overflow: desktop #/
+✔ no horizontal overflow: desktop #/d01/teach/5
+✔ no horizontal overflow: desktop #/d01/teach/7
+✔ no horizontal overflow: desktop #/d01/teach/10
+✔ no horizontal overflow: desktop #/d01/practice
+✔ no horizontal overflow: desktop #/d01/test
+✔ no horizontal overflow: desktop #/d01/notes
+✔ no horizontal overflow: desktop #/parent
+✔ no horizontal overflow: desktop #/d02/teach/3
+✔ no horizontal overflow: desktop #/d02/teach/5
+✔ no horizontal overflow: desktop #/d02/practice
+✔ no horizontal overflow: desktop #/d02/test
+✔ no horizontal overflow: desktop #/d02/notes
+✔ no horizontal overflow: desktop #/d03/teach/3
+✔ no horizontal overflow: desktop #/d03/teach/5
+✔ no horizontal overflow: desktop #/d03/practice
+✔ no horizontal overflow: desktop #/d03/test
+✔ no horizontal overflow: desktop #/d03/notes
+✔ no horizontal overflow: desktop #/d04/teach/3
+✔ no horizontal overflow: desktop #/d04/teach/5
+✔ no horizontal overflow: desktop #/d04/practice
+✔ no horizontal overflow: desktop #/d04/test
+✔ no horizontal overflow: desktop #/d04/notes
+✔ no horizontal overflow: desktop #/d05/teach/3
+✔ no horizontal overflow: desktop #/d05/teach/5
+✔ no horizontal overflow: desktop #/d05/practice
+✔ no horizontal overflow: desktop #/d05/test
+✔ no horizontal overflow: desktop #/d05/notes
+✔ no horizontal overflow: desktop #/d06/teach/3
+✔ no horizontal overflow: desktop #/d06/teach/5
+✔ no horizontal overflow: desktop #/d06/practice
+✔ no horizontal overflow: desktop #/d06/test
+✔ no horizontal overflow: desktop #/d06/notes
+✔ no horizontal overflow: desktop #/d07/teach/3
+✔ no horizontal overflow: desktop #/d07/teach/5
+✔ no horizontal overflow: desktop #/d07/practice
+✔ no horizontal overflow: desktop #/d07/test
+✔ no horizontal overflow: desktop #/d07/notes
+✔ no horizontal overflow: desktop #/d08/teach/3
+✔ no horizontal overflow: desktop #/d08/teach/5
+✔ no horizontal overflow: desktop #/d08/practice
+✔ no horizontal overflow: desktop #/d08/test
+✔ no horizontal overflow: desktop #/d08/notes
+✔ no horizontal overflow: desktop #/d09/teach/3
+✔ no horizontal overflow: desktop #/d09/teach/5
+✔ no horizontal overflow: desktop #/d09/practice
+✔ no horizontal overflow: desktop #/d09/test
+✔ no horizontal overflow: desktop #/d09/notes
+✔ no horizontal overflow: desktop #/d10/teach/3
+✔ no horizontal overflow: desktop #/d10/teach/5
+✔ no horizontal overflow: desktop #/d10/practice
+✔ no horizontal overflow: desktop #/d10/test
+✔ no horizontal overflow: desktop #/d10/notes
+✔ no horizontal overflow: desktop test results
+✔ format fixture renders M4
+✔ no horizontal overflow: iPhone SE practice M4
+✔ tap targets at least 44px: iPhone SE practice M4
+✔ format fixture renders PL5
+✔ no horizontal overflow: iPhone SE practice PL5
+✔ tap targets at least 44px: iPhone SE practice PL5
+✔ format fixture renders M5
+✔ no horizontal overflow: iPhone SE practice M5
+✔ tap targets at least 44px: iPhone SE practice M5
+✔ format fixture renders M9
+✔ no horizontal overflow: iPhone SE practice M9
+✔ tap targets at least 44px: iPhone SE practice M9
+✔ format fixture renders C2
+✔ no horizontal overflow: iPhone SE practice C2
+✔ tap targets at least 44px: iPhone SE practice C2
+✔ format fixture renders E4
+✔ no horizontal overflow: iPhone SE practice E4
+✔ tap targets at least 44px: iPhone SE practice E4
+✔ damaged saved data does not break #/
+✔ damaged saved data does not break #/d01/practice
+✔ damaged saved data does not break #/d01/test
+✔ damaged saved data does not break #/parent
+✔ teach: out-of-range screen redirects and does not mark Teach done
+✔ teach: revealed steps survive a refresh
+✔ teach: damaged saved steps (5) start at step 1 and still work
+✔ teach: damaged saved steps ("abc") start at step 1 and still work
+✔ teach: damaged saved steps ({"d01:whole":"abc"}) start at step 1 and still work
+✔ teach: damaged saved steps ({"d01:whole":-3}) start at step 1 and still work
+✔ test: unreadable typed answer gets a note and counts as not answered
+✔ test: clicking Submit twice records one result
+✔ practice: clicking Next twice moves only one question
+✔ order widget: keyboard focus never falls back to the page after placing or taking back a number
+✔ practice/teach: the "answer first" note disappears once the child answers
+✔ tablet: "Review in Teach" links in test results are at least 44px tall
+✔ integrity: Practice opened during an unfinished Test never repeats its questions (51 sessions)
+✔ integrity: opening Practice during a Test is noted on the Test, with a friendly message
+✔ integrity: 10 of 10 with a lesson page opened keeps the score but is not ★ Mastered
+✔ integrity: the home card shows no ★ Mastered for a test with lesson pages opened
+✔ integrity: Parent Progress explains the rule and labels the test
+✔ integrity: refreshing, or visiting Home, during a test is not counted
+✔ integrity: a test done on its own with 10 of 10 is ★ Mastered
+✔ integrity: a stale tab shows the submitted result instead of changing it
+✔ integrity: Submit in a stale tab records no second result and keeps the first
+✔ integrity: a second open tab switches to the results when the test is submitted elsewhere
+✔ integrity: with only Lessons 3 and 10 mastered, Lesson 10 does not say "All lessons complete"
+✔ integrity: older saved progress keeps its mastery and test count
+✔ integrity: mastery and the count survive when the mastered test leaves the 20-test history
+✔ integrity: a test saved by the previous version can be finished and is recorded once
+✔ teach: Lesson 1 number line (tenths) screen draws its picture and explains why
+✔ teach: Lesson 1 zoomed number line (hundredths) screen draws its picture and explains why
+✔ teach: Lesson 3 missing digit screen draws its picture and explains why
+✔ teach: Lesson 6 number-line jumps screen draws its picture and explains why
+✔ teach: Lesson 7 number-line jumps screen draws its picture and explains why
+✔ teach: Lesson 8 area example screen draws its picture and explains why
+✔ teach: Lesson 9 division layout screen draws its picture and explains why
+✔ teach: Lesson 9 hundredths and related fact screen draws its picture and explains why
+✔ teach: new guided check d01/check-line coaches a wrong answer and unlocks Next when right
+✔ teach: new guided check d01/check-compare coaches a wrong answer and unlocks Next when right
+✔ teach: new guided check d01/check-chart-typed coaches a wrong answer and unlocks Next when right
+✔ teach: new guided check d02/check-expanded-typed coaches a wrong answer and unlocks Next when right
+✔ teach: new guided check d03/check-missing coaches a wrong answer and unlocks Next when right
+✔ teach: new guided check d09/check-hundredths coaches a wrong answer and unlocks Next when right
+✔ practice: "Show me how" for d06/AL1 shows the columns, carries and each step
+✔ practice: "Show me how" for d07/SZ1 shows the columns, regrouping and each step
+✔ saved progress: Lesson 1 Teach finished before the new screens still shows as finished
+✔ a11y: after a correct guided check in Teach, keyboard focus moves to Next (not lost)
+✔ a11y: after a correct Practice answer, keyboard focus moves to the feedback (not lost)
+✔ upgrade: an old answer that matches no choice is asked for again (not scored as wrong)
+✔ upgrade: an unfinished test that cannot be continued explains why
+✔ upgrade: the new typed-chart check starts fresh (old saved answer not shown)
+✔ practice: a session already counted in another tab is not counted again
+✔ expanded form: a long answer is fully visible at 320px (the box grows)
+✔ a11y: after the last hint, keyboard focus moves to that hint (not lost)
+✔ a11y: new worked-example steps are announced, and focus goes to "Why it works" after the last step
+✔ expanded form: a five-part answer fits in the box at 320px
+✔ expanded form: a five-part answer fits in the box at 1366px
+✔ number-line labels are at least 10px on a 320px screen: d01/zoom
+✔ number-line labels are at least 10px on a 320px screen: d06/models
+✔ number-line labels are at least 10px on a 320px screen: d07/models
+✔ number-line labels are at least 10px on a 320px screen: d05/tenths
+✔ guided checks are titled with their topic, and page titles differ
+✔ worked-example steps labelled "Step 1." are not numbered twice
+✔ guides: eight numbered guide cards with titles
+✔ guides: all eight PDFs load (HTTP 200, application/pdf)
+✔ guides: Download names each PDF file, and links are repository-relative
+✔ guides: Print loads the PDF into a print frame and tells the student what happens
+✔ guides: Lesson 6 Notes link to the matching guide (Section 4, Adding)
+✔ practice center: seven skills to choose from, and nothing starts until a choice is made
+✔ practice center: step 2 offers 10, 25 and 50 questions and needs a choice; no session yet
+✔ practice center: all 33 mode and length choices start the right session (seven modes, 10/25/50, challenge per operation)
+✔ practice center: Practice My Misses with no history says so and offers a general review
+✔ practice center: three hints, feedback for a wrong answer, a right answer unlocks Next
+✔ practice center: a paused session shows on the home page
+✔ practice center: resume returns to the same place with the earlier answer kept
+✔ practice center: Start New Practice asks for confirmation (No keeps the session)
+✔ practice center: confirming Start New Practice clears the session and returns to the wizard
+✔ practice center: results report completed, correct, no-hint, with-help, incorrect, hints and skills to review
+✔ practice center: results offer Practice Again, Practice My Misses, the related lesson and the Practice Center
+✔ practice center: the finished session is saved to the practice history once
+✔ practice center: refreshing the results does not record the session twice
+✔ practice center: after a miss, Practice My Misses lists the skill to review
+✔ no horizontal overflow: home (320px)
+✔ tap targets at least 44px: home (320px)
+✔ no horizontal overflow: learn (320px)
+✔ tap targets at least 44px: learn (320px)
+✔ no horizontal overflow: study guides (320px)
+✔ tap targets at least 44px: study guides (320px)
+✔ no horizontal overflow: practice wizard (320px)
+✔ tap targets at least 44px: practice wizard (320px)
+✔ no horizontal overflow: practice results (320px)
+✔ tap targets at least 44px: practice results (320px)
+✔ no horizontal overflow: practice question with a division layout (320px)
+✔ tap targets at least 44px: practice question (320px)
+✔ learn: one recommended step per lesson from saved progress (Review, Continue Teach, Practice again, Practice, Take the Test, Start)
+✔ learn: the Continue banner names the furthest unfinished lesson and links to its next step
+✔ learn: three lesson cards per row at 1280px, each with Teach, Practice, Test and Notes links
+✔ home: "Pick up where you left off" card, a smaller logo, and the grade tags in the footer
+✔ UX: looking at Home and Learn changes no saved progress
+✔ learn: after practicing since a Test without ★, the next step is to take the Test again
+✔ learn: only the first untouched lesson has a filled Start button
+✔ teach: guided checks offer no reminder button before answering
+✔ learn: a started, unfinished Test is the recommended next step
+✔ parent: five overview tiles (mastered, current lesson, latest Test, practice this week, skills to review)
+✔ parent: a 10-row lessons table (Lesson, Teach, Practice, Test, ★)
+✔ parent: started lessons shown; the rest and the rules folded away; Erase stays last
+✔ practice center question: problem panel with a large equation, Options folded away, help beside the question at 1280px
+✔ a11y: from the answer box, Tab reaches Check answer and then Get a hint
+✔ a11y: after Next question, focus goes straight to the new answer box
+✔ practice center: "Show me a picture" opens the division layout before answering, and says when it is open
+✔ worked solution: one step at a time, the current step highlighted and focused, then every step
+✔ worked solution: long division shows its subtraction rows (one or more)
+✔ worked solution: the answer and the division working wait for their steps, then all show; focus stays on the last step
+✔ worked solution: revealed steps are remembered after a refresh
+✔ lesson practice: Start New Practice is in Options; after Next, focus goes to the answer (or the heading)
+✔ practice wizard: each skill card shows an example problem
+✔ practice wizard: Back on step 3 returns to step 2 with the choices kept
+✔ test intro: short ★ rule
+✔ all phone variants fit for decimal addition template AM1
+✔ all phone variants fit for decimal addition template AM2
+✔ all phone variants fit for decimal addition template AM3
+✔ all phone variants fit for decimal addition template AL1
+✔ all phone variants fit for decimal addition template AL2
+✔ all phone variants fit for decimal addition template AL3
+✔ all phone variants fit for decimal addition template MX1
+✔ all phone variants fit for decimal addition template MX2
+✔ all phone variants fit for decimal addition template ES1
+✔ all phone variants fit for decimal addition template ES2
+✔ all phone variants fit for decimal addition template WP1
+✔ all phone variants fit for decimal addition template WP2
+✔ three-addend decimal expression wraps at 320px with every operand visible
+✔ no horizontal scrolling: #/ at 320px
+✔ tap targets at least 44px: #/ at 320px
+✔ no horizontal scrolling: #/learn at 320px
+✔ tap targets at least 44px: #/learn at 320px
+✔ no horizontal scrolling: #/practice at 320px
+✔ tap targets at least 44px: #/practice at 320px
+✔ no horizontal scrolling: #/guides at 320px
+✔ tap targets at least 44px: #/guides at 320px
+✔ no horizontal scrolling: #/parent at 320px
+✔ tap targets at least 44px: #/parent at 320px
+✔ no horizontal scrolling: #/d03/test at 320px
+✔ tap targets at least 44px: #/d03/test at 320px
+✔ no horizontal scrolling: #/d06/practice at 320px
+✔ tap targets at least 44px: #/d06/practice at 320px
+✔ practice question at 320px: no sideways scrolling; one column
+✔ tap targets at least 44px: practice question at 320px
+✔ no horizontal scrolling: #/ at 390px
+✔ tap targets at least 44px: #/ at 390px
+✔ no horizontal scrolling: #/learn at 390px
+✔ tap targets at least 44px: #/learn at 390px
+✔ no horizontal scrolling: #/practice at 390px
+✔ tap targets at least 44px: #/practice at 390px
+✔ no horizontal scrolling: #/guides at 390px
+✔ tap targets at least 44px: #/guides at 390px
+✔ no horizontal scrolling: #/parent at 390px
+✔ tap targets at least 44px: #/parent at 390px
+✔ no horizontal scrolling: #/d03/test at 390px
+✔ tap targets at least 44px: #/d03/test at 390px
+✔ no horizontal scrolling: #/d06/practice at 390px
+✔ tap targets at least 44px: #/d06/practice at 390px
+✔ practice question at 390px: no sideways scrolling; one column
+✔ tap targets at least 44px: practice question at 390px
+✔ no horizontal scrolling: #/ at 768px
+✔ tap targets at least 44px: #/ at 768px
+✔ no horizontal scrolling: #/learn at 768px
+✔ tap targets at least 44px: #/learn at 768px
+✔ no horizontal scrolling: #/practice at 768px
+✔ tap targets at least 44px: #/practice at 768px
+✔ no horizontal scrolling: #/guides at 768px
+✔ tap targets at least 44px: #/guides at 768px
+✔ no horizontal scrolling: #/parent at 768px
+✔ tap targets at least 44px: #/parent at 768px
+✔ no horizontal scrolling: #/d03/test at 768px
+✔ tap targets at least 44px: #/d03/test at 768px
+✔ no horizontal scrolling: #/d06/practice at 768px
+✔ tap targets at least 44px: #/d06/practice at 768px
+✔ practice question at 768px: no sideways scrolling; one column
+✔ tap targets at least 44px: practice question at 768px
+✔ no horizontal scrolling: #/ at 1280px
+✔ tap targets at least 44px: #/ at 1280px
+✔ no horizontal scrolling: #/learn at 1280px
+✔ tap targets at least 44px: #/learn at 1280px
+✔ no horizontal scrolling: #/practice at 1280px
+✔ tap targets at least 44px: #/practice at 1280px
+✔ no horizontal scrolling: #/guides at 1280px
+✔ tap targets at least 44px: #/guides at 1280px
+✔ no horizontal scrolling: #/parent at 1280px
+✔ tap targets at least 44px: #/parent at 1280px
+✔ no horizontal scrolling: #/d03/test at 1280px
+✔ tap targets at least 44px: #/d03/test at 1280px
+✔ no horizontal scrolling: #/d06/practice at 1280px
+✔ tap targets at least 44px: #/d06/practice at 1280px
+✔ practice question at 1280px: no sideways scrolling; two columns
+✔ tap targets at least 44px: practice question at 1280px
+✔ no horizontal scrolling: #/ at 1920px
+✔ tap targets at least 44px: #/ at 1920px
+✔ no horizontal scrolling: #/learn at 1920px
+✔ tap targets at least 44px: #/learn at 1920px
+✔ no horizontal scrolling: #/practice at 1920px
+✔ tap targets at least 44px: #/practice at 1920px
+✔ no horizontal scrolling: #/guides at 1920px
+✔ tap targets at least 44px: #/guides at 1920px
+✔ no horizontal scrolling: #/parent at 1920px
+✔ tap targets at least 44px: #/parent at 1920px
+✔ no horizontal scrolling: #/d03/test at 1920px
+✔ tap targets at least 44px: #/d03/test at 1920px
+✔ no horizontal scrolling: #/d06/practice at 1920px
+✔ tap targets at least 44px: #/d06/practice at 1920px
+✔ practice question at 1920px: no sideways scrolling; two columns
+✔ tap targets at least 44px: practice question at 1920px
+✔ restart: Start Lesson Over asks first, then clears only this lesson's guided answers and revealed steps
+✔ restart: Start Lesson Over keeps tests, mastery, practice and "Teach finished", and goes to screen 1
+✔ restart: lesson Start New Practice asks before discarding answers, then starts a fresh session (finished sessions kept)
+✔ restart: Retake Test keeps earlier results and mastery and starts a new test
+✔ parent: Practice Center section shows sessions, questions, accuracy, hints, recent practice and skills to review
+✔ parent: Practice Center results do not change lesson tests or mastery
+✔ integrity: opening the Practice Center or Study Guides during a lesson Test is noted on it
+✔ review: damaged practice history does not break Parent Progress (no NaN or junk)
+✔ review: damaged practice history does not break Practice My Misses
+✔ review: a stale Practice Center tab does not overwrite a newer session
+✔ review: the phone menu closes after tapping the current page
+✔ review: an unknown lesson route shows Home and highlights Home
+✔ unready lesson route falls back to home
+✔ parent: erase progress works
+✔ no console errors
+✔ no missing files
+
+829 passed, 0 failed
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.2
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.2
+npm notice To update run: npm install -g npm@12.2.2
+npm notice

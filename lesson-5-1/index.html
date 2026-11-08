@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lesson 5-1 · Gabriella's Math Lab</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body data-mode="type">
+
+<!-- Icon sprite: one consistent 24px stroke icon set, referenced with <use>. -->
+<svg class="sprite" aria-hidden="true" focusable="false">
+  <symbol id="i-home" viewBox="0 0 24 24"><path d="M3 10.5 12 3l9 7.5"/><path d="M5.5 9v12h13V9"/><path d="M10 21v-6h4v6"/></symbol>
+  <symbol id="i-left" viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></symbol>
+  <symbol id="i-right" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></symbol>
+  <symbol id="i-type" viewBox="0 0 24 24"><path d="M4 7V4h16v3"/><path d="M9 20h6"/><path d="M12 4v16"/></symbol>
+  <symbol id="i-pencil" viewBox="0 0 24 24"><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/><path d="m14.5 5.5 3 3"/></symbol>
+  <symbol id="i-eraser" viewBox="0 0 24 24"><path d="m7 21-4.3-4.3a2.4 2.4 0 0 1 0-3.4l9.6-9.6a2.4 2.4 0 0 1 3.4 0l5.6 5.6a2.4 2.4 0 0 1 0 3.4L13 21Z"/><path d="M22 21H7"/><path d="m5 11 9 9"/></symbol>
+  <symbol id="i-move" viewBox="0 0 24 24"><path d="m5 9-3 3 3 3"/><path d="m9 5 3-3 3 3"/><path d="m15 19-3 3-3-3"/><path d="m19 9 3 3-3 3"/><path d="M2 12h20"/><path d="M12 2v20"/></symbol>
+  <symbol id="i-undo" viewBox="0 0 24 24"><path d="M9 14 4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 0 11H11"/></symbol>
+  <symbol id="i-redo" viewBox="0 0 24 24"><path d="m15 14 5-5-5-5"/><path d="M20 9H9.5a5.5 5.5 0 0 0 0 11H13"/></symbol>
+  <symbol id="i-minus" viewBox="0 0 24 24"><path d="M5 12h14"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="M12 5v14"/></symbol>
+  <symbol id="i-eye" viewBox="0 0 24 24"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></symbol>
+  <symbol id="i-more" viewBox="0 0 24 24"><circle cx="5" cy="12" r="1.2"/><circle cx="12" cy="12" r="1.2"/><circle cx="19" cy="12" r="1.2"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></symbol>
+  <symbol id="i-bulb" viewBox="0 0 24 24"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M12 2a7 7 0 0 0-4 12.7c.6.5 1 1.3 1 2.1V17h6v-.2c0-.8.4-1.6 1-2.1A7 7 0 0 0 12 2Z"/></symbol>
+  <symbol id="i-steps" viewBox="0 0 24 24"><path d="M10 6h11"/><path d="M10 12h11"/><path d="M10 18h11"/><path d="M4 6h1v4"/><path d="M4 10h2"/><path d="M6 18H4c0-1 2-2 2-3s-1-1.5-2-1"/></symbol>
+  <symbol id="i-answer" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="m8 12 3 3 5-6"/></symbol>
+  <symbol id="i-print" viewBox="0 0 24 24"><path d="M6 9V2h12v7"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><path d="M6 14h12v8H6z"/></symbol>
+  <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></symbol>
+  <symbol id="i-upload" viewBox="0 0 24 24"><path d="M12 21V9"/><path d="m7 14 5-5 5 5"/><path d="M5 3h14"/></symbol>
+  <symbol id="i-save" viewBox="0 0 24 24"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"/><path d="M17 21v-8H7v8"/><path d="M7 3v5h8"/></symbol>
+  <symbol id="i-trash" viewBox="0 0 24 24"><path d="M3 6h18"/><path d="M8 6V4h8v2"/><path d="m19 6-1 14H6L5 6"/></symbol>
+  <symbol id="i-list" viewBox="0 0 24 24"><path d="M8 6h13"/><path d="M8 12h13"/><path d="M8 18h13"/><path d="M3 6h.01"/><path d="M3 12h.01"/><path d="M3 18h.01"/></symbol>
+  <symbol id="i-star" viewBox="0 0 24 24"><path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9Z"/></symbol>
+  <symbol id="i-fit" viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v3"/><path d="M21 8V5a2 2 0 0 0-2-2h-3"/><path d="M3 16v3a2 2 0 0 0 2 2h3"/><path d="M16 21h3a2 2 0 0 0 2-2v-3"/></symbol>
+</svg>
+
+<!-- One slim top bar: title, page navigation, writing tools, save status -->
+<header class="app-header">
+  <a class="brand" href="../index.html" aria-label="Gabriella's Math Lab, return to home">
+    <span class="brand-mark" aria-hidden="true">G</span>
+    <span class="brand-text"><span class="brand-name">Gabriella's Math Lab</span><span class="brand-sub">Lesson 5-1</span></span>
+  </a>
+  <nav class="pager" aria-label="Page navigation">
+    <button id="prev" class="btn btn-icon" aria-label="Previous page"><svg class="icon" aria-hidden="true"><use href="#i-left"/></svg></button>
+    <label class="page-select"><span class="sr-only">Textbook page</span><select id="pages" aria-label="Textbook page"></select></label>
+    <button id="next" class="btn btn-icon" aria-label="Next page"><svg class="icon" aria-hidden="true"><use href="#i-right"/></svg></button>
+  </nav>
+  <div class="toolbar" role="toolbar" aria-label="Writing and reading tools">
+  <div class="tool-group segmented" role="group" aria-label="Input mode">
+    <button data-mode="type" aria-pressed="true" title="Type an answer"><svg class="icon" aria-hidden="true"><use href="#i-type"/></svg><span class="label">Type</span></button>
+    <button data-mode="pen" aria-pressed="false" title="Write with a pencil"><svg class="icon" aria-hidden="true"><use href="#i-pencil"/></svg><span class="label">Pencil</span></button>
+    <button data-mode="eraser" aria-pressed="false" title="Erase handwriting"><svg class="icon" aria-hidden="true"><use href="#i-eraser"/></svg><span class="label">Eraser</span></button>
+    <button data-mode="pan" aria-pressed="false" title="Move the page"><svg class="icon" aria-hidden="true"><use href="#i-move"/></svg><span class="label">Pan</span></button>
+  </div>
+  <div class="tool-group" role="group" aria-label="History">
+    <button id="undo" class="btn btn-icon" aria-label="Undo" title="Undo"><svg class="icon" aria-hidden="true"><use href="#i-undo"/></svg></button>
+    <button id="redo" class="btn btn-icon" aria-label="Redo" title="Redo"><svg class="icon" aria-hidden="true"><use href="#i-redo"/></svg></button>
+  </div>
+  <div class="tool-group zoom" role="group" aria-label="Zoom">
+    <button id="zoomOut" class="btn btn-icon" aria-label="Zoom out" title="Zoom out"><svg class="icon" aria-hidden="true"><use href="#i-minus"/></svg></button>
+    <output id="zoomLabel" aria-live="polite"></output>
+    <button id="zoomIn" class="btn btn-icon" aria-label="Zoom in" title="Zoom in"><svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg></button>
+  </div>
+  <select id="fit" aria-label="Page zoom" hidden><option value="width">Fit width</option><option value="page">Fit page</option><option value="actual">100%</option></select>
+  <div class="tool-group tool-end">
+    <label class="toggle-chip" title="Show only the original page (hides the ? buttons)"><input id="original" type="checkbox"><svg class="icon" aria-hidden="true"><use href="#i-eye"/></svg><span class="label">Original only</span></label>
+    <details class="menu">
+        <summary aria-label="More options"><svg class="icon" aria-hidden="true"><use href="#i-more"/></svg><span class="label">More</span></summary>
+        <div class="card menu-card">
+          <p class="menu-title">Your work</p>
+          <button id="save" class="menu-item"><svg class="icon" aria-hidden="true"><use href="#i-save"/></svg>Save now</button>
+          <button id="print" class="menu-item"><svg class="icon" aria-hidden="true"><use href="#i-print"/></svg>Print lesson / Save PDF</button>
+          <button id="export" class="menu-item"><svg class="icon" aria-hidden="true"><use href="#i-download"/></svg>Export backup</button>
+          <label class="menu-item file"><svg class="icon" aria-hidden="true"><use href="#i-upload"/></svg>Restore backup<input id="import" type="file" accept="application/json"></label>
+          <hr>
+          <button id="resetZoom" class="menu-item"><svg class="icon" aria-hidden="true"><use href="#i-fit"/></svg>Reset zoom</button>
+          <button id="clear" class="menu-item danger"><svg class="icon" aria-hidden="true"><use href="#i-trash"/></svg>Clear this page…</button>
+          <p class="menu-note">Work saves automatically in this browser. Export a backup to keep a separate copy.</p>
+        </div>
+      </details>
+  </div>
+</div>
+  <div class="header-actions">
+    <span class="save-chip" title="Your work saves automatically"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><span id="saveStatus" role="status">Loading…</span></span>
+    <a class="btn btn-icon btn-ghost home-link" href="../index.html" aria-label="Home" title="Home"><svg class="icon" aria-hidden="true"><use href="#i-home"/></svg></a>
+  </div>
+</header>
+
+<div class="workspace">
+<!-- The textbook -->
+<section class="card book-card" aria-label="Textbook">
+  <main id="viewer" aria-label="Textbook workspace" tabindex="-1"><div id="stage"></div></main>
+</section>
+
+<!-- Solution pane: opens on the right when a ? is tapped -->
+<section id="help" class="card help" role="region" aria-labelledby="helpTitle" hidden>
+  <div class="help-head">
+    <h2 id="helpTitle" tabindex="-1">Question</h2>
+    <button id="closeHelp" class="btn btn-icon btn-ghost" aria-label="Close solution"><svg class="icon" aria-hidden="true"><use href="#i-x"/></svg></button>
+  </div>
+  <p class="help-answer"><span class="help-label">Answer <span class="badge" id="answerBadge"></span></span><strong id="answer"></strong></p>
+  <div class="help-how">
+    <span class="help-label">How to solve it</span>
+    <ol id="steps"></ol>
+  </div>
+  <p class="help-hint"><span class="help-label">Hint</span> <span id="hint"></span></p>
+  <p id="helpDetail" hidden></p>
+</section>
+</div>
+
+<dialog id="clearDialog" class="card confirm" aria-labelledby="clearTitle">
+  <h2 id="clearTitle">Clear this page?</h2>
+  <p class="muted">Only the current page is affected. Undo can bring cleared work back.</p>
+  <label class="check-row"><input type="checkbox" id="clearTyped"> Typed answers</label>
+  <label class="check-row"><input type="checkbox" id="clearInk" checked> Handwriting</label>
+  <div class="confirm-actions"><button id="cancelClear" class="btn btn-ghost">Cancel</button><button id="confirmClear" class="btn btn-danger">Clear selected</button></div>
+</dialog>
+
+<div id="printRoot" aria-hidden="true"></div>
+<script type="module" src="app.js"></script>
+</body>
+</html>

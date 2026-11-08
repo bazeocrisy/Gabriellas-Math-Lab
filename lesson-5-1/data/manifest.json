@@ -1,0 +1,55 @@
+{
+  "lesson": "5-1",
+  "title": "Understand Powers and Exponents",
+  "sourceUrl": "https://drive.google.com/file/d/1YobjzwCwrAlPgVpnrAcPUzwWm9N1Z2la/view",
+  "sourceSha256": "1ad58d1fcd75da6f55aeb620820ee6c522e963caea6525d8db5e6e20753567f5",
+  "sourcePages": 38,
+  "sourceDimensions": [
+    612,
+    792
+  ],
+  "render": "PyMuPDF 3\u00d7 (216 dpi), full page, PDF rotation honored, no crop or retouch",
+  "nextLesson": {
+    "lesson": "5-2",
+    "pdfPage": 7,
+    "printedPage": 147
+  },
+  "pages": [
+    {
+      "number": "143",
+      "pdfPage": 3,
+      "asset": "assets/page-143.png",
+      "width": 1836,
+      "height": 2376,
+      "sha256": "5108967774a9d36e76d1099af8dfdd4821753cfe99d1e81454a01fa26dd252b7",
+      "section": "Be Curious"
+    },
+    {
+      "number": "144",
+      "pdfPage": 4,
+      "asset": "assets/page-144.png",
+      "width": 1836,
+      "height": 2376,
+      "sha256": "2a1fb5864cdc3d459d8a934277043e34210bb4b63603d51935e79025e30e24b9",
+      "section": "Learn & Work Together"
+    },
+    {
+      "number": "145",
+      "pdfPage": 5,
+      "asset": "assets/page-145.png",
+      "width": 1836,
+      "height": 2376,
+      "sha256": "3d9dd795e297d37b51a0235964a252d6849585e4c04db4221b08ca9a0c7ca644",
+      "section": "On My Own"
+    },
+    {
+      "number": "146",
+      "pdfPage": 6,
+      "asset": "assets/page-146.png",
+      "width": 1836,
+      "height": 2376,
+      "sha256": "a1ec0b1b9e7a8c94c09578b40b135872d2e3f4ce1941829085d7695fb69e8171",
+      "section": "Reflect"
+    }
+  ]
+}

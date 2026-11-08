@@ -1,0 +1,688 @@
+{
+ "sections": {
+  "5-6": {
+   "title": "Relate Partial Products to an Algorithm"
+  }
+ },
+ "pages": {
+  "163": {
+   "heading": "Be Curious",
+   "fields": [
+    {
+     "id": "curious",
+     "multi": true,
+     "rect": [
+      0.1618,
+      0.585,
+      0.7767,
+      0.165
+     ]
+    },
+    {
+     "id": "mind163",
+     "multi": true,
+     "rect": [
+      0.4984,
+      0.845,
+      0.4401,
+      0.055
+     ]
+    }
+   ],
+   "questions": [
+    {
+     "id": "curious",
+     "title": "Be Curious · What do you notice? What do you wonder?",
+     "hint": "Compare the two ways 132 × 3 is written.",
+     "steps": [
+      "Look at the left problem: it shows three partial products, 300, 90 and 6.",
+      "Look at the right problem: it shows only the final product.",
+      "Notice that both give 396, then write a question you wonder about."
+     ],
+     "answer": "Sample answer: I notice both ways get 396. The left one shows each partial product (3 × 100, 3 × 30, 3 × 2) and the right one only shows the answer. I wonder how you can get 396 without writing the partial products.",
+     "openEnded": true,
+     "anchor": 0.3,
+     "side": "right",
+     "crop": [
+      0.1683,
+      0.215,
+      0.7443,
+      0.36
+     ],
+     "verified": true,
+     "verification": "Original page visually checked; 132 × 3 = 396 computed in Python; 300 + 90 + 6 = 396 checked by adding."
+    },
+    {
+     "id": "mind163",
+     "title": "Math is… Mindset",
+     "hint": "Think about how you help and listen to classmates.",
+     "steps": [
+      "Think about what a good classmate does in math class.",
+      "Write one way you can help your class work together."
+     ],
+     "answer": "Sample answer: I can be part of the classroom community by listening to others, sharing my ideas, and helping a classmate who is stuck. Your own answer may be different.",
+     "openEnded": true,
+     "anchor": 0.8675,
+     "side": "left",
+     "crop": [
+      0.1812,
+      0.8275,
+      0.3042,
+      0.08
+     ],
+     "verified": true,
+     "verification": "Original page visually checked; Opinion prompt; no single answer."
+    }
+   ]
+  },
+  "164": {
+   "heading": "Learn",
+   "fields": [
+    {
+     "id": "learn",
+     "multi": true,
+     "rect": [
+      0.0744,
+      0.22,
+      0.3366,
+      0.025
+     ]
+    },
+    {
+     "id": "general164",
+     "multi": true,
+     "rect": [
+      0.0777,
+      0.6725,
+      0.3883,
+      0.0375
+     ]
+    },
+    {
+     "id": "together",
+     "multi": true,
+     "rect": [
+      0.0971,
+      0.8125,
+      0.7638,
+      0.12
+     ]
+    }
+   ],
+   "questions": [
+    {
+     "id": "learn",
+     "title": "Learn · Los Angeles to New York City",
+     "hint": "The map shows Los Angeles to Phoenix is 413 miles.",
+     "steps": [
+      "Write the multiplication: 413 × 7.",
+      "Multiply the ones, tens and hundreds, regrouping when needed.",
+      "Write the product with the unit: miles."
+     ],
+     "answer": "413 × 7 = 2,891, so the distance is 2,891 miles.",
+     "openEnded": false,
+     "anchor": 0.19,
+     "side": "left",
+     "crop": [
+      0.0647,
+      0.06,
+      0.8155,
+      0.19
+     ],
+     "verified": true,
+     "verification": "Original page visually checked; Computed 413 × 7 = 2,891 in Python; checked by estimate 400 × 7 = 2,800."
+    },
+    {
+     "id": "general164",
+     "title": "Math is… Generalizations",
+     "hint": "Compare the partial products for 413 × 7 with the steps of the algorithm.",
+     "steps": [
+      "Partial products: 7 × 400 = 2,800, 7 × 10 = 70, 7 × 3 = 21.",
+      "The algorithm finds the same pieces, one place value at a time.",
+      "Instead of writing each piece, it regroups and writes one product."
+     ],
+     "answer": "Sample answer: Both multiply each place value of 413 by 7 (2,800 + 70 + 21 = 2,891). The algorithm does the same multiplying but regroups as it goes, so it writes only one product instead of adding the partial products at the end.",
+     "openEnded": true,
+     "anchor": 0.6925,
+     "side": "right",
+     "crop": [
+      0.479,
+      0.65,
+      0.3786,
+      0.085
+     ],
+     "verified": true,
+     "verification": "Original page visually checked; 2,800 + 70 + 21 = 2,891 checked in Python; matches algorithm result 413 × 7."
+    },
+    {
+     "id": "together",
+     "title": "Work Together · 3,021 × 4",
+     "hint": "Start with the ones place and move left.",
+     "steps": [
+      "Ones: 4 × 1 = 4.",
+      "Tens: 4 × 2 tens = 8 tens. Hundreds: 4 × 0 = 0.",
+      "Thousands: 4 × 3 thousands = 12 thousands.",
+      "Put the digits together."
+     ],
+     "answer": "12,084",
+     "openEnded": false,
+     "anchor": 0.785,
+     "side": "right",
+     "crop": [
+      0.0777,
+      0.755,
+      0.7929,
+      0.06
+     ],
+     "verified": true,
+     "verification": "Original page visually checked; Computed 3,021 × 4 = 12,084 in Python; checked 12,084 ÷ 4 = 3,021."
+    }
+   ]
+  },
+  "165": {
+   "heading": "On My Own",
+   "fields": [
+    {
+     "id": "name165",
+     "multi": false,
+     "rect": [
+      0.1942,
+      0.0975,
+      0.7249,
+      0.0225
+     ]
+    },
+    {
+     "id": "1",
+     "multi": false,
+     "rect": [
+      0.1618,
+      0.2275,
+      0.123,
+      0.025
+     ]
+    },
+    {
+     "id": "2",
+     "multi": false,
+     "rect": [
+      0.5178,
+      0.2275,
+      0.1294,
+      0.025
+     ]
+    },
+    {
+     "id": "3",
+     "multi": false,
+     "rect": [
+      0.165,
+      0.3525,
+      0.123,
+      0.025
+     ]
+    },
+    {
+     "id": "4",
+     "multi": false,
+     "rect": [
+      0.5178,
+      0.3525,
+      0.1359,
+      0.025
+     ]
+    },
+    {
+     "id": "5",
+     "multi": false,
+     "rect": [
+      0.3042,
+      0.4625,
+      0.1424,
+      0.025
+     ]
+    },
+    {
+     "id": "6",
+     "multi": false,
+     "rect": [
+      0.6667,
+      0.4625,
+      0.1424,
+      0.025
+     ]
+    },
+    {
+     "id": "7",
+     "multi": false,
+     "rect": [
+      0.3301,
+      0.695,
+      0.1294,
+      0.025
+     ]
+    },
+    {
+     "id": "8",
+     "multi": false,
+     "rect": [
+      0.6731,
+      0.695,
+      0.1424,
+      0.025
+     ]
+    }
+   ],
+   "questions": [
+    {
+     "id": "1",
+     "title": "Problem 1 · 327 × 6",
+     "hint": "Multiply the ones first: 6 × 7.",
+     "steps": [
+      "6 × 7 = 42: write 2, regroup 4 tens.",
+      "6 × 2 tens = 12 tens, plus 4 = 16 tens: write 6, regroup 1 hundred.",
+      "6 × 3 hundreds = 18 hundreds, plus 1 = 19 hundreds."
+     ],
+     "answer": "1,962",
+     "openEnded": false,
+     "anchor": 0.205,
+     "side": "left",
+     "crop": [
+      0.1294,
+      0.18,
+      0.1618,
+      0.055
+     ],
+     "verified": true,
+     "verification": "Original page visually checked; Computed 327 × 6 = 1,962 in Python; checked 1,962 ÷ 6 = 327."
+    },
+    {
+     "id": "2",
+     "title": "Problem 2 · 543 × 8",
+     "hint": "Multiply the ones first: 8 × 3.",
+     "steps": [
+      "8 × 3 = 24: write 4, regroup 2 tens.",
+      "8 × 4 tens = 32 tens, plus 2 = 34 tens: write 4, regroup 3 hundreds.",
+      "8 × 5 hundreds = 40 hundreds, plus 3 = 43 hundreds."
+     ],
+     "answer": "4,344",
+     "openEnded": false,
+     "anchor": 0.205,
+     "side": "right",
+     "crop": [
+      0.4693,
+      0.18,
+      0.1877,
+      0.055
+     ],
+     "verified": true,
+     "verification": "Original page visually checked; Computed 543 × 8 = 4,344 in Python; checked 4,344 ÷ 8 = 543."
+    },
+    {
+     "id": "3",
+     "title": "Problem 3 · 1,931 × 5",
+     "hint": "Multiply one place at a time, starting with the ones.",
+     "steps": [
+      "5 × 1 = 5.",
+      "5 × 3 tens = 15 tens: write 5, regroup 1 hundred.",
+      "5 × 9 hundreds = 45 hundreds, plus 1 = 46: write 6, regroup 4 thousands.",
+      "5 × 1 thousand = 5, plus 4 = 9 thousands."
+     ],
+     "answer": "9,655",
+     "openEnded": false,
+     "anchor": 0.33,
+     "side": "left",
+     "crop": [
+      0.1294,
+      0.305,
+      0.1618,
+      0.055
+     ],
+     "verified": true,
+     "verification": "Original page visually checked; Computed 1,931 × 5 = 9,655 in Python; checked 9,655 ÷ 5 = 1,931."
+    },
+    {
+     "id": "4",
+     "title": "Problem 4 · 3,462 × 4",
+     "hint": "Multiply one place at a time, starting with the ones.",
+     "steps": [
+      "4 × 2 = 8.",
+      "4 × 6 tens = 24 tens: write 4, regroup 2 hundreds.",
+      "4 × 4 hundreds = 16, plus 2 = 18 hundreds: write 8, regroup 1 thousand.",
+      "4 × 3 thousands = 12, plus 1 = 13 thousands."
+     ],
+     "answer": "13,848",
+     "openEnded": false,
+     "anchor": 0.33,
+     "side": "right",
+     "crop": [
+      0.4725,
+      0.305,
+      0.1877,
+      0.055
+     ],
+     "verified": true,
+     "verification": "Original page visually checked; Computed 3,462 × 4 = 13,848 in Python; checked 13,848 ÷ 4 = 3,462."
+    },
+    {
+     "id": "5",
+     "title": "Problem 5 · 188 × 7 = s",
+     "hint": "Estimate first: 188 is close to 200.",
+     "steps": [
+      "Ones: 7 × 8 = 56: write 6, regroup 5 tens.",
+      "Tens: 7 × 8 = 56, plus 5 = 61 tens: write 1, regroup 6 hundreds.",
+      "Hundreds: 7 × 1 = 7, plus 6 = 13 hundreds. Find the matching choice."
+     ],
+     "answer": "B. s = 1,316",
+     "openEnded": false,
+     "anchor": 0.48,
+     "side": "left",
+     "crop": [
+      0.1294,
+      0.4625,
+      0.3366,
+      0.175
+     ],
+     "verified": true,
+     "verification": "Original page visually checked; Computed 188 × 7 = 1,316 in Python; checked 1,316 ÷ 7 = 188 and estimate 200 × 7 = 1,400."
+    },
+    {
+     "id": "6",
+     "title": "Problem 6 · 237 × 9 = v",
+     "hint": "The ones digit of 7 × 9 tells you the last digit of the answer.",
+     "steps": [
+      "Ones: 9 × 7 = 63: write 3, regroup 6 tens.",
+      "Tens: 9 × 3 = 27, plus 6 = 33 tens: write 3, regroup 3 hundreds.",
+      "Hundreds: 9 × 2 = 18, plus 3 = 21 hundreds. Find the matching choice."
+     ],
+     "answer": "D. v = 2,133",
+     "openEnded": false,
+     "anchor": 0.48,
+     "side": "right",
+     "crop": [
+      0.4725,
+      0.4625,
+      0.3495,
+      0.175
+     ],
+     "verified": true,
+     "verification": "Original page visually checked; Computed 237 × 9 = 2,133 in Python; checked 2,133 ÷ 9 = 237."
+    },
+    {
+     "id": "7",
+     "title": "Problem 7 · 2,623 × 2 = y",
+     "hint": "Doubling 2,623 is the same as adding it to itself.",
+     "steps": [
+      "2 × 3 = 6 and 2 × 2 tens = 4 tens.",
+      "2 × 6 hundreds = 12 hundreds: write 2, regroup 1 thousand.",
+      "2 × 2 thousands = 4, plus 1 = 5 thousands. Find the matching choice."
+     ],
+     "answer": "A. y = 5,246",
+     "openEnded": false,
+     "anchor": 0.71,
+     "side": "left",
+     "crop": [
+      0.1294,
+      0.695,
+      0.3495,
+      0.15
+     ],
+     "verified": true,
+     "verification": "Original page visually checked; Computed 2,623 × 2 = 5,246 in Python; checked 2,623 + 2,623 = 5,246."
+    },
+    {
+     "id": "8",
+     "title": "Problem 8 · 5,246 × 3 = r",
+     "hint": "Multiply one place at a time and remember to regroup.",
+     "steps": [
+      "3 × 6 = 18: write 8, regroup 1 ten. 3 × 4 = 12, plus 1 = 13 tens: write 3, regroup 1.",
+      "3 × 2 = 6, plus 1 = 7 hundreds.",
+      "3 × 5 = 15 thousands. Find the matching choice."
+     ],
+     "answer": "D. r = 15,738",
+     "openEnded": false,
+     "anchor": 0.71,
+     "side": "right",
+     "crop": [
+      0.4725,
+      0.695,
+      0.3625,
+      0.15
+     ],
+     "verified": true,
+     "verification": "Original page visually checked; Computed 5,246 × 3 = 15,738 in Python; checked 15,738 ÷ 3 = 5,246."
+    }
+   ]
+  },
+  "166": {
+   "heading": "On My Own",
+   "fields": [
+    {
+     "id": "9",
+     "multi": true,
+     "rect": [
+      0.11,
+      0.1125,
+      0.5307,
+      0.07
+     ]
+    },
+    {
+     "id": "10",
+     "multi": true,
+     "rect": [
+      0.1165,
+      0.25,
+      0.5825,
+      0.0425
+     ]
+    },
+    {
+     "id": "11",
+     "multi": true,
+     "rect": [
+      0.1165,
+      0.3675,
+      0.5178,
+      0.055
+     ]
+    },
+    {
+     "id": "12",
+     "multi": true,
+     "rect": [
+      0.1197,
+      0.4975,
+      0.6149,
+      0.0425
+     ]
+    },
+    {
+     "id": "13",
+     "multi": true,
+     "rect": [
+      0.1197,
+      0.5975,
+      0.6149,
+      0.0825
+     ]
+    },
+    {
+     "id": "reflect",
+     "multi": true,
+     "rect": [
+      0.0971,
+      0.7725,
+      0.4401,
+      0.15
+     ]
+    },
+    {
+     "id": "mind166",
+     "multi": true,
+     "rect": [
+      0.5502,
+      0.7775,
+      0.3042,
+      0.0575
+     ]
+    }
+   ],
+   "questions": [
+    {
+     "id": "9",
+     "title": "9 · How deep is the Atlantic Ocean?",
+     "hint": "Multiply Lake Michigan's depth by 28.",
+     "steps": [
+      "Write 922 × 28.",
+      "Find 922 × 8 = 7,376 and 922 × 20 = 18,440.",
+      "Add: 7,376 + 18,440."
+     ],
+     "answer": "922 × 28 = 25,816, so the Atlantic Ocean is 25,816 feet deep.",
+     "openEnded": false,
+     "anchor": 0.08,
+     "side": "left",
+     "crop": [
+      0.0712,
+      0.04,
+      0.5955,
+      0.15
+     ],
+     "verified": true,
+     "verification": "Original page visually checked; Computed 922 × 28 = 25,816 in Python; checked 25,816 ÷ 28 = 922 and 7,376 + 18,440 = 25,816."
+    },
+    {
+     "id": "10",
+     "title": "10 · Joey's lawn money",
+     "hint": "He earns the same amount each week for 6 weeks.",
+     "steps": [
+      "Write $355 × 6.",
+      "Multiply: 6 × 5 = 30, 6 × 50 = 300, 6 × 300 = 1,800.",
+      "Add the pieces or use the algorithm: 30 + 300 + 1,800."
+     ],
+     "answer": "$355 × 6 = $2,130",
+     "openEnded": false,
+     "anchor": 0.2225,
+     "side": "left",
+     "crop": [
+      0.0712,
+      0.1975,
+      0.6472,
+      0.095
+     ],
+     "verified": true,
+     "verification": "Original page visually checked; Computed 355 × 6 = 2,130 in Python; checked 2,130 ÷ 6 = 355."
+    },
+    {
+     "id": "11",
+     "title": "11 · Maria's steps",
+     "hint": "Read the number of steps on the pedometer: 9,150.",
+     "steps": [
+      "Write 9,150 × 7.",
+      "Multiply: 7 × 50 = 350, 7 × 100 = 700, 7 × 9,000 = 63,000.",
+      "Add: 63,000 + 700 + 350."
+     ],
+     "answer": "9,150 × 7 = 64,050 steps",
+     "openEnded": false,
+     "anchor": 0.33,
+     "side": "left",
+     "crop": [
+      0.0712,
+      0.295,
+      0.8026,
+      0.13
+     ],
+     "verified": true,
+     "verification": "Original page visually checked; Pedometer reads 9150 (zoomed image); computed 9,150 × 7 = 64,050 in Python; checked 64,050 ÷ 7 = 9,150."
+    },
+    {
+     "id": "12",
+     "title": "12 · Podcast seconds",
+     "hint": "There are 60 seconds in 1 minute.",
+     "steps": [
+      "Find the total minutes: 3 × 45 = 135 minutes.",
+      "Change to seconds: 135 × 60.",
+      "135 × 60 = 8,100."
+     ],
+     "answer": "8,100 seconds",
+     "openEnded": false,
+     "anchor": 0.46,
+     "side": "left",
+     "crop": [
+      0.0712,
+      0.425,
+      0.6731,
+      0.115
+     ],
+     "verified": true,
+     "verification": "Original page visually checked; Computed 3 × 45 × 60 = 8,100 in Python; checked another way: 45 × 60 = 2,700 seconds per podcast, 2,700 × 3 = 8,100."
+    },
+    {
+     "id": "13",
+     "title": "13 · Extend Your Thinking",
+     "hint": "Think about what goes wrong if you skip regrouping.",
+     "steps": [
+      "Each step multiplies one place value.",
+      "Regrouped digits must be added in the next step.",
+      "Skipping or mixing up a step gives the wrong product."
+     ],
+     "answer": "Sample answer: Each step multiplies a different place value and passes the regrouped tens, hundreds or thousands to the next step. If you skip a step or forget to add the regrouped amount, a place value is left out and the product is wrong. For example, 413 × 7 is 2,891, but forgetting the 2 regrouped tens gives 2,871.",
+     "openEnded": true,
+     "anchor": 0.57,
+     "side": "left",
+     "crop": [
+      0.0712,
+      0.545,
+      0.6667,
+      0.14
+     ],
+     "verified": true,
+     "verification": "Original page visually checked; Explanation prompt; example checked: 413 × 7 = 2,891 in Python, and omitting 20 gives 2,871."
+    },
+    {
+     "id": "reflect",
+     "title": "Reflect · Partial products and an algorithm",
+     "hint": "Think back to 132 × 3 on the Be Curious page.",
+     "steps": [
+      "Partial products show each place value multiplied separately.",
+      "The algorithm multiplies the same place values, regrouping as it goes.",
+      "Both give the same product."
+     ],
+     "answer": "Sample answer: They both multiply each place value of the number. Partial products write each product (300 + 90 + 6 = 396) and then add, while the algorithm regroups as it goes and writes only the final product, 396.",
+     "openEnded": true,
+     "anchor": 0.7525,
+     "side": "left",
+     "crop": [
+      0.0777,
+      0.73,
+      0.7961,
+      0.045
+     ],
+     "verified": true,
+     "verification": "Original page visually checked; 132 × 3 = 396 and 300 + 90 + 6 = 396 checked in Python."
+    },
+    {
+     "id": "mind166",
+     "title": "Math is… Mindset",
+     "hint": "Remember a time you worked with a partner or the class.",
+     "steps": [
+      "Think of a time you shared, listened or helped in math class.",
+      "Describe what you did."
+     ],
+     "answer": "Sample answer: I was part of the classroom community when I explained my steps to my partner and listened to how she solved the problem. Your own experience may be different.",
+     "openEnded": true,
+     "anchor": 0.8825,
+     "side": "right",
+     "crop": [
+      0.5469,
+      0.84,
+      0.3074,
+      0.085
+     ],
+     "verified": true,
+     "verification": "Original page visually checked; Opinion prompt; no single answer."
+    }
+   ]
+  }
+ }
+}

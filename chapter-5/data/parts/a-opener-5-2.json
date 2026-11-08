@@ -1,0 +1,1254 @@
+{
+ "sections": {
+  "opener": {
+   "title": "Multiply Multi-Digit Whole Numbers"
+  },
+  "5-2": {
+   "title": "Patterns When Multiplying a Whole Number by Powers of 10"
+  }
+ },
+ "pages": {
+  "141": {
+   "heading": "Multiply Multi-Digit Whole Numbers",
+   "fields": [],
+   "questions": []
+  },
+  "142": {
+   "heading": "Ignite! · Mile-High Pennies",
+   "fields": [
+    {
+     "id": "name",
+     "multi": false,
+     "rect": [
+      0.1424,
+      0.096,
+      0.7249,
+      0.021
+     ]
+    },
+    {
+     "id": "1a",
+     "multi": false,
+     "rect": [
+      0.521,
+      0.433,
+      0.0971,
+      0.022
+     ]
+    },
+    {
+     "id": "1b",
+     "multi": false,
+     "rect": [
+      0.5275,
+      0.463,
+      0.0971,
+      0.022
+     ]
+    },
+    {
+     "id": "2",
+     "multi": false,
+     "rect": [
+      0.6427,
+      0.494,
+      0.0971,
+      0.023
+     ]
+    },
+    {
+     "id": "3",
+     "multi": false,
+     "rect": [
+      0.1133,
+      0.6,
+      0.1942,
+      0.023
+     ]
+    },
+    {
+     "id": "3large",
+     "multi": false,
+     "rect": [
+      0.2104,
+      0.682,
+      0.2524,
+      0.024
+     ]
+    },
+    {
+     "id": "3small",
+     "multi": false,
+     "rect": [
+      0.2039,
+      0.765,
+      0.0939,
+      0.024
+     ]
+    },
+    {
+     "id": "4",
+     "multi": false,
+     "rect": [
+      0.343,
+      0.852,
+      0.2686,
+      0.024
+     ]
+    }
+   ],
+   "questions": [
+    {
+     "id": "1a",
+     "title": "Problem 1 · Pennies in a 1-inch stack",
+     "hint": "Find the stack that is labeled 1 in.",
+     "steps": [
+      "Look at the four stacks of pennies.",
+      "Find the stack whose height is marked 1 in.",
+      "Read how many pennies are in that stack."
+     ],
+     "answer": "17 pennies",
+     "openEnded": false,
+     "anchor": 0.445,
+     "side": "left",
+     "crop": [
+      0.0712,
+      0.43,
+      0.5696,
+      0.03
+     ],
+     "verified": true,
+     "verification": "Read from the penny stacks on the page (17 pennies = 1 in.)."
+    },
+    {
+     "id": "1b",
+     "title": "Problem 1 · Pennies in a 2-inch stack",
+     "hint": "Find the stack that is labeled 2 in.",
+     "steps": [
+      "Find the stack whose height is marked 2 in.",
+      "Read how many pennies it has.",
+      "Check: 2 inches is double 1 inch, and 17 × 2 = 34."
+     ],
+     "answer": "34 pennies",
+     "openEnded": false,
+     "anchor": 0.475,
+     "side": "left",
+     "crop": [
+      0.1036,
+      0.46,
+      0.5307,
+      0.03
+     ],
+     "verified": true,
+     "verification": "Read from the penny stacks on the page (34 pennies = 2 in.); checked 17 × 2 = 34 in Python."
+    },
+    {
+     "id": "2",
+     "title": "Problem 2 · Pennies in a 1-foot stack",
+     "hint": "A foot is 12 inches.",
+     "steps": [
+      "Remember that 1 foot = 12 inches.",
+      "Each inch is about 17 pennies.",
+      "Multiply 17 × 12."
+     ],
+     "answer": "About 204 pennies (17 × 12 = 204).",
+     "openEnded": false,
+     "anchor": 0.505,
+     "side": "left",
+     "crop": [
+      0.0712,
+      0.49,
+      0.6796,
+      0.03
+     ],
+     "verified": true,
+     "verification": "Computed in Python; 17 × 12 = 204; checked 34 × 6 = 204."
+    },
+    {
+     "id": "3",
+     "title": "Problem 3 · Guess: a mile-high stack",
+     "hint": "This is a guess, so just think about how big the number might be.",
+     "steps": [
+      "A mile is 5,280 feet, and each foot has about 200 pennies.",
+      "Think: is the answer in the thousands, the millions, or the billions?",
+      "Write your best guess. It does not have to be exact."
+     ],
+     "answer": "Sample answer: about 1,000,000 pennies. Any sensible guess is fine; the calculated estimate is about 1,077,120.",
+     "openEnded": true,
+     "anchor": 0.59,
+     "side": "left",
+     "crop": [
+      0.0712,
+      0.555,
+      0.699,
+      0.075
+     ],
+     "verified": true,
+     "verification": "Guess prompt; reference value 204 × 5,280 = 1,077,120 computed in Python."
+    },
+    {
+     "id": "3large",
+     "title": "Problem 3 · A number that is too large",
+     "hint": "Pick a number much, much bigger than a mile of pennies could be.",
+     "steps": [
+      "Remember a mile-high stack needs about a million pennies.",
+      "Choose a number that is far bigger, like billions."
+     ],
+     "answer": "Sample answer: 1,000,000,000 (one billion) is definitely too large.",
+     "openEnded": true,
+     "anchor": 0.685,
+     "side": "left",
+     "crop": [
+      0.1068,
+      0.66,
+      0.5955,
+      0.05
+     ],
+     "verified": true,
+     "verification": "Open-ended; 1,000,000,000 > 1,077,120 by far (checked in Python)."
+    },
+    {
+     "id": "3small",
+     "title": "Problem 3 · A number that is too small",
+     "hint": "Pick a number that could not even reach the top of a tall building.",
+     "steps": [
+      "About 204 pennies make just 1 foot.",
+      "Choose a number that would make a stack far shorter than a mile, like a few thousand."
+     ],
+     "answer": "Sample answer: 1,000 pennies is definitely too small (that is only about 5 feet tall).",
+     "openEnded": true,
+     "anchor": 0.7675,
+     "side": "left",
+     "crop": [
+      0.1068,
+      0.745,
+      0.5955,
+      0.05
+     ],
+     "verified": true,
+     "verification": "Open-ended; 1,000 ÷ 204 ≈ 4.9 feet, computed in Python."
+    },
+    {
+     "id": "4",
+     "title": "Problem 4 · Calculated estimate for a mile",
+     "hint": "Use your answer from Problem 2 and the number of feet in a mile.",
+     "steps": [
+      "About 204 pennies make 1 foot.",
+      "A mile is 5,280 feet.",
+      "Multiply 204 × 5,280."
+     ],
+     "answer": "About 1,077,120 pennies (204 × 5,280). About 1 million pennies.",
+     "openEnded": false,
+     "anchor": 0.8575,
+     "side": "left",
+     "crop": [
+      0.0712,
+      0.8275,
+      0.6861,
+      0.055
+     ],
+     "verified": true,
+     "verification": "Computed in Python; 204 × 5,280 = 1,077,120; checked 34 × 6 × 5,280 = 1,077,120 and estimate 200 × 5,000 = 1,000,000."
+    }
+   ]
+  },
+  "147": {
+   "heading": "Be Curious",
+   "fields": [
+    {
+     "id": "curious",
+     "multi": true,
+     "rect": [
+      0.1294,
+      0.72,
+      0.7961,
+      0.075
+     ]
+    },
+    {
+     "id": "mind",
+     "multi": true,
+     "rect": [
+      0.479,
+      0.805,
+      0.4466,
+      0.05
+     ]
+    }
+   ],
+   "questions": [
+    {
+     "id": "curious",
+     "title": "Be Curious · How are they the same?",
+     "hint": "Find the value of each expression and compare.",
+     "steps": [
+      "Look at 15 × 10,000, 15 × 10 × 10 × 10 × 10, 15 × 10⁴ and 150,000.",
+      "10,000 is the same as 10 × 10 × 10 × 10, which is 10⁴.",
+      "Notice what is the same and what is written differently."
+     ],
+     "answer": "Sample answer: They are the same because they all equal 150,000. They are different because they are written in different ways: with 10,000, with four factors of 10, with an exponent, and as a standard number.",
+     "openEnded": true,
+     "anchor": 0.53,
+     "side": "right",
+     "crop": [
+      0.123,
+      0.345,
+      0.8091,
+      0.375
+     ],
+     "verified": true,
+     "verification": "Computed in Python; 15 × 10,000 = 15 × 10⁴ = 150,000."
+    },
+    {
+     "id": "mind",
+     "title": "Math is… Mindset · Avoiding distractions",
+     "hint": "This is about you, so there is no wrong answer.",
+     "steps": [
+      "Think about what pulls your attention away while you work.",
+      "Write one thing you do to stay focused."
+     ],
+     "answer": "Sample answer: I put away things I don't need and work in a quiet spot.",
+     "openEnded": true,
+     "anchor": 0.87,
+     "side": "left",
+     "crop": [
+      0.1812,
+      0.825,
+      0.288,
+      0.09
+     ],
+     "verified": true,
+     "verification": "Personal reflection; no single correct answer."
+    }
+   ]
+  },
+  "148": {
+   "heading": "Learn",
+   "fields": [
+    {
+     "id": "structure",
+     "multi": true,
+     "rect": [
+      0.5307,
+      0.549,
+      0.3366,
+      0.029
+     ]
+    },
+    {
+     "id": "work",
+     "multi": true,
+     "rect": [
+      0.1036,
+      0.7975,
+      0.7638,
+      0.135
+     ]
+    }
+   ],
+   "questions": [
+    {
+     "id": "structure",
+     "title": "Math is… Structure · Why do digits shift?",
+     "hint": "Think about place value: each place is worth 10 times the place to its right.",
+     "steps": [
+      "Multiplying by 10 makes every digit worth 10 times as much.",
+      "So each digit moves one place to the left.",
+      "A zero fills the empty ones place."
+     ],
+     "answer": "Sample answer: Each place is worth 10 times the place to its right, so multiplying by 10 makes every digit move one place to the left.",
+     "openEnded": true,
+     "anchor": 0.495,
+     "side": "right",
+     "crop": [
+      0.5275,
+      0.44,
+      0.3204,
+      0.11
+     ],
+     "verified": true,
+     "verification": "Place-value reasoning checked: 36 × 10 = 360 in Python."
+    },
+    {
+     "id": "work",
+     "title": "Work Together · 32 × 10², 10³, 10⁴",
+     "hint": "The exponent tells you how many zeros to put after 32.",
+     "steps": [
+      "10² = 100, so 32 × 10² = 3,200.",
+      "10³ = 1,000, so 32 × 10³ = 32,000.",
+      "10⁴ = 10,000, so 32 × 10⁴ = 320,000.",
+      "Each time the exponent goes up by 1, the product gets one more zero."
+     ],
+     "answer": "32 × 10² = 3,200; 32 × 10³ = 32,000; 32 × 10⁴ = 320,000. The number of zeros after 32 equals the exponent.",
+     "openEnded": false,
+     "anchor": 0.735,
+     "side": "right",
+     "crop": [
+      0.0809,
+      0.705,
+      0.7961,
+      0.235
+     ],
+     "verified": true,
+     "verification": "Computed in Python; 32 × 100 = 3,200, 32 × 1,000 = 32,000, 32 × 10,000 = 320,000; checked by counting zeros."
+    }
+   ]
+  },
+  "149": {
+   "heading": "On My Own",
+   "fields": [
+    {
+     "id": "name",
+     "multi": false,
+     "rect": [
+      0.1942,
+      0.099,
+      0.7249,
+      0.019
+     ]
+    },
+    {
+     "id": "1a",
+     "multi": false,
+     "rect": [
+      0.2816,
+      0.175,
+      0.1411,
+      0.02
+     ]
+    },
+    {
+     "id": "1b",
+     "multi": false,
+     "rect": [
+      0.2964,
+      0.2085,
+      0.1411,
+      0.02
+     ]
+    },
+    {
+     "id": "1c",
+     "multi": false,
+     "rect": [
+      0.3159,
+      0.242,
+      0.1411,
+      0.02
+     ]
+    },
+    {
+     "id": "2a",
+     "multi": false,
+     "rect": [
+      0.6608,
+      0.173,
+      0.1424,
+      0.02
+     ]
+    },
+    {
+     "id": "2b",
+     "multi": false,
+     "rect": [
+      0.6751,
+      0.206,
+      0.1424,
+      0.02
+     ]
+    },
+    {
+     "id": "2c",
+     "multi": false,
+     "rect": [
+      0.69,
+      0.239,
+      0.1424,
+      0.02
+     ]
+    },
+    {
+     "id": "3a",
+     "multi": false,
+     "rect": [
+      0.2951,
+      0.2885,
+      0.1424,
+      0.02
+     ]
+    },
+    {
+     "id": "3b",
+     "multi": false,
+     "rect": [
+      0.2951,
+      0.3235,
+      0.1424,
+      0.02
+     ]
+    },
+    {
+     "id": "3c",
+     "multi": false,
+     "rect": [
+      0.2964,
+      0.3565,
+      0.1424,
+      0.02
+     ]
+    },
+    {
+     "id": "4a",
+     "multi": false,
+     "rect": [
+      0.6369,
+      0.286,
+      0.1586,
+      0.02
+     ]
+    },
+    {
+     "id": "4b",
+     "multi": false,
+     "rect": [
+      0.6382,
+      0.321,
+      0.1586,
+      0.02
+     ]
+    },
+    {
+     "id": "4c",
+     "multi": false,
+     "rect": [
+      0.6382,
+      0.354,
+      0.1586,
+      0.02
+     ]
+    },
+    {
+     "id": "5",
+     "multi": false,
+     "rect": [
+      0.2848,
+      0.438,
+      0.1942,
+      0.025
+     ]
+    },
+    {
+     "id": "6",
+     "multi": false,
+     "rect": [
+      0.6278,
+      0.436,
+      0.1942,
+      0.025
+     ]
+    },
+    {
+     "id": "7",
+     "multi": false,
+     "rect": [
+      0.2783,
+      0.491,
+      0.1942,
+      0.025
+     ]
+    },
+    {
+     "id": "8",
+     "multi": false,
+     "rect": [
+      0.6278,
+      0.489,
+      0.1942,
+      0.025
+     ]
+    },
+    {
+     "id": "9",
+     "multi": false,
+     "rect": [
+      0.2472,
+      0.5875,
+      0.1424,
+      0.021
+     ]
+    },
+    {
+     "id": "10",
+     "multi": false,
+     "rect": [
+      0.5812,
+      0.585,
+      0.1424,
+      0.021
+     ]
+    },
+    {
+     "id": "11",
+     "multi": false,
+     "rect": [
+      0.2285,
+      0.6325,
+      0.1424,
+      0.021
+     ]
+    },
+    {
+     "id": "12",
+     "multi": false,
+     "rect": [
+      0.5832,
+      0.63,
+      0.1424,
+      0.021
+     ]
+    },
+    {
+     "id": "13",
+     "multi": true,
+     "rect": [
+      0.178,
+      0.856,
+      0.7508,
+      0.07
+     ]
+    }
+   ],
+   "questions": [
+    {
+     "id": "1a",
+     "title": "Problem 1 · 12 × 10",
+     "hint": "Count the zeros in the power of 10.",
+     "steps": [
+      "Start with 12.",
+      "Notice that 10 has 1 zero.",
+      "Write 1 zero after 12."
+     ],
+     "answer": "120",
+     "openEnded": false,
+     "anchor": 0.185,
+     "side": "left",
+     "crop": [
+      0.1456,
+      0.1675,
+      0.3236,
+      0.035
+     ],
+     "verified": true,
+     "verification": "Computed in Python; 12 × 10 = 120; checked by counting zeros."
+    },
+    {
+     "id": "1b",
+     "title": "Problem 1 · 12 × 100",
+     "hint": "Count the zeros in the power of 10.",
+     "steps": [
+      "Start with 12.",
+      "Notice that 100 has 2 zeros.",
+      "Write 2 zeros after 12."
+     ],
+     "answer": "1,200",
+     "openEnded": false,
+     "anchor": 0.2185,
+     "side": "left",
+     "crop": [
+      0.1456,
+      0.201,
+      0.3236,
+      0.035
+     ],
+     "verified": true,
+     "verification": "Computed in Python; 12 × 100 = 1,200; checked by counting zeros."
+    },
+    {
+     "id": "1c",
+     "title": "Problem 1 · 12 × 1,000",
+     "hint": "Count the zeros in the power of 10.",
+     "steps": [
+      "Start with 12.",
+      "Notice that 1,000 has 3 zeros.",
+      "Write 3 zeros after 12."
+     ],
+     "answer": "12,000",
+     "openEnded": false,
+     "anchor": 0.252,
+     "side": "left",
+     "crop": [
+      0.1456,
+      0.2345,
+      0.3236,
+      0.035
+     ],
+     "verified": true,
+     "verification": "Computed in Python; 12 × 1,000 = 12,000; checked by counting zeros."
+    },
+    {
+     "id": "2a",
+     "title": "Problem 2 · 24 × 1,000",
+     "hint": "Count the zeros in the power of 10.",
+     "steps": [
+      "Start with 24.",
+      "Notice that 1,000 has 3 zeros.",
+      "Write 3 zeros after 24."
+     ],
+     "answer": "24,000",
+     "openEnded": false,
+     "anchor": 0.183,
+     "side": "right",
+     "crop": [
+      0.4854,
+      0.1655,
+      0.3625,
+      0.035
+     ],
+     "verified": true,
+     "verification": "Computed in Python; 24 × 1,000 = 24,000; checked by counting zeros."
+    },
+    {
+     "id": "2b",
+     "title": "Problem 2 · 24 × 10,000",
+     "hint": "Count the zeros in the power of 10.",
+     "steps": [
+      "Start with 24.",
+      "Notice that 10,000 has 4 zeros.",
+      "Write 4 zeros after 24."
+     ],
+     "answer": "240,000",
+     "openEnded": false,
+     "anchor": 0.216,
+     "side": "right",
+     "crop": [
+      0.4854,
+      0.1985,
+      0.3625,
+      0.035
+     ],
+     "verified": true,
+     "verification": "Computed in Python; 24 × 10,000 = 240,000; checked by counting zeros."
+    },
+    {
+     "id": "2c",
+     "title": "Problem 2 · 24 × 100,000",
+     "hint": "Count the zeros in the power of 10.",
+     "steps": [
+      "Start with 24.",
+      "Notice that 100,000 has 5 zeros.",
+      "Write 5 zeros after 24."
+     ],
+     "answer": "2,400,000",
+     "openEnded": false,
+     "anchor": 0.249,
+     "side": "right",
+     "crop": [
+      0.4854,
+      0.2315,
+      0.3625,
+      0.035
+     ],
+     "verified": true,
+     "verification": "Computed in Python; 24 × 100,000 = 2,400,000; checked by counting zeros."
+    },
+    {
+     "id": "3a",
+     "title": "Problem 3 · 33 × 10²",
+     "hint": "Count the zeros in the power of 10.",
+     "steps": [
+      "Start with 33.",
+      "Notice that the exponent is 2, so the power of 10 has 2 zeros.",
+      "Write 2 zeros after 33."
+     ],
+     "answer": "3,300",
+     "openEnded": false,
+     "anchor": 0.2985,
+     "side": "left",
+     "crop": [
+      0.1456,
+      0.281,
+      0.3236,
+      0.035
+     ],
+     "verified": true,
+     "verification": "Computed in Python; 33 × 10² = 3,300; checked by counting zeros."
+    },
+    {
+     "id": "3b",
+     "title": "Problem 3 · 33 × 10³",
+     "hint": "Count the zeros in the power of 10.",
+     "steps": [
+      "Start with 33.",
+      "Notice that the exponent is 3, so the power of 10 has 3 zeros.",
+      "Write 3 zeros after 33."
+     ],
+     "answer": "33,000",
+     "openEnded": false,
+     "anchor": 0.3335,
+     "side": "left",
+     "crop": [
+      0.1456,
+      0.316,
+      0.3236,
+      0.035
+     ],
+     "verified": true,
+     "verification": "Computed in Python; 33 × 10³ = 33,000; checked by counting zeros."
+    },
+    {
+     "id": "3c",
+     "title": "Problem 3 · 33 × 10⁴",
+     "hint": "Count the zeros in the power of 10.",
+     "steps": [
+      "Start with 33.",
+      "Notice that the exponent is 4, so the power of 10 has 4 zeros.",
+      "Write 4 zeros after 33."
+     ],
+     "answer": "330,000",
+     "openEnded": false,
+     "anchor": 0.3665,
+     "side": "left",
+     "crop": [
+      0.1456,
+      0.349,
+      0.3236,
+      0.035
+     ],
+     "verified": true,
+     "verification": "Computed in Python; 33 × 10⁴ = 330,000; checked by counting zeros."
+    },
+    {
+     "id": "4a",
+     "title": "Problem 4 · 57 × 10⁴",
+     "hint": "Count the zeros in the power of 10.",
+     "steps": [
+      "Start with 57.",
+      "Notice that the exponent is 4, so the power of 10 has 4 zeros.",
+      "Write 4 zeros after 57."
+     ],
+     "answer": "570,000",
+     "openEnded": false,
+     "anchor": 0.296,
+     "side": "right",
+     "crop": [
+      0.4854,
+      0.2785,
+      0.3625,
+      0.035
+     ],
+     "verified": true,
+     "verification": "Computed in Python; 57 × 10⁴ = 570,000; checked by counting zeros."
+    },
+    {
+     "id": "4b",
+     "title": "Problem 4 · 57 × 10⁵",
+     "hint": "Count the zeros in the power of 10.",
+     "steps": [
+      "Start with 57.",
+      "Notice that the exponent is 5, so the power of 10 has 5 zeros.",
+      "Write 5 zeros after 57."
+     ],
+     "answer": "5,700,000",
+     "openEnded": false,
+     "anchor": 0.331,
+     "side": "right",
+     "crop": [
+      0.4854,
+      0.3135,
+      0.3625,
+      0.035
+     ],
+     "verified": true,
+     "verification": "Computed in Python; 57 × 10⁵ = 5,700,000; checked by counting zeros."
+    },
+    {
+     "id": "4c",
+     "title": "Problem 4 · 57 × 10⁶",
+     "hint": "Count the zeros in the power of 10.",
+     "steps": [
+      "Start with 57.",
+      "Notice that the exponent is 6, so the power of 10 has 6 zeros.",
+      "Write 6 zeros after 57."
+     ],
+     "answer": "57,000,000",
+     "openEnded": false,
+     "anchor": 0.364,
+     "side": "right",
+     "crop": [
+      0.4854,
+      0.3465,
+      0.3625,
+      0.035
+     ],
+     "verified": true,
+     "verification": "Computed in Python; 57 × 10⁶ = 57,000,000; checked by counting zeros."
+    },
+    {
+     "id": "5",
+     "title": "Problem 5 · 23 × 10³",
+     "hint": "The exponent tells how many zeros to write after the first factor.",
+     "steps": [
+      "The exponent is 3, so 10 to that power is 1 followed by 3 zeros.",
+      "Write 23 and then 3 more zeros.",
+      "Put commas in to read the number."
+     ],
+     "answer": "23,000",
+     "openEnded": false,
+     "anchor": 0.4515,
+     "side": "left",
+     "crop": [
+      0.1456,
+      0.434,
+      0.3366,
+      0.035
+     ],
+     "verified": true,
+     "verification": "Computed in Python; 23 × 10³ = 23,000; checked by counting zeros."
+    },
+    {
+     "id": "6",
+     "title": "Problem 6 · 581 × 10²",
+     "hint": "The exponent tells how many zeros to write after the first factor.",
+     "steps": [
+      "The exponent is 2, so 10 to that power is 1 followed by 2 zeros.",
+      "Write 581 and then 2 more zeros.",
+      "Put commas in to read the number."
+     ],
+     "answer": "58,100",
+     "openEnded": false,
+     "anchor": 0.4495,
+     "side": "right",
+     "crop": [
+      0.4854,
+      0.432,
+      0.3366,
+      0.035
+     ],
+     "verified": true,
+     "verification": "Computed in Python; 581 × 10² = 58,100; checked by counting zeros."
+    },
+    {
+     "id": "7",
+     "title": "Problem 7 · 60 × 10⁴",
+     "hint": "The exponent tells how many zeros to write after the first factor.",
+     "steps": [
+      "The exponent is 4, so 10 to that power is 1 followed by 4 zeros.",
+      "Write 60 and then 4 more zeros.",
+      "Keep any zeros that are already in the first factor."
+     ],
+     "answer": "600,000",
+     "openEnded": false,
+     "anchor": 0.504,
+     "side": "left",
+     "crop": [
+      0.1456,
+      0.4865,
+      0.3366,
+      0.035
+     ],
+     "verified": true,
+     "verification": "Computed in Python; 60 × 10⁴ = 600,000; checked by counting zeros."
+    },
+    {
+     "id": "8",
+     "title": "Problem 8 · 103 × 10²",
+     "hint": "The exponent tells how many zeros to write after the first factor.",
+     "steps": [
+      "The exponent is 2, so 10 to that power is 1 followed by 2 zeros.",
+      "Write 103 and then 2 more zeros.",
+      "Keep any zeros that are already in the first factor."
+     ],
+     "answer": "10,300",
+     "openEnded": false,
+     "anchor": 0.5015,
+     "side": "right",
+     "crop": [
+      0.4854,
+      0.484,
+      0.3366,
+      0.035
+     ],
+     "verified": true,
+     "verification": "Computed in Python; 103 × 10² = 10,300; checked by counting zeros."
+    },
+    {
+     "id": "9",
+     "title": "Problem 9 · 571 × ? = 5,710",
+     "hint": "Compare the number of zeros in the product with the known factor.",
+     "steps": [
+      "Notice that 5,710 has one more zero than 571.",
+      "The missing factor is 1 followed by that many zeros.",
+      "Check by multiplying."
+     ],
+     "answer": "10",
+     "openEnded": false,
+     "anchor": 0.5985,
+     "side": "left",
+     "crop": [
+      0.1424,
+      0.5785,
+      0.3301,
+      0.04
+     ],
+     "verified": true,
+     "verification": "Computed in Python; divided product by known factor; result 10; checked by multiplying back."
+    },
+    {
+     "id": "10",
+     "title": "Problem 10 · 43 × ? = 4,300,000",
+     "hint": "Compare the number of zeros in the product with the known factor.",
+     "steps": [
+      "Notice that 4,300,000 has five more zeros than 43.",
+      "The missing factor is 1 followed by that many zeros.",
+      "Check by multiplying."
+     ],
+     "answer": "100,000 (10⁵)",
+     "openEnded": false,
+     "anchor": 0.596,
+     "side": "right",
+     "crop": [
+      0.4822,
+      0.576,
+      0.3819,
+      0.04
+     ],
+     "verified": true,
+     "verification": "Computed in Python; divided product by known factor; result 100,000; checked by multiplying back."
+    },
+    {
+     "id": "11",
+     "title": "Problem 11 · 6 × ? = 6,000",
+     "hint": "Compare the number of zeros in the product with the known factor.",
+     "steps": [
+      "Notice that 6,000 has three more zeros than 6.",
+      "The missing factor is 1 followed by that many zeros.",
+      "Check by multiplying."
+     ],
+     "answer": "1,000 (10³)",
+     "openEnded": false,
+     "anchor": 0.6435,
+     "side": "left",
+     "crop": [
+      0.1424,
+      0.6235,
+      0.3301,
+      0.04
+     ],
+     "verified": true,
+     "verification": "Computed in Python; divided product by known factor; result 1,000; checked by multiplying back."
+    },
+    {
+     "id": "12",
+     "title": "Problem 12 · 28 × ? = 280,000",
+     "hint": "Compare the number of zeros in the product with the known factor.",
+     "steps": [
+      "Notice that 280,000 has four more zeros than 28.",
+      "The missing factor is 1 followed by that many zeros.",
+      "Check by multiplying."
+     ],
+     "answer": "10,000 (10⁴)",
+     "openEnded": false,
+     "anchor": 0.641,
+     "side": "right",
+     "crop": [
+      0.4822,
+      0.621,
+      0.3819,
+      0.04
+     ],
+     "verified": true,
+     "verification": "Computed in Python; divided product by known factor; result 10,000; checked by multiplying back."
+    },
+    {
+     "id": "13",
+     "title": "13 · Relationship between the equations",
+     "hint": "Look at how the exponent changes and how the product changes.",
+     "steps": [
+      "Each equation multiplies 6 by a power of 10.",
+      "The exponent goes 5, 7, 9: it grows by 2 each time.",
+      "Count the zeros in each product: 5, 7, 9."
+     ],
+     "answer": "Sample answer: Each exponent is 2 more than the one before, so each product has 2 more zeros and is 100 times as great. The number of zeros in each product equals the exponent.",
+     "openEnded": false,
+     "anchor": 0.78,
+     "side": "left",
+     "crop": [
+      0.1359,
+      0.7275,
+      0.5825,
+      0.125
+     ],
+     "verified": true,
+     "verification": "Computed in Python; 6 × 10⁵ = 600,000, 6 × 10⁷ = 60,000,000, 6 × 10⁹ = 6,000,000,000; ratio 100 each step."
+    }
+   ]
+  },
+  "150": {
+   "heading": "On My Own",
+   "fields": [
+    {
+     "id": "14",
+     "multi": true,
+     "rect": [
+      0.1165,
+      0.165,
+      0.7573,
+      0.075
+     ]
+    },
+    {
+     "id": "15",
+     "multi": false,
+     "rect": [
+      0.5696,
+      0.32,
+      0.2718,
+      0.03
+     ]
+    },
+    {
+     "id": "16",
+     "multi": true,
+     "rect": [
+      0.1165,
+      0.515,
+      0.7573,
+      0.12
+     ]
+    },
+    {
+     "id": "reflect",
+     "multi": true,
+     "rect": [
+      0.0971,
+      0.7375,
+      0.7638,
+      0.1025
+     ]
+    },
+    {
+     "id": "mind",
+     "multi": true,
+     "rect": [
+      0.0971,
+      0.85,
+      0.466,
+      0.08
+     ]
+    }
+   ],
+   "questions": [
+    {
+     "id": "14",
+     "title": "14 · Carol's error",
+     "hint": "Count the zeros in 10,000 and in Carol's answer.",
+     "steps": [
+      "10,000 has 4 zeros, and 80 already has 1 zero.",
+      "So the product should have 1 + 4 = 5 zeros.",
+      "Carol's answer, 80,000, only has 4 zeros."
+     ],
+     "answer": "Carol is not correct. 80 × 10,000 = 800,000. She forgot to count the zero in 80.",
+     "openEnded": false,
+     "anchor": 0.07,
+     "side": "left",
+     "crop": [
+      0.0712,
+      0.035,
+      0.8091,
+      0.13
+     ],
+     "verified": true,
+     "verification": "Computed in Python; 80 × 10,000 = 800,000; checked 8 × 100,000 = 800,000."
+    },
+    {
+     "id": "15",
+     "title": "15 · Which equations are true?",
+     "hint": "Find the value of both sides of each equation.",
+     "steps": [
+      "A: 6 × 100 = 600, but 6 × 10 × 10 × 10 = 6,000.",
+      "B: 10,000 × 4 = 40,000 and 10 × 10 × 10 × 10 × 4 = 40,000.",
+      "C: 15 × 10³ = 15,000, not 1,500.",
+      "D: 70 × 10 × 10 = 7,000."
+     ],
+     "answer": "B and D",
+     "openEnded": false,
+     "anchor": 0.33,
+     "side": "left",
+     "crop": [
+      0.0712,
+      0.25,
+      0.5502,
+      0.15
+     ],
+     "verified": true,
+     "verification": "Computed in Python; each side of A–D: A 600 ≠ 6,000, B 40,000 = 40,000, C 15,000 ≠ 1,500, D 7,000 = 7,000."
+    },
+    {
+     "id": "16",
+     "title": "16 · Extend Your Thinking · ? × 10⁵ = 56,300,000",
+     "hint": "10⁵ adds 5 zeros to the end of the unknown factor.",
+     "steps": [
+      "10⁵ = 100,000, which has 5 zeros.",
+      "Take 5 zeros off the end of 56,300,000.",
+      "Check: 563 × 100,000 = 56,300,000."
+     ],
+     "answer": "563. Multiplying by 10⁵ puts 5 zeros after the factor, so remove 5 zeros from 56,300,000 to get 563.",
+     "openEnded": false,
+     "anchor": 0.465,
+     "side": "left",
+     "crop": [
+      0.0712,
+      0.43,
+      0.712,
+      0.08
+     ],
+     "verified": true,
+     "verification": "Computed in Python; 56,300,000 ÷ 100,000 = 563; checked 563 × 10⁵ = 56,300,000."
+    },
+    {
+     "id": "reflect",
+     "title": "Reflect · Patterns with powers of 10",
+     "hint": "Think about the number of zeros and the exponent.",
+     "steps": [
+      "Look back at the problems in this lesson.",
+      "What happened to the product each time you multiplied by 10?",
+      "How did the exponent tell you how many zeros to write?"
+     ],
+     "answer": "Sample answer: The number of zeros added to the product is the same as the exponent, and each time you multiply by 10 the digits move one place to the left.",
+     "openEnded": true,
+     "anchor": 0.72,
+     "side": "left",
+     "crop": [
+      0.0712,
+      0.655,
+      0.8026,
+      0.09
+     ],
+     "verified": true,
+     "verification": "Reflection; pattern checked against Python products in this lesson."
+    },
+    {
+     "id": "mind",
+     "title": "Math is… Mindset · Avoiding distractions",
+     "hint": "This is about you, so there is no wrong answer.",
+     "steps": [
+      "Think about a time this lesson when you stayed focused.",
+      "Write what helped you."
+     ],
+     "answer": "Sample answer: I worked in a quiet place and finished one problem before looking at anything else.",
+     "openEnded": true,
+     "anchor": 0.8825,
+     "side": "right",
+     "crop": [
+      0.5761,
+      0.84,
+      0.2718,
+      0.085
+     ],
+     "verified": true,
+     "verification": "Personal reflection; no single correct answer."
+    }
+   ]
+  }
+ }
+}
