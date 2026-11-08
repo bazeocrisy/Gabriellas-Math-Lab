@@ -157,6 +157,34 @@ body.solution-open .assist{display:block!important;grid-column:2!important;posit
 body .answer-layer .placement-handle{outline:2px dashed #df8e21!important;outline-offset:2px!important;cursor:move!important;touch-action:none!important}
 body .answer-layer .placement-handle:focus-visible{outline:3px solid #d98211!important}
 body .answer-layer .placement-handle.help-dot{background:#e38916!important}
+
+/* Approved student-facing design: blue writing lines rather than bordered answer boxes. */
+body:not(.placement-editing) .answer-layer .answer-item input{
+border:0!important;border-bottom:2px solid #76b4ef!important;border-radius:0!important;
+background:transparent!important;box-shadow:none!important;padding:0 2px 1px!important;
+font-size:clamp(10px,1.15vw,15px)!important;font-weight:600!important;
+color:#1b4b91!important;height:24px!important;min-height:24px!important;
+}
+body:not(.placement-editing) .answer-layer .answer-item input:focus{
+outline:0!important;background:rgba(238,246,255,.75)!important;
+border-bottom-color:#204fb5!important;
+}
+body:not(.placement-editing) .answer-layer .answer-item input:not(:placeholder-shown){background:rgba(255,255,255,.12)!important}
+body:not(.placement-editing) .answer-layer .answer-item .help-dot{
+width:19px!important;height:19px!important;min-width:19px!important;font-size:12px!important;
+border:2px solid #fff!important;box-shadow:0 1px 3px #132d5a40!important
+}
+body:not(.placement-editing) .answer-layer .answer-item .help-dot:hover,
+body:not(.placement-editing) .answer-layer .answer-item .help-dot:focus-visible{
+outline:2px solid #f1a932!important;outline-offset:2px!important
+}
+#help-box .explain-head{position:sticky;top:0;background:white;z-index:2;padding-bottom:8px}
+#help-box .help-card{max-width:100%}
+body.solution-open .assist{border-radius:16px!important}
+@media(max-width:600px){body:not(.placement-editing) .answer-layer .answer-item input{
+font-size:10px!important;height:20px!important;min-height:20px!important;
+border-bottom-width:1.5px!important}body:not(.placement-editing) .answer-layer .answer-item .help-dot{width:18px!important;height:18px!important;min-width:18px!important}}
+@media print{.answer-layer .answer-item input{border:0!important;background:transparent!important}}
 </style></head><body>
 <div class="shell"><aside class="card side"><div class="eyebrow">Family study edition</div><h1>Gabriella's Math Lab</h1><p class="muted mini">Chapter 5 · Exact textbook pages</p><a class="navlink" href="./unit5-lessons-5-1-to-5-4.html">↗ Open original interactive lessons 5-1 to 5-4</a><a class="navlink" href="./">↗ Math Lab home</a><div class="smallcard"><strong>Progress is saved here</strong><p class="mini muted">This companion workbook stores your writing and notes in this browser. Export a backup if using another device.</p></div><div class="smallcard"><strong>Textbook protection</strong><p class="mini muted">The source pages are rendered unchanged. Ink and notes are saved separately.</p></div></aside>
 <main class="main"><section class="card top"><div><div class="eyebrow">Original Chapter 5 book</div><strong id="page-title">Loading textbook…</strong><div class="mini muted" id="page-subtitle">Use the arrows or select any source PDF page</div><div class="mini muted" id="build-label" style="font-size:10px;margin-top:3px">Answer-line editor · build 2026-11-08-B</div></div><div class="buttons"><button class="btn" id="prev">← Previous</button><select id="page-select" aria-label="Choose textbook page"></select><button class="btn primary" id="next">Next →</button></div></section>
@@ -202,7 +230,7 @@ function renderQuestionList(){updateProgress();}
 
 let calibrating=false,activeDrag=null;
 const clamp=(value,min,max)=>Math.min(max,Math.max(min,value));
-function toggleCalibration(){calibrating=!calibrating;by("calibrate").classList.toggle("active",calibrating);by("calibrate").setAttribute("aria-pressed",String(calibrating));
+function toggleCalibration(){calibrating=!calibrating;document.body.classList.toggle("placement-editing",calibrating);by("calibrate").classList.toggle("active",calibrating);by("calibrate").setAttribute("aria-pressed",String(calibrating));
 by("calibrate").textContent=calibrating?"✓ Finish adjusting":"Adjust boxes";by("session-status").textContent=calibrating?"Adjustment mode: drag a blue handle to its exact position on the original page. Arrows nudge a focused handle. Changes save automatically.":"Tap any ? for all solution steps.";renderBoxes();}
 by("calibrate").onclick=toggleCalibration;
 function placementFor(q){const f=(FIELD_ALIGNMENT[current]||{})[q.id],r=f?.rect||q.rect||[.18,.3,.25,.04];
@@ -225,7 +253,7 @@ const pos=placementFor(q);const wrap=document.createElement("div");wrap.classNam
 const input=document.createElement("input");input.type="text";input.value=state().answers[q.id]||"";
 input.style.left=(pos.inputX*100).toFixed(3)+"%";input.style.top=(pos.inputY*100).toFixed(3)+"%";
 input.style.setProperty("--field-width",(pos.inputW*100).toFixed(3)+"%");
-input.setAttribute("data-problem",q.id);input.setAttribute("aria-label","Answer for "+nameOf(q));input.placeholder="";
+input.setAttribute("data-problem",q.id);input.setAttribute("aria-label","Answer for "+nameOf(q));input.placeholder=" ";input.autocomplete="off";
 input.oninput=e=>{state().answers[q.id]=e.target.value;persist();updateProgress()};
 const button=document.createElement("button");button.type="button";button.className="help-dot";button.textContent="?";
 button.style.left=(pos.helpX*100).toFixed(3)+"%";button.style.top=(pos.helpY*100).toFixed(3)+"%";
