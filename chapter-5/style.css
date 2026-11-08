@@ -114,9 +114,11 @@ summary::-webkit-details-marker { display: none; }
 
 /* 4. App layout: one slim bar on top, then the page (and the solution pane) */
 @media screen {
-  body { height: 100dvh; display: flex; flex-direction: column; overflow: hidden; }
+  /* A fixed, app-like frame: the page never scrolls or rubber-bands; only the textbook viewer does. */
+  html { height: 100%; overflow: hidden; overscroll-behavior: none; }
+  body { height: 100dvh; display: flex; flex-direction: column; overflow: hidden; overscroll-behavior: none; }
 }
-.app-header { flex: none; display: flex; align-items: center; flex-wrap: wrap; gap: var(--s-2) var(--s-4); padding: 6px var(--s-3); background: var(--c-surface); border-bottom: 1px solid var(--c-border); }
+.app-header { flex: none; display: flex; align-items: center; flex-wrap: wrap; gap: var(--s-2) var(--s-4); padding: calc(6px + env(safe-area-inset-top, 0px)) max(var(--s-3), env(safe-area-inset-right, 0px)) 6px max(var(--s-3), env(safe-area-inset-left, 0px)); background: var(--c-surface); border-bottom: 1px solid var(--c-border); }
 .brand { display: flex; align-items: center; justify-content: center; gap: var(--s-2); min-width: var(--tap); min-height: var(--tap); text-decoration: none; border-radius: var(--r-sm); }
 .brand-mark { display: grid; place-items: center; width: 30px; height: 30px; flex: none; border-radius: 9px; background: linear-gradient(135deg, var(--c-primary), var(--c-primary-600)); color: #fff; font-weight: 800; font-size: 15px; }
 .brand-text { display: grid; min-width: 0; line-height: 1.15; }
@@ -154,6 +156,7 @@ body[data-error="true"] .save-chip .icon { display: none; }
 .toggle-chip:has(input:focus-visible) { outline: 3px solid var(--c-focus); outline-offset: 2px; }
 
 .menu { position: relative; }
+.menu:not([open]) .menu-card { display: none; }
 .menu summary { border-color: transparent; background: transparent; }
 .menu[open] summary { background: var(--c-surface-2); border-color: var(--c-border); }
 .menu-card { position: absolute; right: 0; top: calc(100% + 6px); z-index: 20; width: 270px; padding: var(--s-2); display: grid; gap: 2px; box-shadow: var(--shadow-lg); border-radius: var(--r-md); }
@@ -169,7 +172,7 @@ body[data-error="true"] .save-chip .icon { display: none; }
 .menu-note { padding: var(--s-2) var(--s-3); font-size: var(--fs-xs); color: var(--c-ink-2); }
 
 /* Viewer: the page sits on a calm canvas, centred, with gutters for markers. */
-#viewer { flex: 1; min-height: 0; overflow: auto; overscroll-behavior: contain; position: relative; background: var(--c-canvas); padding: var(--s-4) var(--gutter) calc(var(--s-4) + var(--help-h)); touch-action: pan-x pan-y pinch-zoom; outline: none; }
+#viewer { flex: 1; min-height: 0; overflow: auto; overscroll-behavior: contain; position: relative; background: var(--c-canvas); padding: var(--s-4) var(--gutter) calc(var(--s-4) + var(--help-h)); touch-action: pan-x pan-y; outline: none; }
 #stage { position: relative; margin: 0 auto; }
 .sheet { position: relative; background: #fff; box-shadow: var(--shadow-page); aspect-ratio: 612 / 792; }
 .source { display: block; width: 100%; height: 100%; user-select: none; pointer-events: none; }
@@ -227,18 +230,28 @@ dialog::backdrop { background: rgb(15 23 42 / .38); }
   :root { --tap: 36px; }
   .menu-item { min-height: 36px; }
 }
-@media (max-width: 1100px) { .help { width: 300px; } .brand-text { display: none; } }
+@media (max-width: 1180px) { .help { width: 300px; } .brand-text { display: none; } }
+/* Below 1000px (phones, tablets held upright) a side pane would squeeze the page: use a bottom sheet. */
+@media (max-width: 999px) {
+  .help { position: fixed; z-index: 30; left: 0; right: 0; bottom: 0; width: auto; max-height: 50dvh; border-radius: var(--r-lg) var(--r-lg) 0 0; border-width: 1px 0 0; box-shadow: var(--shadow-lg); padding-bottom: calc(var(--s-4) + env(safe-area-inset-bottom, 0px)); }
+  .toolbar { order: 3; width: 100%; }
+}
 @media (max-width: 760px) {
   :root { --gutter: 46px; }
   .app-header { gap: 6px; padding: 6px var(--s-2); }
-  .toolbar { order: 3; width: 100%; justify-content: space-between; }
+  .toolbar { justify-content: space-between; }
   .tool-group + .tool-group { padding-left: 0; border-left: 0; }
   .save-chip #saveStatus { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
   .menu-card { position: fixed; right: var(--s-2); left: var(--s-2); top: auto; width: auto; bottom: var(--s-2); max-height: 70dvh; overflow: auto; }
   #viewer { padding: var(--s-3) var(--gutter) calc(var(--s-3) + var(--help-h)); }
-  .help { position: fixed; z-index: 30; left: 0; right: 0; bottom: 0; width: auto; max-height: 52dvh; border-radius: var(--r-lg) var(--r-lg) 0 0; border-width: 1px 0 0; box-shadow: var(--shadow-lg); padding-bottom: calc(var(--s-4) + env(safe-area-inset-bottom, 0px)); }
 }
-@media (max-width: 380px) { .zoom #zoomLabel { display: none; } }
+/* Phones: pinch zooms the page, so the zoom buttons go; "Original only" moves into More. */
+.phone-only { display: none !important; }
+@media (max-width: 760px) {
+  .toolbar .zoom, .toolbar .tool-end .toggle-chip { display: none; }
+  .phone-only { display: flex !important; }
+  .menu-item[aria-pressed="true"] { background: var(--c-accent-soft); color: var(--c-accent); }
+}
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { transition: none !important; animation: none !important; }

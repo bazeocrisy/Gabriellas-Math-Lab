@@ -8,6 +8,7 @@
     "test:chapter4:browser": "node tests/chapter4.browser.mjs",
     "test:responsive:browser": "node tests/responsive.browser.mjs",
     "test:lesson51:browser": "node tests/lesson51.browser.mjs",
-    "test:chapter5:browser": "node tests/chapter5.browser.mjs"
+    "test:chapter5:browser": "node tests/chapter5.browser.mjs",
+    "test:devices:browser": "node tests/devices.browser.mjs"
   }
 }

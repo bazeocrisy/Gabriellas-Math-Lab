@@ -28,6 +28,10 @@ jobs:
             script: test:lesson51:browser
           - label: responsive
             script: test:responsive:browser
+          - label: chapter5
+            script: test:chapter5:browser
+          - label: devices
+            script: test:devices:browser
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
