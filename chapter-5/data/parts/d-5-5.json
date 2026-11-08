@@ -45,9 +45,9 @@
      "side": "right",
      "crop": [
       0.1683,
-      0.435,
+      0.26,
       0.6472,
-      0.15
+      0.325
      ],
      "verified": true,
      "verification": "Computed 374 × 43 = 16,082 in Python and summed the six printed partial products (12,000 + 2,800 + 160 + 900 + 210 + 12 = 16,082)."
@@ -307,9 +307,9 @@
      "multi": true,
      "rect": [
       0.1812,
-      0.75,
+      0.756,
       0.4013,
-      0.045
+      0.04
      ]
     },
     {
@@ -619,11 +619,11 @@
      "title": "11 · Raya's error",
      "hint": "Compare the top number in Raya's work with the problem, 128 × 17.",
      "steps": [
-      "Raya wrote 208 instead of 128 and used 200 + 10 + 8, so her partial products are wrong.",
+      "Raya's partial products come from 200 + 10 + 8 = 218, not 128, so her total is wrong.",
       "128 = 100 + 20 + 8, so the partial products are 1,000, 200, 80, 700, 140, 56.",
       "Add them to get the correct product."
      ],
-     "answer": "Raya's work is incorrect. She copied 128 as 208 and split it as 200 + 10 + 8. Using 100 + 20 + 8 gives 1,000 + 200 + 80 + 700 + 140 + 56 = 2,176, so 128 × 17 = 2,176, not 3,706.",
+     "answer": "Raya's work is incorrect. Her partial products (2,000 + 100 + 80 + 1,400 + 70 + 56 = 3,706) are for 218 × 17, not 128 × 17. Split 128 as 100 + 20 + 8: 1,000 + 200 + 80 + 700 + 140 + 56 = 2,176. So 128 × 17 = 2,176.",
      "openEnded": false,
      "anchor": 0.38,
      "side": "left",
@@ -634,7 +634,7 @@
       0.1775
      ],
      "verified": true,
-     "verification": "Computed 128 × 17 = 2,176 in Python; verified Raya's printed partial products sum to 3,706 and match 200 + 10 + 8 times 10 and 7; estimate 130 × 17 = 2,210."
+     "verification": "Read from the page: the problem is 128 × 17; Raya's printed work starts with 208 and her partial products add to 3,706 = 218 × 17. Computed 128 × 17 = 2,176 in Python and by partial products."
     },
     {
      "id": "12",

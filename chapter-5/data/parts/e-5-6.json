@@ -375,7 +375,7 @@
      ],
      "answer": "B. s = 1,316",
      "openEnded": false,
-     "anchor": 0.55,
+     "anchor": 0.48,
      "side": "left",
      "crop": [
       0.1294,
@@ -397,7 +397,7 @@
      ],
      "answer": "D. v = 2,133",
      "openEnded": false,
-     "anchor": 0.55,
+     "anchor": 0.48,
      "side": "right",
      "crop": [
       0.4725,
@@ -419,7 +419,7 @@
      ],
      "answer": "A. y = 5,246",
      "openEnded": false,
-     "anchor": 0.77,
+     "anchor": 0.71,
      "side": "left",
      "crop": [
       0.1294,
@@ -441,7 +441,7 @@
      ],
      "answer": "D. r = 15,738",
      "openEnded": false,
-     "anchor": 0.77,
+     "anchor": 0.71,
      "side": "right",
      "crop": [
       0.4725,
