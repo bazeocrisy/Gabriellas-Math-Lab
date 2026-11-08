@@ -1,0 +1,655 @@
+{
+ "sections": {
+  "5-3": {
+   "title": "Estimate Products of Multi-Digit Factors"
+  }
+ },
+ "pages": {
+  "151": {
+   "heading": "Be Curious",
+   "fields": [
+    {
+     "id": "curious",
+     "multi": true,
+     "rect": [
+      0.1715,
+      0.6275,
+      0.699,
+      0.1425
+     ]
+    },
+    {
+     "id": "mind",
+     "multi": true,
+     "rect": [
+      0.4595,
+      0.795,
+      0.4595,
+      0.05
+     ]
+    }
+   ],
+   "questions": [
+    {
+     "id": "curious",
+     "title": "Be Curious · What do you notice? What do you wonder?",
+     "hint": "Compare each shaded rectangle with the red 15 × 12 rectangle.",
+     "steps": [
+      "Find the real product: 15 × 12 = 180.",
+      "Find each product: 20 × 10 = 200, 15 × 10 = 150, 20 × 12 = 240.",
+      "Notice which rectangles are bigger or smaller than the red one, and which is closest."
+     ],
+     "answer": "Sample answer: I notice each teal rectangle uses rounded numbers to estimate 15 × 12 = 180. 20 × 10 = 200 and 15 × 10 = 150 are close; 20 × 12 = 240 is too big because both factors were rounded up. I wonder which way of rounding gives the closest estimate.",
+     "openEnded": true,
+     "anchor": 0.515,
+     "side": "right",
+     "crop": [
+      0.1683,
+      0.4,
+      0.699,
+      0.21
+     ],
+     "verified": true,
+     "verification": "Computed 15×12=180, 20×10=200, 15×10=150, 20×12=240 in Python; compared with the drawn rectangles."
+    },
+    {
+     "id": "mind",
+     "title": "Math is… Mindset",
+     "hint": "Think about what you do first when a word problem looks confusing.",
+     "steps": [
+      "Think of a time a math situation was hard to understand.",
+      "Write what helped you, like drawing a picture or rounding the numbers."
+     ],
+     "answer": "Sample answer: Drawing a picture and estimating first helps me make sense of a situation. Your answer may be different.",
+     "openEnded": true,
+     "anchor": 0.865,
+     "side": "left",
+     "crop": [
+      0.1845,
+      0.8225,
+      0.2589,
+      0.085
+     ],
+     "verified": true,
+     "verification": "Reflection prompt; no single correct answer."
+    }
+   ]
+  },
+  "152": {
+   "heading": "Learn",
+   "fields": [
+    {
+     "id": "example",
+     "multi": true,
+     "rect": [
+      0.0712,
+      0.626,
+      0.7896,
+      0.035
+     ]
+    },
+    {
+     "id": "mind",
+     "multi": true,
+     "rect": [
+      0.5728,
+      0.49,
+      0.2913,
+      0.021
+     ]
+    },
+    {
+     "id": "work",
+     "multi": true,
+     "rect": [
+      0.0906,
+      0.765,
+      0.7638,
+      0.1675
+     ]
+    }
+   ],
+   "questions": [
+    {
+     "id": "example",
+     "title": "Learn · Money from 432 tickets at $13",
+     "hint": "Multiply the number of people by the ticket price, using friendly numbers.",
+     "steps": [
+      "The exact problem is 432 × 13.",
+      "Compatible numbers: 400 × 15 = 6,000.",
+      "Rounded factors: 430 × 10 = 4,300.",
+      "The real answer, $5,616, is between the two estimates, so it makes sense."
+     ],
+     "answer": "About $4,300 to $6,000. The exact amount is 432 × 13 = $5,616.",
+     "openEnded": false,
+     "anchor": 0.15,
+     "side": "left",
+     "crop": [
+      0.0647,
+      0.06,
+      0.8026,
+      0.51
+     ],
+     "verified": true,
+     "verification": "Computed 432×13=5,616, 400×15=6,000, 430×10=4,300 in Python; 5,616 lies between the estimates."
+    },
+    {
+     "id": "mind",
+     "title": "Math is… Choosing Tools",
+     "hint": "An estimate tells you 'about how much', not 'exactly how much'.",
+     "steps": [
+      "Think about what an estimate is close to.",
+      "Think about what it cannot tell you exactly."
+     ],
+     "answer": "Sample answer: An estimate tells me about how big the answer should be, so I can check if my answer is reasonable. It can't tell me the exact answer.",
+     "openEnded": true,
+     "anchor": 0.4475,
+     "side": "right",
+     "crop": [
+      0.5696,
+      0.4075,
+      0.3042,
+      0.0815
+     ],
+     "verified": true,
+     "verification": "Reflection prompt; answer checked against the Learn example."
+    },
+    {
+     "id": "work",
+     "title": "Work Together · 879 × 36",
+     "hint": "Round each factor to a number that is easy to multiply.",
+     "steps": [
+      "Round 879 to 900 and 36 to 40.",
+      "Multiply: 9 × 4 = 36, then add three zeros: 36,000.",
+      "Or use compatible numbers: 900 × 35 = 31,500.",
+      "Explain why you picked your strategy."
+     ],
+     "answer": "One possible answer: 900 × 40 = 36,000 (rounded factors), because those numbers are easy to multiply. Compatible numbers 900 × 35 = 31,500 are also reasonable. The exact product is 31,644.",
+     "openEnded": true,
+     "anchor": 0.73,
+     "side": "right",
+     "crop": [
+      0.0712,
+      0.7,
+      0.7961,
+      0.245
+     ],
+     "verified": true,
+     "verification": "Computed 879×36=31,644, 900×40=36,000, 900×35=31,500 in Python; both estimates are near the exact product."
+    }
+   ]
+  },
+  "153": {
+   "heading": "On My Own",
+   "fields": [
+    {
+     "id": "name",
+     "multi": false,
+     "rect": [
+      0.2006,
+      0.0965,
+      0.7249,
+      0.0215
+     ]
+    },
+    {
+     "id": "1",
+     "multi": false,
+     "rect": [
+      0.1715,
+      0.2025,
+      0.3074,
+      0.0425
+     ]
+    },
+    {
+     "id": "2",
+     "multi": false,
+     "rect": [
+      0.5307,
+      0.2025,
+      0.3625,
+      0.0425
+     ]
+    },
+    {
+     "id": "3",
+     "multi": false,
+     "rect": [
+      0.1715,
+      0.2785,
+      0.3074,
+      0.0355
+     ]
+    },
+    {
+     "id": "4",
+     "multi": false,
+     "rect": [
+      0.5307,
+      0.2785,
+      0.3625,
+      0.0355
+     ]
+    },
+    {
+     "id": "5",
+     "multi": true,
+     "rect": [
+      0.1845,
+      0.395,
+      0.6311,
+      0.035
+     ]
+    },
+    {
+     "id": "6",
+     "multi": true,
+     "rect": [
+      0.1845,
+      0.4825,
+      0.6311,
+      0.04
+     ]
+    },
+    {
+     "id": "7",
+     "multi": true,
+     "rect": [
+      0.1845,
+      0.5975,
+      0.6311,
+      0.0315
+     ]
+    },
+    {
+     "id": "8",
+     "multi": true,
+     "rect": [
+      0.1845,
+      0.725,
+      0.3269,
+      0.055
+     ]
+    },
+    {
+     "id": "9",
+     "multi": true,
+     "rect": [
+      0.1877,
+      0.835,
+      0.6278,
+      0.08
+     ]
+    }
+   ],
+   "questions": [
+    {
+     "id": "1",
+     "title": "Problem 1 · 643 × 18",
+     "hint": "Round each factor to its greatest place value.",
+     "steps": [
+      "Round 643 to 600.",
+      "Round 18 to 20.",
+      "Multiply the rounded numbers: 600 × 20 = 12,000."
+     ],
+     "answer": "About 12,000 (600 × 20). Other close estimates are fine. (Exact: 11,574.)",
+     "openEnded": false,
+     "anchor": 0.185,
+     "side": "left",
+     "crop": [
+      0.1424,
+      0.16,
+      0.3495,
+      0.085
+     ],
+     "verified": true,
+     "verification": "Computed 643×18=11,574 and 600×20=12,000 in Python; estimate is close to the exact product."
+    },
+    {
+     "id": "2",
+     "title": "Problem 2 · 325 × 62",
+     "hint": "Round each factor to its greatest place value.",
+     "steps": [
+      "Round 325 to 300.",
+      "Round 62 to 60.",
+      "Multiply the rounded numbers: 300 × 60 = 18,000."
+     ],
+     "answer": "About 18,000 (300 × 60). Compatible numbers 325 × 60 = 19,500 is even closer. Other close estimates are fine. (Exact: 20,150.)",
+     "openEnded": false,
+     "anchor": 0.184,
+     "side": "right",
+     "crop": [
+      0.4919,
+      0.159,
+      0.4142,
+      0.085
+     ],
+     "verified": true,
+     "verification": "Computed 325×62=20,150 and 300×60=18,000 in Python; estimate is close to the exact product."
+    },
+    {
+     "id": "3",
+     "title": "Problem 3 · 438 × 27",
+     "hint": "Round each factor to its greatest place value.",
+     "steps": [
+      "Round 438 to 400.",
+      "Round 27 to 30.",
+      "Multiply the rounded numbers: 400 × 30 = 12,000."
+     ],
+     "answer": "About 12,000 (400 × 30). Other close estimates are fine. (Exact: 11,826.)",
+     "openEnded": false,
+     "anchor": 0.261,
+     "side": "left",
+     "crop": [
+      0.1424,
+      0.236,
+      0.3495,
+      0.085
+     ],
+     "verified": true,
+     "verification": "Computed 438×27=11,826 and 400×30=12,000 in Python; estimate is close to the exact product."
+    },
+    {
+     "id": "4",
+     "title": "Problem 4 · 572 × 49",
+     "hint": "Round each factor to its greatest place value.",
+     "steps": [
+      "Round 572 to 600.",
+      "Round 49 to 50.",
+      "Multiply the rounded numbers: 600 × 50 = 30,000."
+     ],
+     "answer": "About 30,000 (600 × 50). Other close estimates are fine. (Exact: 28,028.)",
+     "openEnded": false,
+     "anchor": 0.26,
+     "side": "right",
+     "crop": [
+      0.4919,
+      0.235,
+      0.4142,
+      0.085
+     ],
+     "verified": true,
+     "verification": "Computed 572×49=28,028 and 600×50=30,000 in Python; estimate is close to the exact product."
+    },
+    {
+     "id": "5",
+     "title": "Problem 5 · Museum tickets",
+     "hint": "Multiply the number of students by the ticket price, then round.",
+     "steps": [
+      "The problem is 54 × $23.",
+      "Round: 54 is about 50 and 23 is about 20.",
+      "Multiply: 50 × 20 = 1,000."
+     ],
+     "answer": "About $1,000 (50 × 20). Using 50 × 25 = $1,250 is also reasonable. (Exact: $1,242.)",
+     "openEnded": false,
+     "anchor": 0.38,
+     "side": "right",
+     "crop": [
+      0.1424,
+      0.3425,
+      0.6731,
+      0.09
+     ],
+     "verified": true,
+     "verification": "Computed 54×23=1,242, 50×20=1,000, 50×25=1,250 in Python."
+    },
+    {
+     "id": "6",
+     "title": "Problem 6 · Library books",
+     "hint": "Multiply shelves by books on each shelf, using rounded numbers.",
+     "steps": [
+      "The problem is 478 × 38.",
+      "Round: 478 is about 500 and 38 is about 40.",
+      "Multiply: 5 × 4 = 20, add three zeros: 20,000."
+     ],
+     "answer": "About 20,000 books (500 × 40). (Exact: 18,164.)",
+     "openEnded": false,
+     "anchor": 0.47,
+     "side": "right",
+     "crop": [
+      0.1424,
+      0.4325,
+      0.6731,
+      0.0925
+     ],
+     "verified": true,
+     "verification": "Computed 478×38=18,164 and 500×40=20,000 in Python."
+    },
+    {
+     "id": "7",
+     "title": "Problem 7 · Paintings at the fair",
+     "hint": "Multiply the number of buyers by the price of one painting.",
+     "steps": [
+      "The problem is 339 × $23.",
+      "Round: 339 is about 300 and 23 is about 20.",
+      "Multiply: 300 × 20 = 6,000."
+     ],
+     "answer": "About $6,000 (300 × 20). 340 × 20 = $6,800 is also reasonable. (Exact: $7,797.)",
+     "openEnded": false,
+     "anchor": 0.57,
+     "side": "right",
+     "crop": [
+      0.1424,
+      0.5225,
+      0.6861,
+      0.1085
+     ],
+     "verified": true,
+     "verification": "Computed 339×23=7,797, 300×20=6,000, 340×20=6,800 in Python."
+    },
+    {
+     "id": "8",
+     "title": "Problem 8 · Bake sale",
+     "hint": "Look at the sign to find the price of each baked good.",
+     "steps": [
+      "The problem is 405 × $12.",
+      "Round 405 to 400.",
+      "Multiply: 400 × 12 = 4,800."
+     ],
+     "answer": "About $4,800 (400 × 12). 400 × 10 = $4,000 is also a reasonable estimate. (Exact: $4,860.)",
+     "openEnded": false,
+     "anchor": 0.69,
+     "side": "right",
+     "crop": [
+      0.1424,
+      0.63,
+      0.6861,
+      0.1525
+     ],
+     "verified": true,
+     "verification": "Computed 405×12=4,860, 400×12=4,800 in Python."
+    },
+    {
+     "id": "9",
+     "title": "9 · Han's error",
+     "hint": "Make your own estimate of 492 × 32 and compare it with 1,200.",
+     "steps": [
+      "Round 492 to 500 and 32 to 30.",
+      "Multiply: 500 × 30 = 15,000.",
+      "Compare: 1,200 is much too small, so Han's estimate is not reasonable."
+     ],
+     "answer": "Han is not correct. 492 × 32 is about 500 × 30 = 15,000, so 1,200 is far too small (he may have lost zeros). (Exact: 15,744.)",
+     "openEnded": false,
+     "anchor": 0.8075,
+     "side": "right",
+     "crop": [
+      0.1424,
+      0.78,
+      0.6861,
+      0.1375
+     ],
+     "verified": true,
+     "verification": "Computed 492×32=15,744 and 500×30=15,000 in Python; 1,200 is about 13 times too small."
+    }
+   ]
+  },
+  "154": {
+   "heading": "On My Own",
+   "fields": [
+    {
+     "id": "10",
+     "multi": true,
+     "rect": [
+      0.3625,
+      0.095,
+      0.479,
+      0.08
+     ]
+    },
+    {
+     "id": "11",
+     "multi": true,
+     "rect": [
+      0.1068,
+      0.2675,
+      0.6375,
+      0.075
+     ]
+    },
+    {
+     "id": "12",
+     "multi": true,
+     "rect": [
+      0.1068,
+      0.4525,
+      0.6375,
+      0.115
+     ]
+    },
+    {
+     "id": "reflect",
+     "multi": true,
+     "rect": [
+      0.0906,
+      0.6825,
+      0.7508,
+      0.1475
+     ]
+    },
+    {
+     "id": "mind",
+     "multi": true,
+     "rect": [
+      0.0906,
+      0.845,
+      0.5016,
+      0.085
+     ]
+    }
+   ],
+   "questions": [
+    {
+     "id": "10",
+     "title": "Problem 10 · Estimate for 658 × 19",
+     "hint": "Round each factor and see which equation matches.",
+     "steps": [
+      "19 is very close to 20, so the estimate should use 20.",
+      "658 is close to 650.",
+      "650 × 20 = 13,000. A and C use 10, which is too far from 19."
+     ],
+     "answer": "B. 650 × 20 = 13,000, because 650 and 20 are both close to 658 and 19. (Exact: 12,502.)",
+     "openEnded": false,
+     "anchor": 0.115,
+     "side": "right",
+     "crop": [
+      0.0971,
+      0.035,
+      0.6796,
+      0.145
+     ],
+     "verified": true,
+     "verification": "Computed 658×19=12,502 and each option in Python; only B (13,000) is close."
+    },
+    {
+     "id": "11",
+     "title": "Problem 11 · Rounded or compatible?",
+     "hint": "Try both strategies on 246 × 38 and compare the results.",
+     "steps": [
+      "Rounded: 246 rounds to 200 and 38 rounds to 40, so 200 × 40 = 8,000.",
+      "Compatible: 246 is close to 250, and 250 × 40 = 10,000 is easy (25 × 4 = 100).",
+      "Compare the two estimates."
+     ],
+     "answer": "One possible answer: Compatible numbers give the greater estimate. 250 × 40 = 10,000 is greater than the rounded 200 × 40 = 8,000, because 246 rounds down to 200 but goes up to 250 as a compatible number. (Exact: 9,348.)",
+     "openEnded": true,
+     "anchor": 0.24,
+     "side": "right",
+     "crop": [
+      0.0647,
+      0.2125,
+      0.6861,
+      0.1325
+     ],
+     "verified": true,
+     "verification": "Computed 246×38=9,348, 200×40=8,000, 250×40=10,000 in Python. Depends on the rounding chosen, so marked open-ended."
+    },
+    {
+     "id": "12",
+     "title": "12 · Recycling club goal",
+     "hint": "Find the total bottles for one student first, or for one day.",
+     "steps": [
+      "Round 26 to 25 and 72 to 70.",
+      "25 × 70 = 1,750 bottles a day.",
+      "1,750 × 5 = 8,750 bottles in 5 days.",
+      "8,750 is more than 8,000, so they met the goal."
+     ],
+     "answer": "About 8,750 bottles (25 × 70 × 5). Yes, they met their goal of 8,000. (Exact: 26 × 72 × 5 = 9,360.)",
+     "openEnded": false,
+     "anchor": 0.4,
+     "side": "right",
+     "crop": [
+      0.0647,
+      0.3525,
+      0.6926,
+      0.2175
+     ],
+     "verified": true,
+     "verification": "Computed 26×72×5=9,360 and 25×70×5=8,750 in Python; both exceed 8,000."
+    },
+    {
+     "id": "reflect",
+     "title": "Reflect · Is my product reasonable?",
+     "hint": "Think about how an estimate is like a target to compare against.",
+     "steps": [
+      "Estimate first with rounded or compatible numbers.",
+      "Compute the exact product.",
+      "If the exact product is close to the estimate, it is reasonable; if not, check your work."
+     ],
+     "answer": "Sample answer: I estimate the product first. If my calculated answer is close to my estimate, it is reasonable. If it is very far away, I made a mistake and should check again.",
+     "openEnded": true,
+     "anchor": 0.65,
+     "side": "left",
+     "crop": [
+      0.068,
+      0.58,
+      0.7994,
+      0.365
+     ],
+     "verified": true,
+     "verification": "Reflection prompt; matches the lesson's Learn example (5,616 between 4,300 and 6,000)."
+    },
+    {
+     "id": "mind",
+     "title": "Math is… Mindset",
+     "hint": "Think about a problem in this lesson that you figured out.",
+     "steps": [
+      "Remember a problem that was tricky at first.",
+      "Write what helped you understand it."
+     ],
+     "answer": "Sample answer: I made sense of a situation by estimating first, so I knew about how big the answer should be. Your answer may be different.",
+     "openEnded": true,
+     "anchor": 0.8825,
+     "side": "right",
+     "crop": [
+      0.6052,
+      0.84,
+      0.2427,
+      0.0875
+     ],
+     "verified": true,
+     "verification": "Reflection prompt; no single correct answer."
+    }
+   ]
+  }
+ }
+}

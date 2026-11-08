@@ -1,0 +1,1445 @@
+{
+ "sections": {
+  "review": {
+   "title": "Unit Review"
+  },
+  "fluency": {
+   "title": "Fluency Practice"
+  }
+ },
+ "pages": {
+  "173": {
+   "heading": "Unit Review · Vocabulary Review",
+   "fields": [
+    {
+     "id": "name173",
+     "multi": false,
+     "rect": [
+      0.4304,
+      0.09,
+      0.4887,
+      0.018
+     ]
+    },
+    {
+     "id": "1",
+     "multi": false,
+     "rect": [
+      0.3282,
+      0.379,
+      0.2233,
+      0.0185
+     ]
+    },
+    {
+     "id": "1b",
+     "multi": false,
+     "rect": [
+      0.167,
+      0.402,
+      0.2181,
+      0.018
+     ]
+    },
+    {
+     "id": "2",
+     "multi": false,
+     "rect": [
+      0.2123,
+      0.4575,
+      0.2175,
+      0.018
+     ]
+    },
+    {
+     "id": "3",
+     "multi": false,
+     "rect": [
+      0.2136,
+      0.554,
+      0.2233,
+      0.0175
+     ]
+    },
+    {
+     "id": "3b",
+     "multi": false,
+     "rect": [
+      0.3858,
+      0.5765,
+      0.2227,
+      0.018
+     ]
+    },
+    {
+     "id": "4",
+     "multi": false,
+     "rect": [
+      0.4835,
+      0.634,
+      0.2227,
+      0.018
+     ]
+    },
+    {
+     "id": "5",
+     "multi": false,
+     "rect": [
+      0.2142,
+      0.713,
+      0.2239,
+      0.0185
+     ]
+    },
+    {
+     "id": "6",
+     "multi": false,
+     "rect": [
+      0.2142,
+      0.8155,
+      0.2227,
+      0.0185
+     ]
+    },
+    {
+     "id": "7",
+     "multi": false,
+     "rect": [
+      0.2162,
+      0.8955,
+      0.2233,
+      0.019
+     ]
+    }
+   ],
+   "questions": [
+    {
+     "id": "1",
+     "title": "1 · Multiplying multi-digit numbers",
+     "hint": "Think about the smaller products you get when you break apart (decompose) the factors.",
+     "steps": [
+      "Read the word bank.",
+      "Breaking 23 × 14 into 20 × 10, 20 × 4, 3 × 10 and 3 × 4 gives smaller products.",
+      "Those smaller products have a special name, and you add them to get the answer."
+     ],
+     "answer": "partial products; partial products (both blanks use the same words).",
+     "openEnded": false,
+     "anchor": 0.3875,
+     "side": "right",
+     "crop": [
+      0.1262,
+      0.3525,
+      0.6796,
+      0.07
+     ],
+     "verified": true,
+     "verification": "Read the sentence on the page image and matched it to the definitions taught in the listed lesson; checked the word fits the sentence grammatically."
+    },
+    {
+     "id": "2",
+     "title": "2 · How many times the base is multiplied",
+     "hint": "It is the small raised number in 10⁴.",
+     "steps": [
+      "In 10⁴, 10 is the base.",
+      "The small raised 4 tells how many 10s are multiplied.",
+      "Find that word in the word bank."
+     ],
+     "answer": "exponent",
+     "openEnded": false,
+     "anchor": 0.4838,
+     "side": "right",
+     "crop": [
+      0.1262,
+      0.4525,
+      0.657,
+      0.0625
+     ],
+     "verified": true,
+     "verification": "Read the sentence on the page image and matched it to the definitions taught in the listed lesson; checked the word fits the sentence grammatically."
+    },
+    {
+     "id": "3",
+     "title": "3 · Base raised to a power",
+     "hint": "10³ is one way to write 1,000; what is that way called?",
+     "steps": [
+      "A number written like 10³ is written in a special form.",
+      "The raised number that the base is raised to is called the power, or …",
+      "Use two words from the word bank, one for each blank."
+     ],
+     "answer": "exponential form; exponent",
+     "openEnded": false,
+     "anchor": 0.5725,
+     "side": "right",
+     "crop": [
+      0.1262,
+      0.5475,
+      0.6764,
+      0.05
+     ],
+     "verified": true,
+     "verification": "Read the sentence on the page image and matched it to the definitions taught in the listed lesson; checked the word fits the sentence grammatically."
+    },
+    {
+     "id": "4",
+     "title": "4 · Estimating before you compute",
+     "hint": "What do you do to 367 to turn it into 400?",
+     "steps": [
+      "To estimate, you change numbers into friendlier numbers first.",
+      "367 becomes 400 and 29 becomes 30.",
+      "Which word bank word means that?"
+     ],
+     "answer": "round",
+     "openEnded": false,
+     "anchor": 0.6538,
+     "side": "right",
+     "crop": [
+      0.1262,
+      0.63,
+      0.6926,
+      0.0475
+     ],
+     "verified": true,
+     "verification": "Read the sentence on the page image and matched it to the definitions taught in the listed lesson; checked the word fits the sentence grammatically."
+    },
+    {
+     "id": "5",
+     "title": "5 · 10 as the base",
+     "hint": "Numbers like 10, 100 and 1,000 written as 10¹, 10², 10³.",
+     "steps": [
+      "The base is 10.",
+      "The exponent tells how many 10s are multiplied.",
+      "Find the word bank phrase that names these numbers."
+     ],
+     "answer": "power of 10",
+     "openEnded": false,
+     "anchor": 0.7438,
+     "side": "right",
+     "crop": [
+      0.1262,
+      0.7075,
+      0.6796,
+      0.0725
+     ],
+     "verified": true,
+     "verification": "Read the sentence on the page image and matched it to the definitions taught in the listed lesson; checked the word fits the sentence grammatically."
+    },
+    {
+     "id": "6",
+     "title": "6 · An approximate solution",
+     "hint": "Approximate means close to, not exact.",
+     "steps": [
+      "An approximate answer is close to the exact answer.",
+      "Find the word that means a close guess found with friendly numbers."
+     ],
+     "answer": "estimate",
+     "openEnded": false,
+     "anchor": 0.8338,
+     "side": "right",
+     "crop": [
+      0.1262,
+      0.81,
+      0.5987,
+      0.0475
+     ],
+     "verified": true,
+     "verification": "Read the sentence on the page image and matched it to the definitions taught in the listed lesson; checked the word fits the sentence grammatically."
+    },
+    {
+     "id": "7",
+     "title": "7 · A set of steps",
+     "hint": "It is the step-by-step method you use, like the standard way to multiply.",
+     "steps": [
+      "Think of a recipe of steps you always follow.",
+      "Find that word in the word bank."
+     ],
+     "answer": "algorithm",
+     "openEnded": false,
+     "anchor": 0.915,
+     "side": "right",
+     "crop": [
+      0.1262,
+      0.89,
+      0.6117,
+      0.05
+     ],
+     "verified": true,
+     "verification": "Read the sentence on the page image and matched it to the definitions taught in the listed lesson; checked the word fits the sentence grammatically."
+    }
+   ]
+  },
+  "174": {
+   "heading": "Review",
+   "fields": [
+    {
+     "id": "8",
+     "multi": false,
+     "rect": [
+      0.123,
+      0.2625,
+      0.0906,
+      0.0275
+     ]
+    },
+    {
+     "id": "9",
+     "multi": false,
+     "rect": [
+      0.2874,
+      0.4725,
+      0.1061,
+      0.02
+     ]
+    },
+    {
+     "id": "10",
+     "multi": false,
+     "rect": [
+      0.2375,
+      0.725,
+      0.1055,
+      0.019
+     ]
+    },
+    {
+     "id": "11a",
+     "multi": false,
+     "rect": [
+      0.5547,
+      0.2235,
+      0.0634,
+      0.028
+     ]
+    },
+    {
+     "id": "11b",
+     "multi": false,
+     "rect": [
+      0.5547,
+      0.255,
+      0.0634,
+      0.028
+     ]
+    },
+    {
+     "id": "11c",
+     "multi": false,
+     "rect": [
+      0.5547,
+      0.3345,
+      0.0634,
+      0.0275
+     ]
+    },
+    {
+     "id": "11",
+     "multi": false,
+     "rect": [
+      0.6537,
+      0.379,
+      0.1346,
+      0.02
+     ]
+    },
+    {
+     "id": "12",
+     "multi": true,
+     "rect": [
+      0.5307,
+      0.57,
+      0.3366,
+      0.115
+     ]
+    },
+    {
+     "id": "13",
+     "multi": false,
+     "rect": [
+      0.6537,
+      0.806,
+      0.2071,
+      0.022
+     ]
+    }
+   ],
+   "questions": [
+    {
+     "id": "8",
+     "title": "8 · Which is equal to 10⁴?",
+     "hint": "The exponent 4 tells how many 10s are multiplied together.",
+     "steps": [
+      "10⁴ means 10 × 10 × 10 × 10.",
+      "Check each choice: A is 1,000 = 10³; B is 40; D is 40.",
+      "Only C multiplies four 10s, which is 10,000."
+     ],
+     "answer": "C. 10 × 10 × 10 × 10",
+     "openEnded": false,
+     "anchor": 0.2,
+     "side": "left",
+     "crop": [
+      0.0841,
+      0.09,
+      0.3301,
+      0.1675
+     ],
+     "verified": true,
+     "verification": "Python: 10**4 = 10000; A = 1000, B = 40, C = 10000, D = 40; only C matches."
+    },
+    {
+     "id": "9",
+     "title": "9 · About how many rock samples?",
+     "hint": "Round each number to its greatest place before you multiply.",
+     "steps": [
+      "Round 324 to 300.",
+      "Round 23 to 20.",
+      "Multiply 300 × 20 = 6,000."
+     ],
+     "answer": "About 6,000 rock samples (300 × 20). The exact product is 7,452, so 6,000 is a reasonable estimate.",
+     "openEnded": false,
+     "anchor": 0.41,
+     "side": "left",
+     "crop": [
+      0.0777,
+      0.305,
+      0.3786,
+      0.21
+     ],
+     "verified": true,
+     "verification": "Computed 300 × 20 = 6,000 and exact 324 × 23 = 7,452 in Python; estimate is in the right range."
+    },
+    {
+     "id": "10",
+     "title": "10 · Area of the recreational center",
+     "hint": "Split 32 into 30 + 2 and 17 into 10 + 7 in your area model.",
+     "steps": [
+      "Area = length × width = 32 × 17.",
+      "Partial products: 30 × 10 = 300, 30 × 7 = 210, 2 × 10 = 20, 2 × 7 = 14.",
+      "Add: 300 + 210 + 20 + 14 = 544."
+     ],
+     "answer": "544 square meters",
+     "openEnded": false,
+     "anchor": 0.665,
+     "side": "left",
+     "crop": [
+      0.0777,
+      0.565,
+      0.3754,
+      0.2
+     ],
+     "verified": true,
+     "verification": "Computed 32 × 17 = 544 in Python; partial products 300 + 210 + 20 + 14 = 544; estimate 30 × 20 = 600."
+    },
+    {
+     "id": "11",
+     "title": "11 · Partial products for 328 × 14",
+     "hint": "Multiply each place of 328 by the 10 and then by the 4.",
+     "steps": [
+      "10 × 20 = 200 and 10 × 8 = 80.",
+      "4 × 8 = 32.",
+      "Add all six partial products: 3,000 + 200 + 80 + 1,200 + 80 + 32."
+     ],
+     "answer": "Boxes: 200, 80, 32. 328 × 14 = 4,592.",
+     "openEnded": false,
+     "anchor": 0.2475,
+     "side": "right",
+     "crop": [
+      0.4919,
+      0.0925,
+      0.3819,
+      0.31
+     ],
+     "verified": true,
+     "verification": "Computed 328 × 14 = 4,592 in Python; sum of partial products 3000+200+80+1200+80+32 = 4,592."
+    },
+    {
+     "id": "12",
+     "title": "12 · Blaire's pages in 6 weeks",
+     "hint": "Break 242 into 200 + 40 + 2 and multiply each part by 6.",
+     "steps": [
+      "6 × 200 = 1,200.",
+      "6 × 40 = 240 and 6 × 2 = 12.",
+      "Add: 1,200 + 240 + 12 = 1,452."
+     ],
+     "answer": "Sample answer: Use partial products: 6 × 200 = 1,200, 6 × 40 = 240, 6 × 2 = 12; 1,200 + 240 + 12 = 1,452 pages.",
+     "openEnded": true,
+     "anchor": 0.5663,
+     "side": "right",
+     "crop": [
+      0.4919,
+      0.4475,
+      0.3819,
+      0.2375
+     ],
+     "verified": true,
+     "verification": "Computed 242 × 6 = 1,452 in Python; estimate 240 × 6 = 1,440."
+    },
+    {
+     "id": "13",
+     "title": "13 · 429 × 31",
+     "hint": "Multiply 429 by 1, then by 30, and add.",
+     "steps": [
+      "429 × 1 = 429.",
+      "429 × 30 = 12,870.",
+      "Add: 429 + 12,870 = 13,299."
+     ],
+     "answer": "13,299",
+     "openEnded": false,
+     "anchor": 0.7937,
+     "side": "right",
+     "crop": [
+      0.4919,
+      0.755,
+      0.3754,
+      0.0775
+     ],
+     "verified": true,
+     "verification": "Computed 429 × 31 = 13,299 in Python; 429 + 12,870 = 13,299; estimate 400 × 30 = 12,000."
+    }
+   ]
+  },
+  "175": {
+   "heading": "Review",
+   "fields": [
+    {
+     "id": "14",
+     "multi": false,
+     "rect": [
+      0.3883,
+      0.264,
+      0.1165,
+      0.0235
+     ]
+    },
+    {
+     "id": "15",
+     "multi": false,
+     "rect": [
+      0.4272,
+      0.5,
+      0.0841,
+      0.023
+     ]
+    },
+    {
+     "id": "16top",
+     "multi": false,
+     "rect": [
+      0.2718,
+      0.636,
+      0.0828,
+      0.0275
+     ]
+    },
+    {
+     "id": "16a",
+     "multi": false,
+     "rect": [
+      0.2667,
+      0.6885,
+      0.0828,
+      0.028
+     ]
+    },
+    {
+     "id": "16b",
+     "multi": false,
+     "rect": [
+      0.4084,
+      0.6885,
+      0.0602,
+      0.028
+     ]
+    },
+    {
+     "id": "16left",
+     "multi": false,
+     "rect": [
+      0.1715,
+      0.742,
+      0.0447,
+      0.0285
+     ]
+    },
+    {
+     "id": "16c",
+     "multi": false,
+     "rect": [
+      0.2667,
+      0.742,
+      0.0828,
+      0.028
+     ]
+    },
+    {
+     "id": "16d",
+     "multi": false,
+     "rect": [
+      0.4084,
+      0.742,
+      0.0602,
+      0.028
+     ]
+    },
+    {
+     "id": "16",
+     "multi": false,
+     "rect": [
+      0.2893,
+      0.781,
+      0.1172,
+      0.0205
+     ]
+    },
+    {
+     "id": "17est",
+     "multi": false,
+     "rect": [
+      0.7023,
+      0.2125,
+      0.099,
+      0.02
+     ]
+    },
+    {
+     "id": "17",
+     "multi": false,
+     "rect": [
+      0.677,
+      0.241,
+      0.0997,
+      0.0195
+     ]
+    },
+    {
+     "id": "18a",
+     "multi": false,
+     "rect": [
+      0.6932,
+      0.4165,
+      0.1087,
+      0.0285
+     ]
+    },
+    {
+     "id": "18b",
+     "multi": false,
+     "rect": [
+      0.6932,
+      0.45,
+      0.1087,
+      0.0285
+     ]
+    },
+    {
+     "id": "18",
+     "multi": false,
+     "rect": [
+      0.6932,
+      0.484,
+      0.1087,
+      0.0275
+     ]
+    },
+    {
+     "id": "19a",
+     "multi": false,
+     "rect": [
+      0.6492,
+      0.616,
+      0.2699,
+      0.0215
+     ]
+    },
+    {
+     "id": "19",
+     "multi": false,
+     "rect": [
+      0.6472,
+      0.6775,
+      0.2706,
+      0.02
+     ]
+    }
+   ],
+   "questions": [
+    {
+     "id": "14",
+     "title": "14 · Which equations are true? Select all.",
+     "hint": "Count how many 10s are multiplied on each side and check that both sides match.",
+     "steps": [
+      "A: 7 × 100 = 700 but 7 × 10 × 10 × 10 = 7,000, so false.",
+      "B: 2 × 10³ = 2 × 1,000, so true. C: 50 × 1,000 = 50,000, so true.",
+      "D: 8 × 10³ = 8,000 but 8 × 10 × 10 = 800, false. E: 16 × 100 = 1,600, not 160, false."
+     ],
+     "answer": "B and C",
+     "openEnded": false,
+     "anchor": 0.19,
+     "side": "left",
+     "crop": [
+      0.1294,
+      0.09,
+      0.3819,
+      0.2
+     ],
+     "verified": true,
+     "verification": "Evaluated both sides of every option in Python: A 700≠7000, B 2000=2000, C 50000=50000, D 8000≠800, E 1600≠160."
+    },
+    {
+     "id": "15",
+     "title": "15 · Best estimate for 367 × 29",
+     "hint": "Round each factor to the nearest hundred or ten that it is closest to.",
+     "steps": [
+      "367 is closer to 400 than to 300.",
+      "29 is closer to 30 than to 20.",
+      "400 × 30 = 12,000."
+     ],
+     "answer": "D. 400 × 30 = 12,000",
+     "openEnded": false,
+     "anchor": 0.43,
+     "side": "left",
+     "crop": [
+      0.1294,
+      0.335,
+      0.3819,
+      0.19
+     ],
+     "verified": true,
+     "verification": "Python: 367 × 29 = 10,643; 367 rounds to 400, 29 rounds to 30; 400 × 30 = 12,000. Checked each option's arithmetic (all correct as products) and rounding."
+    },
+    {
+     "id": "16",
+     "title": "16 · Area model for 53 × 37",
+     "hint": "Break 53 into 50 + 3 and 37 into 30 + 7.",
+     "steps": [
+      "Top box: 50. Left box: 7.",
+      "Fill the inside: 30 × 50 = 1,500, 30 × 3 = 90, 7 × 50 = 350, 7 × 3 = 21.",
+      "Add: 1,500 + 90 + 350 + 21 = 1,961."
+     ],
+     "answer": "Top: 50; side: 7; boxes 1,500, 90, 350, 21. 53 × 37 = 1,961.",
+     "openEnded": false,
+     "anchor": 0.6875,
+     "side": "left",
+     "crop": [
+      0.1294,
+      0.57,
+      0.3819,
+      0.235
+     ],
+     "verified": true,
+     "verification": "Computed 53 × 37 = 1,961 in Python; partial products 1500+90+350+21 = 1,961; estimate 50 × 40 = 2,000."
+    },
+    {
+     "id": "17",
+     "title": "17 · Track team miles in 5 weeks",
+     "hint": "5 weeks is 5 × 7 = 35 days.",
+     "steps": [
+      "5 weeks = 35 days, so find 126 × 35.",
+      "Estimate: about 100 × 40 = 4,000 (130 × 35 = 4,550 is also a fair estimate).",
+      "Solve: 126 × 30 = 3,780 and 126 × 5 = 630; 3,780 + 630 = 4,410."
+     ],
+     "answer": "Estimation: about 4,000 miles (other reasonable estimates are fine). Solution: 4,410 miles.",
+     "openEnded": false,
+     "anchor": 0.1775,
+     "side": "right",
+     "crop": [
+      0.5437,
+      0.09,
+      0.3754,
+      0.175
+     ],
+     "verified": true,
+     "verification": "Computed 126 × 35 = 4,410 in Python and 126 × 7 × 5 = 4,410; estimate 100 × 40 = 4,000 is close. Assumes the team runs all 7 days a week."
+    },
+    {
+     "id": "18",
+     "title": "18 · 541 × 62 with the algorithm",
+     "hint": "First multiply 541 by the 2 ones, then by the 6 tens.",
+     "steps": [
+      "541 × 2 = 1,082.",
+      "541 × 60 = 32,460.",
+      "Add: 1,082 + 32,460 = 33,542."
+     ],
+     "answer": "1,082; 32,460; 33,542",
+     "openEnded": false,
+     "anchor": 0.4113,
+     "side": "right",
+     "crop": [
+      0.5437,
+      0.3075,
+      0.3754,
+      0.2075
+     ],
+     "verified": true,
+     "verification": "Computed 541 × 62 = 33,542 in Python; 1,082 + 32,460 = 33,542; estimate 500 × 60 = 30,000."
+    },
+    {
+     "id": "19",
+     "title": "19 · 10⁶ as a product of 10s",
+     "hint": "The exponent 6 tells how many 10s to write.",
+     "steps": [
+      "Write six 10s with × between them.",
+      "Each 10 adds one zero.",
+      "Six zeros: 1,000,000."
+     ],
+     "answer": "10 × 10 × 10 × 10 × 10 × 10 = 1,000,000",
+     "openEnded": false,
+     "anchor": 0.6325,
+     "side": "right",
+     "crop": [
+      0.5437,
+      0.5625,
+      0.3819,
+      0.14
+     ],
+     "verified": true,
+     "verification": "Computed 10**6 = 1,000,000 in Python; counted six zeros."
+    }
+   ]
+  },
+  "176": {
+   "heading": "Performance Task",
+   "fields": [
+    {
+     "id": "partA",
+     "multi": true,
+     "rect": [
+      0.0731,
+      0.24,
+      0.6777,
+      0.155
+     ]
+    },
+    {
+     "id": "partB",
+     "multi": true,
+     "rect": [
+      0.0731,
+      0.45,
+      0.6777,
+      0.145
+     ]
+    },
+    {
+     "id": "reflect176",
+     "multi": true,
+     "rect": [
+      0.0939,
+      0.7,
+      0.7605,
+      0.23
+     ]
+    }
+   ],
+   "questions": [
+    {
+     "id": "partA",
+     "title": "Performance Task · Part A: Difference in honey bees",
+     "hint": "Change 13 × 10² and 27 × 10² into standard numbers first.",
+     "steps": [
+      "13 × 10² = 13 × 100 = 1,300 bees.",
+      "27 × 10² = 27 × 100 = 2,700 bees.",
+      "Subtract: 2,700 − 1,300 = 1,400."
+     ],
+     "answer": "1,400 honey bees (location B has 1,400 more).",
+     "openEnded": false,
+     "anchor": 0.3,
+     "side": "right",
+     "crop": [
+      0.0647,
+      0.07,
+      0.699,
+      0.165
+     ],
+     "verified": true,
+     "verification": "Computed 27*100 - 13*100 = 1,400 in Python; check (27 − 13) × 100 = 14 × 100 = 1,400."
+    },
+    {
+     "id": "partB",
+     "title": "Performance Task · Part B: Honey in a year",
+     "hint": "There are 52 weeks in a year.",
+     "steps": [
+      "Each week both locations make 121 + 344 = 465 ounces.",
+      "A year has 52 weeks, so find 465 × 52.",
+      "465 × 50 = 23,250 and 465 × 2 = 930; 23,250 + 930 = 24,180."
+     ],
+     "answer": "About 24,180 ounces of honey each year.",
+     "openEnded": false,
+     "anchor": 0.5,
+     "side": "right",
+     "crop": [
+      0.0647,
+      0.4025,
+      0.699,
+      0.045
+     ],
+     "verified": true,
+     "verification": "Computed (121 + 344) × 52 = 24,180 in Python; also 121 × 52 + 344 × 52 = 6,292 + 17,888 = 24,180; estimate 500 × 50 = 25,000."
+    },
+    {
+     "id": "reflect176",
+     "title": "Reflect · Strategies to multiply",
+     "hint": "Think about the different ways you multiplied in this unit.",
+     "steps": [
+      "List the strategies from the unit: area models, partial products, the algorithm, estimating, powers of 10.",
+      "Pick two or three and tell when each one helps."
+     ],
+     "answer": "Sample answer: I can use an area model, partial products, or the standard algorithm. I can also use powers of 10 for numbers like 30 × 400 and estimate first to check my answer.",
+     "openEnded": true,
+     "anchor": 0.7725,
+     "side": "right",
+     "crop": [
+      0.0712,
+      0.6,
+      0.7961,
+      0.345
+     ],
+     "verified": true,
+     "verification": "Reflection prompt with no single answer; sample checked against the strategies taught in Lessons 5-1 to 5-7."
+    }
+   ]
+  },
+  "177": {
+   "heading": "Fluency Practice",
+   "fields": [
+    {
+     "id": "name177",
+     "multi": false,
+     "rect": [
+      0.2006,
+      0.155,
+      0.6162,
+      0.018
+     ]
+    },
+    {
+     "id": "1m",
+     "multi": false,
+     "rect": [
+      0.2136,
+      0.5135,
+      0.0233,
+      0.0205
+     ]
+    },
+    {
+     "id": "1p",
+     "multi": false,
+     "rect": [
+      0.3799,
+      0.5135,
+      0.0239,
+      0.0205
+     ]
+    },
+    {
+     "id": "1x",
+     "multi": false,
+     "rect": [
+      0.1735,
+      0.565,
+      0.0777,
+      0.02
+     ]
+    },
+    {
+     "id": "1y",
+     "multi": false,
+     "rect": [
+      0.3398,
+      0.565,
+      0.0777,
+      0.02
+     ]
+    },
+    {
+     "id": "1",
+     "multi": false,
+     "rect": [
+      0.4589,
+      0.565,
+      0.0783,
+      0.02
+     ]
+    },
+    {
+     "id": "2",
+     "multi": false,
+     "rect": [
+      0.1987,
+      0.7715,
+      0.3683,
+      0.0235
+     ]
+    },
+    {
+     "id": "3",
+     "multi": false,
+     "rect": [
+      0.2,
+      0.9065,
+      0.3683,
+      0.0245
+     ]
+    }
+   ],
+   "questions": [
+    {
+     "id": "1",
+     "title": "1 · Adjust 2,413 + 1,097",
+     "hint": "Make 1,097 a friendly number by adding just a little.",
+     "steps": [
+      "1,097 + 3 = 1,100, so add 3 to 1,097.",
+      "Take the same 3 away from 2,413: 2,413 − 3 = 2,410.",
+      "Add: 2,410 + 1,100 = 3,510."
+     ],
+     "answer": "− 3 and + 3; 2,410 + 1,100 = 3,510",
+     "openEnded": false,
+     "anchor": 0.52,
+     "side": "left",
+     "crop": [
+      0.1294,
+      0.45,
+      0.4207,
+      0.14
+     ],
+     "verified": true,
+     "verification": "Computed 2,413 + 1,097 = 3,510 in Python; check 2,410 + 1,100 = 3,510."
+    },
+    {
+     "id": "2",
+     "title": "2 · 1,097 + 2,456",
+     "hint": "Start with the ones and regroup when a column makes 10 or more.",
+     "steps": [
+      "Ones: 7 + 6 = 13, write 3 and regroup 1 ten.",
+      "Tens: 9 + 5 + 1 = 15, write 5 and regroup 1 hundred.",
+      "Hundreds: 0 + 4 + 1 = 5. Thousands: 1 + 2 = 3."
+     ],
+     "answer": "3,553",
+     "openEnded": false,
+     "anchor": 0.7375,
+     "side": "left",
+     "crop": [
+      0.1294,
+      0.675,
+      0.4434,
+      0.125
+     ],
+     "verified": true,
+     "verification": "Computed 1,097 + 2,456 = 3,553 in Python; inverse check 3,553 − 2,456 = 1,097."
+    },
+    {
+     "id": "3",
+     "title": "3 · 4,279 + 2,398",
+     "hint": "Watch for regrouping in the ones and tens.",
+     "steps": [
+      "Ones: 9 + 8 = 17, write 7 and regroup 1.",
+      "Tens: 7 + 9 + 1 = 17, write 7 and regroup 1.",
+      "Hundreds: 2 + 3 + 1 = 6. Thousands: 4 + 2 = 6."
+     ],
+     "answer": "6,677",
+     "openEnded": false,
+     "anchor": 0.8725,
+     "side": "left",
+     "crop": [
+      0.1294,
+      0.81,
+      0.4434,
+      0.125
+     ],
+     "verified": true,
+     "verification": "Computed 4,279 + 2,398 = 6,677 in Python; inverse check 6,677 − 2,398 = 4,279."
+    }
+   ]
+  },
+  "178": {
+   "heading": "Fluency Check · Fluency Talk",
+   "fields": [
+    {
+     "id": "4",
+     "multi": false,
+     "rect": [
+      0.2706,
+      0.1125,
+      0.1877,
+      0.0185
+     ]
+    },
+    {
+     "id": "5",
+     "multi": false,
+     "rect": [
+      0.2706,
+      0.174,
+      0.1877,
+      0.018
+     ]
+    },
+    {
+     "id": "6",
+     "multi": false,
+     "rect": [
+      0.2706,
+      0.2335,
+      0.1877,
+      0.018
+     ]
+    },
+    {
+     "id": "7",
+     "multi": false,
+     "rect": [
+      0.2706,
+      0.295,
+      0.1877,
+      0.018
+     ]
+    },
+    {
+     "id": "8",
+     "multi": false,
+     "rect": [
+      0.2706,
+      0.355,
+      0.1877,
+      0.0185
+     ]
+    },
+    {
+     "id": "9",
+     "multi": false,
+     "rect": [
+      0.6731,
+      0.114,
+      0.1942,
+      0.018
+     ]
+    },
+    {
+     "id": "10",
+     "multi": false,
+     "rect": [
+      0.6731,
+      0.175,
+      0.1942,
+      0.0185
+     ]
+    },
+    {
+     "id": "11",
+     "multi": false,
+     "rect": [
+      0.6731,
+      0.235,
+      0.1942,
+      0.0185
+     ]
+    },
+    {
+     "id": "12",
+     "multi": false,
+     "rect": [
+      0.6731,
+      0.2965,
+      0.1942,
+      0.0185
+     ]
+    },
+    {
+     "id": "13",
+     "multi": false,
+     "rect": [
+      0.6731,
+      0.3565,
+      0.1942,
+      0.0185
+     ]
+    },
+    {
+     "id": "talk1",
+     "multi": true,
+     "rect": [
+      0.0939,
+      0.515,
+      0.7605,
+      0.155
+     ]
+    },
+    {
+     "id": "talk2",
+     "multi": true,
+     "rect": [
+      0.0939,
+      0.7225,
+      0.7605,
+      0.1975
+     ]
+    }
+   ],
+   "questions": [
+    {
+     "id": "4",
+     "title": "4 · 3,241 + 316",
+     "hint": "Line up the places and add, starting with the ones.",
+     "steps": [
+      "Line up ones under ones, tens under tens.",
+      "Add each place from right to left, regrouping when a column makes 10 or more.",
+      "Check: 3,557 − 316 = 3,241."
+     ],
+     "answer": "3,557",
+     "openEnded": false,
+     "anchor": 0.12,
+     "side": "left",
+     "crop": [
+      0.0906,
+      0.1075,
+      0.3689,
+      0.025
+     ],
+     "verified": true,
+     "verification": "Computed 3241 + 316 = 3557 in Python; inverse check 3557 − 316 = 3241."
+    },
+    {
+     "id": "5",
+     "title": "5 · 987 − 453",
+     "hint": "Line up the places and subtract, starting with the ones; regroup if the top digit is too small.",
+     "steps": [
+      "Line up ones under ones, tens under tens.",
+      "Subtract each place from right to left, regrouping when you need to.",
+      "Check: 534 + 453 = 987."
+     ],
+     "answer": "534",
+     "openEnded": false,
+     "anchor": 0.1815,
+     "side": "left",
+     "crop": [
+      0.0906,
+      0.169,
+      0.3689,
+      0.025
+     ],
+     "verified": true,
+     "verification": "Computed 987 − 453 = 534 in Python; inverse check 534 + 453 = 987."
+    },
+    {
+     "id": "6",
+     "title": "6 · 824 − 76",
+     "hint": "Line up the places and subtract, starting with the ones; regroup if the top digit is too small.",
+     "steps": [
+      "Line up ones under ones, tens under tens.",
+      "Subtract each place from right to left, regrouping when you need to.",
+      "Check: 748 + 76 = 824."
+     ],
+     "answer": "748",
+     "openEnded": false,
+     "anchor": 0.241,
+     "side": "left",
+     "crop": [
+      0.0906,
+      0.2285,
+      0.3689,
+      0.025
+     ],
+     "verified": true,
+     "verification": "Computed 824 − 76 = 748 in Python; inverse check 748 + 76 = 824."
+    },
+    {
+     "id": "7",
+     "title": "7 · 148 + 231",
+     "hint": "Line up the places and add, starting with the ones.",
+     "steps": [
+      "Line up ones under ones, tens under tens.",
+      "Add each place from right to left, regrouping when a column makes 10 or more.",
+      "Check: 379 − 231 = 148."
+     ],
+     "answer": "379",
+     "openEnded": false,
+     "anchor": 0.3025,
+     "side": "left",
+     "crop": [
+      0.0906,
+      0.29,
+      0.3689,
+      0.025
+     ],
+     "verified": true,
+     "verification": "Computed 148 + 231 = 379 in Python; inverse check 379 − 231 = 148."
+    },
+    {
+     "id": "8",
+     "title": "8 · 542 + 328",
+     "hint": "Line up the places and add, starting with the ones.",
+     "steps": [
+      "Line up ones under ones, tens under tens.",
+      "Add each place from right to left, regrouping when a column makes 10 or more.",
+      "Check: 870 − 328 = 542."
+     ],
+     "answer": "870",
+     "openEnded": false,
+     "anchor": 0.3625,
+     "side": "left",
+     "crop": [
+      0.0906,
+      0.35,
+      0.3689,
+      0.025
+     ],
+     "verified": true,
+     "verification": "Computed 542 + 328 = 870 in Python; inverse check 870 − 328 = 542."
+    },
+    {
+     "id": "9",
+     "title": "9 · 475 + 267",
+     "hint": "Line up the places and add, starting with the ones.",
+     "steps": [
+      "Line up ones under ones, tens under tens.",
+      "Add each place from right to left, regrouping when a column makes 10 or more.",
+      "Check: 742 − 267 = 475."
+     ],
+     "answer": "742",
+     "openEnded": false,
+     "anchor": 0.1215,
+     "side": "right",
+     "crop": [
+      0.479,
+      0.109,
+      0.3916,
+      0.025
+     ],
+     "verified": true,
+     "verification": "Computed 475 + 267 = 742 in Python; inverse check 742 − 267 = 475."
+    },
+    {
+     "id": "10",
+     "title": "10 · 541 + 789",
+     "hint": "Line up the places and add, starting with the ones.",
+     "steps": [
+      "Line up ones under ones, tens under tens.",
+      "Add each place from right to left, regrouping when a column makes 10 or more.",
+      "Check: 1,330 − 789 = 541."
+     ],
+     "answer": "1,330",
+     "openEnded": false,
+     "anchor": 0.1825,
+     "side": "right",
+     "crop": [
+      0.479,
+      0.17,
+      0.3916,
+      0.025
+     ],
+     "verified": true,
+     "verification": "Computed 541 + 789 = 1330 in Python; inverse check 1330 − 789 = 541."
+    },
+    {
+     "id": "11",
+     "title": "11 · 647 − 325",
+     "hint": "Line up the places and subtract, starting with the ones; regroup if the top digit is too small.",
+     "steps": [
+      "Line up ones under ones, tens under tens.",
+      "Subtract each place from right to left, regrouping when you need to.",
+      "Check: 322 + 325 = 647."
+     ],
+     "answer": "322",
+     "openEnded": false,
+     "anchor": 0.2425,
+     "side": "right",
+     "crop": [
+      0.479,
+      0.23,
+      0.3916,
+      0.025
+     ],
+     "verified": true,
+     "verification": "Computed 647 − 325 = 322 in Python; inverse check 322 + 325 = 647."
+    },
+    {
+     "id": "12",
+     "title": "12 · 978 + 96",
+     "hint": "Line up the places and add, starting with the ones.",
+     "steps": [
+      "Line up ones under ones, tens under tens.",
+      "Add each place from right to left, regrouping when a column makes 10 or more.",
+      "Check: 1,074 − 96 = 978."
+     ],
+     "answer": "1,074",
+     "openEnded": false,
+     "anchor": 0.304,
+     "side": "right",
+     "crop": [
+      0.479,
+      0.2915,
+      0.3916,
+      0.025
+     ],
+     "verified": true,
+     "verification": "Computed 978 + 96 = 1074 in Python; inverse check 1074 − 96 = 978."
+    },
+    {
+     "id": "13",
+     "title": "13 · 1,549 − 256",
+     "hint": "Line up the places and subtract, starting with the ones; regroup if the top digit is too small.",
+     "steps": [
+      "Line up ones under ones, tens under tens.",
+      "Subtract each place from right to left, regrouping when you need to.",
+      "Check: 1,293 + 256 = 1,549."
+     ],
+     "answer": "1,293",
+     "openEnded": false,
+     "anchor": 0.364,
+     "side": "right",
+     "crop": [
+      0.479,
+      0.3515,
+      0.3916,
+      0.025
+     ],
+     "verified": true,
+     "verification": "Computed 1549 − 256 = 1293 in Python; inverse check 1293 + 256 = 1549."
+    },
+    {
+     "id": "talk1",
+     "title": "Fluency Talk · Choosing an adding strategy",
+     "hint": "Look at the numbers first: are any of them close to a friendly number?",
+     "steps": [
+      "If a number is close to a hundred or thousand, adjust the numbers.",
+      "If the numbers are easy to break into places, use partial sums.",
+      "Otherwise, the algorithm works for any numbers."
+     ],
+     "answer": "Sample answer: I look at the numbers. If one is close to a friendly number like 1,100, I adjust the numbers. If not, I use partial sums or the algorithm.",
+     "openEnded": true,
+     "anchor": 0.57,
+     "side": "right",
+     "crop": [
+      0.0712,
+      0.47,
+      0.7961,
+      0.2
+     ],
+     "verified": true,
+     "verification": "Discussion prompt with no single answer; sample matches the strategies shown in the Fluency Strategy box."
+    },
+    {
+     "id": "talk2",
+     "title": "Fluency Talk · Why regroup when subtracting?",
+     "hint": "What happens when the top digit in a column is smaller than the bottom digit?",
+     "steps": [
+      "Look at 824 − 76: in the ones, 4 is less than 6.",
+      "Trade 1 ten for 10 ones so you have enough to subtract.",
+      "That trade is called regrouping."
+     ],
+     "answer": "Sample answer: When a digit on top is smaller than the digit below it, I regroup 1 from the next place (like 1 ten for 10 ones) so I have enough to subtract.",
+     "openEnded": true,
+     "anchor": 0.8013,
+     "side": "right",
+     "crop": [
+      0.0712,
+      0.6725,
+      0.7961,
+      0.2575
+     ],
+     "verified": true,
+     "verification": "Discussion prompt with no single answer; sample checked with 824 − 76 (4 < 6 in the ones needs regrouping)."
+    }
+   ]
+  }
+ }
+}

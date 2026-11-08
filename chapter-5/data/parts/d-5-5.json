@@ -1,0 +1,708 @@
+{
+ "sections": {
+  "5-5": {
+   "title": "Use Partial Products to Multiply Multi-Digit Factors"
+  }
+ },
+ "pages": {
+  "159": {
+   "heading": "Be Curious",
+   "fields": [
+    {
+     "id": "curious",
+     "multi": true,
+     "rect": [
+      0.1748,
+      0.6,
+      0.7638,
+      0.11
+     ]
+    },
+    {
+     "id": "mind159",
+     "multi": true,
+     "rect": [
+      0.5437,
+      0.815,
+      0.3948,
+      0.06
+     ]
+    }
+   ],
+   "questions": [
+    {
+     "id": "curious",
+     "title": "Be Curious · What do you notice? What do you wonder?",
+     "hint": "Compare the numbers inside the area model with the numbers in the list on the right.",
+     "steps": [
+      "Look at the area model: 374 is split into 300 + 70 + 4 and 43 into 40 + 3.",
+      "Find each box's number in the list on the right (12,000 is 40 × 300, and so on).",
+      "Say what you notice, then ask a question you wonder about."
+     ],
+     "answer": "Sample answer: I notice both show 374 × 43. The six numbers in the area model are the same six partial products in the list, and they add to 16,082. I wonder if this works for any two numbers.",
+     "openEnded": true,
+     "anchor": 0.5,
+     "side": "right",
+     "crop": [
+      0.1683,
+      0.435,
+      0.6472,
+      0.15
+     ],
+     "verified": true,
+     "verification": "Computed 374 × 43 = 16,082 in Python and summed the six printed partial products (12,000 + 2,800 + 160 + 900 + 210 + 12 = 16,082)."
+    },
+    {
+     "id": "mind159",
+     "title": "Math is… Mindset",
+     "hint": "This is about you, so there is no one right answer.",
+     "steps": [
+      "Think about what helps you pay attention.",
+      "Write one or two steps you will take today."
+     ],
+     "answer": "Sample answer: I will clear my desk, read each problem twice and check my partial products before adding.",
+     "openEnded": true,
+     "anchor": 0.8675,
+     "side": "left",
+     "crop": [
+      0.178,
+      0.825,
+      0.354,
+      0.084
+     ],
+     "verified": true,
+     "verification": "Original source visually checked; open-ended prompt, sample answer reviewed for accuracy."
+    }
+   ]
+  },
+  "160": {
+   "heading": "Learn",
+   "fields": [
+    {
+     "id": "learn",
+     "multi": false,
+     "rect": [
+      0.0777,
+      0.15,
+      0.5049,
+      0.035
+     ]
+    },
+    {
+     "id": "gen160",
+     "multi": true,
+     "rect": [
+      0.5748,
+      0.6125,
+      0.3074,
+      0.0725
+     ]
+    },
+    {
+     "id": "together",
+     "multi": true,
+     "rect": [
+      0.1036,
+      0.795,
+      0.7573,
+      0.14
+     ]
+    }
+   ],
+   "questions": [
+    {
+     "id": "learn",
+     "title": "Learn · Seats in the stadium",
+     "hint": "Each of the 164 rows has 82 seats, so multiply 164 × 82.",
+     "steps": [
+      "Split 164 into 100 + 60 + 4 and 82 into 80 + 2.",
+      "Multiply 80 by 100, 60 and 4: 8,000, 4,800, 320.",
+      "Multiply 2 by 100, 60 and 4: 200, 120, 8.",
+      "Add all six partial products: 13,448."
+     ],
+     "answer": "13,448 seats",
+     "openEnded": false,
+     "anchor": 0.125,
+     "side": "left",
+     "crop": [
+      0.0712,
+      0.06,
+      0.8091,
+      0.15
+     ],
+     "verified": true,
+     "verification": "Computed 164 × 82 = 13,448 in Python; partial products 8,000 + 4,800 + 320 + 200 + 120 + 8 = 13,448; estimate 160 × 80 = 12,800."
+    },
+    {
+     "id": "gen160",
+     "title": "Math is… Generalizations",
+     "hint": "Each box in an area model is one partial product.",
+     "steps": [
+      "Picture 164 × 82 as a rectangle split into parts.",
+      "Each small rectangle's area is one partial product.",
+      "Adding all the small areas gives the whole area, the product."
+     ],
+     "answer": "Sample answer: The area model splits the big rectangle into smaller boxes. Each box is one partial product, and adding the boxes gives the total, just like adding the partial products in the vertical list.",
+     "openEnded": true,
+     "anchor": 0.555,
+     "side": "right",
+     "crop": [
+      0.5748,
+      0.5015,
+      0.3087,
+      0.1045
+     ],
+     "verified": true,
+     "verification": "Original source visually checked; open-ended prompt, sample answer reviewed for accuracy."
+    },
+    {
+     "id": "together",
+     "title": "Work Together · 142 × 63",
+     "hint": "Split 142 into 100 + 40 + 2 and 63 into 60 + 3.",
+     "steps": [
+      "Multiply 60 by 100, 40 and 2: 6,000, 2,400, 120.",
+      "Multiply 3 by 100, 40 and 2: 300, 120, 6.",
+      "Line up the partial products vertically and add them."
+     ],
+     "answer": "8,946 (6,000 + 2,400 + 120 + 300 + 120 + 6)",
+     "openEnded": false,
+     "anchor": 0.8,
+     "side": "right",
+     "crop": [
+      0.0777,
+      0.7325,
+      0.7961,
+      0.21
+     ],
+     "verified": true,
+     "verification": "Computed 142 × 63 = 8,946 in Python; checked partial-product sum and estimate 140 × 60 = 8,400."
+    }
+   ]
+  },
+  "161": {
+   "heading": "On My Own",
+   "fields": [
+    {
+     "id": "name161",
+     "multi": false,
+     "rect": [
+      0.1942,
+      0.103,
+      0.7249,
+      0.018
+     ]
+    },
+    {
+     "id": "1a",
+     "multi": false,
+     "rect": [
+      0.2019,
+      0.274,
+      0.0809,
+      0.0225
+     ]
+    },
+    {
+     "id": "1b",
+     "multi": false,
+     "rect": [
+      0.2019,
+      0.3,
+      0.0809,
+      0.022
+     ]
+    },
+    {
+     "id": "1c",
+     "multi": false,
+     "rect": [
+      0.2019,
+      0.326,
+      0.0809,
+      0.0215
+     ]
+    },
+    {
+     "id": "1",
+     "multi": false,
+     "rect": [
+      0.2019,
+      0.351,
+      0.0809,
+      0.0215
+     ]
+    },
+    {
+     "id": "2a",
+     "multi": false,
+     "rect": [
+      0.6071,
+      0.254,
+      0.068,
+      0.0215
+     ]
+    },
+    {
+     "id": "2b",
+     "multi": false,
+     "rect": [
+      0.6071,
+      0.28,
+      0.068,
+      0.022
+     ]
+    },
+    {
+     "id": "2",
+     "multi": false,
+     "rect": [
+      0.6071,
+      0.305,
+      0.068,
+      0.0225
+     ]
+    },
+    {
+     "id": "3",
+     "multi": true,
+     "rect": [
+      0.1392,
+      0.4825,
+      0.3722,
+      0.0725
+     ]
+    },
+    {
+     "id": "4",
+     "multi": true,
+     "rect": [
+      0.5307,
+      0.4825,
+      0.4078,
+      0.0725
+     ]
+    },
+    {
+     "id": "5",
+     "multi": true,
+     "rect": [
+      0.1392,
+      0.61,
+      0.3722,
+      0.065
+     ]
+    },
+    {
+     "id": "6",
+     "multi": true,
+     "rect": [
+      0.5307,
+      0.61,
+      0.4078,
+      0.065
+     ]
+    },
+    {
+     "id": "7",
+     "multi": true,
+     "rect": [
+      0.1812,
+      0.75,
+      0.4013,
+      0.045
+     ]
+    },
+    {
+     "id": "8",
+     "multi": true,
+     "rect": [
+      0.1812,
+      0.8575,
+      0.6602,
+      0.0575
+     ]
+    }
+   ],
+   "questions": [
+    {
+     "id": "1",
+     "title": "Problem 1 · 325 × 73",
+     "hint": "The three printed partial products all use the 70; now multiply by the 3.",
+     "steps": [
+      "The given ones are 70 × 300, 70 × 20 and 70 × 5.",
+      "Find 3 × 300 = 900, 3 × 20 = 60, 3 × 5 = 15.",
+      "Add all six: 21,000 + 1,400 + 350 + 900 + 60 + 15."
+     ],
+     "answer": "900, 60, 15; product 23,725",
+     "openEnded": false,
+     "anchor": 0.28,
+     "side": "left",
+     "crop": [
+      0.1294,
+      0.1775,
+      0.1683,
+      0.1975
+     ],
+     "verified": true,
+     "verification": "Computed 325 × 73 = 23,725 in Python; 21,000 + 1,400 + 350 + 900 + 60 + 15 = 23,725; estimate 300 × 70 = 21,000."
+    },
+    {
+     "id": "2",
+     "title": "Problem 2 · 104 × 28",
+     "hint": "32 is 8 × 4 and 800 is 8 × 100; now multiply by the 20.",
+     "steps": [
+      "Find 20 × 4 = 80.",
+      "Find 20 × 100 = 2,000.",
+      "Add: 32 + 800 + 80 + 2,000."
+     ],
+     "answer": "80, 2,000; product 2,912",
+     "openEnded": false,
+     "anchor": 0.255,
+     "side": "right",
+     "crop": [
+      0.5372,
+      0.1775,
+      0.1489,
+      0.1525
+     ],
+     "verified": true,
+     "verification": "Computed 104 × 28 = 2,912 in Python; 32 + 800 + 80 + 2,000 = 2,912; estimate 100 × 30 = 3,000."
+    },
+    {
+     "id": "3",
+     "title": "Problem 3 · 17 × 86",
+     "hint": "Split 17 into 10 + 7 and 86 into 80 + 6.",
+     "steps": [
+      "80 × 10 = 800 and 80 × 7 = 560.",
+      "6 × 10 = 60 and 6 × 7 = 42.",
+      "Add: 800 + 560 + 60 + 42."
+     ],
+     "answer": "1,462",
+     "openEnded": false,
+     "anchor": 0.48,
+     "side": "left",
+     "crop": [
+      0.1359,
+      0.435,
+      0.3819,
+      0.12
+     ],
+     "verified": true,
+     "verification": "Computed 17 × 86 = 1,462 in Python; partial products 800 + 560 + 60 + 42; estimate 20 × 80 = 1,600."
+    },
+    {
+     "id": "4",
+     "title": "Problem 4 · 24 × 129",
+     "hint": "Split 129 into 100 + 20 + 9 and 24 into 20 + 4.",
+     "steps": [
+      "20 × 100 = 2,000, 20 × 20 = 400, 20 × 9 = 180.",
+      "4 × 100 = 400, 4 × 20 = 80, 4 × 9 = 36.",
+      "Add all six partial products."
+     ],
+     "answer": "3,096",
+     "openEnded": false,
+     "anchor": 0.48,
+     "side": "right",
+     "crop": [
+      0.5372,
+      0.435,
+      0.4013,
+      0.12
+     ],
+     "verified": true,
+     "verification": "Computed 24 × 129 = 3,096 in Python; partial-product sum 2,000 + 400 + 180 + 400 + 80 + 36 = 3,096; estimate 25 × 130 = 3,250."
+    },
+    {
+     "id": "5",
+     "title": "Problem 5 · 36 × 93",
+     "hint": "Split 36 into 30 + 6 and 93 into 90 + 3.",
+     "steps": [
+      "90 × 30 = 2,700 and 90 × 6 = 540.",
+      "3 × 30 = 90 and 3 × 6 = 18.",
+      "Add: 2,700 + 540 + 90 + 18."
+     ],
+     "answer": "3,348",
+     "openEnded": false,
+     "anchor": 0.61,
+     "side": "left",
+     "crop": [
+      0.1359,
+      0.56,
+      0.3819,
+      0.115
+     ],
+     "verified": true,
+     "verification": "Computed 36 × 93 = 3,348 in Python; partial-product sum checked; estimate 36 × 100 = 3,600 minus 36 × 7 = 252 gives 3,348."
+    },
+    {
+     "id": "6",
+     "title": "Problem 6 · 222 × 58",
+     "hint": "Split 222 into 200 + 20 + 2 and 58 into 50 + 8.",
+     "steps": [
+      "50 × 200 = 10,000, 50 × 20 = 1,000, 50 × 2 = 100.",
+      "8 × 200 = 1,600, 8 × 20 = 160, 8 × 2 = 16.",
+      "Add all six partial products."
+     ],
+     "answer": "12,876",
+     "openEnded": false,
+     "anchor": 0.61,
+     "side": "right",
+     "crop": [
+      0.5372,
+      0.56,
+      0.4013,
+      0.115
+     ],
+     "verified": true,
+     "verification": "Computed 222 × 58 = 12,876 in Python; partial-product sum checked; estimate 200 × 60 = 12,000."
+    },
+    {
+     "id": "7",
+     "title": "Problem 7 · Mountain bikes",
+     "hint": "Each bike costs $249 (look at the price tag), and they sold 24 bikes.",
+     "steps": [
+      "Multiply 249 × 24.",
+      "20 × 249: 4,000 + 800 + 180 = 4,980.",
+      "4 × 249: 800 + 160 + 36 = 996.",
+      "Add: 4,980 + 996 = 5,976."
+     ],
+     "answer": "$5,976",
+     "openEnded": false,
+     "anchor": 0.72,
+     "side": "left",
+     "crop": [
+      0.1392,
+      0.68,
+      0.7929,
+      0.12
+     ],
+     "verified": true,
+     "verification": "Computed 24 × 249 = 5,976 in Python; checked 25 × 249 = 6,225 minus 249 = 5,976."
+    },
+    {
+     "id": "8",
+     "title": "Problem 8 · Bike and scooter packages",
+     "hint": "Multiply the number of packages by the price of each: 12 × 367.",
+     "steps": [
+      "Split 367 into 300 + 60 + 7 and 12 into 10 + 2.",
+      "10 × 367: 3,000 + 600 + 70 = 3,670.",
+      "2 × 367: 600 + 120 + 14 = 734.",
+      "Add: 3,670 + 734 = 4,404."
+     ],
+     "answer": "$4,404",
+     "openEnded": false,
+     "anchor": 0.835,
+     "side": "left",
+     "crop": [
+      0.1392,
+      0.8075,
+      0.7023,
+      0.1075
+     ],
+     "verified": true,
+     "verification": "Computed 12 × 367 = 4,404 in Python; estimate 12 × 370 = 4,440."
+    }
+   ]
+  },
+  "162": {
+   "heading": "On My Own",
+   "fields": [
+    {
+     "id": "9",
+     "multi": true,
+     "rect": [
+      0.1165,
+      0.09,
+      0.7249,
+      0.09
+     ]
+    },
+    {
+     "id": "10",
+     "multi": true,
+     "rect": [
+      0.1165,
+      0.235,
+      0.7249,
+      0.075
+     ]
+    },
+    {
+     "id": "11",
+     "multi": true,
+     "rect": [
+      0.1165,
+      0.39,
+      0.5049,
+      0.12
+     ]
+    },
+    {
+     "id": "12",
+     "multi": true,
+     "rect": [
+      0.1165,
+      0.6075,
+      0.822,
+      0.0525
+     ]
+    },
+    {
+     "id": "reflect",
+     "multi": true,
+     "rect": [
+      0.1036,
+      0.755,
+      0.7573,
+      0.0825
+     ]
+    },
+    {
+     "id": "mind162",
+     "multi": true,
+     "rect": [
+      0.1036,
+      0.845,
+      0.3883,
+      0.08
+     ]
+    }
+   ],
+   "questions": [
+    {
+     "id": "9",
+     "title": "Problem 9 · School fundraiser",
+     "hint": "Multiply the number of donors by the dollars each gives: 327 × 25.",
+     "steps": [
+      "Split 327 into 300 + 20 + 7 and 25 into 20 + 5.",
+      "20 × 327: 6,000 + 400 + 140 = 6,540.",
+      "5 × 327: 1,500 + 100 + 35 = 1,635.",
+      "Add: 6,540 + 1,635 = 8,175."
+     ],
+     "answer": "$8,175",
+     "openEnded": false,
+     "anchor": 0.065,
+     "side": "left",
+     "crop": [
+      0.0712,
+      0.04,
+      0.6667,
+      0.05
+     ],
+     "verified": true,
+     "verification": "Computed 327 × 25 = 8,175 in Python; checked 327 × 100 ÷ 4 = 32,700 ÷ 4 = 8,175."
+    },
+    {
+     "id": "10",
+     "title": "Problem 10 · Boxes of shirts",
+     "hint": "Multiply the boxes by the shirts in each box: 60 × 152.",
+     "steps": [
+      "Split 152 into 100 + 50 + 2.",
+      "60 × 100 = 6,000, 60 × 50 = 3,000, 60 × 2 = 120.",
+      "Add: 6,000 + 3,000 + 120 = 9,120."
+     ],
+     "answer": "9,120 shirts",
+     "openEnded": false,
+     "anchor": 0.21,
+     "side": "left",
+     "crop": [
+      0.0712,
+      0.185,
+      0.6731,
+      0.05
+     ],
+     "verified": true,
+     "verification": "Computed 60 × 152 = 9,120 in Python; checked 152 × 6 = 912, times 10."
+    },
+    {
+     "id": "11",
+     "title": "11 · Raya's error",
+     "hint": "Compare the top number in Raya's work with the problem, 128 × 17.",
+     "steps": [
+      "Raya wrote 208 instead of 128 and used 200 + 10 + 8, so her partial products are wrong.",
+      "128 = 100 + 20 + 8, so the partial products are 1,000, 200, 80, 700, 140, 56.",
+      "Add them to get the correct product."
+     ],
+     "answer": "Raya's work is incorrect. She copied 128 as 208 and split it as 200 + 10 + 8. Using 100 + 20 + 8 gives 1,000 + 200 + 80 + 700 + 140 + 56 = 2,176, so 128 × 17 = 2,176, not 3,706.",
+     "openEnded": false,
+     "anchor": 0.38,
+     "side": "left",
+     "crop": [
+      0.0712,
+      0.315,
+      0.699,
+      0.1775
+     ],
+     "verified": true,
+     "verification": "Computed 128 × 17 = 2,176 in Python; verified Raya's printed partial products sum to 3,706 and match 200 + 10 + 8 times 10 and 7; estimate 130 × 17 = 2,210."
+    },
+    {
+     "id": "12",
+     "title": "12 · Extend Your Thinking · 384 × 725",
+     "hint": "Split 384 into 300 + 80 + 4 and 725 into 700 + 20 + 5; you get nine partial products.",
+     "steps": [
+      "700 × 300 = 210,000, 700 × 80 = 56,000, 700 × 4 = 2,800.",
+      "20 × 300 = 6,000, 20 × 80 = 1,600, 20 × 4 = 80.",
+      "5 × 300 = 1,500, 5 × 80 = 400, 5 × 4 = 20.",
+      "Add all nine: 278,400."
+     ],
+     "answer": "278,400. Multiplying each place-value part of 384 by each part of 725 gives nine partial products whose sum is 278,400.",
+     "openEnded": false,
+     "anchor": 0.575,
+     "side": "left",
+     "crop": [
+      0.0712,
+      0.5275,
+      0.5761,
+      0.0775
+     ],
+     "verified": true,
+     "verification": "Computed 384 × 725 = 278,400 in Python; sum of nine partial products also 278,400; checked 384 × 725 = 384 × 29 × 25 = 11,136 × 25 = 278,400."
+    },
+    {
+     "id": "reflect",
+     "title": "Reflect · Partial products",
+     "hint": "Think about how you broke apart the factors on this page.",
+     "steps": [
+      "Split each factor by place value.",
+      "Multiply every part of one factor by every part of the other.",
+      "Add all the partial products."
+     ],
+     "answer": "Sample answer: I break each factor into hundreds, tens and ones, multiply each part of one factor by each part of the other, then add all the partial products to get the product.",
+     "openEnded": true,
+     "anchor": 0.725,
+     "side": "right",
+     "crop": [
+      0.0777,
+      0.6925,
+      0.7961,
+      0.0575
+     ],
+     "verified": true,
+     "verification": "Original source visually checked; open-ended prompt, sample answer reviewed for accuracy."
+    },
+    {
+     "id": "mind162",
+     "title": "Math is… Mindset",
+     "hint": "This is about you, so there is no one right answer.",
+     "steps": [
+      "Think back on how you worked today.",
+      "Write the steps that helped you stay focused."
+     ],
+     "answer": "Sample answer: I worked one partial product at a time and checked my answers with an estimate.",
+     "openEnded": true,
+     "anchor": 0.885,
+     "side": "right",
+     "crop": [
+      0.4984,
+      0.844,
+      0.3547,
+      0.0835
+     ],
+     "verified": true,
+     "verification": "Original source visually checked; open-ended prompt, sample answer reviewed for accuracy."
+    }
+   ]
+  }
+ }
+}

@@ -1,0 +1,4492 @@
+{
+ "141": [],
+ "142": [
+  {
+   "id": "1a",
+   "title": "Problem 1 · Pennies in a 1-inch stack",
+   "hint": "Find the stack that is labeled 1 in.",
+   "steps": [
+    "Look at the four stacks of pennies.",
+    "Find the stack whose height is marked 1 in.",
+    "Read how many pennies are in that stack."
+   ],
+   "answer": "17 pennies",
+   "openEnded": false,
+   "anchor": 0.445,
+   "side": "left",
+   "crop": [
+    0.0712,
+    0.43,
+    0.5696,
+    0.03
+   ],
+   "verified": true,
+   "verification": "Read from the penny stacks on the page (17 pennies = 1 in.)."
+  },
+  {
+   "id": "1b",
+   "title": "Problem 1 · Pennies in a 2-inch stack",
+   "hint": "Find the stack that is labeled 2 in.",
+   "steps": [
+    "Find the stack whose height is marked 2 in.",
+    "Read how many pennies it has.",
+    "Check: 2 inches is double 1 inch, and 17 × 2 = 34."
+   ],
+   "answer": "34 pennies",
+   "openEnded": false,
+   "anchor": 0.475,
+   "side": "left",
+   "crop": [
+    0.1036,
+    0.46,
+    0.5307,
+    0.03
+   ],
+   "verified": true,
+   "verification": "Read from the penny stacks on the page (34 pennies = 2 in.); checked 17 × 2 = 34 in Python."
+  },
+  {
+   "id": "2",
+   "title": "Problem 2 · Pennies in a 1-foot stack",
+   "hint": "A foot is 12 inches.",
+   "steps": [
+    "Remember that 1 foot = 12 inches.",
+    "Each inch is about 17 pennies.",
+    "Multiply 17 × 12."
+   ],
+   "answer": "About 204 pennies (17 × 12 = 204).",
+   "openEnded": false,
+   "anchor": 0.505,
+   "side": "left",
+   "crop": [
+    0.0712,
+    0.49,
+    0.6796,
+    0.03
+   ],
+   "verified": true,
+   "verification": "Computed in Python; 17 × 12 = 204; checked 34 × 6 = 204."
+  },
+  {
+   "id": "3",
+   "title": "Problem 3 · Guess: a mile-high stack",
+   "hint": "This is a guess, so just think about how big the number might be.",
+   "steps": [
+    "A mile is 5,280 feet, and each foot has about 200 pennies.",
+    "Think: is the answer in the thousands, the millions, or the billions?",
+    "Write your best guess. It does not have to be exact."
+   ],
+   "answer": "Sample answer: about 1,000,000 pennies. Any sensible guess is fine; the calculated estimate is about 1,077,120.",
+   "openEnded": true,
+   "anchor": 0.59,
+   "side": "left",
+   "crop": [
+    0.0712,
+    0.555,
+    0.699,
+    0.075
+   ],
+   "verified": true,
+   "verification": "Guess prompt; reference value 204 × 5,280 = 1,077,120 computed in Python."
+  },
+  {
+   "id": "3large",
+   "title": "Problem 3 · A number that is too large",
+   "hint": "Pick a number much, much bigger than a mile of pennies could be.",
+   "steps": [
+    "Remember a mile-high stack needs about a million pennies.",
+    "Choose a number that is far bigger, like billions."
+   ],
+   "answer": "Sample answer: 1,000,000,000 (one billion) is definitely too large.",
+   "openEnded": true,
+   "anchor": 0.685,
+   "side": "left",
+   "crop": [
+    0.1068,
+    0.66,
+    0.5955,
+    0.05
+   ],
+   "verified": true,
+   "verification": "Open-ended; 1,000,000,000 > 1,077,120 by far (checked in Python)."
+  },
+  {
+   "id": "3small",
+   "title": "Problem 3 · A number that is too small",
+   "hint": "Pick a number that could not even reach the top of a tall building.",
+   "steps": [
+    "About 204 pennies make just 1 foot.",
+    "Choose a number that would make a stack far shorter than a mile, like a few thousand."
+   ],
+   "answer": "Sample answer: 1,000 pennies is definitely too small (that is only about 5 feet tall).",
+   "openEnded": true,
+   "anchor": 0.7675,
+   "side": "left",
+   "crop": [
+    0.1068,
+    0.745,
+    0.5955,
+    0.05
+   ],
+   "verified": true,
+   "verification": "Open-ended; 1,000 ÷ 204 ≈ 4.9 feet, computed in Python."
+  },
+  {
+   "id": "4",
+   "title": "Problem 4 · Calculated estimate for a mile",
+   "hint": "Use your answer from Problem 2 and the number of feet in a mile.",
+   "steps": [
+    "About 204 pennies make 1 foot.",
+    "A mile is 5,280 feet.",
+    "Multiply 204 × 5,280."
+   ],
+   "answer": "About 1,077,120 pennies (204 × 5,280). About 1 million pennies.",
+   "openEnded": false,
+   "anchor": 0.8575,
+   "side": "left",
+   "crop": [
+    0.0712,
+    0.8275,
+    0.6861,
+    0.055
+   ],
+   "verified": true,
+   "verification": "Computed in Python; 204 × 5,280 = 1,077,120; checked 34 × 6 × 5,280 = 1,077,120 and estimate 200 × 5,000 = 1,000,000."
+  }
+ ],
+ "143": [
+  {
+   "id": "curious",
+   "title": "Be Curious · Which Doesn’t Belong?",
+   "steps": [
+    "Notice which expressions repeat the same number.",
+    "Choose one expression that is different.",
+    "Explain your reason; another person may have a different valid reason."
+   ],
+   "answer": "One possible answer: 6 × 8, because it is not a square fact. Other choices are possible with a defensible explanation.",
+   "anchor": 0.704025,
+   "side": "right",
+   "hint": "Look at all four multiplication expressions.",
+   "verified": true,
+   "verification": "Original source visually checked; independently evaluated; no official answer key in supplied PDF.",
+   "openEnded": true,
+   "crop": [
+    0.1,
+    0.24,
+    0.84,
+    0.45
+   ]
+  },
+  {
+   "id": "mind143",
+   "title": "Math is… Mindset",
+   "steps": [
+    "Think about something you have learned in math.",
+    "Write one thing you want classmates to know."
+   ],
+   "answer": "Sample: I want my classmates to know that I use drawings to explain my thinking. Your own math story may be different.",
+   "anchor": 0.891871,
+   "side": "right",
+   "hint": "This is a reflection, not a one-answer problem.",
+   "verified": true,
+   "verification": "Original source visually checked; independently evaluated; no official answer key in supplied PDF.",
+   "openEnded": true,
+   "crop": [
+    0.18,
+    0.82,
+    0.4,
+    0.09
+   ]
+  }
+ ],
+ "144": [
+  {
+   "id": "learn",
+   "title": "Learn · Dean’s pennies",
+   "steps": [
+    "Start with 10 pennies in Week 1.",
+    "Multiply by 10 for each new week: 100, 1,000, 10,000, 100,000, 1,000,000.",
+    "Match the target number to its week in the table."
+   ],
+   "answer": "Week 6. Six factors of 10 give 1,000,000.",
+   "anchor": 0.149961,
+   "side": "left",
+   "hint": "Think about how the number of pennies changes each week.",
+   "verified": true,
+   "verification": "Original source visually checked; independently evaluated; no official answer key in supplied PDF.",
+   "openEnded": false,
+   "crop": [
+    0.06,
+    0.06,
+    0.82,
+    0.11
+   ]
+  },
+  {
+   "id": "patterns",
+   "title": "Patterns in the table",
+   "steps": [
+    "Compare 10 and 100, then 100 and 1,000.",
+    "What do you multiply by each week?",
+    "Relate the number of factors of 10 to the week number."
+   ],
+   "answer": "Sample response: each new week has ten times as many pennies; each row adds one factor of 10 and one zero to the product.",
+   "anchor": 0.25809,
+   "side": "right",
+   "hint": "Follow the number of pennies from one week to the next.",
+   "verified": true,
+   "verification": "Original source visually checked; independently evaluated; no official answer key in supplied PDF.",
+   "openEnded": true,
+   "crop": [
+    0.63,
+    0.16,
+    0.25,
+    0.085
+   ]
+  },
+  {
+   "id": "together",
+   "title": "Work Together · 10⁸",
+   "steps": [
+    "The base is 10.",
+    "Write eight 10s as factors.",
+    "Multiply by using the powers-of-ten pattern."
+   ],
+   "answer": "10 × 10 × 10 × 10 × 10 × 10 × 10 × 10 = 100,000,000.",
+   "anchor": 0.760063,
+   "side": "right",
+   "hint": "The raised 8 is the exponent.",
+   "verified": true,
+   "verification": "Original source visually checked; independently evaluated; no official answer key in supplied PDF.",
+   "openEnded": false,
+   "crop": [
+    0.07,
+    0.7,
+    0.8,
+    0.1
+   ]
+  }
+ ],
+ "145": [
+  {
+   "id": "1",
+   "title": "Problem 1 · 10⁴",
+   "steps": [
+    "Write the exponent as four factors of 10.",
+    "Say aloud what the base 10 and the exponent mean.",
+    "Write your answer in the highlighted space on the original page."
+   ],
+   "answer": "10 × 10 × 10 × 10",
+   "anchor": 0.187056,
+   "side": "left",
+   "hint": "The exponent tells how many equal factors to use.",
+   "verified": true,
+   "verification": "Original source visually checked; independently evaluated; no official answer key in supplied PDF.",
+   "openEnded": false,
+   "crop": [
+    0.12,
+    0.167056,
+    0.36,
+    0.05
+   ]
+  },
+  {
+   "id": "2",
+   "title": "Problem 2 · 10²",
+   "steps": [
+    "Write two factors of 10.",
+    "Say aloud what the base 10 and the exponent mean.",
+    "Write your answer in the highlighted space on the original page."
+   ],
+   "answer": "10 × 10",
+   "anchor": 0.187056,
+   "side": "right",
+   "hint": "The exponent tells how many equal factors to use.",
+   "verified": true,
+   "verification": "Original source visually checked; independently evaluated; no official answer key in supplied PDF.",
+   "openEnded": false,
+   "crop": [
+    0.49,
+    0.167056,
+    0.4,
+    0.05
+   ]
+  },
+  {
+   "id": "3",
+   "title": "Problem 3 · 10³",
+   "steps": [
+    "Write three factors of 10.",
+    "Say aloud what the base 10 and the exponent mean.",
+    "Write your answer in the highlighted space on the original page."
+   ],
+   "answer": "10 × 10 × 10",
+   "anchor": 0.239937,
+   "side": "left",
+   "hint": "The exponent tells how many equal factors to use.",
+   "verified": true,
+   "verification": "Original source visually checked; independently evaluated; no official answer key in supplied PDF.",
+   "openEnded": false,
+   "crop": [
+    0.12,
+    0.21993700000000002,
+    0.36,
+    0.05
+   ]
+  },
+  {
+   "id": "4",
+   "title": "Problem 4 · 10⁶",
+   "steps": [
+    "Write six factors of 10.",
+    "Say aloud what the base 10 and the exponent mean.",
+    "Write your answer in the highlighted space on the original page."
+   ],
+   "answer": "10 × 10 × 10 × 10 × 10 × 10",
+   "anchor": 0.239937,
+   "side": "right",
+   "hint": "The exponent tells how many equal factors to use.",
+   "verified": true,
+   "verification": "Original source visually checked; independently evaluated; no official answer key in supplied PDF.",
+   "openEnded": false,
+   "crop": [
+    0.49,
+    0.21993700000000002,
+    0.4,
+    0.05
+   ]
+  },
+  {
+   "id": "5",
+   "title": "Problem 5 · 10 × 10 × 10",
+   "steps": [
+    "Count the number of factors. That number is the exponent.",
+    "Say aloud what the base 10 and the exponent mean.",
+    "Write your answer in the highlighted space on the original page."
+   ],
+   "answer": "10³",
+   "anchor": 0.344909,
+   "side": "left",
+   "hint": "Count the equal factors rather than adding them.",
+   "verified": true,
+   "verification": "Original source visually checked; independently evaluated; no official answer key in supplied PDF.",
+   "openEnded": false,
+   "crop": [
+    0.12,
+    0.324909,
+    0.36,
+    0.05
+   ]
+  },
+  {
+   "id": "6",
+   "title": "Problem 6 · 10 × 10 × 10 × 10 × 10",
+   "steps": [
+    "Count all five factors, then use the number as the exponent.",
+    "Say aloud what the base 10 and the exponent mean.",
+    "Write your answer in the highlighted space on the original page."
+   ],
+   "answer": "10⁵",
+   "anchor": 0.339384,
+   "side": "right",
+   "hint": "Count the equal factors rather than adding them.",
+   "verified": true,
+   "verification": "Original source visually checked; independently evaluated; no official answer key in supplied PDF.",
+   "openEnded": false,
+   "crop": [
+    0.49,
+    0.319384,
+    0.4,
+    0.05
+   ]
+  },
+  {
+   "id": "7",
+   "title": "Problem 7 · 10 × 10 × 10 × 10",
+   "steps": [
+    "There are four factors of ten.",
+    "Say aloud what the base 10 and the exponent mean.",
+    "Write your answer in the highlighted space on the original page."
+   ],
+   "answer": "10⁴",
+   "anchor": 0.397001,
+   "side": "left",
+   "hint": "Count the equal factors rather than adding them.",
+   "verified": true,
+   "verification": "Original source visually checked; independently evaluated; no official answer key in supplied PDF.",
+   "openEnded": false,
+   "crop": [
+    0.12,
+    0.377001,
+    0.36,
+    0.05
+   ]
+  },
+  {
+   "id": "8",
+   "title": "Problem 8 · 10 × 10",
+   "steps": [
+    "Count two factors.",
+    "Say aloud what the base 10 and the exponent mean.",
+    "Write your answer in the highlighted space on the original page."
+   ],
+   "answer": "10²",
+   "anchor": 0.397001,
+   "side": "right",
+   "hint": "Count the equal factors rather than adding them.",
+   "verified": true,
+   "verification": "Original source visually checked; independently evaluated; no official answer key in supplied PDF.",
+   "openEnded": false,
+   "crop": [
+    0.49,
+    0.377001,
+    0.4,
+    0.05
+   ]
+  },
+  {
+   "id": "9",
+   "title": "Problem 9 · 10",
+   "steps": [
+    "One factor of 10 corresponds to exponent 1.",
+    "Say aloud what the base 10 and the exponent mean.",
+    "Write your answer in the highlighted space on the original page."
+   ],
+   "answer": "10¹",
+   "anchor": 0.503552,
+   "side": "left",
+   "hint": "Use the number of zeros to count the factors of 10.",
+   "verified": true,
+   "verification": "Original source visually checked; independently evaluated; no official answer key in supplied PDF.",
+   "openEnded": false,
+   "crop": [
+    0.12,
+    0.483552,
+    0.36,
+    0.05
+   ]
+  },
+  {
+   "id": "10",
+   "title": "Problem 10 · 1,000",
+   "steps": [
+    "Think: 10 × 10 × 10.",
+    "Say aloud what the base 10 and the exponent mean.",
+    "Write your answer in the highlighted space on the original page."
+   ],
+   "answer": "10³",
+   "anchor": 0.503552,
+   "side": "right",
+   "hint": "Use the number of zeros to count the factors of 10.",
+   "verified": true,
+   "verification": "Original source visually checked; independently evaluated; no official answer key in supplied PDF.",
+   "openEnded": false,
+   "crop": [
+    0.49,
+    0.483552,
+    0.4,
+    0.05
+   ]
+  },
+  {
+   "id": "11",
+   "title": "Problem 11 · 100",
+   "steps": [
+    "Think: 10 × 10.",
+    "Say aloud what the base 10 and the exponent mean.",
+    "Write your answer in the highlighted space on the original page."
+   ],
+   "answer": "10²",
+   "anchor": 0.554854,
+   "side": "left",
+   "hint": "Use the number of zeros to count the factors of 10.",
+   "verified": true,
+   "verification": "Original source visually checked; independently evaluated; no official answer key in supplied PDF.",
+   "openEnded": false,
+   "crop": [
+    0.12,
+    0.5348539999999999,
+    0.36,
+    0.05
+   ]
+  },
+  {
+   "id": "12",
+   "title": "Problem 12 · 10,000",
+   "steps": [
+    "Think: 10 × 10 × 10 × 10.",
+    "Say aloud what the base 10 and the exponent mean.",
+    "Write your answer in the highlighted space on the original page."
+   ],
+   "answer": "10⁴",
+   "anchor": 0.554854,
+   "side": "right",
+   "hint": "Use the number of zeros to count the factors of 10.",
+   "verified": true,
+   "verification": "Original source visually checked; independently evaluated; no official answer key in supplied PDF.",
+   "openEnded": false,
+   "crop": [
+    0.49,
+    0.5348539999999999,
+    0.4,
+    0.05
+   ]
+  },
+  {
+   "id": "13",
+   "title": "13 · Rachel’s error",
+   "steps": [
+    "Five is the exponent; it is not a multiplier of the base.",
+    "Write 10 five times as factors.",
+    "Explain why 10 × 5 is not the same expression."
+   ],
+   "answer": "No. 10⁵ = 10 × 10 × 10 × 10 × 10 = 100,000, not 50.",
+   "anchor": 0.62352,
+   "side": "right",
+   "hint": "Check what 10⁵ actually means.",
+   "verified": true,
+   "verification": "Original source visually checked; independently evaluated; no official answer key in supplied PDF.",
+   "openEnded": false,
+   "crop": [
+    0.12,
+    0.62,
+    0.77,
+    0.085
+   ]
+  },
+  {
+   "id": "14",
+   "title": "14 · STEM Connection",
+   "steps": [
+    "The base is 10 and the exponent is 6.",
+    "A power of 10 has as many zeros as its exponent.",
+    "Write the product with commas."
+   ],
+   "answer": "1,000,000 lines.",
+   "anchor": 0.794002,
+   "side": "right",
+   "hint": "Grace reviewed 10⁶ lines of code.",
+   "verified": true,
+   "verification": "Original source visually checked; independently evaluated; no official answer key in supplied PDF.",
+   "openEnded": false,
+   "crop": [
+    0.13,
+    0.77,
+    0.6,
+    0.08
+   ]
+  }
+ ],
+ "146": [
+  {
+   "id": "15a",
+   "title": "15A · Walking goal",
+   "steps": [
+    "Write 10,000 as repeated factors of 10.",
+    "Count the factors.",
+    "Use 10 as the base and the count as the exponent."
+   ],
+   "answer": "10⁴",
+   "anchor": 0.102605,
+   "side": "right",
+   "hint": "The watch shows 10,000 steps.",
+   "verified": true,
+   "verification": "Original source visually checked; independently evaluated; no official answer key in supplied PDF.",
+   "openEnded": false,
+   "crop": [
+    0.07,
+    0.03,
+    0.81,
+    0.19
+   ]
+  },
+  {
+   "id": "15b",
+   "title": "15B · Product of 10s",
+   "steps": [
+    "Read the goal shown on the tracker: 10,000.",
+    "Count how many times you multiply by 10 to reach that goal.",
+    "Write that many factors, separated by multiplication signs."
+   ],
+   "answer": "10 × 10 × 10 × 10",
+   "anchor": 0.235991,
+   "side": "right",
+   "hint": "Think about how many factors of 10 make the tracker’s goal.",
+   "verified": true,
+   "verification": "Original source visually checked; independently evaluated; no official answer key in supplied PDF.",
+   "openEnded": false,
+   "crop": [
+    0.11,
+    0.22,
+    0.7,
+    0.04
+   ]
+  },
+  {
+   "id": "16",
+   "title": "16 · Jenny’s choice",
+   "steps": [
+    "Her father gives $10.",
+    "Grandfather offers 10 times that amount.",
+    "Compare 10 times the grandfather’s offer with $500."
+   ],
+   "answer": "Grandfather: $100. Ten times $100 is $1,000, which is greater than $500. Choose the $1,000 offer.",
+   "anchor": 0.319653,
+   "side": "right",
+   "hint": "Work out the offers one person at a time.",
+   "verified": true,
+   "verification": "Original source visually checked; independently evaluated; no official answer key in supplied PDF.",
+   "openEnded": false,
+   "crop": [
+    0.07,
+    0.31,
+    0.72,
+    0.12
+   ]
+  },
+  {
+   "id": "17",
+   "title": "17 · Inequality",
+   "steps": [
+    "Evaluate four factors of 10.",
+    "Evaluate 10⁶.",
+    "Choose a number strictly between those values."
+   ],
+   "answer": "Any number strictly between 10,000 and 1,000,000 works, such as 100,000. The textbook inequality does not specify a unique b.",
+   "anchor": 0.555643,
+   "side": "right",
+   "hint": "Find the lower and upper bounds.",
+   "verified": true,
+   "verification": "Original source visually checked; independently evaluated; no official answer key in supplied PDF.",
+   "openEnded": true,
+   "crop": [
+    0.07,
+    0.54,
+    0.72,
+    0.085
+   ]
+  },
+  {
+   "id": "reflect",
+   "title": "Reflect · Patterns",
+   "steps": [
+    "Write 10², 10³, and 10⁴.",
+    "Count the zeros after the 1.",
+    "Describe the connection."
+   ],
+   "answer": "For a whole-number exponent n greater than zero, 10ⁿ is 1 followed by n zeros.",
+   "anchor": 0.684294,
+   "side": "right",
+   "hint": "Think about the number of zeros in powers of 10.",
+   "verified": true,
+   "verification": "Original source visually checked; independently evaluated; no official answer key in supplied PDF.",
+   "openEnded": true,
+   "crop": [
+    0.07,
+    0.69,
+    0.77,
+    0.06
+   ]
+  },
+  {
+   "id": "mind146",
+   "title": "Math is… Mindset",
+   "steps": [
+    "Remember a math idea you shared with your classmates.",
+    "Describe how you helped them understand it."
+   ],
+   "answer": "Sample: I showed my classmates a drawing and explained each step. Your own experience may be different.",
+   "anchor": 0.84925,
+   "side": "right",
+   "hint": "Think of a time you explained a math idea to someone.",
+   "verified": true,
+   "verification": "Original source visually checked; independently evaluated; no official answer key in supplied PDF.",
+   "openEnded": true,
+   "crop": [
+    0.57,
+    0.82,
+    0.28,
+    0.11
+   ]
+  }
+ ],
+ "147": [
+  {
+   "id": "curious",
+   "title": "Be Curious · How are they the same?",
+   "hint": "Find the value of each expression and compare.",
+   "steps": [
+    "Look at 15 × 10,000, 15 × 10 × 10 × 10 × 10, 15 × 10⁴ and 150,000.",
+    "10,000 is the same as 10 × 10 × 10 × 10, which is 10⁴.",
+    "Notice what is the same and what is written differently."
+   ],
+   "answer": "Sample answer: They are the same because they all equal 150,000. They are different because they are written in different ways: with 10,000, with four factors of 10, with an exponent, and as a standard number.",
+   "openEnded": true,
+   "anchor": 0.53,
+   "side": "right",
+   "crop": [
+    0.123,
+    0.345,
+    0.8091,
+    0.375
+   ],
+   "verified": true,
+   "verification": "Computed in Python; 15 × 10,000 = 15 × 10⁴ = 150,000."
+  },
+  {
+   "id": "mind",
+   "title": "Math is… Mindset · Avoiding distractions",
+   "hint": "This is about you, so there is no wrong answer.",
+   "steps": [
+    "Think about what pulls your attention away while you work.",
+    "Write one thing you do to stay focused."
+   ],
+   "answer": "Sample answer: I put away things I don't need and work in a quiet spot.",
+   "openEnded": true,
+   "anchor": 0.87,
+   "side": "left",
+   "crop": [
+    0.1812,
+    0.825,
+    0.288,
+    0.09
+   ],
+   "verified": true,
+   "verification": "Personal reflection; no single correct answer."
+  }
+ ],
+ "148": [
+  {
+   "id": "structure",
+   "title": "Math is… Structure · Why do digits shift?",
+   "hint": "Think about place value: each place is worth 10 times the place to its right.",
+   "steps": [
+    "Multiplying by 10 makes every digit worth 10 times as much.",
+    "So each digit moves one place to the left.",
+    "A zero fills the empty ones place."
+   ],
+   "answer": "Sample answer: Each place is worth 10 times the place to its right, so multiplying by 10 makes every digit move one place to the left.",
+   "openEnded": true,
+   "anchor": 0.495,
+   "side": "right",
+   "crop": [
+    0.5275,
+    0.44,
+    0.3204,
+    0.11
+   ],
+   "verified": true,
+   "verification": "Place-value reasoning checked: 36 × 10 = 360 in Python."
+  },
+  {
+   "id": "work",
+   "title": "Work Together · 32 × 10², 10³, 10⁴",
+   "hint": "The exponent tells you how many zeros to put after 32.",
+   "steps": [
+    "10² = 100, so 32 × 10² = 3,200.",
+    "10³ = 1,000, so 32 × 10³ = 32,000.",
+    "10⁴ = 10,000, so 32 × 10⁴ = 320,000.",
+    "Each time the exponent goes up by 1, the product gets one more zero."
+   ],
+   "answer": "32 × 10² = 3,200; 32 × 10³ = 32,000; 32 × 10⁴ = 320,000. The number of zeros after 32 equals the exponent.",
+   "openEnded": false,
+   "anchor": 0.82,
+   "side": "right",
+   "crop": [
+    0.0809,
+    0.705,
+    0.7961,
+    0.235
+   ],
+   "verified": true,
+   "verification": "Computed in Python; 32 × 100 = 3,200, 32 × 1,000 = 32,000, 32 × 10,000 = 320,000; checked by counting zeros."
+  }
+ ],
+ "149": [
+  {
+   "id": "1a",
+   "title": "Problem 1 · 12 × 10",
+   "hint": "Count the zeros in the power of 10.",
+   "steps": [
+    "Start with 12.",
+    "Notice that 10 has 1 zero.",
+    "Write 1 zero after 12."
+   ],
+   "answer": "120",
+   "openEnded": false,
+   "anchor": 0.185,
+   "side": "left",
+   "crop": [
+    0.1456,
+    0.1675,
+    0.3236,
+    0.035
+   ],
+   "verified": true,
+   "verification": "Computed in Python; 12 × 10 = 120; checked by counting zeros."
+  },
+  {
+   "id": "1b",
+   "title": "Problem 1 · 12 × 100",
+   "hint": "Count the zeros in the power of 10.",
+   "steps": [
+    "Start with 12.",
+    "Notice that 100 has 2 zeros.",
+    "Write 2 zeros after 12."
+   ],
+   "answer": "1,200",
+   "openEnded": false,
+   "anchor": 0.2185,
+   "side": "left",
+   "crop": [
+    0.1456,
+    0.201,
+    0.3236,
+    0.035
+   ],
+   "verified": true,
+   "verification": "Computed in Python; 12 × 100 = 1,200; checked by counting zeros."
+  },
+  {
+   "id": "1c",
+   "title": "Problem 1 · 12 × 1,000",
+   "hint": "Count the zeros in the power of 10.",
+   "steps": [
+    "Start with 12.",
+    "Notice that 1,000 has 3 zeros.",
+    "Write 3 zeros after 12."
+   ],
+   "answer": "12,000",
+   "openEnded": false,
+   "anchor": 0.252,
+   "side": "left",
+   "crop": [
+    0.1456,
+    0.2345,
+    0.3236,
+    0.035
+   ],
+   "verified": true,
+   "verification": "Computed in Python; 12 × 1,000 = 12,000; checked by counting zeros."
+  },
+  {
+   "id": "2a",
+   "title": "Problem 2 · 24 × 1,000",
+   "hint": "Count the zeros in the power of 10.",
+   "steps": [
+    "Start with 24.",
+    "Notice that 1,000 has 3 zeros.",
+    "Write 3 zeros after 24."
+   ],
+   "answer": "24,000",
+   "openEnded": false,
+   "anchor": 0.183,
+   "side": "right",
+   "crop": [
+    0.4854,
+    0.1655,
+    0.3625,
+    0.035
+   ],
+   "verified": true,
+   "verification": "Computed in Python; 24 × 1,000 = 24,000; checked by counting zeros."
+  },
+  {
+   "id": "2b",
+   "title": "Problem 2 · 24 × 10,000",
+   "hint": "Count the zeros in the power of 10.",
+   "steps": [
+    "Start with 24.",
+    "Notice that 10,000 has 4 zeros.",
+    "Write 4 zeros after 24."
+   ],
+   "answer": "240,000",
+   "openEnded": false,
+   "anchor": 0.216,
+   "side": "right",
+   "crop": [
+    0.4854,
+    0.1985,
+    0.3625,
+    0.035
+   ],
+   "verified": true,
+   "verification": "Computed in Python; 24 × 10,000 = 240,000; checked by counting zeros."
+  },
+  {
+   "id": "2c",
+   "title": "Problem 2 · 24 × 100,000",
+   "hint": "Count the zeros in the power of 10.",
+   "steps": [
+    "Start with 24.",
+    "Notice that 100,000 has 5 zeros.",
+    "Write 5 zeros after 24."
+   ],
+   "answer": "2,400,000",
+   "openEnded": false,
+   "anchor": 0.249,
+   "side": "right",
+   "crop": [
+    0.4854,
+    0.2315,
+    0.3625,
+    0.035
+   ],
+   "verified": true,
+   "verification": "Computed in Python; 24 × 100,000 = 2,400,000; checked by counting zeros."
+  },
+  {
+   "id": "3a",
+   "title": "Problem 3 · 33 × 10²",
+   "hint": "Count the zeros in the power of 10.",
+   "steps": [
+    "Start with 33.",
+    "Notice that the exponent is 2, so the power of 10 has 2 zeros.",
+    "Write 2 zeros after 33."
+   ],
+   "answer": "3,300",
+   "openEnded": false,
+   "anchor": 0.2985,
+   "side": "left",
+   "crop": [
+    0.1456,
+    0.281,
+    0.3236,
+    0.035
+   ],
+   "verified": true,
+   "verification": "Computed in Python; 33 × 10² = 3,300; checked by counting zeros."
+  },
+  {
+   "id": "3b",
+   "title": "Problem 3 · 33 × 10³",
+   "hint": "Count the zeros in the power of 10.",
+   "steps": [
+    "Start with 33.",
+    "Notice that the exponent is 3, so the power of 10 has 3 zeros.",
+    "Write 3 zeros after 33."
+   ],
+   "answer": "33,000",
+   "openEnded": false,
+   "anchor": 0.3335,
+   "side": "left",
+   "crop": [
+    0.1456,
+    0.316,
+    0.3236,
+    0.035
+   ],
+   "verified": true,
+   "verification": "Computed in Python; 33 × 10³ = 33,000; checked by counting zeros."
+  },
+  {
+   "id": "3c",
+   "title": "Problem 3 · 33 × 10⁴",
+   "hint": "Count the zeros in the power of 10.",
+   "steps": [
+    "Start with 33.",
+    "Notice that the exponent is 4, so the power of 10 has 4 zeros.",
+    "Write 4 zeros after 33."
+   ],
+   "answer": "330,000",
+   "openEnded": false,
+   "anchor": 0.3665,
+   "side": "left",
+   "crop": [
+    0.1456,
+    0.349,
+    0.3236,
+    0.035
+   ],
+   "verified": true,
+   "verification": "Computed in Python; 33 × 10⁴ = 330,000; checked by counting zeros."
+  },
+  {
+   "id": "4a",
+   "title": "Problem 4 · 57 × 10⁴",
+   "hint": "Count the zeros in the power of 10.",
+   "steps": [
+    "Start with 57.",
+    "Notice that the exponent is 4, so the power of 10 has 4 zeros.",
+    "Write 4 zeros after 57."
+   ],
+   "answer": "570,000",
+   "openEnded": false,
+   "anchor": 0.296,
+   "side": "right",
+   "crop": [
+    0.4854,
+    0.2785,
+    0.3625,
+    0.035
+   ],
+   "verified": true,
+   "verification": "Computed in Python; 57 × 10⁴ = 570,000; checked by counting zeros."
+  },
+  {
+   "id": "4b",
+   "title": "Problem 4 · 57 × 10⁵",
+   "hint": "Count the zeros in the power of 10.",
+   "steps": [
+    "Start with 57.",
+    "Notice that the exponent is 5, so the power of 10 has 5 zeros.",
+    "Write 5 zeros after 57."
+   ],
+   "answer": "5,700,000",
+   "openEnded": false,
+   "anchor": 0.331,
+   "side": "right",
+   "crop": [
+    0.4854,
+    0.3135,
+    0.3625,
+    0.035
+   ],
+   "verified": true,
+   "verification": "Computed in Python; 57 × 10⁵ = 5,700,000; checked by counting zeros."
+  },
+  {
+   "id": "4c",
+   "title": "Problem 4 · 57 × 10⁶",
+   "hint": "Count the zeros in the power of 10.",
+   "steps": [
+    "Start with 57.",
+    "Notice that the exponent is 6, so the power of 10 has 6 zeros.",
+    "Write 6 zeros after 57."
+   ],
+   "answer": "57,000,000",
+   "openEnded": false,
+   "anchor": 0.364,
+   "side": "right",
+   "crop": [
+    0.4854,
+    0.3465,
+    0.3625,
+    0.035
+   ],
+   "verified": true,
+   "verification": "Computed in Python; 57 × 10⁶ = 57,000,000; checked by counting zeros."
+  },
+  {
+   "id": "5",
+   "title": "Problem 5 · 23 × 10³",
+   "hint": "The exponent tells how many zeros to write after the first factor.",
+   "steps": [
+    "The exponent is 3, so 10 to that power is 1 followed by 3 zeros.",
+    "Write 23 and then 3 more zeros.",
+    "Put commas in to read the number."
+   ],
+   "answer": "23,000",
+   "openEnded": false,
+   "anchor": 0.4515,
+   "side": "left",
+   "crop": [
+    0.1456,
+    0.434,
+    0.3366,
+    0.035
+   ],
+   "verified": true,
+   "verification": "Computed in Python; 23 × 10³ = 23,000; checked by counting zeros."
+  },
+  {
+   "id": "6",
+   "title": "Problem 6 · 581 × 10²",
+   "hint": "The exponent tells how many zeros to write after the first factor.",
+   "steps": [
+    "The exponent is 2, so 10 to that power is 1 followed by 2 zeros.",
+    "Write 581 and then 2 more zeros.",
+    "Put commas in to read the number."
+   ],
+   "answer": "58,100",
+   "openEnded": false,
+   "anchor": 0.4495,
+   "side": "right",
+   "crop": [
+    0.4854,
+    0.432,
+    0.3366,
+    0.035
+   ],
+   "verified": true,
+   "verification": "Computed in Python; 581 × 10² = 58,100; checked by counting zeros."
+  },
+  {
+   "id": "7",
+   "title": "Problem 7 · 60 × 10⁴",
+   "hint": "The exponent tells how many zeros to write after the first factor.",
+   "steps": [
+    "The exponent is 4, so 10 to that power is 1 followed by 4 zeros.",
+    "Write 60 and then 4 more zeros.",
+    "Keep any zeros that are already in the first factor."
+   ],
+   "answer": "600,000",
+   "openEnded": false,
+   "anchor": 0.504,
+   "side": "left",
+   "crop": [
+    0.1456,
+    0.4865,
+    0.3366,
+    0.035
+   ],
+   "verified": true,
+   "verification": "Computed in Python; 60 × 10⁴ = 600,000; checked by counting zeros."
+  },
+  {
+   "id": "8",
+   "title": "Problem 8 · 103 × 10²",
+   "hint": "The exponent tells how many zeros to write after the first factor.",
+   "steps": [
+    "The exponent is 2, so 10 to that power is 1 followed by 2 zeros.",
+    "Write 103 and then 2 more zeros.",
+    "Keep any zeros that are already in the first factor."
+   ],
+   "answer": "10,300",
+   "openEnded": false,
+   "anchor": 0.5015,
+   "side": "right",
+   "crop": [
+    0.4854,
+    0.484,
+    0.3366,
+    0.035
+   ],
+   "verified": true,
+   "verification": "Computed in Python; 103 × 10² = 10,300; checked by counting zeros."
+  },
+  {
+   "id": "9",
+   "title": "Problem 9 · 571 × ? = 5,710",
+   "hint": "Compare the number of zeros in the product with the known factor.",
+   "steps": [
+    "Notice that 5,710 has one more zero than 571.",
+    "The missing factor is 1 followed by that many zeros.",
+    "Check by multiplying."
+   ],
+   "answer": "10",
+   "openEnded": false,
+   "anchor": 0.5985,
+   "side": "left",
+   "crop": [
+    0.1424,
+    0.5785,
+    0.3301,
+    0.04
+   ],
+   "verified": true,
+   "verification": "Computed in Python; divided product by known factor; result 10; checked by multiplying back."
+  },
+  {
+   "id": "10",
+   "title": "Problem 10 · 43 × ? = 4,300,000",
+   "hint": "Compare the number of zeros in the product with the known factor.",
+   "steps": [
+    "Notice that 4,300,000 has five more zeros than 43.",
+    "The missing factor is 1 followed by that many zeros.",
+    "Check by multiplying."
+   ],
+   "answer": "100,000 (10⁵)",
+   "openEnded": false,
+   "anchor": 0.596,
+   "side": "right",
+   "crop": [
+    0.4822,
+    0.576,
+    0.3819,
+    0.04
+   ],
+   "verified": true,
+   "verification": "Computed in Python; divided product by known factor; result 100,000; checked by multiplying back."
+  },
+  {
+   "id": "11",
+   "title": "Problem 11 · 6 × ? = 6,000",
+   "hint": "Compare the number of zeros in the product with the known factor.",
+   "steps": [
+    "Notice that 6,000 has three more zeros than 6.",
+    "The missing factor is 1 followed by that many zeros.",
+    "Check by multiplying."
+   ],
+   "answer": "1,000 (10³)",
+   "openEnded": false,
+   "anchor": 0.6435,
+   "side": "left",
+   "crop": [
+    0.1424,
+    0.6235,
+    0.3301,
+    0.04
+   ],
+   "verified": true,
+   "verification": "Computed in Python; divided product by known factor; result 1,000; checked by multiplying back."
+  },
+  {
+   "id": "12",
+   "title": "Problem 12 · 28 × ? = 280,000",
+   "hint": "Compare the number of zeros in the product with the known factor.",
+   "steps": [
+    "Notice that 280,000 has four more zeros than 28.",
+    "The missing factor is 1 followed by that many zeros.",
+    "Check by multiplying."
+   ],
+   "answer": "10,000 (10⁴)",
+   "openEnded": false,
+   "anchor": 0.641,
+   "side": "right",
+   "crop": [
+    0.4822,
+    0.621,
+    0.3819,
+    0.04
+   ],
+   "verified": true,
+   "verification": "Computed in Python; divided product by known factor; result 10,000; checked by multiplying back."
+  },
+  {
+   "id": "13",
+   "title": "13 · Relationship between the equations",
+   "hint": "Look at how the exponent changes and how the product changes.",
+   "steps": [
+    "Each equation multiplies 6 by a power of 10.",
+    "The exponent goes 5, 7, 9: it grows by 2 each time.",
+    "Count the zeros in each product: 5, 7, 9."
+   ],
+   "answer": "Sample answer: Each exponent is 2 more than the one before, so each product has 2 more zeros and is 100 times as great. The number of zeros in each product equals the exponent.",
+   "openEnded": false,
+   "anchor": 0.78,
+   "side": "left",
+   "crop": [
+    0.1359,
+    0.7275,
+    0.5825,
+    0.125
+   ],
+   "verified": true,
+   "verification": "Computed in Python; 6 × 10⁵ = 600,000, 6 × 10⁷ = 60,000,000, 6 × 10⁹ = 6,000,000,000; ratio 100 each step."
+  }
+ ],
+ "150": [
+  {
+   "id": "14",
+   "title": "14 · Carol's error",
+   "hint": "Count the zeros in 10,000 and in Carol's answer.",
+   "steps": [
+    "10,000 has 4 zeros, and 80 already has 1 zero.",
+    "So the product should have 1 + 4 = 5 zeros.",
+    "Carol's answer, 80,000, only has 4 zeros."
+   ],
+   "answer": "Carol is not correct. 80 × 10,000 = 800,000. She forgot to count the zero in 80.",
+   "openEnded": false,
+   "anchor": 0.07,
+   "side": "left",
+   "crop": [
+    0.0712,
+    0.035,
+    0.8091,
+    0.13
+   ],
+   "verified": true,
+   "verification": "Computed in Python; 80 × 10,000 = 800,000; checked 8 × 100,000 = 800,000."
+  },
+  {
+   "id": "15",
+   "title": "15 · Which equations are true?",
+   "hint": "Find the value of both sides of each equation.",
+   "steps": [
+    "A: 6 × 100 = 600, but 6 × 10 × 10 × 10 = 6,000.",
+    "B: 10,000 × 4 = 40,000 and 10 × 10 × 10 × 10 × 4 = 40,000.",
+    "C: 15 × 10³ = 15,000, not 1,500.",
+    "D: 70 × 10 × 10 = 7,000."
+   ],
+   "answer": "B and D",
+   "openEnded": false,
+   "anchor": 0.33,
+   "side": "left",
+   "crop": [
+    0.0712,
+    0.25,
+    0.5502,
+    0.15
+   ],
+   "verified": true,
+   "verification": "Computed in Python; each side of A–D: A 600 ≠ 6,000, B 40,000 = 40,000, C 15,000 ≠ 1,500, D 7,000 = 7,000."
+  },
+  {
+   "id": "16",
+   "title": "16 · Extend Your Thinking · ? × 10⁵ = 56,300,000",
+   "hint": "10⁵ adds 5 zeros to the end of the unknown factor.",
+   "steps": [
+    "10⁵ = 100,000, which has 5 zeros.",
+    "Take 5 zeros off the end of 56,300,000.",
+    "Check: 563 × 100,000 = 56,300,000."
+   ],
+   "answer": "563. Multiplying by 10⁵ puts 5 zeros after the factor, so remove 5 zeros from 56,300,000 to get 563.",
+   "openEnded": false,
+   "anchor": 0.465,
+   "side": "left",
+   "crop": [
+    0.0712,
+    0.43,
+    0.712,
+    0.08
+   ],
+   "verified": true,
+   "verification": "Computed in Python; 56,300,000 ÷ 100,000 = 563; checked 563 × 10⁵ = 56,300,000."
+  },
+  {
+   "id": "reflect",
+   "title": "Reflect · Patterns with powers of 10",
+   "hint": "Think about the number of zeros and the exponent.",
+   "steps": [
+    "Look back at the problems in this lesson.",
+    "What happened to the product each time you multiplied by 10?",
+    "How did the exponent tell you how many zeros to write?"
+   ],
+   "answer": "Sample answer: The number of zeros added to the product is the same as the exponent, and each time you multiply by 10 the digits move one place to the left.",
+   "openEnded": true,
+   "anchor": 0.72,
+   "side": "left",
+   "crop": [
+    0.0712,
+    0.655,
+    0.8026,
+    0.09
+   ],
+   "verified": true,
+   "verification": "Reflection; pattern checked against Python products in this lesson."
+  },
+  {
+   "id": "mind",
+   "title": "Math is… Mindset · Avoiding distractions",
+   "hint": "This is about you, so there is no wrong answer.",
+   "steps": [
+    "Think about a time this lesson when you stayed focused.",
+    "Write what helped you."
+   ],
+   "answer": "Sample answer: I worked in a quiet place and finished one problem before looking at anything else.",
+   "openEnded": true,
+   "anchor": 0.8825,
+   "side": "right",
+   "crop": [
+    0.5761,
+    0.84,
+    0.2718,
+    0.085
+   ],
+   "verified": true,
+   "verification": "Personal reflection; no single correct answer."
+  }
+ ],
+ "151": [
+  {
+   "id": "curious",
+   "title": "Be Curious · What do you notice? What do you wonder?",
+   "hint": "Compare each shaded rectangle with the red 15 × 12 rectangle.",
+   "steps": [
+    "Find the real product: 15 × 12 = 180.",
+    "Find each product: 20 × 10 = 200, 15 × 10 = 150, 20 × 12 = 240.",
+    "Notice which rectangles are bigger or smaller than the red one, and which is closest."
+   ],
+   "answer": "Sample answer: I notice each teal rectangle uses rounded numbers to estimate 15 × 12 = 180. 20 × 10 = 200 and 15 × 10 = 150 are close; 20 × 12 = 240 is too big because both factors were rounded up. I wonder which way of rounding gives the closest estimate.",
+   "openEnded": true,
+   "anchor": 0.515,
+   "side": "right",
+   "crop": [
+    0.1683,
+    0.4,
+    0.699,
+    0.21
+   ],
+   "verified": true,
+   "verification": "Computed 15×12=180, 20×10=200, 15×10=150, 20×12=240 in Python; compared with the drawn rectangles."
+  },
+  {
+   "id": "mind",
+   "title": "Math is… Mindset",
+   "hint": "Think about what you do first when a word problem looks confusing.",
+   "steps": [
+    "Think of a time a math situation was hard to understand.",
+    "Write what helped you, like drawing a picture or rounding the numbers."
+   ],
+   "answer": "Sample answer: Drawing a picture and estimating first helps me make sense of a situation. Your answer may be different.",
+   "openEnded": true,
+   "anchor": 0.865,
+   "side": "left",
+   "crop": [
+    0.1845,
+    0.8225,
+    0.2589,
+    0.085
+   ],
+   "verified": true,
+   "verification": "Reflection prompt; no single correct answer."
+  }
+ ],
+ "152": [
+  {
+   "id": "example",
+   "title": "Learn · Money from 432 tickets at $13",
+   "hint": "Multiply the number of people by the ticket price, using friendly numbers.",
+   "steps": [
+    "The exact problem is 432 × 13.",
+    "Compatible numbers: 400 × 15 = 6,000.",
+    "Rounded factors: 430 × 10 = 4,300.",
+    "The real answer, $5,616, is between the two estimates, so it makes sense."
+   ],
+   "answer": "About $4,300 to $6,000. The exact amount is 432 × 13 = $5,616.",
+   "openEnded": false,
+   "anchor": 0.15,
+   "side": "left",
+   "crop": [
+    0.0647,
+    0.06,
+    0.8026,
+    0.51
+   ],
+   "verified": true,
+   "verification": "Computed 432×13=5,616, 400×15=6,000, 430×10=4,300 in Python; 5,616 lies between the estimates."
+  },
+  {
+   "id": "mind",
+   "title": "Math is… Choosing Tools",
+   "hint": "An estimate tells you 'about how much', not 'exactly how much'.",
+   "steps": [
+    "Think about what an estimate is close to.",
+    "Think about what it cannot tell you exactly."
+   ],
+   "answer": "Sample answer: An estimate tells me about how big the answer should be, so I can check if my answer is reasonable. It can't tell me the exact answer.",
+   "openEnded": true,
+   "anchor": 0.4475,
+   "side": "right",
+   "crop": [
+    0.5696,
+    0.4075,
+    0.3042,
+    0.0815
+   ],
+   "verified": true,
+   "verification": "Reflection prompt; answer checked against the Learn example."
+  },
+  {
+   "id": "work",
+   "title": "Work Together · 879 × 36",
+   "hint": "Round each factor to a number that is easy to multiply.",
+   "steps": [
+    "Round 879 to 900 and 36 to 40.",
+    "Multiply: 9 × 4 = 36, then add three zeros: 36,000.",
+    "Or use compatible numbers: 900 × 35 = 31,500.",
+    "Explain why you picked your strategy."
+   ],
+   "answer": "One possible answer: 900 × 40 = 36,000 (rounded factors), because those numbers are easy to multiply. Compatible numbers 900 × 35 = 31,500 are also reasonable. The exact product is 31,644.",
+   "openEnded": true,
+   "anchor": 0.73,
+   "side": "right",
+   "crop": [
+    0.0712,
+    0.7,
+    0.7961,
+    0.245
+   ],
+   "verified": true,
+   "verification": "Computed 879×36=31,644, 900×40=36,000, 900×35=31,500 in Python; both estimates are near the exact product."
+  }
+ ],
+ "153": [
+  {
+   "id": "1",
+   "title": "Problem 1 · 643 × 18",
+   "hint": "Round each factor to its greatest place value.",
+   "steps": [
+    "Round 643 to 600.",
+    "Round 18 to 20.",
+    "Multiply the rounded numbers: 600 × 20 = 12,000."
+   ],
+   "answer": "About 12,000 (600 × 20). Other close estimates are fine. (Exact: 11,574.)",
+   "openEnded": false,
+   "anchor": 0.185,
+   "side": "left",
+   "crop": [
+    0.1424,
+    0.16,
+    0.3495,
+    0.085
+   ],
+   "verified": true,
+   "verification": "Computed 643×18=11,574 and 600×20=12,000 in Python; estimate is close to the exact product."
+  },
+  {
+   "id": "2",
+   "title": "Problem 2 · 325 × 62",
+   "hint": "Round each factor to its greatest place value.",
+   "steps": [
+    "Round 325 to 300.",
+    "Round 62 to 60.",
+    "Multiply the rounded numbers: 300 × 60 = 18,000."
+   ],
+   "answer": "About 18,000 (300 × 60). Compatible numbers 325 × 60 = 19,500 is even closer. Other close estimates are fine. (Exact: 20,150.)",
+   "openEnded": false,
+   "anchor": 0.184,
+   "side": "right",
+   "crop": [
+    0.4919,
+    0.159,
+    0.4142,
+    0.085
+   ],
+   "verified": true,
+   "verification": "Computed 325×62=20,150 and 300×60=18,000 in Python; estimate is close to the exact product."
+  },
+  {
+   "id": "3",
+   "title": "Problem 3 · 438 × 27",
+   "hint": "Round each factor to its greatest place value.",
+   "steps": [
+    "Round 438 to 400.",
+    "Round 27 to 30.",
+    "Multiply the rounded numbers: 400 × 30 = 12,000."
+   ],
+   "answer": "About 12,000 (400 × 30). Other close estimates are fine. (Exact: 11,826.)",
+   "openEnded": false,
+   "anchor": 0.261,
+   "side": "left",
+   "crop": [
+    0.1424,
+    0.236,
+    0.3495,
+    0.085
+   ],
+   "verified": true,
+   "verification": "Computed 438×27=11,826 and 400×30=12,000 in Python; estimate is close to the exact product."
+  },
+  {
+   "id": "4",
+   "title": "Problem 4 · 572 × 49",
+   "hint": "Round each factor to its greatest place value.",
+   "steps": [
+    "Round 572 to 600.",
+    "Round 49 to 50.",
+    "Multiply the rounded numbers: 600 × 50 = 30,000."
+   ],
+   "answer": "About 30,000 (600 × 50). Other close estimates are fine. (Exact: 28,028.)",
+   "openEnded": false,
+   "anchor": 0.26,
+   "side": "right",
+   "crop": [
+    0.4919,
+    0.235,
+    0.4142,
+    0.085
+   ],
+   "verified": true,
+   "verification": "Computed 572×49=28,028 and 600×50=30,000 in Python; estimate is close to the exact product."
+  },
+  {
+   "id": "5",
+   "title": "Problem 5 · Museum tickets",
+   "hint": "Multiply the number of students by the ticket price, then round.",
+   "steps": [
+    "The problem is 54 × $23.",
+    "Round: 54 is about 50 and 23 is about 20.",
+    "Multiply: 50 × 20 = 1,000."
+   ],
+   "answer": "About $1,000 (50 × 20). Using 50 × 25 = $1,250 is also reasonable. (Exact: $1,242.)",
+   "openEnded": false,
+   "anchor": 0.38,
+   "side": "right",
+   "crop": [
+    0.1424,
+    0.3425,
+    0.6731,
+    0.09
+   ],
+   "verified": true,
+   "verification": "Computed 54×23=1,242, 50×20=1,000, 50×25=1,250 in Python."
+  },
+  {
+   "id": "6",
+   "title": "Problem 6 · Library books",
+   "hint": "Multiply shelves by books on each shelf, using rounded numbers.",
+   "steps": [
+    "The problem is 478 × 38.",
+    "Round: 478 is about 500 and 38 is about 40.",
+    "Multiply: 5 × 4 = 20, add three zeros: 20,000."
+   ],
+   "answer": "About 20,000 books (500 × 40). (Exact: 18,164.)",
+   "openEnded": false,
+   "anchor": 0.47,
+   "side": "right",
+   "crop": [
+    0.1424,
+    0.4325,
+    0.6731,
+    0.0925
+   ],
+   "verified": true,
+   "verification": "Computed 478×38=18,164 and 500×40=20,000 in Python."
+  },
+  {
+   "id": "7",
+   "title": "Problem 7 · Paintings at the fair",
+   "hint": "Multiply the number of buyers by the price of one painting.",
+   "steps": [
+    "The problem is 339 × $23.",
+    "Round: 339 is about 300 and 23 is about 20.",
+    "Multiply: 300 × 20 = 6,000."
+   ],
+   "answer": "About $6,000 (300 × 20). 340 × 20 = $6,800 is also reasonable. (Exact: $7,797.)",
+   "openEnded": false,
+   "anchor": 0.57,
+   "side": "right",
+   "crop": [
+    0.1424,
+    0.5225,
+    0.6861,
+    0.1085
+   ],
+   "verified": true,
+   "verification": "Computed 339×23=7,797, 300×20=6,000, 340×20=6,800 in Python."
+  },
+  {
+   "id": "8",
+   "title": "Problem 8 · Bake sale",
+   "hint": "Look at the sign to find the price of each baked good.",
+   "steps": [
+    "The problem is 405 × $12.",
+    "Round 405 to 400.",
+    "Multiply: 400 × 12 = 4,800."
+   ],
+   "answer": "About $4,800 (400 × 12). 400 × 10 = $4,000 is also a reasonable estimate. (Exact: $4,860.)",
+   "openEnded": false,
+   "anchor": 0.69,
+   "side": "right",
+   "crop": [
+    0.1424,
+    0.63,
+    0.6861,
+    0.1525
+   ],
+   "verified": true,
+   "verification": "Computed 405×12=4,860, 400×12=4,800 in Python."
+  },
+  {
+   "id": "9",
+   "title": "9 · Han's error",
+   "hint": "Make your own estimate of 492 × 32 and compare it with 1,200.",
+   "steps": [
+    "Round 492 to 500 and 32 to 30.",
+    "Multiply: 500 × 30 = 15,000.",
+    "Compare: 1,200 is much too small, so Han's estimate is not reasonable."
+   ],
+   "answer": "Han is not correct. 492 × 32 is about 500 × 30 = 15,000, so 1,200 is far too small (he may have lost zeros). (Exact: 15,744.)",
+   "openEnded": false,
+   "anchor": 0.8075,
+   "side": "right",
+   "crop": [
+    0.1424,
+    0.78,
+    0.6861,
+    0.1375
+   ],
+   "verified": true,
+   "verification": "Computed 492×32=15,744 and 500×30=15,000 in Python; 1,200 is about 13 times too small."
+  }
+ ],
+ "154": [
+  {
+   "id": "10",
+   "title": "Problem 10 · Estimate for 658 × 19",
+   "hint": "Round each factor and see which equation matches.",
+   "steps": [
+    "19 is very close to 20, so the estimate should use 20.",
+    "658 is close to 650.",
+    "650 × 20 = 13,000. A and C use 10, which is too far from 19."
+   ],
+   "answer": "B. 650 × 20 = 13,000, because 650 and 20 are both close to 658 and 19. (Exact: 12,502.)",
+   "openEnded": false,
+   "anchor": 0.115,
+   "side": "right",
+   "crop": [
+    0.0971,
+    0.035,
+    0.6796,
+    0.145
+   ],
+   "verified": true,
+   "verification": "Computed 658×19=12,502 and each option in Python; only B (13,000) is close."
+  },
+  {
+   "id": "11",
+   "title": "Problem 11 · Rounded or compatible?",
+   "hint": "Try both strategies on 246 × 38 and compare the results.",
+   "steps": [
+    "Rounded: 246 rounds to 200 and 38 rounds to 40, so 200 × 40 = 8,000.",
+    "Compatible: 246 is close to 250, and 250 × 40 = 10,000 is easy (25 × 4 = 100).",
+    "Compare the two estimates."
+   ],
+   "answer": "One possible answer: Compatible numbers give the greater estimate. 250 × 40 = 10,000 is greater than the rounded 200 × 40 = 8,000, because 246 rounds down to 200 but goes up to 250 as a compatible number. (Exact: 9,348.)",
+   "openEnded": true,
+   "anchor": 0.24,
+   "side": "right",
+   "crop": [
+    0.0647,
+    0.2125,
+    0.6861,
+    0.1325
+   ],
+   "verified": true,
+   "verification": "Computed 246×38=9,348, 200×40=8,000, 250×40=10,000 in Python. Depends on the rounding chosen, so marked open-ended."
+  },
+  {
+   "id": "12",
+   "title": "12 · Recycling club goal",
+   "hint": "Find the total bottles for one student first, or for one day.",
+   "steps": [
+    "Round 26 to 25 and 72 to 70.",
+    "25 × 70 = 1,750 bottles a day.",
+    "1,750 × 5 = 8,750 bottles in 5 days.",
+    "8,750 is more than 8,000, so they met the goal."
+   ],
+   "answer": "About 8,750 bottles (25 × 70 × 5). Yes, they met their goal of 8,000. (Exact: 26 × 72 × 5 = 9,360.)",
+   "openEnded": false,
+   "anchor": 0.4,
+   "side": "right",
+   "crop": [
+    0.0647,
+    0.3525,
+    0.6926,
+    0.2175
+   ],
+   "verified": true,
+   "verification": "Computed 26×72×5=9,360 and 25×70×5=8,750 in Python; both exceed 8,000."
+  },
+  {
+   "id": "reflect",
+   "title": "Reflect · Is my product reasonable?",
+   "hint": "Think about how an estimate is like a target to compare against.",
+   "steps": [
+    "Estimate first with rounded or compatible numbers.",
+    "Compute the exact product.",
+    "If the exact product is close to the estimate, it is reasonable; if not, check your work."
+   ],
+   "answer": "Sample answer: I estimate the product first. If my calculated answer is close to my estimate, it is reasonable. If it is very far away, I made a mistake and should check again.",
+   "openEnded": true,
+   "anchor": 0.65,
+   "side": "left",
+   "crop": [
+    0.068,
+    0.58,
+    0.7994,
+    0.365
+   ],
+   "verified": true,
+   "verification": "Reflection prompt; matches the lesson's Learn example (5,616 between 4,300 and 6,000)."
+  },
+  {
+   "id": "mind",
+   "title": "Math is… Mindset",
+   "hint": "Think about a problem in this lesson that you figured out.",
+   "steps": [
+    "Remember a problem that was tricky at first.",
+    "Write what helped you understand it."
+   ],
+   "answer": "Sample answer: I made sense of a situation by estimating first, so I knew about how big the answer should be. Your answer may be different.",
+   "openEnded": true,
+   "anchor": 0.8825,
+   "side": "right",
+   "crop": [
+    0.6052,
+    0.84,
+    0.2427,
+    0.0875
+   ],
+   "verified": true,
+   "verification": "Reflection prompt; no single correct answer."
+  }
+ ],
+ "155": [
+  {
+   "id": "curious",
+   "title": "Be Curious · What do you see?",
+   "hint": "Look at how the big tray is split into smaller sections.",
+   "steps": [
+    "Look at the whole bento box. What shape is it?",
+    "Notice how it is divided into smaller rectangles.",
+    "Tell what you notice, like how many sections there are or how the parts fit together."
+   ],
+   "answer": "Sample answer: I see a rectangular lunch box divided into smaller rectangles. The small sections fit together to make the whole box, so their areas add up to the area of the whole box.",
+   "openEnded": true,
+   "anchor": 0.275,
+   "side": "right",
+   "crop": [
+    0.1748,
+    0.25,
+    0.7508,
+    0.54
+   ],
+   "verified": true,
+   "verification": "Original page visually checked; opinion/noticing prompt with no single answer."
+  },
+  {
+   "id": "mind",
+   "title": "Math is… Mindset",
+   "hint": "This is a reflection about working with a partner, not a one-answer problem.",
+   "steps": [
+    "Think about a time your partner explained an idea.",
+    "What could you say or do to show you really listened?",
+    "Write one way you can show it."
+   ],
+   "answer": "Sample answer: I can repeat my partner's idea in my own words and ask a question about it before I share my own idea.",
+   "openEnded": true,
+   "anchor": 0.865,
+   "side": "right",
+   "crop": [
+    0.1845,
+    0.82,
+    0.4369,
+    0.09
+   ],
+   "verified": true,
+   "verification": "Original page visually checked; reflection prompt with no single answer."
+  }
+ ],
+ "156": [
+  {
+   "id": "learn",
+   "title": "Learn · 72 × 114 soccer field",
+   "hint": "Break 72 into tens and ones and 114 into hundreds, tens and ones.",
+   "steps": [
+    "Split the factors: 72 = 70 + 2 and 114 = 100 + 10 + 4.",
+    "Fill each box: 70 × 100 = 7,000, 70 × 10 = 700, 70 × 4 = 280, 2 × 100 = 200, 2 × 10 = 20, 2 × 4 = 8.",
+    "Add: 7,000 + 700 + 280 + 200 + 20 + 8 = 8,208."
+   ],
+   "answer": "Top row: 7,000 | 700 | 280; bottom row: 200 | 20 | 8. 72 × 114 = 8,208, so the area is 8,208 square feet.",
+   "openEnded": false,
+   "anchor": 0.36,
+   "side": "left",
+   "crop": [
+    0.0841,
+    0.21,
+    0.7832,
+    0.3575
+   ],
+   "verified": true,
+   "verification": "Computed in Python; 72 × 114 = 8,208; sum of six partial products also 8,208; matches the page."
+  },
+  {
+   "id": "modeling",
+   "title": "Math is… Modeling",
+   "hint": "Think about what each small box in the area model stands for.",
+   "steps": [
+    "Look at how the big rectangle is split into smaller boxes.",
+    "Each box is one partial product.",
+    "Explain how adding the boxes gives the whole product."
+   ],
+   "answer": "Sample answer: An area model breaks a big multiplication into smaller, easier products by place value. Each small box is a partial product, and adding them gives the area of the whole rectangle, which is the product.",
+   "openEnded": true,
+   "anchor": 0.45,
+   "side": "right",
+   "crop": [
+    0.5081,
+    0.4075,
+    0.3709,
+    0.0825
+   ],
+   "verified": true,
+   "verification": "Original page visually checked; explanation prompt with no single answer."
+  },
+  {
+   "id": "work",
+   "title": "Work Together · 304 × 68",
+   "hint": "Break 304 into 300 + 4 and 68 into 60 + 8.",
+   "steps": [
+    "Draw a rectangle with 300 + 4 across the top and 60 + 8 down the side.",
+    "Find each partial product: 300 × 60 = 18,000, 300 × 8 = 2,400, 4 × 60 = 240, 4 × 8 = 32.",
+    "Add them: 18,000 + 2,400 + 240 + 32."
+   ],
+   "answer": "304 × 68 = 20,672 (18,000 + 2,400 + 240 + 32).",
+   "openEnded": false,
+   "anchor": 0.725,
+   "side": "right",
+   "crop": [
+    0.0744,
+    0.6925,
+    0.7929,
+    0.2525
+   ],
+   "verified": true,
+   "verification": "Computed in Python; 304 × 68 = 20,672; partial products 18,000 + 2,400 + 240 + 32 = 20,672; estimate 300 × 70 = 21,000."
+  }
+ ],
+ "157": [
+  {
+   "id": "1total",
+   "title": "Problem 1 · Area model for 154 × 36",
+   "hint": "Each empty box is the side number on its row times the top number of its column.",
+   "steps": [
+    "Break apart: 154 = 100 + 50 + 4 and 36 = 30 + 6.",
+    "Multiply row by column for each empty box: 30 × 50 = 1,500, 30 × 4 = 120, 6 × 50 = 300, 6 × 4 = 24.",
+    "Add: 3,000 + 1,500 + 120 + 600 + 300 + 24 = 5,544."
+   ],
+   "answer": "Boxes: 1,500 | 120 (top), 300 | 24 (bottom). 154 × 36 = 5,544.",
+   "openEnded": false,
+   "anchor": 0.24,
+   "side": "left",
+   "crop": [
+    0.1359,
+    0.17,
+    0.3333,
+    0.1225
+   ],
+   "verified": true,
+   "verification": "Computed in Python; 154 × 36 = 5,544; partial products sum to 5,544; estimate 150 × 36 = 5,400."
+  },
+  {
+   "id": "2total",
+   "title": "Problem 2 · Area model for 421 × 52",
+   "hint": "The top row is 50 times each part; the bottom row is 2 times each part.",
+   "steps": [
+    "Break apart: 421 = 400 + 20 + 1 and 52 = 50 + 2.",
+    "Fill the empty boxes: 50 × 20 = 1,000, 2 × 400 = 800, 2 × 20 = 40, 2 × 1 = 2.",
+    "Add: 20,000 + 1,000 + 50 + 800 + 40 + 2 = 21,892."
+   ],
+   "answer": "Boxes: 1,000 (top middle); 800 | 40 | 2 (bottom). 421 × 52 = 21,892.",
+   "openEnded": false,
+   "anchor": 0.235,
+   "side": "right",
+   "crop": [
+    0.479,
+    0.1725,
+    0.3236,
+    0.1075
+   ],
+   "verified": true,
+   "verification": "Computed in Python; 421 × 52 = 21,892; partial products sum to 21,892; estimate 400 × 50 = 20,000."
+  },
+  {
+   "id": "3",
+   "title": "Problem 3 · 15 × 24",
+   "hint": "Split 15 into 10 + 5 and 24 into 20 + 4.",
+   "steps": [
+    "Draw lines in the box to make 4 smaller boxes.",
+    "Multiply: 10 × 20 = 200, 10 × 4 = 40, 5 × 20 = 100, 5 × 4 = 20.",
+    "Add: 200 + 40 + 100 + 20 = 360."
+   ],
+   "answer": "360",
+   "openEnded": false,
+   "anchor": 0.383,
+   "side": "left",
+   "crop": [
+    0.1359,
+    0.37,
+    0.3172,
+    0.165
+   ],
+   "verified": true,
+   "verification": "Computed in Python; 15 × 24 = 360; partial products sum to 360; check 360 ÷ 24 = 15."
+  },
+  {
+   "id": "4",
+   "title": "Problem 4 · 28 × 132",
+   "hint": "Split 28 into 20 + 8 and 132 into 100 + 30 + 2.",
+   "steps": [
+    "Divide the long box into 2 rows and 3 columns.",
+    "Multiply: 20 × 100 = 2,000, 20 × 30 = 600, 20 × 2 = 40, 8 × 100 = 800, 8 × 30 = 240, 8 × 2 = 16.",
+    "Add all six: 2,000 + 600 + 40 + 800 + 240 + 16 = 3,696."
+   ],
+   "answer": "3,696",
+   "openEnded": false,
+   "anchor": 0.381,
+   "side": "right",
+   "crop": [
+    0.4887,
+    0.3675,
+    0.3074,
+    0.09
+   ],
+   "verified": true,
+   "verification": "Computed in Python; 28 × 132 = 3,696; six partial products sum to 3,696; check 3,696 ÷ 28 = 132."
+  },
+  {
+   "id": "5",
+   "title": "Problem 5 · 33 × 78",
+   "hint": "Split 33 into 30 + 3 and 78 into 70 + 8.",
+   "steps": [
+    "Sketch an area model with 2 rows and 2 columns.",
+    "Multiply: 30 × 70 = 2,100, 30 × 8 = 240, 3 × 70 = 210, 3 × 8 = 24.",
+    "Add: 2,100 + 240 + 210 + 24 = 2,574."
+   ],
+   "answer": "2,574",
+   "openEnded": false,
+   "anchor": 0.582,
+   "side": "left",
+   "crop": [
+    0.1392,
+    0.5675,
+    0.3172,
+    0.03
+   ],
+   "verified": true,
+   "verification": "Computed in Python; 33 × 78 = 2,574; partial products sum to 2,574; estimate 30 × 80 = 2,400."
+  },
+  {
+   "id": "6",
+   "title": "Problem 6 · 72 × 225",
+   "hint": "Split 72 into 70 + 2 and 225 into 200 + 20 + 5.",
+   "steps": [
+    "Sketch an area model with 2 rows and 3 columns.",
+    "Multiply: 70 × 200 = 14,000, 70 × 20 = 1,400, 70 × 5 = 350, 2 × 200 = 400, 2 × 20 = 40, 2 × 5 = 10.",
+    "Add all six: the total is 16,200."
+   ],
+   "answer": "16,200",
+   "openEnded": false,
+   "anchor": 0.58,
+   "side": "right",
+   "crop": [
+    0.4887,
+    0.565,
+    0.3139,
+    0.0325
+   ],
+   "verified": true,
+   "verification": "Computed in Python; 72 × 225 = 16,200; six partial products sum to 16,200; check 16,200 ÷ 72 = 225."
+  },
+  {
+   "id": "7total",
+   "title": "Problem 7 · Area model 218 × 28",
+   "hint": "Add the numbers on top to get one factor and the numbers on the side to get the other.",
+   "steps": [
+    "Top: 200 + 10 + 8 = 218. Side: 20 + 8 = 28. So the equation is 218 × 28.",
+    "Fill the boxes: 4,000 | 200 | 160 on top and 1,600 | 80 | 64 on the bottom.",
+    "Add: 4,000 + 200 + 160 + 1,600 + 80 + 64 = 6,104."
+   ],
+   "answer": "218 × 28 = 6,104",
+   "openEnded": false,
+   "anchor": 0.76,
+   "side": "left",
+   "crop": [
+    0.1424,
+    0.69,
+    0.3107,
+    0.1625
+   ],
+   "verified": true,
+   "verification": "Computed in Python; 218 × 28 = 6,104; six partial products sum to 6,104; estimate 200 × 30 = 6,000."
+  },
+  {
+   "id": "8total",
+   "title": "Problem 8 · Area model 416 × 63",
+   "hint": "Add the numbers on top to get one factor and the numbers on the side to get the other.",
+   "steps": [
+    "Top: 400 + 10 + 6 = 416. Side: 60 + 3 = 63. So the equation is 416 × 63.",
+    "Fill the boxes: 24,000 | 600 | 360 on top and 1,200 | 30 | 18 on the bottom.",
+    "Add: 24,000 + 600 + 360 + 1,200 + 30 + 18 = 26,208."
+   ],
+   "answer": "416 × 63 = 26,208",
+   "openEnded": false,
+   "anchor": 0.7575,
+   "side": "right",
+   "crop": [
+    0.4822,
+    0.6875,
+    0.3786,
+    0.165
+   ],
+   "verified": true,
+   "verification": "Computed in Python; 416 × 63 = 26,208; six partial products sum to 26,208; estimate 400 × 60 = 24,000."
+  }
+ ],
+ "158": [
+  {
+   "id": "9",
+   "title": "Problem 9 · Football field area",
+   "hint": "Area of a rectangle is length × width.",
+   "steps": [
+    "The field is 120 yards long and 53 yards wide.",
+    "Split 53 into 50 + 3: 120 × 50 = 6,000 and 120 × 3 = 360.",
+    "Add: 6,000 + 360 = 6,360."
+   ],
+   "answer": "6,360 square yards",
+   "openEnded": false,
+   "anchor": 0.1,
+   "side": "left",
+   "crop": [
+    0.0744,
+    0.035,
+    0.7961,
+    0.145
+   ],
+   "verified": true,
+   "verification": "Computed in Python; 120 × 53 = 6,360; partial products 6,000 + 360; check 6,360 ÷ 53 = 120."
+  },
+  {
+   "id": "10",
+   "title": "Problem 10 · Canned food",
+   "hint": "Multiply the number of boxes by the cans in each box.",
+   "steps": [
+    "Find 128 × 45.",
+    "Split 45 into 40 + 5: 128 × 40 = 5,120 and 128 × 5 = 640.",
+    "Add: 5,120 + 640 = 5,760."
+   ],
+   "answer": "5,760 cans",
+   "openEnded": false,
+   "anchor": 0.2225,
+   "side": "left",
+   "crop": [
+    0.0744,
+    0.1975,
+    0.644,
+    0.0475
+   ],
+   "verified": true,
+   "verification": "Computed in Python; 128 × 45 = 5,760; partial products 5,120 + 640; estimate 130 × 45 = 5,850."
+  },
+  {
+   "id": "11",
+   "title": "Problem 11 · STEM Connection · Owen's sketchbooks",
+   "hint": "Multiply the number of sketchbooks by the sketches in each one.",
+   "steps": [
+    "Find 14 × 128.",
+    "Split 14 into 10 + 4: 10 × 128 = 1,280 and 4 × 128 = 512.",
+    "Add: 1,280 + 512 = 1,792."
+   ],
+   "answer": "1,792 sketches",
+   "openEnded": false,
+   "anchor": 0.355,
+   "side": "left",
+   "crop": [
+    0.0744,
+    0.32,
+    0.5566,
+    0.0675
+   ],
+   "verified": true,
+   "verification": "Computed in Python; 14 × 128 = 1,792; partial products 1,280 + 512; check 1,792 ÷ 14 = 128."
+  },
+  {
+   "id": "12",
+   "title": "Problem 12 · Extend Your Thinking · 452 × 273",
+   "hint": "Break both factors into hundreds, tens and ones.",
+   "steps": [
+    "Draw a rectangle with 400 + 50 + 2 on one side and 200 + 70 + 3 on the other, making 9 boxes.",
+    "Find each box: 80,000, 28,000, 1,200, 10,000, 3,500, 150, 400, 140, 6.",
+    "Add all nine partial products to get 123,396."
+   ],
+   "answer": "Sample answer: Break 452 into 400 + 50 + 2 and 273 into 200 + 70 + 3. Make a 3-by-3 area model and multiply to get 9 partial products: 80,000 + 28,000 + 1,200 + 10,000 + 3,500 + 150 + 400 + 140 + 6 = 123,396. So 452 × 273 = 123,396.",
+   "openEnded": false,
+   "anchor": 0.4875,
+   "side": "left",
+   "crop": [
+    0.0744,
+    0.4625,
+    0.6117,
+    0.05
+   ],
+   "verified": true,
+   "verification": "Computed in Python; 452 × 273 = 123,396; nine partial products sum to 123,396; estimate 450 × 270 = 121,500."
+  },
+  {
+   "id": "reflect",
+   "title": "Reflect · Thinking like a mathematician",
+   "hint": "Think about the steps you used to multiply big numbers.",
+   "steps": [
+    "Remember how you broke the factors apart by place value.",
+    "Think about how the area model kept your partial products organized.",
+    "Write how you checked that your answer made sense."
+   ],
+   "answer": "Sample answer: I broke each factor into hundreds, tens and ones, used an area model to find each partial product, added them, and checked with an estimate.",
+   "openEnded": true,
+   "anchor": 0.7,
+   "side": "left",
+   "crop": [
+    0.0777,
+    0.645,
+    0.7994,
+    0.3
+   ],
+   "verified": true,
+   "verification": "Original page visually checked; reflection prompt with no single answer."
+  },
+  {
+   "id": "mind",
+   "title": "Math is… Mindset",
+   "hint": "This is a reflection about working with a partner.",
+   "steps": [
+    "Think about a time you worked with a partner in this lesson.",
+    "What did you do to understand their thinking?",
+    "Write one example."
+   ],
+   "answer": "Sample answer: I listened to my partner explain how they split the factors, then I said their idea back in my own words and asked why they chose that way.",
+   "openEnded": true,
+   "anchor": 0.875,
+   "side": "right",
+   "crop": [
+    0.5631,
+    0.82,
+    0.2926,
+    0.11
+   ],
+   "verified": true,
+   "verification": "Original page visually checked; reflection prompt with no single answer."
+  }
+ ],
+ "159": [
+  {
+   "id": "curious",
+   "title": "Be Curious · What do you notice? What do you wonder?",
+   "hint": "Compare the numbers inside the area model with the numbers in the list on the right.",
+   "steps": [
+    "Look at the area model: 374 is split into 300 + 70 + 4 and 43 into 40 + 3.",
+    "Find each box's number in the list on the right (12,000 is 40 × 300, and so on).",
+    "Say what you notice, then ask a question you wonder about."
+   ],
+   "answer": "Sample answer: I notice both show 374 × 43. The six numbers in the area model are the same six partial products in the list, and they add to 16,082. I wonder if this works for any two numbers.",
+   "openEnded": true,
+   "anchor": 0.5,
+   "side": "right",
+   "crop": [
+    0.1683,
+    0.435,
+    0.6472,
+    0.15
+   ],
+   "verified": true,
+   "verification": "Computed 374 × 43 = 16,082 in Python and summed the six printed partial products (12,000 + 2,800 + 160 + 900 + 210 + 12 = 16,082)."
+  },
+  {
+   "id": "mind159",
+   "title": "Math is… Mindset",
+   "hint": "This is about you, so there is no one right answer.",
+   "steps": [
+    "Think about what helps you pay attention.",
+    "Write one or two steps you will take today."
+   ],
+   "answer": "Sample answer: I will clear my desk, read each problem twice and check my partial products before adding.",
+   "openEnded": true,
+   "anchor": 0.8675,
+   "side": "left",
+   "crop": [
+    0.178,
+    0.825,
+    0.354,
+    0.084
+   ],
+   "verified": true,
+   "verification": "Original source visually checked; open-ended prompt, sample answer reviewed for accuracy."
+  }
+ ],
+ "160": [
+  {
+   "id": "learn",
+   "title": "Learn · Seats in the stadium",
+   "hint": "Each of the 164 rows has 82 seats, so multiply 164 × 82.",
+   "steps": [
+    "Split 164 into 100 + 60 + 4 and 82 into 80 + 2.",
+    "Multiply 80 by 100, 60 and 4: 8,000, 4,800, 320.",
+    "Multiply 2 by 100, 60 and 4: 200, 120, 8.",
+    "Add all six partial products: 13,448."
+   ],
+   "answer": "13,448 seats",
+   "openEnded": false,
+   "anchor": 0.125,
+   "side": "left",
+   "crop": [
+    0.0712,
+    0.06,
+    0.8091,
+    0.15
+   ],
+   "verified": true,
+   "verification": "Computed 164 × 82 = 13,448 in Python; partial products 8,000 + 4,800 + 320 + 200 + 120 + 8 = 13,448; estimate 160 × 80 = 12,800."
+  },
+  {
+   "id": "gen160",
+   "title": "Math is… Generalizations",
+   "hint": "Each box in an area model is one partial product.",
+   "steps": [
+    "Picture 164 × 82 as a rectangle split into parts.",
+    "Each small rectangle's area is one partial product.",
+    "Adding all the small areas gives the whole area, the product."
+   ],
+   "answer": "Sample answer: The area model splits the big rectangle into smaller boxes. Each box is one partial product, and adding the boxes gives the total, just like adding the partial products in the vertical list.",
+   "openEnded": true,
+   "anchor": 0.555,
+   "side": "right",
+   "crop": [
+    0.5748,
+    0.5015,
+    0.3087,
+    0.1045
+   ],
+   "verified": true,
+   "verification": "Original source visually checked; open-ended prompt, sample answer reviewed for accuracy."
+  },
+  {
+   "id": "together",
+   "title": "Work Together · 142 × 63",
+   "hint": "Split 142 into 100 + 40 + 2 and 63 into 60 + 3.",
+   "steps": [
+    "Multiply 60 by 100, 40 and 2: 6,000, 2,400, 120.",
+    "Multiply 3 by 100, 40 and 2: 300, 120, 6.",
+    "Line up the partial products vertically and add them."
+   ],
+   "answer": "8,946 (6,000 + 2,400 + 120 + 300 + 120 + 6)",
+   "openEnded": false,
+   "anchor": 0.8,
+   "side": "right",
+   "crop": [
+    0.0777,
+    0.7325,
+    0.7961,
+    0.21
+   ],
+   "verified": true,
+   "verification": "Computed 142 × 63 = 8,946 in Python; checked partial-product sum and estimate 140 × 60 = 8,400."
+  }
+ ],
+ "161": [
+  {
+   "id": "1",
+   "title": "Problem 1 · 325 × 73",
+   "hint": "The three printed partial products all use the 70; now multiply by the 3.",
+   "steps": [
+    "The given ones are 70 × 300, 70 × 20 and 70 × 5.",
+    "Find 3 × 300 = 900, 3 × 20 = 60, 3 × 5 = 15.",
+    "Add all six: 21,000 + 1,400 + 350 + 900 + 60 + 15."
+   ],
+   "answer": "900, 60, 15; product 23,725",
+   "openEnded": false,
+   "anchor": 0.28,
+   "side": "left",
+   "crop": [
+    0.1294,
+    0.1775,
+    0.1683,
+    0.1975
+   ],
+   "verified": true,
+   "verification": "Computed 325 × 73 = 23,725 in Python; 21,000 + 1,400 + 350 + 900 + 60 + 15 = 23,725; estimate 300 × 70 = 21,000."
+  },
+  {
+   "id": "2",
+   "title": "Problem 2 · 104 × 28",
+   "hint": "32 is 8 × 4 and 800 is 8 × 100; now multiply by the 20.",
+   "steps": [
+    "Find 20 × 4 = 80.",
+    "Find 20 × 100 = 2,000.",
+    "Add: 32 + 800 + 80 + 2,000."
+   ],
+   "answer": "80, 2,000; product 2,912",
+   "openEnded": false,
+   "anchor": 0.255,
+   "side": "right",
+   "crop": [
+    0.5372,
+    0.1775,
+    0.1489,
+    0.1525
+   ],
+   "verified": true,
+   "verification": "Computed 104 × 28 = 2,912 in Python; 32 + 800 + 80 + 2,000 = 2,912; estimate 100 × 30 = 3,000."
+  },
+  {
+   "id": "3",
+   "title": "Problem 3 · 17 × 86",
+   "hint": "Split 17 into 10 + 7 and 86 into 80 + 6.",
+   "steps": [
+    "80 × 10 = 800 and 80 × 7 = 560.",
+    "6 × 10 = 60 and 6 × 7 = 42.",
+    "Add: 800 + 560 + 60 + 42."
+   ],
+   "answer": "1,462",
+   "openEnded": false,
+   "anchor": 0.48,
+   "side": "left",
+   "crop": [
+    0.1359,
+    0.435,
+    0.3819,
+    0.12
+   ],
+   "verified": true,
+   "verification": "Computed 17 × 86 = 1,462 in Python; partial products 800 + 560 + 60 + 42; estimate 20 × 80 = 1,600."
+  },
+  {
+   "id": "4",
+   "title": "Problem 4 · 24 × 129",
+   "hint": "Split 129 into 100 + 20 + 9 and 24 into 20 + 4.",
+   "steps": [
+    "20 × 100 = 2,000, 20 × 20 = 400, 20 × 9 = 180.",
+    "4 × 100 = 400, 4 × 20 = 80, 4 × 9 = 36.",
+    "Add all six partial products."
+   ],
+   "answer": "3,096",
+   "openEnded": false,
+   "anchor": 0.48,
+   "side": "right",
+   "crop": [
+    0.5372,
+    0.435,
+    0.4013,
+    0.12
+   ],
+   "verified": true,
+   "verification": "Computed 24 × 129 = 3,096 in Python; partial-product sum 2,000 + 400 + 180 + 400 + 80 + 36 = 3,096; estimate 25 × 130 = 3,250."
+  },
+  {
+   "id": "5",
+   "title": "Problem 5 · 36 × 93",
+   "hint": "Split 36 into 30 + 6 and 93 into 90 + 3.",
+   "steps": [
+    "90 × 30 = 2,700 and 90 × 6 = 540.",
+    "3 × 30 = 90 and 3 × 6 = 18.",
+    "Add: 2,700 + 540 + 90 + 18."
+   ],
+   "answer": "3,348",
+   "openEnded": false,
+   "anchor": 0.61,
+   "side": "left",
+   "crop": [
+    0.1359,
+    0.56,
+    0.3819,
+    0.115
+   ],
+   "verified": true,
+   "verification": "Computed 36 × 93 = 3,348 in Python; partial-product sum checked; estimate 36 × 100 = 3,600 minus 36 × 7 = 252 gives 3,348."
+  },
+  {
+   "id": "6",
+   "title": "Problem 6 · 222 × 58",
+   "hint": "Split 222 into 200 + 20 + 2 and 58 into 50 + 8.",
+   "steps": [
+    "50 × 200 = 10,000, 50 × 20 = 1,000, 50 × 2 = 100.",
+    "8 × 200 = 1,600, 8 × 20 = 160, 8 × 2 = 16.",
+    "Add all six partial products."
+   ],
+   "answer": "12,876",
+   "openEnded": false,
+   "anchor": 0.61,
+   "side": "right",
+   "crop": [
+    0.5372,
+    0.56,
+    0.4013,
+    0.115
+   ],
+   "verified": true,
+   "verification": "Computed 222 × 58 = 12,876 in Python; partial-product sum checked; estimate 200 × 60 = 12,000."
+  },
+  {
+   "id": "7",
+   "title": "Problem 7 · Mountain bikes",
+   "hint": "Each bike costs $249 (look at the price tag), and they sold 24 bikes.",
+   "steps": [
+    "Multiply 249 × 24.",
+    "20 × 249: 4,000 + 800 + 180 = 4,980.",
+    "4 × 249: 800 + 160 + 36 = 996.",
+    "Add: 4,980 + 996 = 5,976."
+   ],
+   "answer": "$5,976",
+   "openEnded": false,
+   "anchor": 0.72,
+   "side": "left",
+   "crop": [
+    0.1392,
+    0.68,
+    0.7929,
+    0.12
+   ],
+   "verified": true,
+   "verification": "Computed 24 × 249 = 5,976 in Python; checked 25 × 249 = 6,225 minus 249 = 5,976."
+  },
+  {
+   "id": "8",
+   "title": "Problem 8 · Bike and scooter packages",
+   "hint": "Multiply the number of packages by the price of each: 12 × 367.",
+   "steps": [
+    "Split 367 into 300 + 60 + 7 and 12 into 10 + 2.",
+    "10 × 367: 3,000 + 600 + 70 = 3,670.",
+    "2 × 367: 600 + 120 + 14 = 734.",
+    "Add: 3,670 + 734 = 4,404."
+   ],
+   "answer": "$4,404",
+   "openEnded": false,
+   "anchor": 0.835,
+   "side": "left",
+   "crop": [
+    0.1392,
+    0.8075,
+    0.7023,
+    0.1075
+   ],
+   "verified": true,
+   "verification": "Computed 12 × 367 = 4,404 in Python; estimate 12 × 370 = 4,440."
+  }
+ ],
+ "162": [
+  {
+   "id": "9",
+   "title": "Problem 9 · School fundraiser",
+   "hint": "Multiply the number of donors by the dollars each gives: 327 × 25.",
+   "steps": [
+    "Split 327 into 300 + 20 + 7 and 25 into 20 + 5.",
+    "20 × 327: 6,000 + 400 + 140 = 6,540.",
+    "5 × 327: 1,500 + 100 + 35 = 1,635.",
+    "Add: 6,540 + 1,635 = 8,175."
+   ],
+   "answer": "$8,175",
+   "openEnded": false,
+   "anchor": 0.065,
+   "side": "left",
+   "crop": [
+    0.0712,
+    0.04,
+    0.6667,
+    0.05
+   ],
+   "verified": true,
+   "verification": "Computed 327 × 25 = 8,175 in Python; checked 327 × 100 ÷ 4 = 32,700 ÷ 4 = 8,175."
+  },
+  {
+   "id": "10",
+   "title": "Problem 10 · Boxes of shirts",
+   "hint": "Multiply the boxes by the shirts in each box: 60 × 152.",
+   "steps": [
+    "Split 152 into 100 + 50 + 2.",
+    "60 × 100 = 6,000, 60 × 50 = 3,000, 60 × 2 = 120.",
+    "Add: 6,000 + 3,000 + 120 = 9,120."
+   ],
+   "answer": "9,120 shirts",
+   "openEnded": false,
+   "anchor": 0.21,
+   "side": "left",
+   "crop": [
+    0.0712,
+    0.185,
+    0.6731,
+    0.05
+   ],
+   "verified": true,
+   "verification": "Computed 60 × 152 = 9,120 in Python; checked 152 × 6 = 912, times 10."
+  },
+  {
+   "id": "11",
+   "title": "11 · Raya's error",
+   "hint": "Compare the top number in Raya's work with the problem, 128 × 17.",
+   "steps": [
+    "Raya wrote 208 instead of 128 and used 200 + 10 + 8, so her partial products are wrong.",
+    "128 = 100 + 20 + 8, so the partial products are 1,000, 200, 80, 700, 140, 56.",
+    "Add them to get the correct product."
+   ],
+   "answer": "Raya's work is incorrect. She copied 128 as 208 and split it as 200 + 10 + 8. Using 100 + 20 + 8 gives 1,000 + 200 + 80 + 700 + 140 + 56 = 2,176, so 128 × 17 = 2,176, not 3,706.",
+   "openEnded": false,
+   "anchor": 0.38,
+   "side": "left",
+   "crop": [
+    0.0712,
+    0.315,
+    0.699,
+    0.1775
+   ],
+   "verified": true,
+   "verification": "Computed 128 × 17 = 2,176 in Python; verified Raya's printed partial products sum to 3,706 and match 200 + 10 + 8 times 10 and 7; estimate 130 × 17 = 2,210."
+  },
+  {
+   "id": "12",
+   "title": "12 · Extend Your Thinking · 384 × 725",
+   "hint": "Split 384 into 300 + 80 + 4 and 725 into 700 + 20 + 5; you get nine partial products.",
+   "steps": [
+    "700 × 300 = 210,000, 700 × 80 = 56,000, 700 × 4 = 2,800.",
+    "20 × 300 = 6,000, 20 × 80 = 1,600, 20 × 4 = 80.",
+    "5 × 300 = 1,500, 5 × 80 = 400, 5 × 4 = 20.",
+    "Add all nine: 278,400."
+   ],
+   "answer": "278,400. Multiplying each place-value part of 384 by each part of 725 gives nine partial products whose sum is 278,400.",
+   "openEnded": false,
+   "anchor": 0.575,
+   "side": "left",
+   "crop": [
+    0.0712,
+    0.5275,
+    0.5761,
+    0.0775
+   ],
+   "verified": true,
+   "verification": "Computed 384 × 725 = 278,400 in Python; sum of nine partial products also 278,400; checked 384 × 725 = 384 × 29 × 25 = 11,136 × 25 = 278,400."
+  },
+  {
+   "id": "reflect",
+   "title": "Reflect · Partial products",
+   "hint": "Think about how you broke apart the factors on this page.",
+   "steps": [
+    "Split each factor by place value.",
+    "Multiply every part of one factor by every part of the other.",
+    "Add all the partial products."
+   ],
+   "answer": "Sample answer: I break each factor into hundreds, tens and ones, multiply each part of one factor by each part of the other, then add all the partial products to get the product.",
+   "openEnded": true,
+   "anchor": 0.725,
+   "side": "right",
+   "crop": [
+    0.0777,
+    0.6925,
+    0.7961,
+    0.0575
+   ],
+   "verified": true,
+   "verification": "Original source visually checked; open-ended prompt, sample answer reviewed for accuracy."
+  },
+  {
+   "id": "mind162",
+   "title": "Math is… Mindset",
+   "hint": "This is about you, so there is no one right answer.",
+   "steps": [
+    "Think back on how you worked today.",
+    "Write the steps that helped you stay focused."
+   ],
+   "answer": "Sample answer: I worked one partial product at a time and checked my answers with an estimate.",
+   "openEnded": true,
+   "anchor": 0.885,
+   "side": "right",
+   "crop": [
+    0.4984,
+    0.844,
+    0.3547,
+    0.0835
+   ],
+   "verified": true,
+   "verification": "Original source visually checked; open-ended prompt, sample answer reviewed for accuracy."
+  }
+ ],
+ "163": [
+  {
+   "id": "curious",
+   "title": "Be Curious · What do you notice? What do you wonder?",
+   "hint": "Compare the two ways 132 × 3 is written.",
+   "steps": [
+    "Look at the left problem: it shows three partial products, 300, 90 and 6.",
+    "Look at the right problem: it shows only the final product.",
+    "Notice that both give 396, then write a question you wonder about."
+   ],
+   "answer": "Sample answer: I notice both ways get 396. The left one shows each partial product (3 × 100, 3 × 30, 3 × 2) and the right one only shows the answer. I wonder how you can get 396 without writing the partial products.",
+   "openEnded": true,
+   "anchor": 0.3,
+   "side": "right",
+   "crop": [
+    0.1683,
+    0.215,
+    0.7443,
+    0.36
+   ],
+   "verified": true,
+   "verification": "Original page visually checked; 132 × 3 = 396 computed in Python; 300 + 90 + 6 = 396 checked by adding."
+  },
+  {
+   "id": "mind163",
+   "title": "Math is… Mindset",
+   "hint": "Think about how you help and listen to classmates.",
+   "steps": [
+    "Think about what a good classmate does in math class.",
+    "Write one way you can help your class work together."
+   ],
+   "answer": "Sample answer: I can be part of the classroom community by listening to others, sharing my ideas, and helping a classmate who is stuck. Your own answer may be different.",
+   "openEnded": true,
+   "anchor": 0.8675,
+   "side": "left",
+   "crop": [
+    0.1812,
+    0.8275,
+    0.3042,
+    0.08
+   ],
+   "verified": true,
+   "verification": "Original page visually checked; Opinion prompt; no single answer."
+  }
+ ],
+ "164": [
+  {
+   "id": "learn",
+   "title": "Learn · Los Angeles to New York City",
+   "hint": "The map shows Los Angeles to Phoenix is 413 miles.",
+   "steps": [
+    "Write the multiplication: 413 × 7.",
+    "Multiply the ones, tens and hundreds, regrouping when needed.",
+    "Write the product with the unit: miles."
+   ],
+   "answer": "413 × 7 = 2,891, so the distance is 2,891 miles.",
+   "openEnded": false,
+   "anchor": 0.19,
+   "side": "left",
+   "crop": [
+    0.0647,
+    0.06,
+    0.8155,
+    0.19
+   ],
+   "verified": true,
+   "verification": "Original page visually checked; Computed 413 × 7 = 2,891 in Python; checked by estimate 400 × 7 = 2,800."
+  },
+  {
+   "id": "general164",
+   "title": "Math is… Generalizations",
+   "hint": "Compare the partial products for 413 × 7 with the steps of the algorithm.",
+   "steps": [
+    "Partial products: 7 × 400 = 2,800, 7 × 10 = 70, 7 × 3 = 21.",
+    "The algorithm finds the same pieces, one place value at a time.",
+    "Instead of writing each piece, it regroups and writes one product."
+   ],
+   "answer": "Sample answer: Both multiply each place value of 413 by 7 (2,800 + 70 + 21 = 2,891). The algorithm does the same multiplying but regroups as it goes, so it writes only one product instead of adding the partial products at the end.",
+   "openEnded": true,
+   "anchor": 0.6925,
+   "side": "right",
+   "crop": [
+    0.479,
+    0.65,
+    0.3786,
+    0.085
+   ],
+   "verified": true,
+   "verification": "Original page visually checked; 2,800 + 70 + 21 = 2,891 checked in Python; matches algorithm result 413 × 7."
+  },
+  {
+   "id": "together",
+   "title": "Work Together · 3,021 × 4",
+   "hint": "Start with the ones place and move left.",
+   "steps": [
+    "Ones: 4 × 1 = 4.",
+    "Tens: 4 × 2 tens = 8 tens. Hundreds: 4 × 0 = 0.",
+    "Thousands: 4 × 3 thousands = 12 thousands.",
+    "Put the digits together."
+   ],
+   "answer": "12,084",
+   "openEnded": false,
+   "anchor": 0.785,
+   "side": "right",
+   "crop": [
+    0.0777,
+    0.755,
+    0.7929,
+    0.06
+   ],
+   "verified": true,
+   "verification": "Original page visually checked; Computed 3,021 × 4 = 12,084 in Python; checked 12,084 ÷ 4 = 3,021."
+  }
+ ],
+ "165": [
+  {
+   "id": "1",
+   "title": "Problem 1 · 327 × 6",
+   "hint": "Multiply the ones first: 6 × 7.",
+   "steps": [
+    "6 × 7 = 42: write 2, regroup 4 tens.",
+    "6 × 2 tens = 12 tens, plus 4 = 16 tens: write 6, regroup 1 hundred.",
+    "6 × 3 hundreds = 18 hundreds, plus 1 = 19 hundreds."
+   ],
+   "answer": "1,962",
+   "openEnded": false,
+   "anchor": 0.205,
+   "side": "left",
+   "crop": [
+    0.1294,
+    0.18,
+    0.1618,
+    0.055
+   ],
+   "verified": true,
+   "verification": "Original page visually checked; Computed 327 × 6 = 1,962 in Python; checked 1,962 ÷ 6 = 327."
+  },
+  {
+   "id": "2",
+   "title": "Problem 2 · 543 × 8",
+   "hint": "Multiply the ones first: 8 × 3.",
+   "steps": [
+    "8 × 3 = 24: write 4, regroup 2 tens.",
+    "8 × 4 tens = 32 tens, plus 2 = 34 tens: write 4, regroup 3 hundreds.",
+    "8 × 5 hundreds = 40 hundreds, plus 3 = 43 hundreds."
+   ],
+   "answer": "4,344",
+   "openEnded": false,
+   "anchor": 0.205,
+   "side": "right",
+   "crop": [
+    0.4693,
+    0.18,
+    0.1877,
+    0.055
+   ],
+   "verified": true,
+   "verification": "Original page visually checked; Computed 543 × 8 = 4,344 in Python; checked 4,344 ÷ 8 = 543."
+  },
+  {
+   "id": "3",
+   "title": "Problem 3 · 1,931 × 5",
+   "hint": "Multiply one place at a time, starting with the ones.",
+   "steps": [
+    "5 × 1 = 5.",
+    "5 × 3 tens = 15 tens: write 5, regroup 1 hundred.",
+    "5 × 9 hundreds = 45 hundreds, plus 1 = 46: write 6, regroup 4 thousands.",
+    "5 × 1 thousand = 5, plus 4 = 9 thousands."
+   ],
+   "answer": "9,655",
+   "openEnded": false,
+   "anchor": 0.33,
+   "side": "left",
+   "crop": [
+    0.1294,
+    0.305,
+    0.1618,
+    0.055
+   ],
+   "verified": true,
+   "verification": "Original page visually checked; Computed 1,931 × 5 = 9,655 in Python; checked 9,655 ÷ 5 = 1,931."
+  },
+  {
+   "id": "4",
+   "title": "Problem 4 · 3,462 × 4",
+   "hint": "Multiply one place at a time, starting with the ones.",
+   "steps": [
+    "4 × 2 = 8.",
+    "4 × 6 tens = 24 tens: write 4, regroup 2 hundreds.",
+    "4 × 4 hundreds = 16, plus 2 = 18 hundreds: write 8, regroup 1 thousand.",
+    "4 × 3 thousands = 12, plus 1 = 13 thousands."
+   ],
+   "answer": "13,848",
+   "openEnded": false,
+   "anchor": 0.33,
+   "side": "right",
+   "crop": [
+    0.4725,
+    0.305,
+    0.1877,
+    0.055
+   ],
+   "verified": true,
+   "verification": "Original page visually checked; Computed 3,462 × 4 = 13,848 in Python; checked 13,848 ÷ 4 = 3,462."
+  },
+  {
+   "id": "5",
+   "title": "Problem 5 · 188 × 7 = s",
+   "hint": "Estimate first: 188 is close to 200.",
+   "steps": [
+    "Ones: 7 × 8 = 56: write 6, regroup 5 tens.",
+    "Tens: 7 × 8 = 56, plus 5 = 61 tens: write 1, regroup 6 hundreds.",
+    "Hundreds: 7 × 1 = 7, plus 6 = 13 hundreds. Find the matching choice."
+   ],
+   "answer": "B. s = 1,316",
+   "openEnded": false,
+   "anchor": 0.55,
+   "side": "left",
+   "crop": [
+    0.1294,
+    0.4625,
+    0.3366,
+    0.175
+   ],
+   "verified": true,
+   "verification": "Original page visually checked; Computed 188 × 7 = 1,316 in Python; checked 1,316 ÷ 7 = 188 and estimate 200 × 7 = 1,400."
+  },
+  {
+   "id": "6",
+   "title": "Problem 6 · 237 × 9 = v",
+   "hint": "The ones digit of 7 × 9 tells you the last digit of the answer.",
+   "steps": [
+    "Ones: 9 × 7 = 63: write 3, regroup 6 tens.",
+    "Tens: 9 × 3 = 27, plus 6 = 33 tens: write 3, regroup 3 hundreds.",
+    "Hundreds: 9 × 2 = 18, plus 3 = 21 hundreds. Find the matching choice."
+   ],
+   "answer": "D. v = 2,133",
+   "openEnded": false,
+   "anchor": 0.55,
+   "side": "right",
+   "crop": [
+    0.4725,
+    0.4625,
+    0.3495,
+    0.175
+   ],
+   "verified": true,
+   "verification": "Original page visually checked; Computed 237 × 9 = 2,133 in Python; checked 2,133 ÷ 9 = 237."
+  },
+  {
+   "id": "7",
+   "title": "Problem 7 · 2,623 × 2 = y",
+   "hint": "Doubling 2,623 is the same as adding it to itself.",
+   "steps": [
+    "2 × 3 = 6 and 2 × 2 tens = 4 tens.",
+    "2 × 6 hundreds = 12 hundreds: write 2, regroup 1 thousand.",
+    "2 × 2 thousands = 4, plus 1 = 5 thousands. Find the matching choice."
+   ],
+   "answer": "A. y = 5,246",
+   "openEnded": false,
+   "anchor": 0.77,
+   "side": "left",
+   "crop": [
+    0.1294,
+    0.695,
+    0.3495,
+    0.15
+   ],
+   "verified": true,
+   "verification": "Original page visually checked; Computed 2,623 × 2 = 5,246 in Python; checked 2,623 + 2,623 = 5,246."
+  },
+  {
+   "id": "8",
+   "title": "Problem 8 · 5,246 × 3 = r",
+   "hint": "Multiply one place at a time and remember to regroup.",
+   "steps": [
+    "3 × 6 = 18: write 8, regroup 1 ten. 3 × 4 = 12, plus 1 = 13 tens: write 3, regroup 1.",
+    "3 × 2 = 6, plus 1 = 7 hundreds.",
+    "3 × 5 = 15 thousands. Find the matching choice."
+   ],
+   "answer": "D. r = 15,738",
+   "openEnded": false,
+   "anchor": 0.77,
+   "side": "right",
+   "crop": [
+    0.4725,
+    0.695,
+    0.3625,
+    0.15
+   ],
+   "verified": true,
+   "verification": "Original page visually checked; Computed 5,246 × 3 = 15,738 in Python; checked 15,738 ÷ 3 = 5,246."
+  }
+ ],
+ "166": [
+  {
+   "id": "9",
+   "title": "9 · How deep is the Atlantic Ocean?",
+   "hint": "Multiply Lake Michigan's depth by 28.",
+   "steps": [
+    "Write 922 × 28.",
+    "Find 922 × 8 = 7,376 and 922 × 20 = 18,440.",
+    "Add: 7,376 + 18,440."
+   ],
+   "answer": "922 × 28 = 25,816, so the Atlantic Ocean is 25,816 feet deep.",
+   "openEnded": false,
+   "anchor": 0.08,
+   "side": "left",
+   "crop": [
+    0.0712,
+    0.04,
+    0.5955,
+    0.15
+   ],
+   "verified": true,
+   "verification": "Original page visually checked; Computed 922 × 28 = 25,816 in Python; checked 25,816 ÷ 28 = 922 and 7,376 + 18,440 = 25,816."
+  },
+  {
+   "id": "10",
+   "title": "10 · Joey's lawn money",
+   "hint": "He earns the same amount each week for 6 weeks.",
+   "steps": [
+    "Write $355 × 6.",
+    "Multiply: 6 × 5 = 30, 6 × 50 = 300, 6 × 300 = 1,800.",
+    "Add the pieces or use the algorithm: 30 + 300 + 1,800."
+   ],
+   "answer": "$355 × 6 = $2,130",
+   "openEnded": false,
+   "anchor": 0.2225,
+   "side": "left",
+   "crop": [
+    0.0712,
+    0.1975,
+    0.6472,
+    0.095
+   ],
+   "verified": true,
+   "verification": "Original page visually checked; Computed 355 × 6 = 2,130 in Python; checked 2,130 ÷ 6 = 355."
+  },
+  {
+   "id": "11",
+   "title": "11 · Maria's steps",
+   "hint": "Read the number of steps on the pedometer: 9,150.",
+   "steps": [
+    "Write 9,150 × 7.",
+    "Multiply: 7 × 50 = 350, 7 × 100 = 700, 7 × 9,000 = 63,000.",
+    "Add: 63,000 + 700 + 350."
+   ],
+   "answer": "9,150 × 7 = 64,050 steps",
+   "openEnded": false,
+   "anchor": 0.33,
+   "side": "left",
+   "crop": [
+    0.0712,
+    0.295,
+    0.8026,
+    0.13
+   ],
+   "verified": true,
+   "verification": "Original page visually checked; Pedometer reads 9150 (zoomed image); computed 9,150 × 7 = 64,050 in Python; checked 64,050 ÷ 7 = 9,150."
+  },
+  {
+   "id": "12",
+   "title": "12 · Podcast seconds",
+   "hint": "There are 60 seconds in 1 minute.",
+   "steps": [
+    "Find the total minutes: 3 × 45 = 135 minutes.",
+    "Change to seconds: 135 × 60.",
+    "135 × 60 = 8,100."
+   ],
+   "answer": "8,100 seconds",
+   "openEnded": false,
+   "anchor": 0.46,
+   "side": "left",
+   "crop": [
+    0.0712,
+    0.425,
+    0.6731,
+    0.115
+   ],
+   "verified": true,
+   "verification": "Original page visually checked; Computed 3 × 45 × 60 = 8,100 in Python; checked another way: 45 × 60 = 2,700 seconds per podcast, 2,700 × 3 = 8,100."
+  },
+  {
+   "id": "13",
+   "title": "13 · Extend Your Thinking",
+   "hint": "Think about what goes wrong if you skip regrouping.",
+   "steps": [
+    "Each step multiplies one place value.",
+    "Regrouped digits must be added in the next step.",
+    "Skipping or mixing up a step gives the wrong product."
+   ],
+   "answer": "Sample answer: Each step multiplies a different place value and passes the regrouped tens, hundreds or thousands to the next step. If you skip a step or forget to add the regrouped amount, a place value is left out and the product is wrong. For example, 413 × 7 is 2,891, but forgetting the 2 regrouped tens gives 2,871.",
+   "openEnded": true,
+   "anchor": 0.57,
+   "side": "left",
+   "crop": [
+    0.0712,
+    0.545,
+    0.6667,
+    0.14
+   ],
+   "verified": true,
+   "verification": "Original page visually checked; Explanation prompt; example checked: 413 × 7 = 2,891 in Python, and omitting 20 gives 2,871."
+  },
+  {
+   "id": "reflect",
+   "title": "Reflect · Partial products and an algorithm",
+   "hint": "Think back to 132 × 3 on the Be Curious page.",
+   "steps": [
+    "Partial products show each place value multiplied separately.",
+    "The algorithm multiplies the same place values, regrouping as it goes.",
+    "Both give the same product."
+   ],
+   "answer": "Sample answer: They both multiply each place value of the number. Partial products write each product (300 + 90 + 6 = 396) and then add, while the algorithm regroups as it goes and writes only the final product, 396.",
+   "openEnded": true,
+   "anchor": 0.7525,
+   "side": "left",
+   "crop": [
+    0.0777,
+    0.73,
+    0.7961,
+    0.045
+   ],
+   "verified": true,
+   "verification": "Original page visually checked; 132 × 3 = 396 and 300 + 90 + 6 = 396 checked in Python."
+  },
+  {
+   "id": "mind166",
+   "title": "Math is… Mindset",
+   "hint": "Remember a time you worked with a partner or the class.",
+   "steps": [
+    "Think of a time you shared, listened or helped in math class.",
+    "Describe what you did."
+   ],
+   "answer": "Sample answer: I was part of the classroom community when I explained my steps to my partner and listened to how she solved the problem. Your own experience may be different.",
+   "openEnded": true,
+   "anchor": 0.8825,
+   "side": "right",
+   "crop": [
+    0.5469,
+    0.84,
+    0.3074,
+    0.085
+   ],
+   "verified": true,
+   "verification": "Original page visually checked; Opinion prompt; no single answer."
+  }
+ ],
+ "167": [
+  {
+   "id": "s1",
+   "title": "Student 1 · Area model for 42 × 13",
+   "hint": "Check whether the sides of the box add up to 42 and 13.",
+   "steps": [
+    "Look at the top: 40 + 2 = 42. Look at the side: 10 + 3 = 13.",
+    "Check each box: 10 × 40 = 400, 10 × 2 = 20, 3 × 40 = 120, 3 × 2 = 6.",
+    "Every part of 42 is multiplied by every part of 13, so the plan works. Mark Yes and explain why."
+   ],
+   "answer": "Yes. Student 1 splits 42 into 40 + 2 and 13 into 10 + 3 and finds all four partial products (400, 20, 120 and 6). Adding them would give the product.",
+   "openEnded": false,
+   "anchor": 0.485,
+   "side": "left",
+   "crop": [
+    0.1197,
+    0.31,
+    0.3981,
+    0.295
+   ],
+   "verified": true,
+   "verification": "Checked each box in Python: 10×40=400, 10×2=20, 3×40=120, 3×2=6; 400+20+120+6 = 546 = 42 × 13."
+  },
+  {
+   "id": "s2",
+   "title": "Student 2 · (40 × 20) + (2 × 3)",
+   "hint": "Does 13 have a 20 in it?",
+   "steps": [
+    "Break 13 into tens and ones: 13 = 10 + 3, not 20 + 3.",
+    "Notice that the parts 40 × 3 and 2 × 10 are missing too.",
+    "Since the numbers and the parts are wrong, mark No and explain."
+   ],
+   "answer": "No. 13 is 10 + 3, so there is no 20 to multiply by, and the plan leaves out partial products such as 40 × 3 and 2 × 10. (It would give 806, not 546.)",
+   "openEnded": false,
+   "anchor": 0.75,
+   "side": "left",
+   "crop": [
+    0.1197,
+    0.65,
+    0.3981,
+    0.17
+   ],
+   "verified": true,
+   "verification": "Computed (40×20)+(2×3) = 806 ≠ 42×13 = 546 in Python; checked that 13 = 10 + 3."
+  }
+ ],
+ "168": [
+  {
+   "id": "s3",
+   "title": "Student 3 · 13 × 40 + 13 × 2",
+   "hint": "Is 40 + 2 the same as 42?",
+   "steps": [
+    "Break 42 into 40 + 2.",
+    "Multiply 13 by each part: 13 × 40 and 13 × 2.",
+    "Adding the two parts gives 13 × 42, which equals 42 × 13. Mark Yes and explain."
+   ],
+   "answer": "Yes. Student 3 breaks 42 into 40 + 2 and multiplies each part by 13. Because 13 × 42 = 42 × 13, adding the two parts gives the product.",
+   "openEnded": false,
+   "anchor": 0.13,
+   "side": "left",
+   "crop": [
+    0.0906,
+    0.055,
+    0.3236,
+    0.13
+   ],
+   "verified": true,
+   "verification": "Computed 13×40 + 13×2 = 520 + 26 = 546 = 42×13 in Python; order of factors does not change the product."
+  },
+  {
+   "id": "reflect168",
+   "title": "Reflect On Your Learning",
+   "hint": "Choose the circle that matches how you feel right now.",
+   "steps": [
+    "Read the four choices from 'I'm confused' to 'I can teach someone else.'",
+    "Pick the one that is true for you and write it in the box."
+   ],
+   "answer": "Sample answer: I understand. Your own choice may be different.",
+   "openEnded": true,
+   "anchor": 0.85,
+   "side": "right",
+   "crop": [
+    0.0712,
+    0.76,
+    0.7961,
+    0.15
+   ],
+   "verified": true,
+   "verification": "Open-ended prompt read from the original page; sample answer reviewed for accuracy."
+  }
+ ],
+ "169": [
+  {
+   "id": "curious",
+   "title": "Be Curious · How are they the same?",
+   "hint": "Compare the final answers and count the rows of work.",
+   "steps": [
+    "Look at the bottom number of each problem.",
+    "Count how many partial products each one writes.",
+    "Tell one way they are the same and one way they are different."
+   ],
+   "answer": "One possible answer: Both multiply 443 × 15 and get 6,645. The left one writes six small partial products (2,000, 200, 15, 4,000, 400, 30); the right one uses regrouping to write only two partial products (2,215 and 4,430).",
+   "openEnded": true,
+   "anchor": 0.45,
+   "side": "right",
+   "crop": [
+    0.1748,
+    0.22,
+    0.5631,
+    0.425
+   ],
+   "verified": true,
+   "verification": "Computed 443×15 = 6,645 in Python; 2,000+200+15+4,000+400+30 = 6,645 and 2,215+4,430 = 6,645."
+  },
+  {
+   "id": "mind169",
+   "title": "Math is… Mindset",
+   "hint": "Think about a math moment you enjoyed.",
+   "steps": [
+    "Remember a time math felt fun or exciting.",
+    "Write what made you feel that way."
+   ],
+   "answer": "Sample answer: I feel excited when I solve a hard problem and check that my answer is right.",
+   "openEnded": true,
+   "anchor": 0.8675,
+   "side": "right",
+   "crop": [
+    0.1748,
+    0.825,
+    0.3204,
+    0.085
+   ],
+   "verified": true,
+   "verification": "Open-ended prompt read from the original page; sample answer reviewed for accuracy."
+  }
+ ],
+ "170": [
+  {
+   "id": "learn",
+   "title": "Learn · T-shirt money",
+   "hint": "Each shirt costs $26, so multiply 549 × 26.",
+   "steps": [
+    "Multiply 549 × 6 = 3,294.",
+    "Multiply 549 × 20 = 10,980.",
+    "Add the partial products: 3,294 + 10,980 = 14,274."
+   ],
+   "answer": "$14,274",
+   "openEnded": false,
+   "anchor": 0.15,
+   "side": "left",
+   "crop": [
+    0.0777,
+    0.06,
+    0.8026,
+    0.165
+   ],
+   "verified": true,
+   "verification": "Computed 549×26 = 14,274 in Python; estimate 550×25 = 13,750 is close."
+  },
+  {
+   "id": "general",
+   "title": "Math is… Generalizations · two 3-digit numbers",
+   "hint": "How many digits does the bottom number have?",
+   "steps": [
+    "A 2-digit factor gives 2 partial products (ones and tens).",
+    "A 3-digit factor has ones, tens and hundreds.",
+    "So you would find 3 partial products and add them."
+   ],
+   "answer": "Sample answer: With two 3-digit numbers you multiply by the ones, the tens and the hundreds, so there are three partial products to add instead of two.",
+   "openEnded": true,
+   "anchor": 0.355,
+   "side": "right",
+   "crop": [
+    0.5178,
+    0.3,
+    0.3463,
+    0.1075
+   ],
+   "verified": true,
+   "verification": "Reasoned from the algorithm; checked example 549×126 = 3,294 + 10,980 + 54,900 = 69,174 in Python."
+  },
+  {
+   "id": "together",
+   "title": "Work Together · 2,165 × 34",
+   "hint": "Split 34 into 4 ones and 3 tens.",
+   "steps": [
+    "Multiply 2,165 × 4 = 8,660.",
+    "Multiply 2,165 × 30 = 64,950.",
+    "Add: 8,660 + 64,950 = 73,610."
+   ],
+   "answer": "73,610",
+   "openEnded": false,
+   "anchor": 0.85,
+   "side": "right",
+   "crop": [
+    0.0906,
+    0.815,
+    0.7896,
+    0.125
+   ],
+   "verified": true,
+   "verification": "Computed 2,165×34 = 73,610 in Python; estimate 2,000×35 = 70,000 is close."
+  }
+ ],
+ "171": [
+  {
+   "id": "1",
+   "title": "Problem 1 · 327 × 15",
+   "hint": "Multiply by the ones digit first, then by the tens.",
+   "steps": [
+    "Multiply 327 × 5 = 1,635.",
+    "Multiply 327 × 10 = 3,270.",
+    "Add the partial products: 1,635 + 3,270 = 4,905."
+   ],
+   "answer": "4,905",
+   "openEnded": false,
+   "anchor": 0.2,
+   "side": "left",
+   "crop": [
+    0.1294,
+    0.1725,
+    0.2589,
+    0.0525
+   ],
+   "verified": true,
+   "verification": "Computed 327×15 = 4,905 in Python; partial products 1,635 + 3,270 checked; estimate 330 × 15 = 4,950 is close."
+  },
+  {
+   "id": "2",
+   "title": "Problem 2 · 2,682 × 35",
+   "hint": "Multiply by the ones digit first, then by the tens.",
+   "steps": [
+    "Multiply 2,682 × 5 = 13,410.",
+    "Multiply 2,682 × 30 = 80,460.",
+    "Add the partial products: 13,410 + 80,460 = 93,870."
+   ],
+   "answer": "93,870",
+   "openEnded": false,
+   "anchor": 0.2,
+   "side": "right",
+   "crop": [
+    0.479,
+    0.1725,
+    0.233,
+    0.0525
+   ],
+   "verified": true,
+   "verification": "Computed 2,682×35 = 93,870 in Python; partial products 13,410 + 80,460 checked; estimate 2,700 × 35 = 94,500 is close."
+  },
+  {
+   "id": "3",
+   "title": "Problem 3 · 135 × 23",
+   "hint": "Multiply by the ones digit first, then by the tens.",
+   "steps": [
+    "Multiply 135 × 3 = 405.",
+    "Multiply 135 × 20 = 2,700.",
+    "Add the partial products: 405 + 2,700 = 3,105."
+   ],
+   "answer": "3,105",
+   "openEnded": false,
+   "anchor": 0.32,
+   "side": "left",
+   "crop": [
+    0.1294,
+    0.2925,
+    0.2589,
+    0.0525
+   ],
+   "verified": true,
+   "verification": "Computed 135×23 = 3,105 in Python; partial products 405 + 2,700 checked; estimate 135 × 20 = 2,700, plus a bit more."
+  },
+  {
+   "id": "4",
+   "title": "Problem 4 · 792 × 11",
+   "hint": "Multiply by the ones digit first, then by the tens.",
+   "steps": [
+    "Multiply 792 × 1 = 792.",
+    "Multiply 792 × 10 = 7,920.",
+    "Add the partial products: 792 + 7,920 = 8,712."
+   ],
+   "answer": "8,712",
+   "openEnded": false,
+   "anchor": 0.315,
+   "side": "right",
+   "crop": [
+    0.479,
+    0.29,
+    0.233,
+    0.0525
+   ],
+   "verified": true,
+   "verification": "Computed 792×11 = 8,712 in Python; partial products 792 + 7,920 checked; estimate 800 × 11 = 8,800 is close."
+  },
+  {
+   "id": "5",
+   "title": "Problem 5 · 180 × 72",
+   "hint": "Multiply by the ones digit first, then by the tens.",
+   "steps": [
+    "Multiply 180 × 2 = 360.",
+    "Multiply 180 × 70 = 12,600.",
+    "Add the partial products: 360 + 12,600 = 12,960."
+   ],
+   "answer": "12,960",
+   "openEnded": false,
+   "anchor": 0.435,
+   "side": "left",
+   "crop": [
+    0.1294,
+    0.41,
+    0.2589,
+    0.0525
+   ],
+   "verified": true,
+   "verification": "Computed 180×72 = 12,960 in Python; partial products 360 + 12,600 checked; estimate 180 × 70 = 12,600 is close."
+  },
+  {
+   "id": "6",
+   "title": "Problem 6 · 378 × 29",
+   "hint": "Multiply by the ones digit first, then by the tens.",
+   "steps": [
+    "Multiply 378 × 9 = 3,402.",
+    "Multiply 378 × 20 = 7,560.",
+    "Add the partial products: 3,402 + 7,560 = 10,962."
+   ],
+   "answer": "10,962",
+   "openEnded": false,
+   "anchor": 0.435,
+   "side": "right",
+   "crop": [
+    0.479,
+    0.4075,
+    0.233,
+    0.0525
+   ],
+   "verified": true,
+   "verification": "Computed 378×29 = 10,962 in Python; partial products 3,402 + 7,560 checked; estimate 378 × 30 = 11,340 is close."
+  },
+  {
+   "id": "7",
+   "title": "Problem 7 · 623 × 64",
+   "hint": "Multiply by the ones digit first, then by the tens.",
+   "steps": [
+    "Multiply 623 × 4 = 2,492.",
+    "Multiply 623 × 60 = 37,380.",
+    "Add the partial products: 2,492 + 37,380 = 39,872."
+   ],
+   "answer": "39,872",
+   "openEnded": false,
+   "anchor": 0.5525,
+   "side": "left",
+   "crop": [
+    0.1294,
+    0.5275,
+    0.2589,
+    0.0525
+   ],
+   "verified": true,
+   "verification": "Computed 623×64 = 39,872 in Python; partial products 2,492 + 37,380 checked; estimate 600 × 64 = 38,400 is close."
+  },
+  {
+   "id": "8",
+   "title": "Problem 8 · 1,432 × 73",
+   "hint": "Multiply by the ones digit first, then by the tens.",
+   "steps": [
+    "Multiply 1,432 × 3 = 4,296.",
+    "Multiply 1,432 × 70 = 100,240.",
+    "Add the partial products: 4,296 + 100,240 = 104,536."
+   ],
+   "answer": "104,536",
+   "openEnded": false,
+   "anchor": 0.55,
+   "side": "right",
+   "crop": [
+    0.479,
+    0.525,
+    0.233,
+    0.0525
+   ],
+   "verified": true,
+   "verification": "Computed 1,432×73 = 104,536 in Python; partial products 4,296 + 100,240 checked; estimate 1,400 × 75 = 105,000 is close."
+  },
+  {
+   "id": "9",
+   "title": "Problem 9 · Mia's school paper",
+   "hint": "Multiply the sheets per day by the number of days.",
+   "steps": [
+    "Write 3,408 × 25.",
+    "Multiply 3,408 × 5 = 17,040 and 3,408 × 20 = 68,160.",
+    "Add: 17,040 + 68,160 = 85,200."
+   ],
+   "answer": "85,200 sheets of paper",
+   "openEnded": false,
+   "anchor": 0.73,
+   "side": "left",
+   "crop": [
+    0.1294,
+    0.69,
+    0.6796,
+    0.07
+   ],
+   "verified": true,
+   "verification": "Computed 3,408×25 = 85,200 in Python; check: 3,408 × 100 ÷ 4 = 85,200."
+  },
+  {
+   "id": "10",
+   "title": "Problem 10 · Jack's houses",
+   "hint": "Each house takes 375 points; multiply by 23 houses.",
+   "steps": [
+    "Write 375 × 23.",
+    "Multiply 375 × 3 = 1,125 and 375 × 20 = 7,500.",
+    "Add: 1,125 + 7,500 = 8,625."
+   ],
+   "answer": "8,625 points",
+   "openEnded": false,
+   "anchor": 0.85,
+   "side": "left",
+   "crop": [
+    0.123,
+    0.8225,
+    0.6926,
+    0.05
+   ],
+   "verified": true,
+   "verification": "Computed 375×23 = 8,625 in Python; estimate 400×20 = 8,000 is close."
+  }
+ ],
+ "172": [
+  {
+   "id": "11",
+   "title": "Problem 11 · Road trip miles",
+   "hint": "They drove the same distance each day, so multiply.",
+   "steps": [
+    "Write 412 × 5.",
+    "Multiply: 400 × 5 = 2,000 and 12 × 5 = 60.",
+    "Add: 2,000 + 60 = 2,060."
+   ],
+   "answer": "2,060 miles",
+   "openEnded": false,
+   "anchor": 0.065,
+   "side": "left",
+   "crop": [
+    0.0712,
+    0.04,
+    0.6796,
+    0.0475
+   ],
+   "verified": true,
+   "verification": "Computed 412×5 = 2,060 in Python; check 2,060 ÷ 5 = 412."
+  },
+  {
+   "id": "12",
+   "title": "Problem 12 · Hotel room",
+   "hint": "A 7-day stay means 7 nights at $193 each.",
+   "steps": [
+    "Write 193 × 7.",
+    "Multiply: 200 × 7 = 1,400, then take away 7 × 7 = 49.",
+    "1,400 − 49 = 1,351."
+   ],
+   "answer": "$1,351",
+   "openEnded": false,
+   "anchor": 0.16,
+   "side": "left",
+   "crop": [
+    0.0712,
+    0.1375,
+    0.6278,
+    0.045
+   ],
+   "verified": true,
+   "verification": "Computed 193×7 = 1,351 in Python; check 1,351 ÷ 7 = 193. Treated the 7-day stay as 7 nights, as the problem intends."
+  },
+  {
+   "id": "13",
+   "title": "13 · STEM Connection · Dog teeth",
+   "hint": "Each dog has 42 teeth; multiply by the number of dogs.",
+   "steps": [
+    "Write 42 × 65.",
+    "Multiply 42 × 5 = 210 and 42 × 60 = 2,520.",
+    "Add: 210 + 2,520 = 2,730."
+   ],
+   "answer": "2,730 teeth",
+   "openEnded": false,
+   "anchor": 0.27,
+   "side": "left",
+   "crop": [
+    0.0712,
+    0.235,
+    0.5696,
+    0.065
+   ],
+   "verified": true,
+   "verification": "Computed 42×65 = 2,730 in Python; estimate 40×65 = 2,600 is close."
+  },
+  {
+   "id": "14",
+   "title": "14 · Extend Your Thinking",
+   "hint": "Look for the partial products hiding inside the algorithm.",
+   "steps": [
+    "Remember that partial products split a factor into ones and tens.",
+    "In the algorithm, each row is a combined partial product.",
+    "Explain how knowing one helps you understand the other."
+   ],
+   "answer": "Sample answer: The algorithm uses the same partial products, just combined. When I multiply by the ones digit and then the tens digit, I am finding the same pieces as with partial products, so I understand why each row and each zero is there.",
+   "openEnded": true,
+   "anchor": 0.44,
+   "side": "left",
+   "crop": [
+    0.0777,
+    0.405,
+    0.6667,
+    0.07
+   ],
+   "verified": true,
+   "verification": "Concept explanation checked against the page's Learn example (549×26 = 3,294 + 10,980)."
+  },
+  {
+   "id": "reflect",
+   "title": "Reflect · Algorithm vs. partial products",
+   "hint": "Count how many rows each method needs.",
+   "steps": [
+    "Think about how many partial products you write with each method.",
+    "Explain why fewer rows can save time."
+   ],
+   "answer": "Sample answer: An algorithm combines several small partial products into one row by regrouping, so there are fewer numbers to write and add. For 443 × 15 it uses 2 rows instead of 6.",
+   "openEnded": true,
+   "anchor": 0.7,
+   "side": "left",
+   "crop": [
+    0.0777,
+    0.665,
+    0.7961,
+    0.06
+   ],
+   "verified": true,
+   "verification": "Compared the two methods on page 169: 443×15 = 6,645 both ways in Python."
+  },
+  {
+   "id": "mind172",
+   "title": "Math is… Mindset",
+   "hint": "Think about a moment in math that felt great.",
+   "steps": [
+    "Remember a time you felt excited about math.",
+    "Write what happened and why it felt good."
+   ],
+   "answer": "Sample answer: I felt excited when I finally got a 4-digit times 2-digit problem right on my own.",
+   "openEnded": true,
+   "anchor": 0.885,
+   "side": "right",
+   "crop": [
+    0.5599,
+    0.8425,
+    0.2913,
+    0.0825
+   ],
+   "verified": true,
+   "verification": "Open-ended prompt read from the original page; sample answer reviewed for accuracy."
+  }
+ ],
+ "173": [
+  {
+   "id": "1",
+   "title": "1 · Multiplying multi-digit numbers",
+   "hint": "Think about the smaller products you get when you break apart (decompose) the factors.",
+   "steps": [
+    "Read the word bank.",
+    "Breaking 23 × 14 into 20 × 10, 20 × 4, 3 × 10 and 3 × 4 gives smaller products.",
+    "Those smaller products have a special name, and you add them to get the answer."
+   ],
+   "answer": "partial products; partial products (both blanks use the same words).",
+   "openEnded": false,
+   "anchor": 0.3875,
+   "side": "right",
+   "crop": [
+    0.1262,
+    0.3525,
+    0.6796,
+    0.07
+   ],
+   "verified": true,
+   "verification": "Read the sentence on the page image and matched it to the definitions taught in the listed lesson; checked the word fits the sentence grammatically."
+  },
+  {
+   "id": "2",
+   "title": "2 · How many times the base is multiplied",
+   "hint": "It is the small raised number in 10⁴.",
+   "steps": [
+    "In 10⁴, 10 is the base.",
+    "The small raised 4 tells how many 10s are multiplied.",
+    "Find that word in the word bank."
+   ],
+   "answer": "exponent",
+   "openEnded": false,
+   "anchor": 0.4838,
+   "side": "right",
+   "crop": [
+    0.1262,
+    0.4525,
+    0.657,
+    0.0625
+   ],
+   "verified": true,
+   "verification": "Read the sentence on the page image and matched it to the definitions taught in the listed lesson; checked the word fits the sentence grammatically."
+  },
+  {
+   "id": "3",
+   "title": "3 · Base raised to a power",
+   "hint": "10³ is one way to write 1,000; what is that way called?",
+   "steps": [
+    "A number written like 10³ is written in a special form.",
+    "The raised number that the base is raised to is called the power, or …",
+    "Use two words from the word bank, one for each blank."
+   ],
+   "answer": "exponential form; exponent",
+   "openEnded": false,
+   "anchor": 0.5725,
+   "side": "right",
+   "crop": [
+    0.1262,
+    0.5475,
+    0.6764,
+    0.05
+   ],
+   "verified": true,
+   "verification": "Read the sentence on the page image and matched it to the definitions taught in the listed lesson; checked the word fits the sentence grammatically."
+  },
+  {
+   "id": "4",
+   "title": "4 · Estimating before you compute",
+   "hint": "What do you do to 367 to turn it into 400?",
+   "steps": [
+    "To estimate, you change numbers into friendlier numbers first.",
+    "367 becomes 400 and 29 becomes 30.",
+    "Which word bank word means that?"
+   ],
+   "answer": "round",
+   "openEnded": false,
+   "anchor": 0.6538,
+   "side": "right",
+   "crop": [
+    0.1262,
+    0.63,
+    0.6926,
+    0.0475
+   ],
+   "verified": true,
+   "verification": "Read the sentence on the page image and matched it to the definitions taught in the listed lesson; checked the word fits the sentence grammatically."
+  },
+  {
+   "id": "5",
+   "title": "5 · 10 as the base",
+   "hint": "Numbers like 10, 100 and 1,000 written as 10¹, 10², 10³.",
+   "steps": [
+    "The base is 10.",
+    "The exponent tells how many 10s are multiplied.",
+    "Find the word bank phrase that names these numbers."
+   ],
+   "answer": "power of 10",
+   "openEnded": false,
+   "anchor": 0.7438,
+   "side": "right",
+   "crop": [
+    0.1262,
+    0.7075,
+    0.6796,
+    0.0725
+   ],
+   "verified": true,
+   "verification": "Read the sentence on the page image and matched it to the definitions taught in the listed lesson; checked the word fits the sentence grammatically."
+  },
+  {
+   "id": "6",
+   "title": "6 · An approximate solution",
+   "hint": "Approximate means close to, not exact.",
+   "steps": [
+    "An approximate answer is close to the exact answer.",
+    "Find the word that means a close guess found with friendly numbers."
+   ],
+   "answer": "estimate",
+   "openEnded": false,
+   "anchor": 0.8338,
+   "side": "right",
+   "crop": [
+    0.1262,
+    0.81,
+    0.5987,
+    0.0475
+   ],
+   "verified": true,
+   "verification": "Read the sentence on the page image and matched it to the definitions taught in the listed lesson; checked the word fits the sentence grammatically."
+  },
+  {
+   "id": "7",
+   "title": "7 · A set of steps",
+   "hint": "It is the step-by-step method you use, like the standard way to multiply.",
+   "steps": [
+    "Think of a recipe of steps you always follow.",
+    "Find that word in the word bank."
+   ],
+   "answer": "algorithm",
+   "openEnded": false,
+   "anchor": 0.915,
+   "side": "right",
+   "crop": [
+    0.1262,
+    0.89,
+    0.6117,
+    0.05
+   ],
+   "verified": true,
+   "verification": "Read the sentence on the page image and matched it to the definitions taught in the listed lesson; checked the word fits the sentence grammatically."
+  }
+ ],
+ "174": [
+  {
+   "id": "8",
+   "title": "8 · Which is equal to 10⁴?",
+   "hint": "The exponent 4 tells how many 10s are multiplied together.",
+   "steps": [
+    "10⁴ means 10 × 10 × 10 × 10.",
+    "Check each choice: A is 1,000 = 10³; B is 40; D is 40.",
+    "Only C multiplies four 10s, which is 10,000."
+   ],
+   "answer": "C. 10 × 10 × 10 × 10",
+   "openEnded": false,
+   "anchor": 0.2,
+   "side": "left",
+   "crop": [
+    0.0841,
+    0.09,
+    0.3301,
+    0.1675
+   ],
+   "verified": true,
+   "verification": "Python: 10**4 = 10000; A = 1000, B = 40, C = 10000, D = 40; only C matches."
+  },
+  {
+   "id": "9",
+   "title": "9 · About how many rock samples?",
+   "hint": "Round each number to its greatest place before you multiply.",
+   "steps": [
+    "Round 324 to 300.",
+    "Round 23 to 20.",
+    "Multiply 300 × 20 = 6,000."
+   ],
+   "answer": "About 6,000 rock samples (300 × 20). The exact product is 7,452, so 6,000 is a reasonable estimate.",
+   "openEnded": false,
+   "anchor": 0.41,
+   "side": "left",
+   "crop": [
+    0.0777,
+    0.305,
+    0.3786,
+    0.21
+   ],
+   "verified": true,
+   "verification": "Computed 300 × 20 = 6,000 and exact 324 × 23 = 7,452 in Python; estimate is in the right range."
+  },
+  {
+   "id": "10",
+   "title": "10 · Area of the recreational center",
+   "hint": "Split 32 into 30 + 2 and 17 into 10 + 7 in your area model.",
+   "steps": [
+    "Area = length × width = 32 × 17.",
+    "Partial products: 30 × 10 = 300, 30 × 7 = 210, 2 × 10 = 20, 2 × 7 = 14.",
+    "Add: 300 + 210 + 20 + 14 = 544."
+   ],
+   "answer": "544 square meters",
+   "openEnded": false,
+   "anchor": 0.665,
+   "side": "left",
+   "crop": [
+    0.0777,
+    0.565,
+    0.3754,
+    0.2
+   ],
+   "verified": true,
+   "verification": "Computed 32 × 17 = 544 in Python; partial products 300 + 210 + 20 + 14 = 544; estimate 30 × 20 = 600."
+  },
+  {
+   "id": "11",
+   "title": "11 · Partial products for 328 × 14",
+   "hint": "Multiply each place of 328 by the 10 and then by the 4.",
+   "steps": [
+    "10 × 20 = 200 and 10 × 8 = 80.",
+    "4 × 8 = 32.",
+    "Add all six partial products: 3,000 + 200 + 80 + 1,200 + 80 + 32."
+   ],
+   "answer": "Boxes: 200, 80, 32. 328 × 14 = 4,592.",
+   "openEnded": false,
+   "anchor": 0.2475,
+   "side": "right",
+   "crop": [
+    0.4919,
+    0.0925,
+    0.3819,
+    0.31
+   ],
+   "verified": true,
+   "verification": "Computed 328 × 14 = 4,592 in Python; sum of partial products 3000+200+80+1200+80+32 = 4,592."
+  },
+  {
+   "id": "12",
+   "title": "12 · Blaire's pages in 6 weeks",
+   "hint": "Break 242 into 200 + 40 + 2 and multiply each part by 6.",
+   "steps": [
+    "6 × 200 = 1,200.",
+    "6 × 40 = 240 and 6 × 2 = 12.",
+    "Add: 1,200 + 240 + 12 = 1,452."
+   ],
+   "answer": "Sample answer: Use partial products: 6 × 200 = 1,200, 6 × 40 = 240, 6 × 2 = 12; 1,200 + 240 + 12 = 1,452 pages.",
+   "openEnded": true,
+   "anchor": 0.5663,
+   "side": "right",
+   "crop": [
+    0.4919,
+    0.4475,
+    0.3819,
+    0.2375
+   ],
+   "verified": true,
+   "verification": "Computed 242 × 6 = 1,452 in Python; estimate 240 × 6 = 1,440."
+  },
+  {
+   "id": "13",
+   "title": "13 · 429 × 31",
+   "hint": "Multiply 429 by 1, then by 30, and add.",
+   "steps": [
+    "429 × 1 = 429.",
+    "429 × 30 = 12,870.",
+    "Add: 429 + 12,870 = 13,299."
+   ],
+   "answer": "13,299",
+   "openEnded": false,
+   "anchor": 0.7937,
+   "side": "right",
+   "crop": [
+    0.4919,
+    0.755,
+    0.3754,
+    0.0775
+   ],
+   "verified": true,
+   "verification": "Computed 429 × 31 = 13,299 in Python; 429 + 12,870 = 13,299; estimate 400 × 30 = 12,000."
+  }
+ ],
+ "175": [
+  {
+   "id": "14",
+   "title": "14 · Which equations are true? Select all.",
+   "hint": "Count how many 10s are multiplied on each side and check that both sides match.",
+   "steps": [
+    "A: 7 × 100 = 700 but 7 × 10 × 10 × 10 = 7,000, so false.",
+    "B: 2 × 10³ = 2 × 1,000, so true. C: 50 × 1,000 = 50,000, so true.",
+    "D: 8 × 10³ = 8,000 but 8 × 10 × 10 = 800, false. E: 16 × 100 = 1,600, not 160, false."
+   ],
+   "answer": "B and C",
+   "openEnded": false,
+   "anchor": 0.19,
+   "side": "left",
+   "crop": [
+    0.1294,
+    0.09,
+    0.3819,
+    0.2
+   ],
+   "verified": true,
+   "verification": "Evaluated both sides of every option in Python: A 700≠7000, B 2000=2000, C 50000=50000, D 8000≠800, E 1600≠160."
+  },
+  {
+   "id": "15",
+   "title": "15 · Best estimate for 367 × 29",
+   "hint": "Round each factor to the nearest hundred or ten that it is closest to.",
+   "steps": [
+    "367 is closer to 400 than to 300.",
+    "29 is closer to 30 than to 20.",
+    "400 × 30 = 12,000."
+   ],
+   "answer": "D. 400 × 30 = 12,000",
+   "openEnded": false,
+   "anchor": 0.43,
+   "side": "left",
+   "crop": [
+    0.1294,
+    0.335,
+    0.3819,
+    0.19
+   ],
+   "verified": true,
+   "verification": "Python: 367 × 29 = 10,643; 367 rounds to 400, 29 rounds to 30; 400 × 30 = 12,000. Checked each option's arithmetic (all correct as products) and rounding."
+  },
+  {
+   "id": "16",
+   "title": "16 · Area model for 53 × 37",
+   "hint": "Break 53 into 50 + 3 and 37 into 30 + 7.",
+   "steps": [
+    "Top box: 50. Left box: 7.",
+    "Fill the inside: 30 × 50 = 1,500, 30 × 3 = 90, 7 × 50 = 350, 7 × 3 = 21.",
+    "Add: 1,500 + 90 + 350 + 21 = 1,961."
+   ],
+   "answer": "Top: 50; side: 7; boxes 1,500, 90, 350, 21. 53 × 37 = 1,961.",
+   "openEnded": false,
+   "anchor": 0.6875,
+   "side": "left",
+   "crop": [
+    0.1294,
+    0.57,
+    0.3819,
+    0.235
+   ],
+   "verified": true,
+   "verification": "Computed 53 × 37 = 1,961 in Python; partial products 1500+90+350+21 = 1,961; estimate 50 × 40 = 2,000."
+  },
+  {
+   "id": "17",
+   "title": "17 · Track team miles in 5 weeks",
+   "hint": "5 weeks is 5 × 7 = 35 days.",
+   "steps": [
+    "5 weeks = 35 days, so find 126 × 35.",
+    "Estimate: about 100 × 40 = 4,000 (130 × 35 = 4,550 is also a fair estimate).",
+    "Solve: 126 × 30 = 3,780 and 126 × 5 = 630; 3,780 + 630 = 4,410."
+   ],
+   "answer": "Estimation: about 4,000 miles (other reasonable estimates are fine). Solution: 4,410 miles.",
+   "openEnded": false,
+   "anchor": 0.1775,
+   "side": "right",
+   "crop": [
+    0.5437,
+    0.09,
+    0.3754,
+    0.175
+   ],
+   "verified": true,
+   "verification": "Computed 126 × 35 = 4,410 in Python and 126 × 7 × 5 = 4,410; estimate 100 × 40 = 4,000 is close. Assumes the team runs all 7 days a week."
+  },
+  {
+   "id": "18",
+   "title": "18 · 541 × 62 with the algorithm",
+   "hint": "First multiply 541 by the 2 ones, then by the 6 tens.",
+   "steps": [
+    "541 × 2 = 1,082.",
+    "541 × 60 = 32,460.",
+    "Add: 1,082 + 32,460 = 33,542."
+   ],
+   "answer": "1,082; 32,460; 33,542",
+   "openEnded": false,
+   "anchor": 0.4113,
+   "side": "right",
+   "crop": [
+    0.5437,
+    0.3075,
+    0.3754,
+    0.2075
+   ],
+   "verified": true,
+   "verification": "Computed 541 × 62 = 33,542 in Python; 1,082 + 32,460 = 33,542; estimate 500 × 60 = 30,000."
+  },
+  {
+   "id": "19",
+   "title": "19 · 10⁶ as a product of 10s",
+   "hint": "The exponent 6 tells how many 10s to write.",
+   "steps": [
+    "Write six 10s with × between them.",
+    "Each 10 adds one zero.",
+    "Six zeros: 1,000,000."
+   ],
+   "answer": "10 × 10 × 10 × 10 × 10 × 10 = 1,000,000",
+   "openEnded": false,
+   "anchor": 0.6325,
+   "side": "right",
+   "crop": [
+    0.5437,
+    0.5625,
+    0.3819,
+    0.14
+   ],
+   "verified": true,
+   "verification": "Computed 10**6 = 1,000,000 in Python; counted six zeros."
+  }
+ ],
+ "176": [
+  {
+   "id": "partA",
+   "title": "Performance Task · Part A: Difference in honey bees",
+   "hint": "Change 13 × 10² and 27 × 10² into standard numbers first.",
+   "steps": [
+    "13 × 10² = 13 × 100 = 1,300 bees.",
+    "27 × 10² = 27 × 100 = 2,700 bees.",
+    "Subtract: 2,700 − 1,300 = 1,400."
+   ],
+   "answer": "1,400 honey bees (location B has 1,400 more).",
+   "openEnded": false,
+   "anchor": 0.3,
+   "side": "right",
+   "crop": [
+    0.0647,
+    0.07,
+    0.699,
+    0.165
+   ],
+   "verified": true,
+   "verification": "Computed 27*100 - 13*100 = 1,400 in Python; check (27 − 13) × 100 = 14 × 100 = 1,400."
+  },
+  {
+   "id": "partB",
+   "title": "Performance Task · Part B: Honey in a year",
+   "hint": "There are 52 weeks in a year.",
+   "steps": [
+    "Each week both locations make 121 + 344 = 465 ounces.",
+    "A year has 52 weeks, so find 465 × 52.",
+    "465 × 50 = 23,250 and 465 × 2 = 930; 23,250 + 930 = 24,180."
+   ],
+   "answer": "About 24,180 ounces of honey each year.",
+   "openEnded": false,
+   "anchor": 0.5,
+   "side": "right",
+   "crop": [
+    0.0647,
+    0.4025,
+    0.699,
+    0.045
+   ],
+   "verified": true,
+   "verification": "Computed (121 + 344) × 52 = 24,180 in Python; also 121 × 52 + 344 × 52 = 6,292 + 17,888 = 24,180; estimate 500 × 50 = 25,000."
+  },
+  {
+   "id": "reflect176",
+   "title": "Reflect · Strategies to multiply",
+   "hint": "Think about the different ways you multiplied in this unit.",
+   "steps": [
+    "List the strategies from the unit: area models, partial products, the algorithm, estimating, powers of 10.",
+    "Pick two or three and tell when each one helps."
+   ],
+   "answer": "Sample answer: I can use an area model, partial products, or the standard algorithm. I can also use powers of 10 for numbers like 30 × 400 and estimate first to check my answer.",
+   "openEnded": true,
+   "anchor": 0.7725,
+   "side": "right",
+   "crop": [
+    0.0712,
+    0.6,
+    0.7961,
+    0.345
+   ],
+   "verified": true,
+   "verification": "Reflection prompt with no single answer; sample checked against the strategies taught in Lessons 5-1 to 5-7."
+  }
+ ],
+ "177": [
+  {
+   "id": "1",
+   "title": "1 · Adjust 2,413 + 1,097",
+   "hint": "Make 1,097 a friendly number by adding just a little.",
+   "steps": [
+    "1,097 + 3 = 1,100, so add 3 to 1,097.",
+    "Take the same 3 away from 2,413: 2,413 − 3 = 2,410.",
+    "Add: 2,410 + 1,100 = 3,510."
+   ],
+   "answer": "− 3 and + 3; 2,410 + 1,100 = 3,510",
+   "openEnded": false,
+   "anchor": 0.52,
+   "side": "left",
+   "crop": [
+    0.1294,
+    0.45,
+    0.4207,
+    0.14
+   ],
+   "verified": true,
+   "verification": "Computed 2,413 + 1,097 = 3,510 in Python; check 2,410 + 1,100 = 3,510."
+  },
+  {
+   "id": "2",
+   "title": "2 · 1,097 + 2,456",
+   "hint": "Start with the ones and regroup when a column makes 10 or more.",
+   "steps": [
+    "Ones: 7 + 6 = 13, write 3 and regroup 1 ten.",
+    "Tens: 9 + 5 + 1 = 15, write 5 and regroup 1 hundred.",
+    "Hundreds: 0 + 4 + 1 = 5. Thousands: 1 + 2 = 3."
+   ],
+   "answer": "3,553",
+   "openEnded": false,
+   "anchor": 0.7375,
+   "side": "left",
+   "crop": [
+    0.1294,
+    0.675,
+    0.4434,
+    0.125
+   ],
+   "verified": true,
+   "verification": "Computed 1,097 + 2,456 = 3,553 in Python; inverse check 3,553 − 2,456 = 1,097."
+  },
+  {
+   "id": "3",
+   "title": "3 · 4,279 + 2,398",
+   "hint": "Watch for regrouping in the ones and tens.",
+   "steps": [
+    "Ones: 9 + 8 = 17, write 7 and regroup 1.",
+    "Tens: 7 + 9 + 1 = 17, write 7 and regroup 1.",
+    "Hundreds: 2 + 3 + 1 = 6. Thousands: 4 + 2 = 6."
+   ],
+   "answer": "6,677",
+   "openEnded": false,
+   "anchor": 0.8725,
+   "side": "left",
+   "crop": [
+    0.1294,
+    0.81,
+    0.4434,
+    0.125
+   ],
+   "verified": true,
+   "verification": "Computed 4,279 + 2,398 = 6,677 in Python; inverse check 6,677 − 2,398 = 4,279."
+  }
+ ],
+ "178": [
+  {
+   "id": "4",
+   "title": "4 · 3,241 + 316",
+   "hint": "Line up the places and add, starting with the ones.",
+   "steps": [
+    "Line up ones under ones, tens under tens.",
+    "Add each place from right to left, regrouping when a column makes 10 or more.",
+    "Check: 3,557 − 316 = 3,241."
+   ],
+   "answer": "3,557",
+   "openEnded": false,
+   "anchor": 0.12,
+   "side": "left",
+   "crop": [
+    0.0906,
+    0.1075,
+    0.3689,
+    0.025
+   ],
+   "verified": true,
+   "verification": "Computed 3241 + 316 = 3557 in Python; inverse check 3557 − 316 = 3241."
+  },
+  {
+   "id": "5",
+   "title": "5 · 987 − 453",
+   "hint": "Line up the places and subtract, starting with the ones; regroup if the top digit is too small.",
+   "steps": [
+    "Line up ones under ones, tens under tens.",
+    "Subtract each place from right to left, regrouping when you need to.",
+    "Check: 534 + 453 = 987."
+   ],
+   "answer": "534",
+   "openEnded": false,
+   "anchor": 0.1815,
+   "side": "left",
+   "crop": [
+    0.0906,
+    0.169,
+    0.3689,
+    0.025
+   ],
+   "verified": true,
+   "verification": "Computed 987 − 453 = 534 in Python; inverse check 534 + 453 = 987."
+  },
+  {
+   "id": "6",
+   "title": "6 · 824 − 76",
+   "hint": "Line up the places and subtract, starting with the ones; regroup if the top digit is too small.",
+   "steps": [
+    "Line up ones under ones, tens under tens.",
+    "Subtract each place from right to left, regrouping when you need to.",
+    "Check: 748 + 76 = 824."
+   ],
+   "answer": "748",
+   "openEnded": false,
+   "anchor": 0.241,
+   "side": "left",
+   "crop": [
+    0.0906,
+    0.2285,
+    0.3689,
+    0.025
+   ],
+   "verified": true,
+   "verification": "Computed 824 − 76 = 748 in Python; inverse check 748 + 76 = 824."
+  },
+  {
+   "id": "7",
+   "title": "7 · 148 + 231",
+   "hint": "Line up the places and add, starting with the ones.",
+   "steps": [
+    "Line up ones under ones, tens under tens.",
+    "Add each place from right to left, regrouping when a column makes 10 or more.",
+    "Check: 379 − 231 = 148."
+   ],
+   "answer": "379",
+   "openEnded": false,
+   "anchor": 0.3025,
+   "side": "left",
+   "crop": [
+    0.0906,
+    0.29,
+    0.3689,
+    0.025
+   ],
+   "verified": true,
+   "verification": "Computed 148 + 231 = 379 in Python; inverse check 379 − 231 = 148."
+  },
+  {
+   "id": "8",
+   "title": "8 · 542 + 328",
+   "hint": "Line up the places and add, starting with the ones.",
+   "steps": [
+    "Line up ones under ones, tens under tens.",
+    "Add each place from right to left, regrouping when a column makes 10 or more.",
+    "Check: 870 − 328 = 542."
+   ],
+   "answer": "870",
+   "openEnded": false,
+   "anchor": 0.3625,
+   "side": "left",
+   "crop": [
+    0.0906,
+    0.35,
+    0.3689,
+    0.025
+   ],
+   "verified": true,
+   "verification": "Computed 542 + 328 = 870 in Python; inverse check 870 − 328 = 542."
+  },
+  {
+   "id": "9",
+   "title": "9 · 475 + 267",
+   "hint": "Line up the places and add, starting with the ones.",
+   "steps": [
+    "Line up ones under ones, tens under tens.",
+    "Add each place from right to left, regrouping when a column makes 10 or more.",
+    "Check: 742 − 267 = 475."
+   ],
+   "answer": "742",
+   "openEnded": false,
+   "anchor": 0.1215,
+   "side": "right",
+   "crop": [
+    0.479,
+    0.109,
+    0.3916,
+    0.025
+   ],
+   "verified": true,
+   "verification": "Computed 475 + 267 = 742 in Python; inverse check 742 − 267 = 475."
+  },
+  {
+   "id": "10",
+   "title": "10 · 541 + 789",
+   "hint": "Line up the places and add, starting with the ones.",
+   "steps": [
+    "Line up ones under ones, tens under tens.",
+    "Add each place from right to left, regrouping when a column makes 10 or more.",
+    "Check: 1,330 − 789 = 541."
+   ],
+   "answer": "1,330",
+   "openEnded": false,
+   "anchor": 0.1825,
+   "side": "right",
+   "crop": [
+    0.479,
+    0.17,
+    0.3916,
+    0.025
+   ],
+   "verified": true,
+   "verification": "Computed 541 + 789 = 1330 in Python; inverse check 1330 − 789 = 541."
+  },
+  {
+   "id": "11",
+   "title": "11 · 647 − 325",
+   "hint": "Line up the places and subtract, starting with the ones; regroup if the top digit is too small.",
+   "steps": [
+    "Line up ones under ones, tens under tens.",
+    "Subtract each place from right to left, regrouping when you need to.",
+    "Check: 322 + 325 = 647."
+   ],
+   "answer": "322",
+   "openEnded": false,
+   "anchor": 0.2425,
+   "side": "right",
+   "crop": [
+    0.479,
+    0.23,
+    0.3916,
+    0.025
+   ],
+   "verified": true,
+   "verification": "Computed 647 − 325 = 322 in Python; inverse check 322 + 325 = 647."
+  },
+  {
+   "id": "12",
+   "title": "12 · 978 + 96",
+   "hint": "Line up the places and add, starting with the ones.",
+   "steps": [
+    "Line up ones under ones, tens under tens.",
+    "Add each place from right to left, regrouping when a column makes 10 or more.",
+    "Check: 1,074 − 96 = 978."
+   ],
+   "answer": "1,074",
+   "openEnded": false,
+   "anchor": 0.304,
+   "side": "right",
+   "crop": [
+    0.479,
+    0.2915,
+    0.3916,
+    0.025
+   ],
+   "verified": true,
+   "verification": "Computed 978 + 96 = 1074 in Python; inverse check 1074 − 96 = 978."
+  },
+  {
+   "id": "13",
+   "title": "13 · 1,549 − 256",
+   "hint": "Line up the places and subtract, starting with the ones; regroup if the top digit is too small.",
+   "steps": [
+    "Line up ones under ones, tens under tens.",
+    "Subtract each place from right to left, regrouping when you need to.",
+    "Check: 1,293 + 256 = 1,549."
+   ],
+   "answer": "1,293",
+   "openEnded": false,
+   "anchor": 0.364,
+   "side": "right",
+   "crop": [
+    0.479,
+    0.3515,
+    0.3916,
+    0.025
+   ],
+   "verified": true,
+   "verification": "Computed 1549 − 256 = 1293 in Python; inverse check 1293 + 256 = 1549."
+  },
+  {
+   "id": "talk1",
+   "title": "Fluency Talk · Choosing an adding strategy",
+   "hint": "Look at the numbers first: are any of them close to a friendly number?",
+   "steps": [
+    "If a number is close to a hundred or thousand, adjust the numbers.",
+    "If the numbers are easy to break into places, use partial sums.",
+    "Otherwise, the algorithm works for any numbers."
+   ],
+   "answer": "Sample answer: I look at the numbers. If one is close to a friendly number like 1,100, I adjust the numbers. If not, I use partial sums or the algorithm.",
+   "openEnded": true,
+   "anchor": 0.57,
+   "side": "right",
+   "crop": [
+    0.0712,
+    0.47,
+    0.7961,
+    0.2
+   ],
+   "verified": true,
+   "verification": "Discussion prompt with no single answer; sample matches the strategies shown in the Fluency Strategy box."
+  },
+  {
+   "id": "talk2",
+   "title": "Fluency Talk · Why regroup when subtracting?",
+   "hint": "What happens when the top digit in a column is smaller than the bottom digit?",
+   "steps": [
+    "Look at 824 − 76: in the ones, 4 is less than 6.",
+    "Trade 1 ten for 10 ones so you have enough to subtract.",
+    "That trade is called regrouping."
+   ],
+   "answer": "Sample answer: When a digit on top is smaller than the digit below it, I regroup 1 from the next place (like 1 ten for 10 ones) so I have enough to subtract.",
+   "openEnded": true,
+   "anchor": 0.8013,
+   "side": "right",
+   "crop": [
+    0.0712,
+    0.6725,
+    0.7961,
+    0.2575
+   ],
+   "verified": true,
+   "verification": "Discussion prompt with no single answer; sample checked with 824 − 76 (4 < 6 in the ones needs regrouping)."
+  }
+ ]
+}
