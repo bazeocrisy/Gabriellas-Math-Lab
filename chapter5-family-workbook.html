@@ -11,6 +11,30 @@
 .paper-outer{max-height:calc(100vh - 185px)}
 @media(max-width:1180px){.shell{grid-template-columns:minmax(0,1fr) 285px}.assist{grid-column:auto;position:sticky}}
 @media(max-width:700px){.shell{display:block}.assist{max-height:none;overflow:visible;position:static}.paper-outer{max-height:70vh}}
+
+/* v4 — page-first layout: problems live in compact cards, never over source printing */
+.shell{max-width:1600px;grid-template-columns:minmax(0,1fr) 310px;padding:12px;gap:12px}
+.side{display:none!important}
+.assist{position:sticky;top:12px;max-height:calc(100vh - 24px);overflow:auto;padding:14px}
+.assist>.tips,.assist>hr,.assist>p.muted,.assist>label,.assist>textarea,.assist>#note-status,.assist>h2[style],.assist>.notice,.assist>.navlink{display:none!important}
+.viewer{padding:10px}
+.paper-outer{padding:10px;max-height:calc(100vh - 180px);min-height:460px}
+.toolbar{padding:4px 0 10px}
+.answer-item{display:none!important}
+.q-list{max-height:58vh;overflow:auto;scrollbar-width:thin}
+.q-row{display:grid;grid-template-columns:1fr auto;gap:7px;padding:9px;border-radius:12px;align-items:center}
+.q-row strong{font-size:13px}
+.q-row input{grid-column:1 / -1;min-height:39px;width:100%;border:1px solid #cdd9ed;background:#fff;border-radius:9px;padding:8px 10px;font-size:14px}
+.q-row input:focus{outline:2px solid #9bb8fa;border-color:#315bc4}
+.q-row .btn{min-height:36px}
+.q-row.selected{border-color:#6086df;background:#f3f7ff}
+.help-card{background:#fff;border:1px solid #9ebbf0;box-shadow:0 5px 15px #243b6e10}
+.add-on-page{padding:9px}
+.add-on-page p{display:none}
+.chapter-progress{padding:9px}
+#page-title{font-size:17px}
+@media(max-width:1050px){.shell{grid-template-columns:minmax(0,1fr) 270px}.assist{position:sticky;grid-column:auto}}
+@media(max-width:700px){.shell{display:block}.assist{position:static;max-height:none;margin-top:12px}.q-list{max-height:320px}.paper-outer{max-height:72vh}}
 </style></head><body>
 <div class="shell"><aside class="card side"><div class="eyebrow">Family study edition</div><h1>Gabriella's Math Lab</h1><p class="muted mini">Chapter 5 · Exact textbook pages</p><a class="navlink" href="./unit5-lessons-5-1-to-5-4.html">↗ Open original interactive lessons 5-1 to 5-4</a><a class="navlink" href="./">↗ Math Lab home</a><div class="smallcard"><strong>Progress is saved here</strong><p class="mini muted">This companion workbook stores your writing and notes in this browser. Export a backup if using another device.</p></div><div class="smallcard"><strong>Textbook protection</strong><p class="mini muted">The source pages are rendered unchanged. Ink and notes are saved separately.</p></div></aside>
 <main class="main"><section class="card top"><div><div class="eyebrow">Original Chapter 5 book</div><strong id="page-title">Loading textbook…</strong><div class="mini muted" id="page-subtitle">Use the arrows or select any source PDF page</div></div><div class="buttons"><button class="btn" id="prev">← Previous</button><select id="page-select" aria-label="Choose textbook page"></select><button class="btn primary" id="next">Next →</button></div></section>
@@ -45,14 +69,14 @@ if(showSteps){html+='<div class="help-stage"><strong>Steps</strong><ol class="he
 if(showAnswer&&showSteps){html+='<div class="help-stage"><strong>'+(q.openEnded?"Sample response":"Verified answer")+'</strong><p>'+safe(q.answer)+'</p></div>';}}
 html+='<button class="btn" id="close-help">Close explanation</button></section>';box.innerHTML=html;
 const steps=by("show-steps");if(steps)steps.onclick=()=>{showSteps=!showSteps;showAnswer=false;renderHelp()};const answer=by("show-answer");if(answer)answer.onclick=()=>{showAnswer=!showAnswer;renderHelp()};by("close-help").onclick=()=>{chosenHelp=null;renderHelp();renderQuestionList()};}
-function renderQuestionList(){const list=by("question-list"), items=listedQuestions();by("problem-status").textContent=(VERIFIED[current]?items.length+" textbook prompts mapped on this page":"Add a box for each printed problem on this page")+". Every box saves automatically.";list.innerHTML=items.length?items.map(q=>'<div class="q-row"><div><strong>'+safe(nameOf(q))+'</strong><div class="chapter-question-label">'+(String(state().answers[q.id]||"").trim()?"✓ Answer entered":"Not answered")+'</div></div><button class="btn '+(chosenHelp===q.id?"active":"")+'" data-help="'+safe(q.id)+'">? Help</button></div>').join(""):'<div class="mini muted">No answer boxes have been mapped yet. Use the Add answer box control to mark printed questions on this page.</div>';
+
+function renderQuestionList(){const list=by("question-list"),items=listedQuestions();
+by("problem-status").textContent=(VERIFIED[current]?"Select a question below to answer or get help.":"Use Add answer box to map each printed problem.")+" Answers save as you type.";
+list.innerHTML=items.length?items.map(q=>'<div class="q-row '+(chosenHelp===q.id?"selected":"")+'" data-question="'+safe(q.id)+'"><div><strong>'+safe(nameOf(q))+'</strong><div class="chapter-question-label">'+(String(state().answers[q.id]||"").trim()?"✓ Answer saved":"Enter an answer below")+'</div></div><button class="btn" data-help="'+safe(q.id)+'" aria-label="Show help for '+safe(nameOf(q))+'">? Help</button><input type="text" data-answer="'+safe(q.id)+'" value="'+safe(state().answers[q.id]||"")+'" placeholder="Type your answer here" aria-label="Answer for '+safe(nameOf(q))+'"></div>').join(""):'<div class="mini muted">No mapped questions on this page yet. Add one to start.</div>';
 list.querySelectorAll("[data-help]").forEach(b=>b.addEventListener("click",()=>showQuestion(b.dataset.help)));
+list.querySelectorAll("[data-answer]").forEach(input=>input.addEventListener("input",e=>{state().answers[input.dataset.answer]=e.target.value;persist();const label=input.parentElement.querySelector(".chapter-question-label");if(label)label.textContent=e.target.value.trim()?"✓ Answer saved":"Enter an answer below";updateProgress()}));
 updateProgress();}
-function renderBoxes(){const layer=by("answer-layer");layer.innerHTML="";const qs=listedQuestions();for(const q of qs){const r=q.rect||[.12,.3,.3,.035];const wrap=document.createElement("div");wrap.className="answer-item"+(r[3]>.05?" long":"");wrap.style.left=(100*r[0]).toFixed(3)+"%";wrap.style.top=(100*r[1]).toFixed(3)+"%";wrap.style.width=(100*Math.min(.6,Math.max(.125,r[2]))).toFixed(3)+"%";wrap.setAttribute("data-id",q.id);
-const input=document.createElement("input");input.type="text";input.value=state().answers[q.id]||"";input.setAttribute("aria-label","Answer for "+nameOf(q));input.placeholder="Answer";input.oninput=e=>{state().answers[q.id]=e.target.value;persist();renderQuestionList()};input.onclick=e=>e.stopPropagation();
-const btn=document.createElement("button");btn.className="help-dot"+(chosenHelp===q.id?" selected":"");btn.textContent="?";btn.type="button";btn.title="Hint, steps and answer for "+nameOf(q);btn.setAttribute("aria-label","Get help for "+nameOf(q));btn.onclick=e=>{e.stopPropagation();showQuestion(q.id);renderBoxes()};
-wrap.append(input,btn);layer.append(wrap);}
-renderQuestionList();renderHelp();}
+function renderBoxes(){const layer=by("answer-layer");layer.innerHTML="";renderQuestionList();renderHelp();}
 by("place-box").onclick=()=>{placing=!placing;by("page").classList.toggle("placing",placing);by("place-box").textContent=placing?"Cancel placement":"＋ Add answer box to page";choose("pen")};
 by("answer-layer").addEventListener("click",e=>{if(!placing||e.target!==by("answer-layer"))return;const r=by("answer-layer").getBoundingClientRect();const x=(e.clientX-r.left)/r.width,y=(e.clientY-r.top)/r.height;const label=prompt("Enter the printed problem number or name (e.g. 18a):");if(!label||!label.trim())return;const id="custom-"+Date.now().toString(36)+"-"+Math.floor(Math.random()*1e5);state().customQuestions.push({id,title:"Problem "+label.trim().slice(0,40),rect:[Math.max(.015,Math.min(.82,x)),Math.max(.01,Math.min(.93,y)),.18,.04]});placing=false;by("page").classList.remove("placing");by("place-box").textContent="＋ Add answer box to page";persist();renderBoxes();});
 
