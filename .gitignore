@@ -1,0 +1,18 @@
+# Build output (scripts/build-site.js) and local tooling
+_site/
+_preview/
+node_modules/
+
+# Test output
+tests/screenshots/
+tests/math/screenshots/
+
+# Private material: newsletters, homework photos, scans, answer keys. Never committed, never published.
+private/
+
+# OS and editor files
+.DS_Store
+Thumbs.db
+*.swp
+.vscode/
+.idea/

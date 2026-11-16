@@ -1,0 +1,37 @@
+{
+  "version": 1,
+  "subjects": [
+    {
+      "id": "math",
+      "name": "Math",
+      "role": "Math teacher",
+      "currentUnit": null,
+      "units": [
+        { "id": "decimals", "title": "Decimal Skills", "status": null, "href": "math/index.html#/decimals" },
+        { "id": "chapter-4", "title": "Chapter 4: Add and Subtract Decimals", "status": null, "href": "math/index.html#/chapter4" }
+      ]
+    },
+    {
+      "id": "ela",
+      "name": "ELA",
+      "longName": "English Language Arts",
+      "role": "ELA teacher",
+      "currentUnit": null,
+      "units": []
+    },
+    {
+      "id": "social-studies",
+      "name": "Social Studies",
+      "role": "Social Studies teacher",
+      "currentUnit": null,
+      "units": []
+    },
+    {
+      "id": "science",
+      "name": "Science",
+      "role": "Science teacher",
+      "currentUnit": null,
+      "units": []
+    }
+  ]
+}

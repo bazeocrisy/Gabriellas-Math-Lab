@@ -1,0 +1,65 @@
+{
+  "version": 1,
+  "id": "2026-11-16",
+  "label": "Week of November 16–20",
+  "notes": null,
+  "events": [],
+  "subjects": {
+    "math": {
+      "unit": null,
+      "topics": [],
+      "vocabulary": [],
+      "homework": [],
+      "assessments": [],
+      "notes": null,
+      "resources": {
+        "learn": [],
+        "practice": [],
+        "guides": [],
+        "tests": []
+      }
+    },
+    "ela": {
+      "unit": null,
+      "topics": [],
+      "vocabulary": [],
+      "homework": [],
+      "assessments": [],
+      "notes": null,
+      "resources": {
+        "learn": [],
+        "practice": [],
+        "guides": [],
+        "tests": []
+      }
+    },
+    "social-studies": {
+      "unit": null,
+      "topics": [],
+      "vocabulary": [],
+      "homework": [],
+      "assessments": [],
+      "notes": null,
+      "resources": {
+        "learn": [],
+        "practice": [],
+        "guides": [],
+        "tests": []
+      }
+    },
+    "science": {
+      "unit": null,
+      "topics": [],
+      "vocabulary": [],
+      "homework": [],
+      "assessments": [],
+      "notes": null,
+      "resources": {
+        "learn": [],
+        "practice": [],
+        "guides": [],
+        "tests": []
+      }
+    }
+  }
+}

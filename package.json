@@ -1,0 +1,15 @@
+{
+  "name": "studynova",
+  "private": true,
+  "type": "module",
+  "description": "StudyNova: free 5th-grade study hub for Math, ELA, Social Studies and Science (static site, no build step, no dependencies)",
+  "engines": { "node": ">=22" },
+  "scripts": {
+    "test": "node --test \"tests/unit/*.test.js\" \"tests/math/*.test.mjs\"",
+    "test:browser": "node scripts/run-browser-tests.mjs",
+    "build": "node scripts/build-site.js",
+    "test:site": "node scripts/build-site.js _site && node scripts/run-browser-tests.mjs --site _site",
+    "test:all": "npm test && npm run test:browser && npm run test:site",
+    "serve": "node tests/serve.js"
+  }
+}
